@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administracyjny</title>
+</head>
+<body>
+<main class="main-content margin-box" layout:fragment="content">
+    <p class="notification-bar" th:if="${notification}" th:text="${notification}">Powiadomienia</p>
+
+    <h2 class="list-heading">Panel administracyjny</h2>
+
+    <p class="list-description">Zarządzaj baza gier</p>
+    <ul class="admin-list-border">
+        <li><a class="admin-listing" href="#" th:href="@{/admin/dodaj-gre}">Dodaj gre</a></li>
+        <li><a class="admin-listing" href="#" th:href="@{/admin/edytuj-gre}">Edytuj gre</a></li>
+        <li><a class="admin-listing" href="#" th:href="@{/admin/dodaj-kategorie}">Dodaj kategorię</a></li>
+        <li><a class="admin-listing" href="#" th:href="@{/admin/edytuj-kategorie}">Edytuj kategorię</a></li>
+        <li><a class="admin-listing" href="#" th:href="@{/admin/dodaj-platforme}">Dodaj platforme</a></li>
+        <li><a class="admin-listing" href="#" th:href="@{/admin/edytuj-platforme}">Edytuj platforme</a></li>
+
+    </ul>
+    <p class="list-description">Zarządzaj baza wydawców/producentów</p>
+    <ul class="admin-list-border">
+        <li><a class="admin-listing" href="#" th:href="@{/admin/dodaj-firme}">Dodaj firmę</a></li>
+        <li><a class="admin-listing" href="#" th:href="@{/admin/edytuj-firme}">Edytuj firmę</a></li>
+    </ul>
+
+    <p class="list-description">Zarządzaj użytkownikami</p>
+    <ul class="admin-list-border">
+        <li><a class="admin-listing" href="#" th:href="@{/admin/lista-uzytkownikow}">Lista użytkowników</a></li>
+        <li><a class="admin-listing" href="#" th:href="@{/admin/ban}">Ban</a></li>
+    </ul>
+</main>
+</body>
+</html>

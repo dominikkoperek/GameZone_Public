@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles/main.css" th:href="@{/styles/main.css}">
+    <link rel="icon" type="image/x-icon" href="/static/img/favicon.png" th:href="@{/img/favicon.png}">
+    <title>GameZone</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="navbar">
+
+        <ul class="menu">
+            <li class="menu-logo-container">
+                <a href="#" th:href="@{/}">
+                    <i class="fa-solid fa-dragon logo"></i> GameZone
+                </a>
+            </li>
+            <li class="menu-toggle">
+                <a href="#">
+                    <i id="toggle-icon" class="fa-solid fa-bars"></i>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="#" th:href="@{/admin}">Admin</a>
+            </li>
+            <li class="menu-item">
+                <a href="#" th:href="@{/gry/kategoria}">Kategorie</a>
+            </li>
+            <li class="menu-item">
+                <a href="/polecane-gry" th:href="@{/polecane-gry}">Top10</a>
+            </li>
+            <li class="menu-item">
+                <a href="#">Zaloguj się</a>
+            </li>
+            <li class="menu-item">
+                <a href="/firma" th:href="@{/firma}">Firmy</a>
+            </li>
+        </ul>
+    </div>
+    <header class="jumbotron">
+        <div class="jumbotron-text">
+            <h1 class="jumbotron-header">GameZone</h1>
+            <p class="jumbotron-description">
+                Odkryj świat gier razem z nami! Oceniaj, dyskutuj i odkrywaj najlepsze gry wszechczasów!
+            </p>
+        </div>
+    </header>
+
+    <main class="main-content margin-box" layout:fragment="content">
+
+    </main>
+
+
+    <footer class="footer">
+        <p id="copyright"> GameZone</p>
+    </footer>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script defer src="../static/scripts/common.js" th:src="@{/scripts/common.js}"></script>
+</body>
+</html>

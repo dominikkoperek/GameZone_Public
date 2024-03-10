@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Dodaj producenta gry</title>
+</head>
+<body>
+<main class="main-content margin-box" layout:fragment="content">
+    <h2 class="list-heading">Panel administracyjny</h2>
+    <h3 class="list-description">Dodaj nową firmę</h3>
+
+    <form action="" method="post" class="add-content-form" id="add-content-form" th:object="${company}"
+          autocomplete="off">
+        <div class="form-button-container">
+            <a class="form-back-button" href="#" th:href="@{/admin}">
+                <i class="fa-solid fa-chevron-left logo"></i>wróć
+            </a>
+            <button class="form-back-button" onclick="clearCompanyForm()" type="button">wyczyść
+                <i class="fa-solid fa-rotate-right logo"></i>
+            </button>
+        </div>
+
+        <label for="companyName">Nazwa (max 35 znaków)</label>
+        <input type="text" id="companyName" placeholder="spacja = lista wydawców"
+               th:field="*{name}"
+               th:classappend="${#fields.hasErrors('name')} ?'error-input':'' "
+               aria-autocomplete="none"
+               autocomplete="off"
+               autocorrect="off"
+               onkeyup="validateCompanyName()">
+        <ul id="show-suggestion-list" class="hide-notification"></ul>
+        <div class="input-validation-container">
+            <p class="notification-error" id="name-error"></p>
+            <p class="notification-error" th:errors="${company.name}">Powiadomienie</p>
+        </div>
+
+        <div class="input-border">
+            <label for="companyCountry">Kraj pochodzenia (Wyszukiwarka)</label>
+
+            <input type="text" id="companyCountry"
+                   th:classappend="${#fields.hasErrors('country')} ?'error-input':'' "
+                   aria-autocomplete="none"
+                   autocomplete="off"
+                   autocorrect="off"
+                   onkeyup="validateCountry()">
+            <ul id="show-countries-list" class="hide-notification"></ul>
+            <label for="country-value">Wybrany Kraj</label>
+            <input readonly type="text" th:field="*{country}" id="country-value">
+
+            <div class="input-validation-container">
+                <p class="notification-error" id="country-error"></p>
+                <p class="notification-error" th:errors="${company.country}">Powiadomienie</p>
+            </div>
+        </div>
+
+        <label for="companyShortDescription">Krótki opis(100 - 1000 znaków)</label>
+        <textarea rows="8" id="companyShortDescription"
+                  th:field="*{shortDescription}"
+                  th:classappend="${#fields.hasErrors('shortDescription')} ? 'error-input':'' "
+                  aria-autocomplete="none"
+                  autocomplete="off"
+                  autocorrect="off"
+                  onkeyup="validateCompanyShortDescription()">
+        </textarea>
+        <div class="input-validation-container">
+            <p class="notification-error" id="short-description-error"></p>
+            <p class="notification-error" th:errors="${company.shortDescription}">Powiadomienie</p>
+        </div>
+        <label for="companyLongDescription">Pełny opis(200 - 100.000 znaków)</label>
+
+        <textarea rows="14" id="companyLongDescription" class="contentEditor"
+                  th:field="*{description}"
+                  th:classappend="${#fields.hasErrors('description')} ? 'error-input': '' "
+                  aria-autocomplete="none"
+                  autocomplete="off"
+                  autocorrect="off"
+                  onkeyup="validateCompanyLongDescription()">
+        </textarea>
+        <div class="input-validation-container">
+            <p class="notification-error" id="long-description-error"></p>
+            <p class="notification-error" th:errors="${company.description}">Powiadomienie</p>
+        </div>
+
+
+        <div class="checkbox-center-container">
+            <div class="checkbox-margin-box">
+                <label class="checkbox-container">Producent
+                    <input type="checkbox" name="isProducer" id="isProducer" onclick="validateIsProducerOrIsPublisher()">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <div class="checkbox-margin-box">
+                <label class="checkbox-container">Wydawca
+                    <input type="checkbox" name="isPublisher" id="isPublisher" onclick="validateIsProducerOrIsPublisher()">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+        <div class="input-validation-container">
+            <p class="notification-error" id="is-company-error"></p>
+            <p class="notification-error" th:errors="${company.publisher}">Powiadomienie</p>
+            <p class="notification-error" th:errors="${company.producer}">Powiadomienie</p>
+        </div>
+
+
+        <button onclick="return validateCompanyForm()" type="submit" id="form-button">Dodaj</button>
+    </form>
+    <script src="/scripts/companyFormValidation.js" th:src="@{/scripts/companyFormValidation.js}"></script>
+    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '.contentEditor',
+            plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",
+            toolbar: 'undo |redo| numlist |bullist | outdent |indent| bold | h2 | link | preview|',
+            menubar: '',
+            toolbar_sticky: false,
+            icons: 'thin',
+            content_css: "/styles/tinymce.css",
+            setup: function (editor) {
+                editor.on('keyup', function (e) {
+                    validateCompanyLongDescription();
+                });
+            },
+            min_height: 400,
+            max_height: 800,
+        });
+
+    </script>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0001-1" author="dominik">
+        <createTable tableName="company">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(80)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="short_description" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_Producer" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_Publisher" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(MAX)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(99)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

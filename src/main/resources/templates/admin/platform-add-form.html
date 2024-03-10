@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Dodaj kategorie gry</title>
+</head>
+<body>
+<main class="main-content margin-box" layout:fragment="content">
+    <h2 class="list-heading">Panel administracyjny</h2>
+    <h3 class="list-description">Dodaj nową platformę gier</h3>
+
+    <form action="" method="post" class="add-content-form" id="add-content-form" th:object="${platform}"
+          autocomplete="off">
+        <div class="form-button-container">
+            <a class="form-back-button" href="#" th:href="@{/admin}"><i
+                    class="fa-solid fa-chevron-left logo"></i>wróć</a>
+            <button class="form-back-button" id="form-reset-button" onclick="clearPlatformForm()" type="button">wyczyść
+                <i class="fa-solid fa-rotate-right logo"></i>
+            </button>
+        </div>
+
+        <label for="platformName">Nazwa (2 - 10 znaków)</label>
+        <input type="text" id="platformName" placeholder="spacja = zajęte platformy"
+               th:field="*{name}"
+               th:classappend="${#fields.hasErrors('name')} ? 'error-input' : ''"
+               aria-autocomplete="none"
+               autocomplete="off"
+               autocorrect="off"
+               onkeyup="validatePlatformName()">
+        <ul id="show-suggestion-list" class="hide-notification"></ul>
+        <div class="input-validation-container">
+            <p class="notification-error" id="name-error"></p>
+            <p class="notification-error" th:errors="${platform.name}">Powiadomienia</p>
+        </div>
+
+        <label for="platformDescription">Opis (50 - 800 znaków)</label>
+        <textarea rows="8" id="platformDescription"
+                  th:classappend="${#fields.hasErrors('description')} ? 'error-input' : ''"
+                  th:field="*{description}"
+                  aria-autocomplete="none"
+                  autocomplete="off"
+                  autocorrect="off"
+                  onkeyup="validatePlatformDescription()">
+        </textarea>
+        <div class="input-validation-container">
+            <p class="notification-error" id="description-error"></p>
+            <p class="notification-error" th:errors="${platform.description}">Powiadomienia</p>
+        </div>
+
+        <label for="platformLogoAddress">Logo kod SVG(100 - 30.000 znaków)</label>
+        <textarea rows="6" id="platformLogoAddress"
+                  th:classappend="${#fields.hasErrors('logoAddress')} ? 'error-input' : ''"
+                  th:field="*{logoAddress}"
+                  aria-autocomplete="none"
+                  autocomplete="off"
+                  autocorrect="off"
+                  onkeyup="validatePlatformLogoAddress()"
+                  placeholder="Pamiętaj dodać po <svg class=&quot;platform-logo&quot;">
+        </textarea>
+        <div class="input-validation-container">
+            <p class="notification-error" id="file-error-message"></p>
+            <p class="notification-error" id="logoAddress-error"></p>
+            <p class="notification-error" th:errors="${platform.logoAddress}">Powiadomienia</p>
+        </div>
+        <div class="file-center-container">
+
+            <div class="file-container">
+                <input type="file" accept=".svg" class="input-file" id="svg-file" oninput="addFile(this)">
+            </div>
+
+            <div class="platforms-container all-platforms-container">
+                <ul class="platform-list all-platform-list">
+                    <li class="platform-element svg-platform-element"  th:each="platforms:${allGamePlatforms}">
+                        <button class="platform-item all-platform-item" type="button">
+                            <div class="icon-container ">
+                                <span class="platform-logo copy-svg" th:utext="${platforms.value}"></span>
+                                <span class="platform-text all_platform_text" th:text="${platforms.key}">Pc</span>
+                            </div>
+                        </button>
+                    </li>
+                        <li class="platform-element svg-platform-element">
+                            <button class="platform-item all-platform-item" type="button">
+                                <div class="icon-container" id="test-svg-logo">
+                                    <span id="user-svg-upload" class="platform-logo"></span>
+                                    <span id="user-svg-name" class="platform-text all_platform_text">Test</span>
+                                </div>
+                            </button>
+                        </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <button onclick="return validatePlatformForm()" type="submit" id="form-button">Dodaj</button>
+    </form>
+    <script src="/static/scripts/platformFormValidation.js" th:src="@{/scripts/platformFormValidation.js}"></script>
+
+</main>
+</body>
+</html>

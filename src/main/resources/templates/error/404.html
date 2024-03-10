@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Strona nie istnieje! | 404</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <div class="error-container">
+        <div class="error-image">
+            <img th:src="@{/img/404.png}" alt="pixel-art-404">
+        </div>
+        <h1>Strona nie istnieje!</h1>
+        <a href="#" th:href="@{/}">Strona główna</a>
+    </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="|${heading} - GameZone|">Firma - Game-zone</title>
+</head>
+<body>
+<main class="main-content margin-box" layout:fragment="content">
+    <h2 class="list-heading display-inline-flex" th:text="${heading}">Tytuł</h2>
+    <img class="company-logo-cover" src="/img/logocd.jpg" th:alt="|${company.name} logo|">
+    <p class="list-description display-block" th:text="${description}">Opis</p>
+    <div class="company-details-center-box">
+        <p th:text="|Kraj: ${country}|">Opis</p>
+        <div class="company-details">
+            <p th:if="${company.publisher}" th:text="Wydawca">Wydawca</p>
+            <p th:if="${company.producer}" th:text="Producent">Producent</p>
+            <p th:if="${isPolishCompany && company.producer}">Polski Producent</p>
+            <p th:if="${isPolishCompany && company.publisher}">Polski Wydawca</p>
+        </div>
+    </div>
+
+
+    <div class="company-button-container">
+        <a class="company-type-button" href="#">Polscy Producenci Gier</a>
+        <a class="company-type-button" href="#">Polscy Wydawcy Gier</a>
+        <a class="company-type-button" href="#">Producenci Gier</a>
+        <a class="company-type-button" href="#">Wydawcy Gier</a>
+        <div class="company-search-container">
+            <form class="company-search-form" id="company-search-form" role="search">
+                <input type="text" id="company-search-input"
+                       class="company-search-input"
+                       placeholder="szukaj firmy"
+                       aria-label="szukaj firmy"
+                       aria-autocomplete="none"
+                       autocomplete="off"
+                       autocorrect="off">
+                <button class="company-search-button">
+                    <svg viewBox="0 0 1024 1024">
+                        <path class="path1"
+                              d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="game-full-description">
+        <section class="game-section" th:utext="${company.description}"></section>
+    </div>
+
+    <div class="popular-produced-games" th:unless="${allGamesByProducerId.isEmpty()}">
+        <h2 class="article-heading" th:text="|Popularne gry wyprodukowane przez ${company.name}|">
+            Gry wyprodukowane przez</h2>
+        <section class="company-games-container">
+            <a href="#" th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}"
+               class="company-game-cover" th:each="allGames,count:${allPromotedGamesByProducerId}"
+               th:if="${count.index lt 6}">
+                <img src="/img/mass.jpg" th:alt="|${allGames.title}-cover-poster|">
+                <p th:text="${allGames.title}">Mass Effect 3</p>
+            </a>
+        </section>
+    </div>
+
+    <div class="popular-produced-games" th:unless="${allGamesByPublisherId.isEmpty()}">
+        <h2 class="article-heading" th:text="|Popularne gry wydane przez ${company.name}|">
+            Gry wydane przez</h2>
+        <section class="company-games-container">
+            <a href="#" th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}"
+               class="company-game-cover" th:each="allGames,count:${allPromotedGamesByPublisherId}"
+               th:if="${count.index lt 6}">
+
+                <img src="/img/mass.jpg" th:alt="game-poster">
+                <p th:text="${allGames.title}">Mass Effect 3</p>
+            </a>
+        </section>
+    </div>
+
+    <div th:unless="${allGamesByProducerId.isEmpty()}">
+        <section>
+            <h2 class="article-heading" th:text="|Wszystkie gry wyprodukowane przez ${company.name}|"></h2>
+            <ul id="games-list-producer" class="games-list-hide container-limit">
+                <li th:each="allGames:${allGamesByProducerId}">
+                    <a class="games-list-container" href="#"
+                       th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}">
+                        <span class="all-games-list" th:text="${allGames.title}"></span>
+                        <span class="games-date" th:text="${allGames.releaseYear.getYear()}"></span>
+                    </a>
+                </li>
+                <li th:if="${allGamesByProducerId.size() ge 25}">
+                    <button id="producer-button" class="company-type-button" onclick="showAllProducedGames()"
+                            type="button">Pokaż wszystkie wyprodukowane
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <div th:unless="${allGamesByPublisherId.isEmpty()}">
+        <section>
+            <h2 class="article-heading container-limit" th:text="|Wszystkie gry wydane przez ${company.name}|"></h2>
+            <ul id="games-list-publisher" class="games-list-hide container-limit">
+                <li th:each="allGames:${allGamesByPublisherId}">
+                    <a class="games-list-container" href="#"
+                       th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}">
+                        <span class="all-games-list" th:text="${allGames.title}"></span>
+                        <span class="games-date" th:text="${allGames.releaseYear.getYear()}"></span>
+                    </a>
+                </li>
+                <li th:if="${allGamesByPublisherId.size() ge 25}">
+                    <button id="publisher-button" class="company-type-button" onclick="showAllPublishedGames()"
+                            type="button">Pokaż wszystkie wydane
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <script src="/static/scripts/company.js" th:src="@{/scripts/company.js}"></script>
+</main>
+</body>
+</html>

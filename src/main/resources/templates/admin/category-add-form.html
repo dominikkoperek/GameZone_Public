@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Dodaj kategorie gry</title>
+</head>
+<body>
+<main class="main-content margin-box" layout:fragment="content">
+    <h2 class="list-heading">Panel administracyjny</h2>
+    <h3 class="list-description">Dodaj nową kategorie gier</h3>
+
+    <form action="" method="post" class="add-content-form" id="add-content-form" th:object="${category}"
+          autocomplete="off">
+        <div class="form-button-container">
+            <a class="form-back-button" href="#" th:href="@{/admin}">
+                <i class="fa-solid fa-chevron-left logo"></i>wróć</a>
+            <button class="form-back-button" onclick="clearCategoryForm()" type="button">wyczyść
+                <i class="fa-solid fa-rotate-right logo"></i>
+            </button>
+        </div>
+        <label for="categoryName">Nazwa (3 - 20 znaków)</label>
+        <input type="text" id="categoryName" placeholder="spacja = zajęte kategorie"
+               th:field="*{name}"
+               th:classappend="${#fields.hasErrors('name')} ? 'error-input' : ''"
+               aria-autocomplete="none"
+               autocomplete="off"
+               autocorrect="off"
+               onkeyup="validateCategoryName()">
+        <ul id="notification-bar-categories" class="hide-notification"></ul>
+        <div class="input-validation-container">
+            <p class="notification-error" id="name-error"></p>
+            <p class="notification-error" th:errors="${category.name}">Powiadomienia</p>
+        </div>
+
+        <label for="categoryShortDescription">Opis (50 - 800 znaków)</label>
+        <textarea rows="8" id="categoryShortDescription"
+                  th:classappend="${#fields.hasErrors('description')} ? 'error-input' : ''"
+                  th:field="*{description}"
+                  aria-autocomplete="none"
+                  autocomplete="off"
+                  autocorrect="off"
+                  onkeyup="validateCategoryDescription()">
+        </textarea>
+        <div class="input-validation-container">
+            <p class="notification-error" id="description-error"></p>
+            <p class="notification-error" th:errors="${category.description}">Powiadomienia</p>
+        </div>
+
+        <button onclick="return validateCategoryFrom()" type="submit" id="form-button">Dodaj</button>
+    </form>
+    <script src="/static/scripts/categoryFormValidation.js" th:src="@{/scripts/categoryFormValidation.js}"></script>
+
+</main>
+</body>
+</html>

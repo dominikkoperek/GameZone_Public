@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title th:text="|${game.title} - GameZone|">GameZone</title>
+</head>
+
+<body>
+<div class="container">
+    <main class="main-content" layout:fragment="content">
+        <div class="margin-box">
+
+
+        <section class="game ">
+            <div class="game-container">
+                <div class="game-summary">
+                    <img src="../static/img/notfound.png"
+                         th:src="@{/img/mass.jpg}"
+                         th:alt="${game.title}"
+                         alt="tytuł gry"
+                         class="game-summary-cover"
+                    />
+                </div>
+                <div class="game-rating-container game-section">
+                    <h3 class="game-rating-heading">Wystaw ocene</h3>
+                    <div>
+                        <p class="game-rating-value">4.3
+                            <span class="game-rating-max-value">/5</span></p>
+                    </div>
+                    <form action="#" class="game-rating-form">
+                        <input type=hidden name="gameId">
+                        <div class="game-rating-buttons">
+                            <button data-rating="5" class="game-rating-button"><i class="fa-solid fa-star"></i>
+                            </button>
+                            <button data-rating="4" class="game-rating-button"><i class="fa-solid fa-star"></i>
+                            </button>
+                            <button data-rating="3" class="game-rating-button"><i class="fa-solid fa-star"></i>
+                            </button>
+                            <button data-rating="2" class="game-rating-button"><i class="fa-solid fa-star"></i>
+                            </button>
+                            <button data-rating="1" class="game-rating-button"><i class="fa-solid fa-star"></i>
+                            </button>
+                        </div>
+                        <p class="game-rating-count"><i class="fa-solid fa-user"></i> 212</p>
+                    </form>
+                    <p class="game-rating-login"><a href="#">Zaloguj sie</a>, aby zagłosować </p>
+                </div>
+
+            </div>
+
+
+            <div class="game-summary-info">
+                <h1 class="game-summary-title" th:text="${game.title}">Mass Effect 3</h1>
+                <p class="game-summary-short-description" th:text="${game.shortDescription}">
+                    Trzecia odsłona osadzonej w konwencji space opery gry studia BioWare.
+                    Mass Effect 3 jest zwieńczeniem epickiej trylogii opowiadającej o losach komandora Sheparda
+                    i konflikcie z prastarą rasą Żniwiarzy.
+                </p>
+                <div class="game-summary-details">
+                    <ul class="game-summary-item game-summary-category">
+                        <li th:each="gameCategory : ${game.category}">
+                            <a href="#"
+                               th:if="${!game.category.isEmpty()}"
+                               th:href="@{|/gry/kategorie/${gameCategory.name}|}"
+                               th:text="${gameCategory.name}">RPG</a>
+                        </li>
+                    </ul>
+
+                    <ul class="game-summary-item">
+                        <span>Tryb gry:</span>
+                        <a th:each="mode:${game.gameModes}">
+                            <i th:if="${mode.gameMode.name} eq 'singleplayer'" title="singleplayer"
+                               class="fa-solid fa-user"></i>
+                            <i th:if="${mode.gameMode.name} eq 'multiplayer'" title="multiplayer"
+                               class="fa-solid fa-users">
+                                <span class="game-summary-item-gamemode" th:text="${mode.description}"></span>
+                            </i>
+                        </a>
+                        <i th:if="${game.gameModes.isEmpty()}" title="brak" class="fa-solid fa-question"></i>
+                    </ul>
+
+                    <p class="game-summary-item"
+                       th:text="|Premiera: ${#temporals.format(game.releaseYear, 'd MMM yyyy')}|">Premiera: 6 mar
+                        2012 </p>
+                    <span class="game-summary-item">Producent:
+                        <a href="#"
+                           th:href="@{|/firma/${#strings.replace(game.producer.name,' ','-')}/${game.producer.id}|}"
+                           th:text="${game.producer.name}">BioWare
+                        </a>
+                    </span>
+                    <span class="game-summary-item">Wydawca:
+                        <a href="#"
+                           th:href="@{|/firma/${#strings.replace(game.publisher.name,' ','-')}/${game.publisher.id}|}"
+                           th:text="${game.publisher.name}">Electronic Arts Inc.
+                        </a>
+                    </span>
+                </div>
+
+                <div class="platforms-container hide-platforms">
+                    <ul class="platform-list">
+                        <li class="platform_element" th:each="platform: ${game.platform}">
+                            <a class="platform-item" href="#"
+                               th:href="@{|/gry/platforma/${platform.key}|}">
+                                <div class="icon-container">
+                                    <span th:utext="${platform.value}" class="platform-logo"></span>
+                                    <span class="platform-text" th:text="${platform.key}">Pc</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+
+
+        <div class="platforms-container show-platforms">
+            <ul class="platform-list">
+                <li class="platform_element" th:each="platform: ${game.platform}">
+                    <a class="platform-item" href="#"
+                       th:href="@{|/gry/platforma/${platform.key}|}">
+                        <div class="icon-container">
+                            <span th:utext="${platform.value}" class="platform-logo"></span>
+                            <span class="platform-text" th:text="${platform.key}">Pc</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="game-full-description">
+            <section class="game-section">
+                <h2 class="game-section-heading">Fabuła</h2>
+                <p class="game-section-content" th:text="${game.description}">Lorem Lorem Lorem</p>
+            </section>
+            <section class="game-trailer">
+                <h2 class="game-section-heading">Zwiastun</h2>
+                <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+                    <iframe class="game-trailer"
+                            style="width:100%;height:100%;
+                            position:absolute;left:0;top:0;
+                            overflow:hidden"
+                            type="text/html" src="https://www.dailymotion.com/embed/video/xqsktw"
+                            th:src="|https://www.dailymotion.com/embed/video/${game.dailymotionTrailerId}|"
+                            width="100%" height="100%" allowfullscreen title="Dailymotion Video Player">
+                    </iframe>
+                </div>
+
+            </section>
+        </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

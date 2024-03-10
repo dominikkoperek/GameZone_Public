@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Kategorie gier - Game-zone</title>
+</head>
+<body>
+<main class="main-content margin-box" layout:fragment="content">
+    <h2 class="list-heading" th:text="${heading}">Tytuł</h2>
+    <p class="list-description" th:text="${description}">Opis</p>
+    <div class="company-container">
+        <div class="company-button-container">
+            <a class="company-type-button" href="#">Polscy Producenci Gier</a>
+            <a class="company-type-button" href="#">Polscy Wydawcy Gier</a>
+            <a class="company-type-button" href="#">Producenci Gier</a>
+            <a class="company-type-button" href="#">Wydawcy Gier</a>
+            <div class="company-search-container">
+                <form class="company-search-form" id="company-search-form" role="search">
+                    <input type="text" id="company-search-input"
+                           class="company-search-input"
+                           placeholder="szukaj firmy"
+                           aria-label="szukaj firmy"
+                           aria-autocomplete="none"
+                           autocomplete="off"
+                           autocorrect="off">
+                    <button class="company-search-button">
+                        <svg viewBox="0 0 1024 1024">
+                            <path class="path1"
+                                  d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+        <div class="company-center-container">
+            <h2 class="company-heading">Polscy Producenci Gier</h2>
+            <ul class="company-list">
+                <li th:each="polishProducer,count :${polishProducers}" th:if="${count.index lt 20}">
+                    <a href="#" th:href="@{|/firma/${#strings.replace(polishProducer.name,' ','-')}/${polishProducer.id}|}"
+                       th:text="${polishProducer.name}">Cd Projekt Red</a>
+                </li>
+            </ul>
+
+            <h2 class="company-heading">Polscy Wydawcy Gier</h2>
+            <ul class="company-list">
+                <li th:each="polishPublisher,count :${polishPublishers}" th:if="${count.index lt 20}">
+                    <a href="#" th:href="@{|/firma/${#strings.replace(polishPublisher.name,' ','-')}/${polishPublisher.id}|}"
+                       th:text="${polishPublisher.name}">Cd Projekt Red</a>
+                </li>
+            </ul>
+
+            <h2 class="company-heading">Producenci Gier</h2>
+            <ul class="company-list">
+                <li th:each="allProducer,count :${allProducers}" th:if="${count.index lt 20}">
+                    <a href="#" th:href="@{|/firma/${#strings.replace(allProducer.name,' ','-')}/${allProducer.id}|}"
+                       th:text="${allProducer.name}">Cd Projekt Red</a>
+                </li>
+
+            </ul>
+            <h2 class="company-heading">Wydawcy Gier</h2>
+            <ul class="company-list">
+                <li th:each="allPublisher,count :${allPublishers}" th:if="${count.index lt 20}">
+                    <a href="#" th:href="@{|/firma/${#strings.replace(allPublisher.name,' ','-')}/${allPublisher.id}|}"
+                       th:text="${allPublisher.name}">Cd Projekt Red</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</main>
+</body>
+</html>
