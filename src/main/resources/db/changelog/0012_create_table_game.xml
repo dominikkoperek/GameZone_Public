@@ -9,7 +9,7 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="title" type="VARCHAR(100)"/>
+            <column name="title" type="VARCHAR(120)"/>
             <column name="short_description" type="VARCHAR(1000)"/>
             <column name="dailymotion_Trailer_Id" type="VARCHAR(30)"/>
             <column name="release_year" type="DATE"/>
@@ -31,6 +31,11 @@
             <column name="description" type="VARCHAR(MAX)">
                 <constraints nullable="false"/>
             </column>
+            <column name="min_players" type="INTEGER">
+            </column>
+            <column name="max_players" type="INTEGER">
+            </column>
+
 
         </createTable>
     </changeSet>

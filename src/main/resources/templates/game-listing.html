@@ -39,7 +39,7 @@
                 <div class="game-poster-wrapper">
                     <a href="#" th:href="@{|/gry/${#strings.replace(game.title,' ','-')}/${game.id}|}"> <img
                             src="../static/img/notfound.png"
-                            th:src="@{/img/notfound.png}"
+                            th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
                             alt="tytuł gry"
                             class="game-list-item-poster">
                     </a>

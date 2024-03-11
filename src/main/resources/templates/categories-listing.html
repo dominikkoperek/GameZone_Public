@@ -8,13 +8,8 @@
         </head>
 <body>
     <main class="main-content margin-box" layout:fragment="content">
-        <h2 class="list-heading">Kategorie gier</h2>
-        <p class="list-description">
-            Każda gra ma jeden główny gatunek: Akcji, Bijatyki, Logiczne,
-            Przygodowe, RPG, Sportowe, Strategiczne, Symulacje, Romanse,
-            Wyścigi, Zręcznościowe itp. Dodatkowo każda gra ma kilka pobocznych kategorii dzięki
-            którym znajdziesz swój ulubiony tytuł!
-        </p>
+        <h2 class="list-heading" th:text="${heading}">Kategorie gier</h2>
+        <p class="list-description" th:text="${description}">Opis</p>
         <ul class="list-border">
             <li th:each="category:${categories}">
                 <a  class="category-listing" th:href="@{|/gry/kategorie/${category.name}|}"  th:text="${#strings.capitalize(category.name)}">

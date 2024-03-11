@@ -22,8 +22,8 @@
             </button>
         </div>
 
-        <label for="companyName">Nazwa (max 35 znaków)</label>
-        <input type="text" id="companyName" placeholder="spacja = lista wydawców"
+        <label for="company-name">Nazwa (max 35 znaków)</label>
+        <input type="text" id="company-name" placeholder="spacja = lista wydawców"
                th:field="*{name}"
                th:classappend="${#fields.hasErrors('name')} ?'error-input':'' "
                aria-autocomplete="none"
@@ -37,9 +37,9 @@
         </div>
 
         <div class="input-border">
-            <label for="companyCountry">Kraj pochodzenia (Wyszukiwarka)</label>
+            <label for="company-country">Kraj pochodzenia (Wyszukiwarka)</label>
 
-            <input type="text" id="companyCountry"
+            <input type="text" id="company-country"
                    th:classappend="${#fields.hasErrors('country')} ?'error-input':'' "
                    aria-autocomplete="none"
                    autocomplete="off"
@@ -55,8 +55,8 @@
             </div>
         </div>
 
-        <label for="companyShortDescription">Krótki opis(100 - 1000 znaków)</label>
-        <textarea rows="8" id="companyShortDescription"
+        <label for="company-short-description">Krótki opis(100 - 1000 znaków)</label>
+        <textarea rows="8" id="company-short-description"
                   th:field="*{shortDescription}"
                   th:classappend="${#fields.hasErrors('shortDescription')} ? 'error-input':'' "
                   aria-autocomplete="none"
@@ -68,9 +68,9 @@
             <p class="notification-error" id="short-description-error"></p>
             <p class="notification-error" th:errors="${company.shortDescription}">Powiadomienie</p>
         </div>
-        <label for="companyLongDescription">Pełny opis(200 - 100.000 znaków)</label>
+        <label for="company-long-description">Pełny opis(200 - 100.000 znaków)</label>
 
-        <textarea rows="14" id="companyLongDescription" class="contentEditor"
+        <textarea rows="14" id="company-long-description" class="contentEditor"
                   th:field="*{description}"
                   th:classappend="${#fields.hasErrors('description')} ? 'error-input': '' "
                   aria-autocomplete="none"

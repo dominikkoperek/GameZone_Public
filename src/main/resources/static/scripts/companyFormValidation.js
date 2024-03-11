@@ -12,9 +12,9 @@ let timerCompanySuggestions;
 let companySuggestions = [];
 let isProducer = document.getElementById("isProducer");
 let isPublisher = document.getElementById("isPublisher");
-let isCompanyError =document.getElementById("is-company-error")
+let isCompanyError = document.getElementById("is-company-error")
 
-let companyCountry = document.getElementById("companyCountry");
+let companyCountry = document.getElementById("company-country");
 let countryValue = document.getElementById("country-value");
 let countriesListSuggestion = document.getElementById("show-countries-list");
 let timerCountrySuggestions;
@@ -82,15 +82,27 @@ const clearCompanyForm = () => {
 
 }
 const validateCountry = () => {
-    countryValue.value = countryValue.value;
     let countryValueTrim = countryValue.value.trim();
     if (countryValueTrim === '') {
         countryValue.classList.add('error-input');
         formCountryError.innerHTML = 'Kraj nie może być pusty'
         return false;
     }
-
-
+    if (countryValueTrim.length < 4) {
+        countryValue.classList.add('error-input');
+        formCountryError.innerHTML = 'Kraj musi mieć przynajmniej 4 znaki'
+        return false;
+    }
+    if (countryValueTrim.length > 33) {
+        countryValue.classList.add('error-input');
+        formCountryError.innerHTML = 'Kraj może mieć maksymalnie 33 znaki'
+        return false;
+    }
+    if (countryValueTrim !== companyCountry.value) {
+        countryValue.classList.add('error-input');
+        formCountryError.innerHTML = 'Wartośći w obu polach muszą być takie same';
+        return false;
+    }
     formCountryError.innerHTML = '';
     countryValue.classList.remove('error-input');
     return true;
@@ -143,7 +155,7 @@ const validateCompanyLongDescription = () => {
 }
 
 function validateIsProducerOrIsPublisher() {
-    if (!isPublisher.checked  && !isProducer.checked) {
+    if (!isPublisher.checked && !isProducer.checked) {
         isProducer.classList.add('error-input');
         isPublisher.classList.add('error-input');
         isCompanyError.innerHTML = 'Wybierz przynajmniej 1 opcje!'
@@ -166,9 +178,9 @@ async function checkIsFormValid() {
     let companyShortDescription = validateCompanyShortDescription();
     let companyLongDescription = validateCompanyLongDescription();
     let country = validateCountry();
-    let isProducerOrPublisher =validateIsProducerOrIsPublisher();
+    let isProducerOrPublisher = validateIsProducerOrIsPublisher();
 
-    return companyName && companyShortDescription && companyLongDescription && country &&isProducerOrPublisher;
+    return companyName && companyShortDescription && companyLongDescription && country && isProducerOrPublisher;
 }
 
 function validateCompanyForm() {
@@ -208,13 +220,13 @@ function getCompanySuggestion(input) {
                 companyListSuggestion.classList.add("show-notification")
                 companyListSuggestion.classList.remove("hide-notification")
             } else {
-                companyListSuggestion.classList.remove("show-notification")
                 companyListSuggestion.classList.add("hide-notification")
+                companyListSuggestion.classList.remove("show-notification")
             }
 
         },
         error: function (error) {
-            console.error('Wystąpił błąd:', error);
+            console.error('Error: ', error);
         }
     });
 }
@@ -253,7 +265,7 @@ function getCountriesSuggestion(input) {
 
         },
         error: function (error) {
-            console.error('Wystąpił błąd:', error);
+            console.error('Error: ', error);
         }
     });
 }
@@ -271,7 +283,7 @@ function showCountries(input) {
         let listItem = document.createElement('li');
         listItem.className = 'hint-listing hint-listing-country';
         let listButton = document.createElement('button');
-        listButton.className = 'country';
+        listButton.className = 'hint-element';
         listButton.type = 'button';
         listButton.value = suggestion;
         listButton.textContent = suggestion;
@@ -302,7 +314,7 @@ function checkCompanyAvailability(company) {
                 }
             },
             error: function (error) {
-                console.error('Wystąpił błąd:', error);
+                console.error('Error: ', error);
                 reject(error);
             }
         })

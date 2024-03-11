@@ -7,18 +7,16 @@ import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryRepository;
 import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
 import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyRepository;
-import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeSaveDto;
-import com.example.gamezoneproject.domain.game.gameDetails.modes.gameGameMode.GameGameMode;
-import com.example.gamezoneproject.domain.game.gameDetails.modes.gameGameMode.GameGameModeRepository;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode.GameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode.GameModeRepository;
-import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeDto;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformRepository;
+import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import com.example.gamezoneproject.storage.FileStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
@@ -29,18 +27,16 @@ public class GameService {
     private final GamePlatformRepository gamePlatformRepository;
     private final CompanyRepository companyRepository;
     private final CategoryRepository categoryRepository;
-    private final GameGameModeRepository gameGameModeRepository;
     private final GameModeRepository gameModeRepository;
 
     public GameService(FileStorageService fileStorageService, GameRepository gameRepository,
                        GamePlatformRepository gamePlatformRepository, CompanyRepository companyRepository,
-                       CategoryRepository categoryRepository, GameGameModeRepository gameGameModeRepository, GameModeRepository gameModeRepository) {
+                       CategoryRepository categoryRepository, GameModeRepository gameModeRepository) {
         this.fileStorageService = fileStorageService;
         this.gameRepository = gameRepository;
         this.gamePlatformRepository = gamePlatformRepository;
         this.companyRepository = companyRepository;
         this.categoryRepository = categoryRepository;
-        this.gameGameModeRepository = gameGameModeRepository;
         this.gameModeRepository = gameModeRepository;
     }
 
@@ -104,14 +100,16 @@ public class GameService {
                 .map(GameDtoMapper::mapGameByCompanyId)
                 .toList();
     }
+
     @Transactional
     public void addGame(GameSaveDto gameSaveDto) {
         Game game = new Game();
-        game.setTitle(gameSaveDto.getTitle());
-        game.setShortDescription(gameSaveDto.getShortDescription());
-        game.setDescription(gameSaveDto.getDescription());
-        game.setDailymotionTrailerId(gameSaveDto.getDailymotionTrailerId());
-        game.setReleaseYear(gameSaveDto.getReleaseYear());
+        game.setTitle(gameSaveDto.getTitle().trim());
+        game.setShortDescription(gameSaveDto.getShortDescription().trim());
+        game.setDescription(gameSaveDto.getDescription().trim());
+        game.setDailymotionTrailerId(gameSaveDto.getDailymotionTrailerId().trim());
+
+        game.setReleaseYear(getReleaseDate(gameSaveDto.getReleaseYear()));
 
         Company producer = companyRepository.findByNameIgnoreCase(gameSaveDto.getProducer()).orElseThrow();
         game.setProducer(producer);
@@ -123,27 +121,37 @@ public class GameService {
 
         game.setGamePlatform(getUserPlatforms(gameSaveDto.getPlatform()));
 
-        game.setGameModes(getGameModes(gameSaveDto.getGameModes(),game));
+        game.setGameModes(getGameModes(gameSaveDto.getGameModes()));
+
+        game.setPlayerRange(getPlayersRange(gameSaveDto.getPlayerRange()));
 
         game.setPromoted(gameSaveDto.isPromoted());
         if (gameSaveDto.getPoster() != null && !gameSaveDto.getPoster().isEmpty()) {
-            String savedFileName = fileStorageService.saveImage(gameSaveDto.getPoster());
+
+            String savedFileName = fileStorageService.saveImage(gameSaveDto.getPoster(),gameSaveDto.getTitle());
             game.setPoster(savedFileName);
         }
         gameRepository.save(game);
     }
 
-    private List<GameGameMode> getGameModes(List<GameModeSaveDto> gameModesDto, Game game) {
+    private LocalDate getReleaseDate(LocalDate releaseYear) {
+        return LocalDate.of(releaseYear.getYear(), releaseYear.getMonth(), releaseYear.getDayOfMonth());
+    }
 
-        List<GameGameMode> resultModes = new ArrayList<>();
-        for (GameModeSaveDto gameMode : gameModesDto) {
-            GameMode gameModeByName = gameModeRepository.findByNameIgnoreCase(gameMode.getName()).orElseThrow();
+    private PlayerRange getPlayersRange(PlayerRange playerRange) {
+        PlayerRange result = new PlayerRange();
+        result.setMinPlayers(playerRange.getMinPlayers());
+        result.setMaxPlayers(playerRange.getMaxPlayers());
+        return result;
+    }
 
-            GameGameMode gameGameMode = new GameGameMode();
-            gameGameMode.setGame(game);
-            gameGameMode.setGameMode(gameModeByName);
-            gameGameMode.setDescription(gameMode.getDescription());
-            resultModes.add(gameGameMode);
+    private List<GameMode> getGameModes(List<String> gameModesDto) {
+
+        List<GameMode> resultModes = new ArrayList<>();
+        for (String gameMode : gameModesDto) {
+            GameMode gameModeByName = gameModeRepository
+                    .findByNameIgnoreCase(gameMode).orElseThrow();
+            resultModes.add(gameModeByName);
         }
         return resultModes;
     }

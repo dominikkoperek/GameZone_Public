@@ -9,7 +9,7 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR(80)">
+            <column name="name" type="VARCHAR(33)">
                 <constraints unique="true" nullable="false"/>
             </column>
         </createTable>

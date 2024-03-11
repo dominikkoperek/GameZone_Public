@@ -11,7 +11,7 @@
     <h2 class="list-heading">Panel administracyjny</h2>
     <h3 class="list-description">Dodaj nową grę</h3>
 
-    <form action="" method="post" enctype="multipart/form-data"
+    <form  action="" method="post" enctype="multipart/form-data"
           class="add-content-form" id="add-content-form" autocomplete="off" th:object="${game}">
 
         <div class="form-button-container">
@@ -23,22 +23,22 @@
             </button>
         </div>
 
-        <label for="gameTitle">Tytuł (max 120 znaków)</label>
-        <input type="text" id="gameTitle" placeholder="spacja = lista gier"
+        <label for="game-title">Tytuł (max 120 znaków)</label>
+        <input type="text" id="game-title" placeholder="spacja = istniejące gry"
                th:field="*{title}"
                th:classappend="${#fields.hasErrors('title')} ?'error-input':'' "
                aria-autocomplete="none"
                autocomplete="off"
                autocorrect="off"
                onkeyup="validateGameTitle()">
-        <ul id="show-suggestion-list" class="hide-notification"></ul>
+        <ul id="show-title-suggestion-list" class="hide-notification"></ul>
         <div class="input-validation-container">
             <p class="notification-error" id="title-error"></p>
             <p class="notification-error" th:errors="*{title}">Powiadomienie</p>
         </div>
 
-        <label for="gameShortDescription">Krótki opis(100 - 1000 znaków)</label>
-        <textarea rows="5" id="gameShortDescription"
+        <label for="game-short-description">Krótki opis(100 - 1000 znaków)</label>
+        <textarea rows="5" id="game-short-description"
                   th:field="*{shortDescription}"
                   th:classappend="${#fields.hasErrors('shortDescription')} ? 'error-input':'' "
                   aria-autocomplete="none"
@@ -46,9 +46,13 @@
                   autocorrect="off"
                   onkeyup="validateGameShortDescription()">
         </textarea>
+        <div class="input-validation-container">
+            <p class="notification-error" id="game-short-description-error"></p>
+            <p class="notification-error" th:errors="*{shortDescription}">Powiadomienie</p>
+        </div>
 
-        <label for="gameLongDescription">Pełny opis(200 - 100.000 znaków)</label>
-        <textarea rows="14" id="gameLongDescription" class="contentEditor"
+        <label for="game-long-description">Pełny opis(200 - 100.000 znaków)</label>
+        <textarea rows="14" id="game-long-description" class="content-editor"
                   th:field="*{description}"
                   th:classappend="${#fields.hasErrors('description')} ? 'error-input': '' "
                   aria-autocomplete="none"
@@ -57,7 +61,7 @@
                   onkeyup="validateGameLongDescription()">
         </textarea>
         <div class="input-validation-container">
-            <p class="notification-error" id="long-description-error"></p>
+            <p class="notification-error" id="game-long-description-error"></p>
             <p class="notification-error" th:errors="*{description}">Powiadomienie</p>
         </div>
 
@@ -66,8 +70,8 @@
             <p class="notification-error" th:errors="*{shortDescription}">Powiadomienie</p>
         </div>
 
-        <label for="TrailerId">Id Trailera DailyMotion (max 30 znaków)</label>
-        <input type="text" id="TrailerId"
+        <label for="game-trailer-id">Id Trailera DailyMotion (max 30 znaków)</label>
+        <input type="text" id="game-trailer-id"
                th:field="*{dailymotionTrailerId}"
                th:classappend="${#fields.hasErrors('dailymotionTrailerId')} ?'error-input':'' "
                aria-autocomplete="none"
@@ -75,60 +79,58 @@
                autocorrect="off"
                onkeyup="validateGameTrailerId()">
         <div class="input-validation-container">
-            <p class="notification-error" id="trailerId-error"></p>
+            <p class="notification-error" id="game-trailer-id-error"></p>
             <p class="notification-error" th:errors="*{dailymotionTrailerId}">Powiadomienie</p>
         </div>
 
         <div class="input-border">
-            <label for="producerName">Producent (wybierz z listy)</label>
-            <input type="text" id="producerName"
+            <label for="producer-name">Producent (wybierz z listy)</label>
+            <input type="text" id="producer-name"
                    th:field="*{producer}"
                    th:classappend="${#fields.hasErrors('producer')} ?'error-input':'' "
                    aria-autocomplete="none"
                    autocomplete="off"
                    autocorrect="off"
                    onkeyup="validateGameProducer()">
-            <ul id="show-producers-list" class="hide-notification"></ul>
-
+            <ul id="show-producers-suggestion-list" class="hide-notification"></ul>
             <label for="producer-value">Wybrany producent</label>
             <input readonly type="text" id="producer-value">
-
             <div class="input-validation-container">
-                <p class="notification-error" id="gameProducer-error"></p>
+                <p class="notification-error" id="game-producer-error"></p>
                 <p class="notification-error" th:errors="*{producer}">Powiadomienie</p>
             </div>
         </div>
 
         <div class="input-border">
-            <label for="publisherName">Wydawca (wybierz z listy)</label>
-            <input type="text" id="publisherName"
+            <label for="publisher-name">Wydawca (wybierz z listy)</label>
+            <input type="text" id="publisher-name"
                    th:field="*{publisher}"
                    th:classappend="${#fields.hasErrors('publisher')} ?'error-input':'' "
                    aria-autocomplete="none"
                    autocomplete="off"
                    autocorrect="off"
                    onkeyup="validateGamePublisher()">
-            <ul id="show-publishers-list" class="hide-notification"></ul>
+            <ul id="show-publishers-suggestion-list" class="hide-notification"></ul>
 
             <label for="publisher-value">Wybrany wydawca</label>
             <input readonly type="text" id="publisher-value">
 
             <div class="input-validation-container">
-                <p class="notification-error" id="gamePublisher-error"></p>
+                <p class="notification-error" id="game-publisher-error"></p>
                 <p class="notification-error" th:errors="*{publisher}">Powiadomienie</p>
             </div>
         </div>
 
-        <label for="releaseDate">Data wydania</label>
-        <input type="date" id="releaseDate"
+        <label for="release-date">Data wydania</label>
+        <input type="date" id="release-date"
+               min="1980-01-01"
+               max="2099-01-01"
                th:field="*{releaseYear}"
                th:classappend="${#fields.hasErrors('releaseYear')} ?'error-input':'' "
-               aria-autocomplete="none"
-               autocomplete="off"
-               autocorrect="off"
                onkeyup="validateGameReleaseDate()">
+
         <div class="input-validation-container">
-            <p class="notification-error" id="releaseDate-error"></p>
+            <p class="notification-error" id="release-date-error"></p>
             <p class="notification-error" th:errors="*{releaseYear}">Powiadomienie</p>
         </div>
 
@@ -153,24 +155,37 @@
         </div>
 
         <div class="input-border">
-            <label for="gameModes">Tryby gry (wybierz z listy)</label>
+            <label for="game-modes">Tryby gry (wybierz z listy)</label>
 
-            <div class="checkbox-left-center-container">
-                <div class="checkbox-margin-box" th:each="modes,count:${allGameModes}">
+            <div class="checkbox-left-center-container" id="game-modes">
+                <div class="checkbox-margin-box" th:each="modes:${allGameModes}">
                     <label class="checkbox-container">
                         <span th:text="${modes.name}"></span>
-                        <input type="checkbox" th:name="'game.gameModes['+${count.index}+'].name'" th:value="${modes.name}" th:id="${modes.name}"
-                               onclick="validateGameMode()">
+                        <input type="checkbox" th:field="${game.gameModes}" th:value="${modes.name}"
+                               onkeyup="validateGameMode()">
                         <span class="checkmark"></span>
                     </label>
-                    <input type="text" id="gameModes"
+
+
+                </div>
+                <div id="show-players-range" class="hide-players-range">
+                    <label for="min-players">Minimalna liczba graczy</label>
+                    <input type="number"
+                           min="1"
+                           id="min-players"
                            th:classappend="${#fields.hasErrors('gameModes')} ?'error-input':'' "
-                           th:name="'game.gameModes['+${count.index}+'].description'"
-                           aria-autocomplete="none"
-                           autocomplete="off"
-                           autocorrect="off"
+                           th:field="${game.playerRange.minPlayers}"
+                           value="1"
+                           onkeyup="validateGameModes()"/>
+                    <label for="max-players">Maksymalna liczba graczy</label>
+                    <input type="number"
+                           min="1"
+                           id="max-players"
+                           th:classappend="${#fields.hasErrors('gameModes')} ?'error-input':'' "
+                           th:field="${game.playerRange.maxPlayers}"
                            onkeyup="validateGameModes()"/>
                 </div>
+
             </div>
 
             <div class="input-validation-container">
@@ -190,7 +205,7 @@
                    onkeyup="validateGamePlatforms()">
             <ul id="show-game-platform-list" class="hide-notification"></ul>
 
-            <label for="game-modes-value">Wybrane platformy</label>
+            <label for="game-platforms-value">Wybrane platformy</label>
             <input readonly type="text" id="game-platforms-value">
 
             <div class="input-validation-container">
@@ -200,13 +215,14 @@
         </div>
 
         <label for="poster">Plakat gry (jpg, png, jpeg)</label>
-        <input type="file" id="poster" class="input-file" accept="image/jpeg,image/jpg,image/png"
-               th:field="*{poster}"
-               th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
-               aria-autocomplete="none"
-               autocomplete="off"
-               autocorrect="off"
-               onkeyup="validatePoster()">
+
+        <div class="file-container">
+            <input type="file" id="poster" class="input-file" accept="image/jpeg,image/jpg,image/png"
+                   th:field="*{poster}"
+                   th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
+                   onkeyup="validatePoster()">
+        </div>
+
         <div class="input-validation-container">
             <p class="notification-error" id="poster-error"></p>
             <p class="notification-error" th:errors="${game.poster}">Powiadomienie</p>
@@ -214,18 +230,18 @@
 
         <div class="checkbox-margin-box">
             <label class="checkbox-container">Gra polecana przez redakcje
-                <input type="checkbox" name="isPromoted" id="isPromoted" onclick="validateIsPromoted()">
+                <input type="checkbox" name="isPromoted" id="isPromoted" onkeyup="validateIsPromoted()">
                 <span class="checkmark"></span>
             </label>
         </div>
         <button onclick="return validateGameForm()" type="submit" id="form-button">Dodaj</button>
     </form>
-    <script src="/scripts/gameFormValidation.js" th:src="@{/scripts/gameFormValidation.js}"></script>
+    <script src="/scripts/gameFromValidation.js" th:src="@{/scripts/gameFromValidation.js}"></script>
     <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"
             referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '.contentEditor',
+            selector: '.content-editor',
             plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",
             toolbar: 'undo |redo| numlist |bullist | outdent |indent| bold | h2 | link | preview|',
             menubar: '',

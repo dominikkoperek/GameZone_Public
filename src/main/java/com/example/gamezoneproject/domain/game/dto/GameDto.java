@@ -3,7 +3,8 @@ package com.example.gamezoneproject.domain.game.dto;
 import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
 
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
-import com.example.gamezoneproject.domain.game.gameDetails.modes.gameGameMode.GameGameMode;
+import com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode.GameMode;
+import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -17,16 +18,17 @@ public class GameDto {
     private LocalDate releaseYear;
     private List<Category> category;
     private Map<String, String> platform;
-    private List<GameGameMode> gameModes;
+    private List<GameMode> gameModes;
     private boolean promoted;
     private Company producer;
     private Company publisher;
     private String poster;
+    private PlayerRange playerRange;
 
     public GameDto(Long id, String title, String dailymotionTrailerId, String shortDescription,
                    String description, LocalDate releaseYear, List<Category> category,
-                   Map<String, String> platform, List<GameGameMode> gameModes, boolean promoted,
-                   Company producer, Company publisher, String poster) {
+                   Map<String, String> platform, List<GameMode> gameModes, boolean promoted,
+                   Company producer, Company publisher, String poster, PlayerRange playerRange) {
         this.id = id;
         this.title = title;
         this.dailymotionTrailerId = dailymotionTrailerId;
@@ -40,6 +42,7 @@ public class GameDto {
         this.producer = producer;
         this.publisher = publisher;
         this.poster = poster;
+        this.playerRange = playerRange;
     }
 
     public String getShortDescription() {
@@ -50,11 +53,11 @@ public class GameDto {
         this.shortDescription = shortDescription;
     }
 
-    public List<GameGameMode> getGameModes() {
+    public List<GameMode> getGameModes() {
         return gameModes;
     }
 
-    public void setGameModes(List<GameGameMode> gameModes) {
+    public void setGameModes(List<GameMode> gameModes) {
         this.gameModes = gameModes;
     }
 
@@ -145,5 +148,13 @@ public class GameDto {
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public PlayerRange getPlayerRange() {
+        return playerRange;
+    }
+
+    public void setPlayerRange(PlayerRange playerRange) {
+        this.playerRange = playerRange;
     }
 }

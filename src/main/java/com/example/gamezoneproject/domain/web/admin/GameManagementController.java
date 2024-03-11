@@ -4,6 +4,7 @@ import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameSaveDto;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeDto;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode.GameModeService;
+import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,10 @@ public class GameManagementController {
     public String addGameForm(Model model){
         GameSaveDto game = new GameSaveDto();
         List<GameModeDto> allGameModes = gameModeService.findAllGameModes();
+        PlayerRange playerRange = new PlayerRange();
+        playerRange.setMinPlayers(1);
+        playerRange.setMaxPlayers(1);
+        game.setPlayerRange(playerRange);
 
         model.addAttribute("allGameModes",allGameModes);
         model.addAttribute("game",game);

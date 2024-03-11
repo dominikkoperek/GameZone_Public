@@ -6,16 +6,18 @@ public class GameByCompanyDto {
     private Long id;
     private String title;
     private LocalDate releaseYear;
+    private String poster;
 
     public GameByCompanyDto(Long id, String title) {
         this.id = id;
         this.title = title;
     }
 
-    public GameByCompanyDto(Long id, String title, LocalDate releaseYear) {
+    public GameByCompanyDto(Long id, String title, LocalDate releaseYear, String poster) {
         this.id = id;
         this.title = title;
         this.releaseYear = releaseYear;
+        this.poster = poster;
     }
 
     public Long getId() {
@@ -40,5 +42,13 @@ public class GameByCompanyDto {
 
     public void setReleaseYear(LocalDate releaseYear) {
         this.releaseYear = releaseYear;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

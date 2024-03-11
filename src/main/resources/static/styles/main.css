@@ -222,7 +222,8 @@ p {
 
 .game-list-item-poster {
     display: block;
-    max-width: 12.5rem;
+    width: 12.5rem;
+    height: 18.75rem;
     box-shadow: 3px 0 4px rgba(143, 143, 143, 0.48);
 }
 
@@ -402,8 +403,9 @@ p {
 }
 
 .game-summary-cover {
-    max-width: 12.5rem;
-    border: 1px solid rgba(129, 129, 129, 0.36);
+    width: 12.5rem;
+    height: 15.5rem;
+    border: 1px solid rgba(224, 224, 224, 0.36);
     margin-bottom: 0;
     padding-bottom: 0;
     resize: none;
@@ -520,6 +522,7 @@ ul.game-summary-item > a > i {
 
     .game-summary-cover {
         max-width: 8rem;
+        max-height: 10.5rem;
     }
 
 }
@@ -575,7 +578,7 @@ ul.game-summary-item > a > i {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    max-width: 250px;
+    max-width: 15.625rem;
     padding-bottom: 8px;
     background-color: rgba(56, 56, 56, 0.35);
     border-radius: 0 0 2rem 2rem;
@@ -609,10 +612,9 @@ ul.game-summary-item > a > i {
 .game-rating-buttons {
     display: flex;
     flex-direction: row-reverse;
-
 }
 .game-rating-button i{
-    transition: all 200ms ease-in-out;
+    transition: transform 200ms ease-in-out, color 200ms ease-in-out;
 }
 
 .active,
@@ -666,7 +668,7 @@ ul.game-summary-item > a > i {
 /*GAME RATING MEDIA*/
 @media only screen and (max-width: 400px) {
     .game-rating-container {
-        max-width: 150px;
+        width: 8rem;
     }
 
     .game-rating-heading {
@@ -773,7 +775,7 @@ ul.game-summary-item > a > i {
     list-style: none;
     font-size: 0.9rem;
     border: 1px solid #575757;
-    margin: 0.1rem;
+    margin: 0.2rem 0.2rem 0 0;
     padding: 0.4rem;
     text-align: center;
 }
@@ -1258,11 +1260,13 @@ input[type="file"]::file-selector-button:hover
     float: left;
 }
 
-.hint-listing-country {
+.hint-listing-country,
+.hint-listing-producer,
+.hint-listing-publisher {
     padding: 0;
 }
 
-.country {
+.hint-element {
     display: block;
     color: inherit;
     width: 100%;
@@ -1273,19 +1277,20 @@ input[type="file"]::file-selector-button:hover
     padding: 0.4rem;
 }
 
-#show-countries-list > li:hover {
+#show-countries-list > li:hover,
+#show-producers-suggestion-list > li:hover,
+#show-publishers-suggestion-list > li:hover
+{
     background-color: #4b4b4b;
     outline: 1px solid #9a7a37;
 }
 
-#companyCountry,#TrailerId,#releaseDate {
-    width: 35%;
+#company-country,#country-value,
+#release-date,
+#game-trailer-id{
+    max-width: 20rem;
 }
 
-#country-value {
-    width: 35%;
-
-}
 input:read-only{
     background-color: #a9a9a9;
 }
@@ -1402,6 +1407,23 @@ input:read-only{
     padding: 0.1rem;
     border: 1px dotted #5b5b5b;
 
+}
+#min-players,#max-players{
+    display: flex;
+    width: 4.8rem;
+}
+.show-players-range{
+    display: flex;
+}
+.hide-players-range{
+    display: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator{
+    transition: all ease-in-out 100ms;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover{
+    cursor: pointer;
+    transform: scale(1.2);
 }
 
 

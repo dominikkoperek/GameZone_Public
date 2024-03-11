@@ -22,14 +22,16 @@ public class GameDtoMapper {
                 game.isPromoted(),
                 game.getProducer(),
                 game.getPublisher(),
-                game.getPoster());
+                game.getPoster(),
+                game.getPlayerRange());
     }
 
     static GameByCompanyDto mapGameByCompanyId(Game game) {
         return new GameByCompanyDto(
                 game.getId(),
                 game.getTitle(),
-                game.getReleaseYear()
+                game.getReleaseYear(),
+                game.getPoster()
         );
     }
 }

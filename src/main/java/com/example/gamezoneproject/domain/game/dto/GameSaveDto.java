@@ -3,6 +3,7 @@ package com.example.gamezoneproject.domain.game.dto;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeDto;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeSaveDto;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode.GameMode;
+import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -17,11 +18,12 @@ public class GameSaveDto {
     private LocalDate releaseYear;
     private List<String> category;
     private Set<String> platform;
-    private List<GameModeSaveDto> gameModes;
+    private List<String> gameModes;
     private boolean promoted;
     private String producer;
     private String publisher;
     private MultipartFile poster;
+    private PlayerRange playerRange;
 
     public String getTitle() {
         return title;
@@ -79,11 +81,11 @@ public class GameSaveDto {
         this.platform = platform;
     }
 
-    public List<GameModeSaveDto> getGameModes() {
+    public List<String> getGameModes() {
         return gameModes;
     }
 
-    public void setGameModes(List<GameModeSaveDto> gameModes) {
+    public void setGameModes(List<String> gameModes) {
         this.gameModes = gameModes;
     }
 
@@ -117,5 +119,13 @@ public class GameSaveDto {
 
     public void setPoster(MultipartFile poster) {
         this.poster = poster;
+    }
+
+    public PlayerRange getPlayerRange() {
+        return playerRange;
+    }
+
+    public void setPlayerRange(PlayerRange playerRange) {
+        this.playerRange = playerRange;
     }
 }

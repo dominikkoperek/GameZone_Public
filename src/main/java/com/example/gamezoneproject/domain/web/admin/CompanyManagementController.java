@@ -29,7 +29,6 @@ public class CompanyManagementController {
     @PostMapping("/admin/dodaj-firme")
     public String addCategory(@Valid @ModelAttribute("company") CompanyDto companyDto,
                               BindingResult bindingResult,
-                              Model model,
                               RedirectAttributes redirectAttributes,
                               @RequestParam(required = false, defaultValue = "false") Boolean isProducer,
                               @RequestParam(required = false, defaultValue = "false") Boolean isPublisher

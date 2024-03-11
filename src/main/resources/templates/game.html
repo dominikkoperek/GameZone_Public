@@ -18,7 +18,7 @@
             <div class="game-container">
                 <div class="game-summary">
                     <img src="../static/img/notfound.png"
-                         th:src="@{/img/mass.jpg}"
+                         th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
                          th:alt="${game.title}"
                          alt="tytuł gry"
                          class="game-summary-cover"
@@ -72,11 +72,12 @@
                     <ul class="game-summary-item">
                         <span>Tryb gry:</span>
                         <a th:each="mode:${game.gameModes}">
-                            <i th:if="${mode.gameMode.name} eq 'singleplayer'" title="singleplayer"
+                            <i th:if="${mode.name} eq 'singleplayer'" title="singleplayer"
                                class="fa-solid fa-user"></i>
-                            <i th:if="${mode.gameMode.name} eq 'multiplayer'" title="multiplayer"
+                            <i th:if="${mode.name} eq 'multiplayer'" title="multiplayer"
                                class="fa-solid fa-users">
-                                <span class="game-summary-item-gamemode" th:text="${mode.description}"></span>
+                                <span class="game-summary-item-gamemode" th:if="${game.playerRange.maxPlayers} ge ${game.playerRange.minPlayers}"
+                                      th:text="|${game.playerRange.minPlayers} - ${game.playerRange.maxPlayers}|" >1</span>
                             </i>
                         </a>
                         <i th:if="${game.gameModes.isEmpty()}" title="brak" class="fa-solid fa-question"></i>
@@ -113,7 +114,6 @@
                     </ul>
                 </div>
             </div>
-
         </section>
 
 
@@ -134,22 +134,13 @@
 
         <div class="game-full-description">
             <section class="game-section">
-                <h2 class="game-section-heading">Fabuła</h2>
-                <p class="game-section-content" th:text="${game.description}">Lorem Lorem Lorem</p>
+                <section th:utext="${game.description}"></section>
             </section>
             <section class="game-trailer">
-                <h2 class="game-section-heading">Zwiastun</h2>
-                <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
-                    <iframe class="game-trailer"
-                            style="width:100%;height:100%;
-                            position:absolute;left:0;top:0;
-                            overflow:hidden"
-                            type="text/html" src="https://www.dailymotion.com/embed/video/xqsktw"
-                            th:src="|https://www.dailymotion.com/embed/video/${game.dailymotionTrailerId}|"
-                            width="100%" height="100%" allowfullscreen title="Dailymotion Video Player">
-                    </iframe>
-                </div>
+                <h2 class="article-heading">Zwiastun</h2>
 
+                <script class="game-trailer" src="https://geo.dailymotion.com/player/xr9tu.js"
+                        th:data-video="${game.dailymotionTrailerId}"></script>
             </section>
         </div>
         </div>

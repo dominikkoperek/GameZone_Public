@@ -46,7 +46,9 @@
         </div>
     </div>
     <div class="game-full-description">
-        <section class="game-section" th:utext="${company.description}"></section>
+        <section class="game-section" >
+            <section th:utext="${company.description}"></section>
+        </section>
     </div>
 
     <div class="popular-produced-games" th:unless="${allGamesByProducerId.isEmpty()}">
@@ -56,7 +58,10 @@
             <a href="#" th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}"
                class="company-game-cover" th:each="allGames,count:${allPromotedGamesByProducerId}"
                th:if="${count.index lt 6}">
-                <img src="/img/mass.jpg" th:alt="|${allGames.title}-cover-poster|">
+                <img src="/img/mass.jpg"
+                     th:alt="|${allGames.title}-cover-poster|"
+                     th:src="${allGames.poster ne null} ? @{|/galeria/gry/${allGames.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
+                >
                 <p th:text="${allGames.title}">Mass Effect 3</p>
             </a>
         </section>
@@ -70,7 +75,9 @@
                class="company-game-cover" th:each="allGames,count:${allPromotedGamesByPublisherId}"
                th:if="${count.index lt 6}">
 
-                <img src="/img/mass.jpg" th:alt="game-poster">
+                <img src="/img/mass.jpg"
+                     th:src="${allGames.poster ne null} ? @{|/galeria/gry/${allGames.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
+                     th:alt="game-poster">
                 <p th:text="${allGames.title}">Mass Effect 3</p>
             </a>
         </section>

@@ -1,9 +1,10 @@
 package com.example.gamezoneproject.domain.game;
 
 import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
-import com.example.gamezoneproject.domain.game.gameDetails.modes.gameGameMode.GameGameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
+import com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode.GameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
+import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -39,11 +40,15 @@ public class Game {
     )
     private Set<GamePlatform> gamePlatform = new HashSet<>();
 
-    @OneToMany(mappedBy = "game")
-    private List<GameGameMode> gameModes = new LinkedList<>();
+    @ManyToMany@JoinTable(name = "game_game_mode",
+            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "game_mode_id", referencedColumnName = "id")
+    )
+    private List<GameMode> gameModes = new LinkedList<>();
 
     private boolean promoted;
     private String poster;
+    private PlayerRange playerRange;
 
     public Long getId() {
         return id;
@@ -62,11 +67,11 @@ public class Game {
         this.title = title;
     }
 
-    public List<GameGameMode> getGameModes() {
+    public List<GameMode> getGameModes() {
         return gameModes;
     }
 
-    public void setGameModes(List<GameGameMode> gameModes) {
+    public void setGameModes(List<GameMode> gameModes) {
         this.gameModes = gameModes;
     }
 
@@ -149,5 +154,13 @@ public class Game {
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public PlayerRange getPlayerRange() {
+        return playerRange;
+    }
+
+    public void setPlayerRange(PlayerRange playerRange) {
+        this.playerRange = playerRange;
     }
 }

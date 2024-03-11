@@ -25,7 +25,7 @@ public class FileStorageService {
 
     public FileStorageService(@Value("${app.storage.location}") String storageLocation) {
         this.fileStorageLocation = storageLocation + "/pliki/";
-        this.imageStorageLocation = storageLocation + "/gry/";
+        this.imageStorageLocation = storageLocation + "/galeria/gry/";
         Path fileStoragePath = Path.of(this.fileStorageLocation);
         Path imageStoragePath = Path.of(this.imageStorageLocation);
         prepareStorageDirectories(fileStoragePath, imageStoragePath);
@@ -48,23 +48,23 @@ public class FileStorageService {
         }
     }
 
-    public String saveImage(MultipartFile file) {
+    public String saveImage(MultipartFile file,String fileName) {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (extension != null) {
             if (extension.equals("jpg") || extension.equals("png") || extension.equals("jpeg")) {
-                return saveFile(file, imageStorageLocation);
+                return saveFile(file, imageStorageLocation,fileName);
             }
         }
         throw new InvalidFileExtensionException("Invalid file extension: " + extension);
 
     }
 
-    public String saveFile(MultipartFile file) {
-        return saveFile(file, fileStorageLocation);
+    public String saveFile(MultipartFile file,String fileName) {
+        return saveFile(file, fileStorageLocation,fileName);
     }
 
-    private String saveFile(MultipartFile file, String fileStorageLocation) {
-        Path filePath = createFilePath(file, fileStorageLocation);
+    private String saveFile(MultipartFile file, String fileStorageLocation,String fileName) {
+        Path filePath = createFilePath(file, fileStorageLocation,fileName);
         try {
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             return filePath.getFileName().toString();
@@ -73,15 +73,14 @@ public class FileStorageService {
         }
     }
 
-    private Path createFilePath(MultipartFile file, String storageLocation) {
+    private Path createFilePath(MultipartFile file, String storageLocation,String fileName) {
         String originalFileName = file.getOriginalFilename();
-        String fileBaseName = FilenameUtils.getBaseName(originalFileName);
         String fileExtension = FilenameUtils.getExtension(originalFileName);
         String completeFilename;
         Path filePath;
         int fileIndex = 0;
         do {
-            completeFilename = fileBaseName + fileIndex + "." + fileExtension;
+            completeFilename = fileName.trim() +"_" +fileIndex + "." + fileExtension;
             filePath = Paths.get(storageLocation, completeFilename);
             fileIndex++;
         } while (Files.exists(filePath));

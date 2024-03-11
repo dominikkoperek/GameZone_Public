@@ -45,6 +45,8 @@ public class CategoryController {
                 .collect(Collectors.toList());
 
         model.addAttribute("categories", categories);
+        model.addAttribute("heading", "Kategorie gier");
+        model.addAttribute("description", " Każda gra ma jeden główny gatunek: Akcji, Bijatyki, Logiczne, Przygodowe, RPG, Sportowe, Strategiczne, Symulacje, Romanse, Wyścigi, Zręcznościowe itp. Dodatkowo każda gra ma kilka pobocznych kategorii dzięki którym znajdziesz swój ulubiony tytuł!");
         return "categories-listing";
     }
 }

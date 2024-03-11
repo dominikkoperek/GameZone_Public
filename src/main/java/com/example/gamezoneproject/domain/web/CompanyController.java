@@ -15,6 +15,7 @@ import java.util.List;
 
 @Controller
 public class CompanyController {
+    private final static String POLISH_NAME  = "Polska";
     private final CompanyService companyService;
     private final GameService gameService;
 
@@ -57,13 +58,14 @@ public class CompanyController {
         List<GameByCompanyDto> allPromotedGamesByPublisherId = gameService.findAllPromotedGamesByPublisherId(id);
         List<GameByCompanyDto> allGamesByProducerId = gameService.findAllGamesByProducerId(id);
         List<GameByCompanyDto> allGamesByPublisherId = gameService.findAllGamesByPublisherId(id);
-        boolean isPolishCompany = companyDto.getCountry().equalsIgnoreCase("Polska");
+        boolean isPolishCompany = companyDto.getCountry().equalsIgnoreCase(POLISH_NAME);
 
         model.addAttribute("isPolishCompany",isPolishCompany);
         model.addAttribute("allPromotedGamesByProducerId",allPromotedGamesByProducerId);
         model.addAttribute("allPromotedGamesByPublisherId",allPromotedGamesByPublisherId);
         model.addAttribute("allGamesByProducerId",allGamesByProducerId);
         model.addAttribute("allGamesByPublisherId",allGamesByPublisherId);
+
 
         if (companyName.replaceAll("-", " ").equalsIgnoreCase(companyDto.getName())) {
             model.addAttribute("company", companyDto);

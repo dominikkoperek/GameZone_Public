@@ -38,4 +38,24 @@ public class CompanyEndpoint {
         return ResponseEntity.ok(allCompanies);
     }
 
+    @GetMapping("/allProducers")
+    public ResponseEntity<?> findAllProducers() {
+        List<String> allProducers = companyService
+                .findAllProducers()
+                .stream()
+                .map(CompanyDto::getName)
+                .toList();
+        return ResponseEntity.ok(allProducers);
+    }
+
+    @GetMapping("/allPublishers")
+    public ResponseEntity<?> findAllPublishers() {
+        List<String> allProducers = companyService
+                .findAllPublishers()
+                .stream()
+                .map(CompanyDto::getName)
+                .toList();
+        return ResponseEntity.ok(allProducers);
+    }
+
 }
