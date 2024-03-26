@@ -4,6 +4,15 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface CategoryRepository extends CrudRepository<Category,Long> {
+/**
+ * Hibernate Interface that is responsible for all operations with Category entity in database.
+ */
+public interface CategoryRepository extends CrudRepository<Category, Long> {
+    /**
+     * Finds a category by name, ignoring case.
+     *
+     * @param name The category name.
+     * @return An optional containing the category if found, or empty if not.
+     */
     Optional<Category> findByNameIgnoreCase(String name);
 }

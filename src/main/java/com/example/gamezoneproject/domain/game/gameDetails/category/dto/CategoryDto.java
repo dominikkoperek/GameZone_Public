@@ -4,14 +4,19 @@ import com.example.gamezoneproject.domain.validation.NoCategoryDuplication;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Main DTO class for the Game categories.
+ * It's responsible for mapping from the Categories entity to DTO.
+ * This DTO contain ALL game details fields.
+ */
 public class CategoryDto {
     private Long id;
     @NoCategoryDuplication
     @NotBlank
-    @Size(min = 3,max = 20)
+    @Size(min = 3, max = 20)
     private String name;
     @NotBlank
-    @Size(min = 50,max = 800)
+    @Size(min = 50, max = 800)
     private String description;
 
     public CategoryDto() {

@@ -37,12 +37,14 @@
         <ul class="game-list" th:remove="all-but-first">
             <li class="game-list-item" th:each="game: ${games}">
                 <div class="game-poster-wrapper">
+                    <div class="poster-list-wrapper">
                     <a href="#" th:href="@{|/gry/${#strings.replace(game.title,' ','-')}/${game.id}|}"> <img
                             src="../static/img/notfound.png"
                             th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
                             alt="tytuł gry"
                             class="game-list-item-poster">
                     </a>
+                </div>
                     <div class="game-poster-content fade">
                         <span class="poster-description" th:text="${game.shortDescription}">Opis gry</span>
                     </div>
@@ -72,7 +74,8 @@
 
                         <h4 th:if="${game.platform.isEmpty()}" th:text="|Brak platformy|">Brak danych</h4>
                         <div class="game-details-container">
-                            <p th:text="${game.releaseYear.getYear()}">1999</p>
+                            <p  th:if="${game.releaseYear.getYear() ne 9999}" th:text="${game.releaseYear.getYear()}">1999</p>
+                            <p  th:unless="${game.releaseYear.getYear()ne 9999}">data nieogłoszona</p>
 
                             <a href="#"
                                th:if="${!game.category.isEmpty()}"

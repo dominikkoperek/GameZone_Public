@@ -1,11 +1,12 @@
 package com.example.gamezoneproject.domain.game.gameDetails.country.dto;
-
+/**
+ * Main DTO class for the Countries.
+ * It's responsible for mapping from the Country entity to DTO.
+ * This DTO contain ALL country details fields.
+ */
 public class CountryDto {
     private Long id;
     private String name;
-
-    public CountryDto() {
-    }
 
     public CountryDto(String name) {
         this.name = name;

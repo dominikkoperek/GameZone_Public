@@ -2,7 +2,11 @@ package com.example.gamezoneproject.domain.game.gameDetails.platform.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-
+/**
+ * Main DTO class for the GamePlatform.
+ * It's responsible for mapping from the GamePlatform entity to DTO.
+ * This DTO contain ALL game platform details fields.
+ */
 public class GamePlatformDto {
     private Long id;
     @NotBlank

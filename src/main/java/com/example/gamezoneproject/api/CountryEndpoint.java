@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Endpoint controller responsible for getting info about countries from database
+ */
 @RestController
 @RequestMapping("/api/country")
 public class CountryEndpoint {
@@ -17,8 +20,14 @@ public class CountryEndpoint {
         this.countryService = countryService;
     }
 
+    /**
+     * Endpoint responsible for finding and returning all available countries names from database
+     *
+     * @return ResponseEntity that hold list of countries names
+     */
+
     @GetMapping("/allCountries")
-    public ResponseEntity<?> findAllCountries(){
+    public ResponseEntity<List<String>> findAllCountries() {
         List<String> allCountries = countryService.findAllCountries();
         return ResponseEntity.ok(allCountries);
     }

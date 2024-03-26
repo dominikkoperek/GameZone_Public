@@ -11,14 +11,14 @@
     <h2 class="list-heading">Panel administracyjny</h2>
     <h3 class="list-description">Dodaj nową grę</h3>
 
-    <form  action="" method="post" enctype="multipart/form-data"
+    <form action="" method="post" enctype="multipart/form-data"
           class="add-content-form" id="add-content-form" autocomplete="off" th:object="${game}">
 
         <div class="form-button-container">
             <a class="form-back-button" href="#" th:href="@{/admin}">
                 <i class="fa-solid fa-chevron-left logo"></i>wróć
             </a>
-            <button class="form-back-button" onclick="clearGameForm()" type="button">wyczyść
+            <button class="form-back-button" onclick="clearGameForm()" type="button" id="game-reset-button">wyczyść
                 <i class="fa-solid fa-rotate-right logo"></i>
             </button>
         </div>
@@ -37,7 +37,7 @@
             <p class="notification-error" th:errors="*{title}">Powiadomienie</p>
         </div>
 
-        <label for="game-short-description">Krótki opis(100 - 1000 znaków)</label>
+        <label for="game-short-description">Krótki opis(100 - 320 znaków)</label>
         <textarea rows="5" id="game-short-description"
                   th:field="*{shortDescription}"
                   th:classappend="${#fields.hasErrors('shortDescription')} ? 'error-input':'' "
@@ -122,6 +122,7 @@
         </div>
 
         <label for="release-date">Data wydania</label>
+        <span>(jeśli jest nieznana zostaw puste)</span>
         <input type="date" id="release-date"
                min="1980-01-01"
                max="2099-01-01"
@@ -134,27 +135,19 @@
             <p class="notification-error" th:errors="*{releaseYear}">Powiadomienie</p>
         </div>
 
-        <div class="input-border">
-            <label for="gameCategories">Kategorie (wybierz z listy)</label>
-            <input type="text" id="gameCategories"
-                   th:classappend="${#fields.hasErrors('category')} ?'error-input':'' "
-                   th:field="*{category}"
-                   aria-autocomplete="none"
-                   autocomplete="off"
-                   autocorrect="off"
-                   onkeyup="validateGameCategories()">
-            <ul id="show-categories-list" class="hide-notification"></ul>
+        <label for="categories">Kategorie (wybierz z listy)</label>
+        <span><i class="fa fa-solid fa-crown"></i> główna kategoria</span>
+        <select multiple id="categories" th:field="*{category}">
+            <option th:each="cat:${allCategories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+        </select>
+        <input type="hidden" readonly id="mainCategory" name="mainCategory" value="">
 
-            <label for="categories-value">Wybrane kategorie</label>
-            <input readonly type="text" id="categories-value">
-
-            <div class="input-validation-container">
-                <p class="notification-error" id="gameCategories-error"></p>
-                <p class="notification-error" th:errors="*{category}">Powiadomienie</p>
-            </div>
+        <div class="input-validation-container">
+            <p class="notification-error" id="game-categories-error"></p>
+            <p class="notification-error" th:errors="*{category}">Powiadomienie</p>
         </div>
 
-        <div class="input-border">
+        <div class="input-border" id="game-modes-input-container">
             <label for="game-modes">Tryby gry (wybierz z listy)</label>
 
             <div class="checkbox-left-center-container" id="game-modes">
@@ -162,65 +155,70 @@
                     <label class="checkbox-container">
                         <span th:text="${modes.name}"></span>
                         <input type="checkbox" th:field="${game.gameModes}" th:value="${modes.name}"
-                               onkeyup="validateGameMode()">
+                               onclick="validateGameMode()">
                         <span class="checkmark"></span>
                     </label>
-
-
                 </div>
+
                 <div id="show-players-range" class="hide-players-range">
                     <label for="min-players">Minimalna liczba graczy</label>
                     <input type="number"
                            min="1"
+                           max="999"
                            id="min-players"
                            th:classappend="${#fields.hasErrors('gameModes')} ?'error-input':'' "
                            th:field="${game.playerRange.minPlayers}"
                            value="1"
-                           onkeyup="validateGameModes()"/>
+                           oninput="validatePlayersRange()"/>
                     <label for="max-players">Maksymalna liczba graczy</label>
                     <input type="number"
                            min="1"
+                           max="2000"
                            id="max-players"
                            th:classappend="${#fields.hasErrors('gameModes')} ?'error-input':'' "
                            th:field="${game.playerRange.maxPlayers}"
-                           onkeyup="validateGameModes()"/>
+                           oninput="validatePlayersRange()"/>
                 </div>
-
             </div>
 
             <div class="input-validation-container">
                 <p class="notification-error" id="game-modes-error"></p>
                 <p class="notification-error" th:errors="*{gameModes}">Powiadomienie</p>
             </div>
+
+            <div class="input-validation-container">
+                <p class="notification-error" id="player-range-error"></p>
+                <p class="notification-error" th:errors="*{playerRange}">Powiadomienie</p>
+            </div>
         </div>
 
-        <div class="input-border">
-            <label for="gamePlatforms">Platformy (wybierz z listy)</label>
-            <input type="text" id="gamePlatforms"
-                   th:classappend="${#fields.hasErrors('platform')} ?'error-input':'' "
-                   th:field="*{platform}"
-                   aria-autocomplete="none"
-                   autocomplete="off"
-                   autocorrect="off"
-                   onkeyup="validateGamePlatforms()">
-            <ul id="show-game-platform-list" class="hide-notification"></ul>
-
-            <label for="game-platforms-value">Wybrane platformy</label>
-            <input readonly type="text" id="game-platforms-value">
-
+            <label for="platforms">Platformy (wybierz z listy)</label>
+            <select multiple id="platforms" th:field="*{platform}">
+                <option th:each="platforms:${allAvailableGamePlatforms}" th:value="${platforms}"
+                        th:text="${platforms}"></option>
+            </select>
             <div class="input-validation-container">
                 <p class="notification-error" id="game-platforms-error"></p>
                 <p class="notification-error" th:errors="*{platform}">Powiadomienie</p>
             </div>
-        </div>
 
-        <label for="poster">Plakat gry (jpg, png, jpeg)</label>
-
+        <label for="image">Plakat gry (jpg, png, jpeg)</label>
         <div class="file-container">
-            <input type="file" id="poster" class="input-file" accept="image/jpeg,image/jpg,image/png"
-                   th:field="*{poster}"
-                   th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
-                   onkeyup="validatePoster()">
+            <div class="form-element">
+                <input type="file" id="image" accept="image/jpeg,image/jpg,image/png"
+                       th:field="*{poster}"
+                       th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
+                       onkeyup="validatePoster()"
+                >
+                <label for="image" id="image-preview">
+                    <img th:src="@{/img/notfound.png}" alt="not-upload">
+                    <div class="image-name">
+                        <span>+</span>
+                    </div>
+
+                </label>
+            </div>
+
         </div>
 
         <div class="input-validation-container">
@@ -230,33 +228,39 @@
 
         <div class="checkbox-margin-box">
             <label class="checkbox-container">Gra polecana przez redakcje
-                <input type="checkbox" name="isPromoted" id="isPromoted" onkeyup="validateIsPromoted()">
+                <input type="checkbox" name="isPromoted" id="isPromoted" onkeyup="validateIsPromoted()"
+                       th:field="*{promoted}">
                 <span class="checkmark"></span>
             </label>
         </div>
-        <button onclick="return validateGameForm()" type="submit" id="form-button">Dodaj</button>
+        <button onclick="return sendForm()" type="submit" id="game-add-form-button">Dodaj</button>
     </form>
     <script src="/scripts/gameFromValidation.js" th:src="@{/scripts/gameFromValidation.js}"></script>
-    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"
-            referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '.content-editor',
-            plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",
-            toolbar: 'undo |redo| numlist |bullist | outdent |indent| bold | h2 | link | preview|',
-            menubar: '',
-            toolbar_sticky: false,
-            icons: 'thin',
-            content_css: "/styles/tinymce.css",
-            setup: function (editor) {
-                editor.on('keyup', function (e) {
-                    validateGameLongDescription();
-                });
-            },
-            min_height: 400,
-            max_height: 800,
-        });
+    <script src="/scripts/MultipleFormSelect.js" th:src="@{/scripts/MultipleFormSelect.js}"></script>
 
+    <!--    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"-->
+    <!--            referrerpolicy="origin"></script>-->
+    <!--    <script>-->
+    <!--        tinymce.init({-->
+    <!--            selector: '.content-editor',-->
+    <!--            plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",-->
+    <!--            toolbar: 'undo|redo|removeformat|numlist |bullist | outdent |indent| bold|italic| h2 | link | preview|',-->
+    <!--            menubar: '',-->
+    <!--            toolbar_sticky: false,-->
+    <!--            icons: 'thin',-->
+    <!--            content_css: "/styles/tinymce.css",-->
+    <!--            setup: function (editor) {-->
+    <!--                editor.on('change', function (e) {-->
+    <!--                    validateGameLongDescription();-->
+    <!--                });-->
+    <!--            },-->
+    <!--            min_height: 400,-->
+    <!--            max_height: 800,-->
+    <!--        });-->
+    <!--    </script>-->
+    <script>
+        new MultiSelectTag('categories');
+        new MultiSelectTag('platforms');
     </script>
 </main>
 </body>

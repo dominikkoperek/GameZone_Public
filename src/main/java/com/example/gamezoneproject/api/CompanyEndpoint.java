@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Endpoint controller responsible for getting info about companies from database.
+ */
 @RestController
 @RequestMapping("/api/company")
 public class CompanyEndpoint {
@@ -19,17 +22,30 @@ public class CompanyEndpoint {
         this.companyService = companyService;
     }
 
+    /**
+     * Endpoint that check if company already exists in database by provided name.
+     * If the name param is null, it returns all companies.
+     *
+     * @param name name of the company provided by user (optional).
+     * @return ResponseEntity containing true/false if the name is provided, or ResponseEntity containing a list.
+     * of all companies if the name is null.
+     */
     @GetMapping("/availability")
-    public ResponseEntity<?> checkCompanyAvailability(@RequestParam(required = false) String company) {
-        boolean isCompanyAvailable = companyService.isCompanyAvailable(company);
-        if (company == null) {
+    public ResponseEntity<?> checkCompanyAvailability(@RequestParam(required = false) String name) {
+        boolean isCompanyAvailable = companyService.isCompanyAvailable(name);
+        if (name == null) {
             return findAllCompanies();
         }
         return ResponseEntity.ok(isCompanyAvailable);
     }
 
+    /**
+     * Endpoint that find all companies in database and map them to get their names.
+     *
+     * @return ResponseEntity containing a list of all companies names.
+     */
     @GetMapping("/allCompanies")
-    public ResponseEntity<?> findAllCompanies() {
+    public ResponseEntity<List<String>> findAllCompanies() {
         List<String> allCompanies = companyService
                 .findAllCompanies()
                 .stream()
@@ -38,8 +54,13 @@ public class CompanyEndpoint {
         return ResponseEntity.ok(allCompanies);
     }
 
+    /**
+     * Endpoint that finds all companies in database that are producers and maps them to get their names.
+     *
+     * @return ResponseEntity containing a list of all company names that are producers.
+     */
     @GetMapping("/allProducers")
-    public ResponseEntity<?> findAllProducers() {
+    public ResponseEntity<List<String>> findAllProducers() {
         List<String> allProducers = companyService
                 .findAllProducers()
                 .stream()
@@ -48,8 +69,13 @@ public class CompanyEndpoint {
         return ResponseEntity.ok(allProducers);
     }
 
+    /**
+     * Endpoint that finds all companies in database that are publishers and map them to get their names.
+     *
+     * @return ResponseEntity containing a list of all company names that are producers.
+     */
     @GetMapping("/allPublishers")
-    public ResponseEntity<?> findAllPublishers() {
+    public ResponseEntity<List<String>> findAllPublishers() {
         List<String> allProducers = companyService
                 .findAllPublishers()
                 .stream()

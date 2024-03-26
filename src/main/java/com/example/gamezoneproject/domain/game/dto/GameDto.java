@@ -9,6 +9,11 @@ import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRa
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Main DTO class for the Game entity.
+ * It's responsible for mapping from the Game entity to DTO.
+ * This DTO contain ALL game details fields.
+ */
 public class GameDto {
     private Long id;
     private String title;

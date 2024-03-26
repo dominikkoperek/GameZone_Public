@@ -2,6 +2,11 @@ package com.example.gamezoneproject.domain.game.dto;
 
 import java.time.LocalDate;
 
+/**
+ * Simple DTO class for the Game entity.
+ * This is used when searching for games by a company's id, and includes information such as the
+ * game's id, title, release date and poster.
+ */
 public class GameByCompanyDto {
     private Long id;
     private String title;

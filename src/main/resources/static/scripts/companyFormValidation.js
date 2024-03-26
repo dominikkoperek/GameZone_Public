@@ -1,6 +1,6 @@
-let companyName = document.getElementById("companyName");
-let companyShortDescription = document.getElementById("companyShortDescription");
-let companyLongDescription = document.getElementById("companyLongDescription");
+let companyName = document.getElementById("company-name");
+let companyShortDescription = document.getElementById("company-short-description");
+let companyLongDescription = document.getElementById("company-long-description");
 let companyListSuggestion = document.getElementById("show-suggestion-list");
 let companyFormError = document.querySelector(".notification-error");
 let form = document.getElementById("add-content-form");
@@ -10,8 +10,8 @@ let formLongDescriptionError = document.getElementById("long-description-error")
 let formCountryError = document.getElementById("country-error");
 let timerCompanySuggestions;
 let companySuggestions = [];
-let isProducer = document.getElementById("isProducer");
-let isPublisher = document.getElementById("isPublisher");
+let isProducer = document.getElementById("is-producer");
+let isPublisher = document.getElementById("is-publisher");
 let isCompanyError = document.getElementById("is-company-error")
 
 let companyCountry = document.getElementById("company-country");
@@ -53,6 +53,7 @@ const validateCompanyName = async () => {
         return false;
     }
     let isCompanyAvailable = await checkCompanyAvailability(companyNameValue);
+
     if (!isCompanyAvailable) {
         companyName.classList.add('error-input');
         companyFormError.innerHTML = 'Wydawca już istnieje';
@@ -300,12 +301,12 @@ function showCountries(input) {
 }
 
 
-function checkCompanyAvailability(company) {
+function checkCompanyAvailability(name) {
     return new Promise((resolve, reject) => {
         $.ajax({
             url: '/api/company/availability',
             type: 'GET',
-            data: {company: company},
+            data: {name: name},
             success: function (data) {
                 if (!data) {
                     resolve(false);

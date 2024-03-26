@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Stream;
 
+/**
+ * Endpoint controller responsible for getting info about game's categories from database
+ */
 @RestController
 @RequestMapping("/api/category")
 public class GameCategoryEndpoint {
@@ -20,6 +22,14 @@ public class GameCategoryEndpoint {
         this.categoryService = categoryService;
     }
 
+    /**
+     * Endpoint that check if game category already exists in database by provided category param.
+     * If the category param  is null, it returns all categories.
+     *
+     * @param category name of the game category provided by user (optional).
+     * @return ResponseEntity containing true/false if the category param is provided, or a ResponseEntity containing list
+     * of all categories if the category param is null.
+     */
     @GetMapping("/availability")
     public ResponseEntity<?> checkCategoryAvailability(@RequestParam(required = false) String category) {
         boolean isCategoryAvailable = categoryService.isCategoryAvailable(category);
@@ -29,8 +39,13 @@ public class GameCategoryEndpoint {
         return ResponseEntity.ok(isCategoryAvailable);
     }
 
+    /**
+     * Endpoint that finds all game's categories in database and map them to get their names.
+     *
+     * @return ResponseEntity containing list of game's categories names.
+     */
     @GetMapping("/allCategories")
-    public ResponseEntity<?> findAllCategories() {
+    public ResponseEntity<List<String>> findAllCategories() {
         List<String> categories = categoryService
                 .findAllGameCategories()
                 .stream()

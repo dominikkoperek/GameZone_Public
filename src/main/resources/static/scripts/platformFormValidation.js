@@ -21,7 +21,6 @@ let platformSuggestions = [];
 
 formButton.addEventListener("click", function (ev) {
     ev.preventDefault();
-
 })
 copySvgContainer.forEach(copySvgContainer => {
     copySvgContainer.addEventListener("click", function (ev) {

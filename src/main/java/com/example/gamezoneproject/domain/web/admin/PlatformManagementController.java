@@ -1,6 +1,5 @@
 package com.example.gamezoneproject.domain.web.admin;
 
-import com.example.gamezoneproject.domain.exceptions.PlatformNotFoundException;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.dto.GamePlatformDto;
 import jakarta.validation.Valid;
@@ -13,13 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.LinkedHashMap;
-import java.util.Optional;
 
+/**
+ *  Controller for game platform add form.
+ */
 @Controller
 public class PlatformManagementController {
     private final GamePlatformService platformService;
     private final GamePlatformService gamePlatformService;
-    private static final String PLATFORM_ALL_NAME = "wszystkie";
 
 
     public PlatformManagementController(GamePlatformService platformService,
@@ -28,20 +28,30 @@ public class PlatformManagementController {
         this.gamePlatformService = gamePlatformService;
     }
 
+    /**
+     * Binds a form with a GamePlatformDto object. It uses game platform service for adding attributes to form.
+     * @param model The Model object that add attributes GamePlatformDto, allGamePlatforms.
+     * @return The view name of the platform addition form.
+     */
     @GetMapping("/admin/dodaj-platforme")
     public String addPlatformForm(Model model) {
         model.addAttribute("platform", new GamePlatformDto());
         LinkedHashMap<String, String> allGamePlatforms = gamePlatformService.findAllGamePlatforms();
         model.addAttribute("allGamePlatforms", allGamePlatforms);
-
         return "admin/platform-add-form";
     }
 
+    /**
+     * Handles the form submission for adding a game platform. Adds a new game platform to the database based on the provided DTO.
+     * @param gamePlatformDto The DTO of the game platform to be added. This should be validated properly.
+     * @param bindingResult The result of the validation of the game platform DTO.
+     * @param redirectAttributes The redirect attributes used for passing a success message after the game platform is added.
+     * @return If the form has errors, returns the view name of the game platform addition form, otherwise redirects to the admin home page.
+     */
     @PostMapping("/admin/dodaj-platforme")
     public String addPlatform(@Valid @ModelAttribute("platform") GamePlatformDto gamePlatformDto,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes,
-                              Model model) {
+                              RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "admin/platform-add-form";
         } else {

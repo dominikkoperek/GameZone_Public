@@ -54,7 +54,8 @@ public class CompanyController {
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        List<GameByCompanyDto> allPromotedGamesByProducerId = gameService.findAllPromotedGamesByProducerId(id);
+        List<GameByCompanyDto> allPromotedGamesByProducerId = gameService
+                .findAllPromotedGamesByProducerId(id);
         List<GameByCompanyDto> allPromotedGamesByPublisherId = gameService.findAllPromotedGamesByPublisherId(id);
         List<GameByCompanyDto> allGamesByProducerId = gameService.findAllGamesByProducerId(id);
         List<GameByCompanyDto> allGamesByPublisherId = gameService.findAllGamesByPublisherId(id);

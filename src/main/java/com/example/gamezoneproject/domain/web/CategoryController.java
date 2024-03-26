@@ -16,6 +16,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for category list and game list sorted by categories.
+ */
 @Controller
 public class CategoryController {
     private final CategoryService categoryService;
@@ -26,6 +29,13 @@ public class CategoryController {
         this.gameService = gameService;
     }
 
+    /**
+     * Method responsible displaying list of games by category name. If category name not exists throw ResponseStatusException
+     *
+     * @param name  The name of the category.
+     * @param model The Model object that add attribute GameDto and two messages category name and description.
+     * @return The view name of the game listing.
+     */
     @GetMapping("/gry/kategorie/{name}")
     public String getCategory(@PathVariable String name, Model model) {
         CategoryDto category = categoryService.findCategoryByName(name)
@@ -37,6 +47,11 @@ public class CategoryController {
         return "game-listing";
     }
 
+    /**
+     *  Method responsible displaying list of all categories. It sorts the names of categories by their names.
+     * @param model The Model object that add attributes, CategoryDto and messages, heading and description.
+     * @return The view name of the categories-listing.
+     */
     @GetMapping("/gry/kategoria")
     public String getCategoryList(Model model) {
         List<CategoryDto> categories = categoryService.findAllGameCategories()

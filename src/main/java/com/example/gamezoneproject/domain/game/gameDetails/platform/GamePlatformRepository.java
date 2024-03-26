@@ -1,12 +1,17 @@
 package com.example.gamezoneproject.domain.game.gameDetails.platform;
 
-import io.micrometer.common.lang.NonNullApi;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
 import java.util.Optional;
 
+/**
+ * Hibernate Interface that is responsible for all operations with GamePlatform entity in database.
+ */
 public interface GamePlatformRepository extends CrudRepository<GamePlatform,Long> {
-    Optional<GamePlatform> findByNameIgnoreCase(String gamePlatform);
+    /**
+     * Finds the GamePlatform by the included param name, ignoring case.
+     * @param name game platform name.
+     * @return Optional containing the GamePlatform if found, or empty if not.
+     */
+    Optional<GamePlatform> findByNameIgnoreCase(String name);
 
 }

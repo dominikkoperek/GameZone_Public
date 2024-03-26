@@ -5,6 +5,11 @@ import com.example.gamezoneproject.domain.validation.NoCompanyDuplication;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ *   Main DTO class for the company.
+ *   It's responsible for mapping from the Company entity to DTO.
+ *   This DTO contain ALL company details fields.
+ */
 public class CompanyDto {
     private Long id;
     @NotBlank

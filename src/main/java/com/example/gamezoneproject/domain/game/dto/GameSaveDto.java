@@ -7,16 +7,23 @@ import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRa
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Simple DTO class for the Game entity.
+ * This is used for saving games, and includes information such as the
+ * game's title, trailer id,short description, long description, release date, list of categories names,
+ * set of platforms names,list of game modes names, producer, publisher, is promoted, poster and players range.
+ */
 public class GameSaveDto {
     private String title;
     private String dailymotionTrailerId;
     private String shortDescription;
     private String description;
     private LocalDate releaseYear;
-    private List<String> category;
+    private LinkedList<String> category;
     private Set<String> platform;
     private List<String> gameModes;
     private boolean promoted;
@@ -65,11 +72,11 @@ public class GameSaveDto {
         this.releaseYear = releaseYear;
     }
 
-    public List<String> getCategory() {
+    public LinkedList<String> getCategory() {
         return category;
     }
 
-    public void setCategory(List<String> category) {
+    public void setCategory(LinkedList<String> category) {
         this.category = category;
     }
 

@@ -5,6 +5,15 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface GameModeRepository extends CrudRepository<GameMode,Long> {
+/**
+ * Hibernate Interface that is responsible for all operations with GameMode entity in database.
+ */
+public interface GameModeRepository extends CrudRepository<GameMode, Long> {
+    /**
+     * Find by name, ignoring case.
+     *
+     * @param name The name of the game mode.
+     * @return Optional of the entity GameMode if the name exists or empty.
+     */
     Optional<GameMode> findByNameIgnoreCase(String name);
 }

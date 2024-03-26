@@ -51,14 +51,14 @@
         </section>
     </div>
 
-    <div class="popular-produced-games" th:unless="${allGamesByProducerId.isEmpty()}">
+    <div class="popular-produced-games" th:unless="${allPromotedGamesByProducerId.isEmpty()}">
         <h2 class="article-heading" th:text="|Popularne gry wyprodukowane przez ${company.name}|">
             Gry wyprodukowane przez</h2>
         <section class="company-games-container">
             <a href="#" th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}"
                class="company-game-cover" th:each="allGames,count:${allPromotedGamesByProducerId}"
                th:if="${count.index lt 6}">
-                <img src="/img/mass.jpg"
+                <img src="/img/notfound.png"
                      th:alt="|${allGames.title}-cover-poster|"
                      th:src="${allGames.poster ne null} ? @{|/galeria/gry/${allGames.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
                 >
@@ -75,7 +75,7 @@
                class="company-game-cover" th:each="allGames,count:${allPromotedGamesByPublisherId}"
                th:if="${count.index lt 6}">
 
-                <img src="/img/mass.jpg"
+                <img src="/img/notfound.png"
                      th:src="${allGames.poster ne null} ? @{|/galeria/gry/${allGames.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
                      th:alt="game-poster">
                 <p th:text="${allGames.title}">Mass Effect 3</p>
@@ -91,7 +91,8 @@
                     <a class="games-list-container" href="#"
                        th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}">
                         <span class="all-games-list" th:text="${allGames.title}"></span>
-                        <span class="games-date" th:text="${allGames.releaseYear.getYear()}"></span>
+                        <span class="games-date"  th:text="${allGames.releaseYear.getYear() ne 9999} ? ${allGames.releaseYear.getYear()} : 'nieogłoszona' "></span>
+
                     </a>
                 </li>
                 <li th:if="${allGamesByProducerId.size() ge 25}">
