@@ -1,6 +1,5 @@
 package com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode;
 
-import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeDto;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

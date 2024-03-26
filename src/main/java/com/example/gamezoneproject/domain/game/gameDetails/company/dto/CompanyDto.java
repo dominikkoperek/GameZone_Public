@@ -36,16 +36,6 @@ public class CompanyDto {
         this.description = description;
     }
 
-    public CompanyDto(String name, String shortDescription, String country, Boolean isProducer, Boolean isPublisher,
-                      String description ) {
-        this.name = name;
-        this.shortDescription = shortDescription;
-        this.country = country;
-        this.isProducer = isProducer;
-        this.isPublisher = isPublisher;
-        this.description = description;
-    }
-
     public CompanyDto() {
     }
 

@@ -13,11 +13,6 @@ public class GameByCompanyDto {
     private LocalDate releaseYear;
     private String poster;
 
-    public GameByCompanyDto(Long id, String title) {
-        this.id = id;
-        this.title = title;
-    }
-
     public GameByCompanyDto(Long id, String title, LocalDate releaseYear, String poster) {
         this.id = id;
         this.title = title;
