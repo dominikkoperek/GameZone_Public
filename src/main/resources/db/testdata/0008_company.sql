@@ -1,6 +1,6 @@
-INSERT INTO company (name,short_description,country,is_Producer,is_Publisher,description)
+INSERT INTO company (name,short_description,country,is_Producer,is_Publisher,poster,description)
 VALUES ('Cd Projekt Red','CD Projekt RED to specjalizujący się w grach RPG polski producent i wydawca gier, wchodzący w skład grupy CD PROJEKT S.A. Studio zostało założone w roku 2000, z inicjatywy wcześniejszych założycieli firmy CD Projekt sp. z o.o. (obecnie CDP.pl) Marcina Iwińskiego i Michała Kicińskiego. Siedziba firmy znajduje się w Warszawie, ale od 2013 roku funkcjonuje też biuro lokalne w Krakowie.'
-,'Polska','true','true', '<h2>O firmie</h2>
+,'Polska','true','true', 'cdprojektred0.jpg','<h2>O firmie</h2>
 
 <p>Misję studia CD Projekt RED od początku stanowiło <strong>&bdquo;tworzenie najlepszych na świecie gier RPG, opowiadających fascynujące, poruszające i dorosłe historie</strong><strong><em>&rdquo;</em></strong><strong>&nbsp;oraz wyznaczających nowe standardy w dziedzinie elektronicznej rozrywki</strong>. Misję tę z całą pewnością zrealizowała trylogia&nbsp;Wiedźmin, kt&oacute;rej trzecia odsłona pokazała nad wyraz dobitnie ogromne tempo rozwoju studia i drzemiący w nim potencjał.</p>
 
@@ -46,12 +46,12 @@ VALUES ('Cd Projekt Red','CD Projekt RED to specjalizujący się w grach RPG pol
 
 <p>26 września światło dzienne ujrzał zaś wyczekiwany dodatek do<em>&nbsp;Cyberpunka 2077</em>, zatytułowany&nbsp;<em>Widmo wolności&nbsp;</em>(ang.<em>&nbsp;Phantom Liberty</em>).&nbsp;<strong>Add-on spotkał się z bardzo ciepłym przyjęciem ze strony graczy i recenzent&oacute;w</strong>; na platformie Steam m&oacute;gł się pochwalić &bdquo;bardzo pozytywnymi&rdquo; ocenami, zaś według serwisu Metacritic średnia ocen przyznanych mu przez branżowe media mieściła się w przedziale 88-90 na 100.</p>');
 
-INSERT INTO company (name,short_description,country,is_Producer,is_Publisher,description)
+INSERT INTO company (name,short_description,country,is_Producer,is_Publisher,poster,description)
 VALUES ('Techland','Jeden z najstarszych i najważniejszych polskich producentów, wydawców oraz dystrybutorów gier
 wideo na komputery osobiste i konsole. Siedziba główna firmy mieści się we Wrocławiu (wcześniej w Ostrowie
 Wielkopolskim), jednak Techland posiada także studio deweloperskie w Warszawie. Od lipca 2023 roku Techland należy
 do chińskiej firmy Tencent. Założycielem, a później prezesem i wreszcie dyrektorem generalnym Techlandu jest
-Paweł Marchewka.','Polska','true','true',
+Paweł Marchewka.','Polska','true','true','techland0.jpg',
         '<h2>Techland jako producent gier</h2>
 
 <p>Działalność producenta gier firma Techland rozpoczęła w połowie lat 90., początkowo koncentrując się na prostych produkcjach, poświęconych brydżowi czy też szachom.&nbsp;<strong>Pierwsze &bdquo;poważne&rdquo; gry Techlandu ukazały się zaś dopiero na przełomie XX i XXI wieku</strong>. Najważniejszymi tytułami z tego okresu okazały się bazujące na autorskim silniku Chrome Engine serie strzelanin FPS&nbsp;Chrome&nbsp;oraz wyścig&oacute;w samochodowych&nbsp;Xpand Rally. Na rodzimym rynku sporą popularnością cieszył się r&oacute;wnież autorski cykl symulator&oacute;w żużlowych, rozwijany po dziś dzień pod nazwą&nbsp;FIM Speedway Grand Prix. Mimo dobrego przyjęcia ww. tytuł&oacute;w, Techland nie zrezygnował jednak całkowicie z pozycji z niższego segmentu cenowego, przygotowując w latach 2001-2010 sporą liczbę gier familijnych oraz program&oacute;w karaoke.</p>

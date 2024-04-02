@@ -1,9 +1,10 @@
 package com.example.gamezoneproject.domain.game.gameDetails.company.dto;
 
 
-import com.example.gamezoneproject.domain.validation.NoCompanyDuplication;
+import com.example.gamezoneproject.domain.validation.company.NoCompanyDuplication;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *   Main DTO class for the company.
@@ -12,21 +13,27 @@ import jakarta.validation.constraints.Size;
  */
 public class CompanyDto {
     private Long id;
-    @NotBlank
-    @Size(min = 3,max = 35)
-    @NoCompanyDuplication
+
     private String name;
-    @NotBlank
-    @Size(min = 100,max = 1000)
+
     private String shortDescription;
 
     private String country;
     private Boolean isProducer;
     private Boolean isPublisher;
     private String description;
+    private String poster;
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
 
     public CompanyDto(Long id, String name, String shortDescription, String country, Boolean isProducer,
-                      Boolean isPublisher, String description) {
+                      Boolean isPublisher, String description, String poster) {
         this.id = id;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -34,6 +41,7 @@ public class CompanyDto {
         this.isProducer = isProducer;
         this.isPublisher = isPublisher;
         this.description = description;
+        this.poster = poster;
     }
 
     public CompanyDto() {

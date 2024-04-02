@@ -9,7 +9,7 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="title" type="VARCHAR(120)"/>
+            <column name="title" type="VARCHAR(99)"/>
             <column name="short_description" type="VARCHAR(320)"/>
             <column name="dailymotion_Trailer_Id" type="VARCHAR(30)"/>
             <column name="release_year" type="DATE"/>

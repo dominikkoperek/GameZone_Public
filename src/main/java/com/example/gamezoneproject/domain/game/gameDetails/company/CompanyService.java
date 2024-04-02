@@ -1,9 +1,12 @@
 package com.example.gamezoneproject.domain.game.gameDetails.company;
 
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDto;
+import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanySaveDto;
+import com.example.gamezoneproject.storage.FileStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -16,9 +19,11 @@ import java.util.stream.StreamSupport;
 public class CompanyService {
     private final static String POLISH_COUNTRY_NAME = "Polska";
     private final CompanyRepository companyRepository;
+    private final FileStorageService fileStorageService;
 
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(CompanyRepository companyRepository, FileStorageService fileStorageService) {
         this.companyRepository = companyRepository;
+        this.fileStorageService = fileStorageService;
     }
 
     /**
@@ -98,18 +103,23 @@ public class CompanyService {
     /**
      * This method uses the repository to save a new company in the database. It uses a CompanyDto to get all the necessary information.
      *
-     * @param companyDto An companyDto object containing the name, short description, long description, country, and whether
-     *                   the company is a publisher and/or producer.
+     * @param companySaveDto An CompanySaveDto object.
      */
     @Transactional
-    public void addCompany(CompanyDto companyDto) {
+    public void addCompany(CompanySaveDto companySaveDto) {
         Company companyToSave = new Company();
-        companyToSave.setName(companyDto.getName());
-        companyToSave.setShortDescription(companyDto.getShortDescription());
-        companyToSave.setDescription(companyDto.getDescription());
-        companyToSave.setCountry(companyDto.getCountry());
-        companyToSave.setProducer(companyDto.getProducer());
-        companyToSave.setPublisher(companyDto.getPublisher());
+        companyToSave.setName(companySaveDto.getName());
+        companyToSave.setShortDescription(companySaveDto.getShortDescription());
+        companyToSave.setDescription(companySaveDto.getDescription());
+        companyToSave.setCountry(companySaveDto.getCountry());
+        companyToSave.setProducer(companySaveDto.isProducer());
+        companyToSave.setPublisher(companySaveDto.isPublisher());
+            if (companySaveDto.getPoster() != null && !companySaveDto.getPoster().isEmpty()) {
+                String savedFileName = fileStorageService
+                        .saveImage(companySaveDto.getPoster(), companySaveDto.getName(), false, true);
+                companyToSave.setPoster(savedFileName);
+            }
+
         companyRepository.save(companyToSave);
     }
 

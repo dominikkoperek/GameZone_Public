@@ -2,6 +2,7 @@ package com.example.gamezoneproject.domain.web.admin;
 
 import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyService;
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDto;
+import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanySaveDto;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 /**
  * Controller for company add form.
  */
@@ -21,49 +23,46 @@ public class CompanyManagementController {
     public CompanyManagementController(CompanyService companyService) {
         this.companyService = companyService;
     }
+
     /**
-     * Binds a form with a CompanyDto object.
+     * Binds a form with a CompanySaveDto object.
      *
      * @param model The Model object that will be populated with a new CompanyDto.
      * @return The view name of the company addition form.
      */
     @GetMapping("/admin/dodaj-firme")
     public String addCompanyModel(Model model) {
-        model.addAttribute("company", new CompanyDto());
+        model.addAttribute("company", new CompanySaveDto());
         return "admin/company-add-form";
     }
 
     /**
      * Handles the form submission for adding a company. Adds a new company to the database based on the provided DTO.
-     * @param companyDto The DTO of the company to be added. This should be validated properly.
-     * @param bindingResult The result of the validation of the company DTO.
+     *
+     * @param companySaveDto     The DTO of the company to be added. This should be validated properly.
+     * @param bindingResult      The result of the validation of the company DTO.
      * @param redirectAttributes The redirect attributes used for passing a success message after the company is added.
-     * @param isProducer Additional param used for passing information whether company is Producer.
-     * @param isPublisher Additional param used for passing information whether company is Publisher.
      * @return If the form has errors, returns the view name of the company addition form, otherwise redirects to the admin home page.
      */
     @PostMapping("/admin/dodaj-firme")
-    public String addCategory(@Valid @ModelAttribute("company") CompanyDto companyDto,
+    public String addCategory(@Valid @ModelAttribute("company") CompanySaveDto companySaveDto,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes,
-                              @RequestParam(required = false, defaultValue = "false") Boolean isProducer,
-                              @RequestParam(required = false, defaultValue = "false") Boolean isPublisher
-    ) {
+                              RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "admin/company-add-form";
 
         } else {
-            setProducerAndPublisher(companyDto, isProducer, isPublisher);
-            companyService.addCompany(companyDto);
+            setProducerAndPublisher(companySaveDto, companySaveDto.isProducer(), companySaveDto.isPublisher());
+            companyService.addCompany(companySaveDto);
             redirectAttributes.addFlashAttribute(AdminController.NOTIFICATION_ATTRIBUTE,
-                    "Firma %s została dodana".formatted(companyDto.getName()));
+                    "Firma %s została dodana".formatted(companySaveDto.getName()));
             return "redirect:/admin";
         }
     }
 
-    private static void setProducerAndPublisher(CompanyDto companyDto, Boolean isProducer, Boolean isPublisher) {
-        companyDto.setProducer(isProducer);
-        companyDto.setPublisher(isPublisher);
+    private static void setProducerAndPublisher(CompanySaveDto companySaveDto, Boolean isProducer, Boolean isPublisher) {
+        companySaveDto.setProducer(isProducer);
+        companySaveDto.setPublisher(isPublisher);
     }
 
 

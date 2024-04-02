@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.validation;
+package com.example.gamezoneproject.domain.validation.category;
 
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryService;
 import com.example.gamezoneproject.domain.game.gameDetails.category.dto.CategoryDto;

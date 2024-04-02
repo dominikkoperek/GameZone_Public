@@ -7,8 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+/**
+ * Controller for recommended games.
+ */
 @Controller
 public class RecommendedGamesController {
     private final GameService gameService;
@@ -19,9 +24,18 @@ public class RecommendedGamesController {
         this.gamePlatformService = gamePlatformService;
     }
 
+    /**
+     * Display list of the all recommended games.
+     * @param model The Model object that add attributes.
+     * @return  The view name of game-listing.
+     */
+
     @GetMapping("/polecane-gry")
     public String home(Model model) {
-        List<GameDto> promotedGames = gameService.findAllPromotedGames();
+        List<GameDto> promotedGames = gameService.findAllPromotedGames()
+                .stream()
+                .sorted(Comparator.comparing(GameDto::getReleaseYear).reversed())
+                .toList();
         LinkedHashMap<String, String> gamePlatforms = gamePlatformService.findAllGamePlatforms();
 
         model.addAttribute("platforms",gamePlatforms);

@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.validation;
+package com.example.gamezoneproject.domain.validation.other.containsh2;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -11,13 +11,15 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * Checks if the String contains "<h2></h2>".
+ */
 @Documented
-@Constraint(validatedBy = NoCategoryDuplicationValidator.class)
+@Constraint(validatedBy = ContainsH2Validator.class)
 @Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
-public @interface NoCategoryDuplication {
-    String message() default "{jakarta.validation.constraints.NoCategoryDuplication.message}";
-
+public @interface ContainsH2 {
+    String message () default "{jakarta.validation.constraints.ContainsH2.message}";
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

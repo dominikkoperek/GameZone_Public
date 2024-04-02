@@ -27,6 +27,7 @@
             <column name="country" type="VARCHAR(99)">
                 <constraints nullable="false"/>
             </column>
+            <column name="poster" type="VARCHAR(100)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

@@ -10,6 +10,13 @@ spring:
   web:
     resources:
       static-locations: classpath:/static/,file:uploads/
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
 app:
   storage:
     location: uploads
+server:
+  tomcat:
+    max-swallow-size: -1

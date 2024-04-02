@@ -9,7 +9,8 @@
 <body>
 <main class="main-content margin-box" layout:fragment="content">
     <h2 class="list-heading display-inline-flex" th:text="${heading}">Tytuł</h2>
-    <img class="company-logo-cover" src="/img/logocd.jpg" th:alt="|${company.name} logo|">
+    <img class="company-logo-cover" src="/img/notfound.png"
+         th:src="${company.poster ne null} ? @{|/galeria/firmy/${company.poster}|} :@{/galeria/firmy/company-poster-placeholder.png}" th:alt="|${company.name} logo|">
     <p class="list-description display-block" th:text="${description}">Opis</p>
     <div class="company-details-center-box">
         <p th:text="|Kraj: ${country}|">Opis</p>

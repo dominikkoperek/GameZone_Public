@@ -65,11 +65,6 @@
             <p class="notification-error" th:errors="*{description}">Powiadomienie</p>
         </div>
 
-        <div class="input-validation-container">
-            <p class="notification-error" id="short-description-error"></p>
-            <p class="notification-error" th:errors="*{shortDescription}">Powiadomienie</p>
-        </div>
-
         <label for="game-trailer-id">Id Trailera DailyMotion (max 30 znaków)</label>
         <input type="text" id="game-trailer-id"
                th:field="*{dailymotionTrailerId}"
@@ -140,11 +135,12 @@
         <select multiple id="categories" th:field="*{category}">
             <option th:each="cat:${allCategories}" th:value="${cat.name}" th:text="${cat.name}"></option>
         </select>
-        <input type="hidden" readonly id="mainCategory" name="mainCategory" value="">
+        <input type="hidden" readonly id="mainCategory" name="mainCategory" value="" th:field="*{mainCategory}">
 
         <div class="input-validation-container">
             <p class="notification-error" id="game-categories-error"></p>
             <p class="notification-error" th:errors="*{category}">Powiadomienie</p>
+            <p class="notification-error" th:errors="*{mainCategory}">Powiadomienie</p>
         </div>
 
         <div class="input-border" id="game-modes-input-container">
@@ -159,6 +155,7 @@
                         <span class="checkmark"></span>
                     </label>
                 </div>
+
 
                 <div id="show-players-range" class="hide-players-range">
                     <label for="min-players">Minimalna liczba graczy</label>
@@ -202,13 +199,13 @@
                 <p class="notification-error" th:errors="*{platform}">Powiadomienie</p>
             </div>
 
-        <label for="image">Plakat gry (jpg, png, jpeg)</label>
+        <label for="image">Plakat gry max 1Mb (jpg, png, jpeg)</label>
         <div class="file-container">
             <div class="form-element">
                 <input type="file" id="image" accept="image/jpeg,image/jpg,image/png"
                        th:field="*{poster}"
                        th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
-                       onkeyup="validatePoster()"
+                       onchange="validateGamePoster()"
                 >
                 <label for="image" id="image-preview">
                     <img th:src="@{/img/notfound.png}" alt="not-upload">

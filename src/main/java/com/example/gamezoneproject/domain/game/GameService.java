@@ -173,6 +173,17 @@ public class GameService {
                 .sorted(Comparator.comparing(GameByCompanyDto::getReleaseYear).reversed())
                 .toList();
     }
+    /**
+     * This method uses the repository to find game by name param.
+     * It maps the result to a GameDto
+     *
+     * @param name name of the game.
+     * @return Optional containing a GameDto if the name exists, or empty optional.
+     */
+    public Optional<GameDto> findByTitle(String name) {
+        return gameRepository.findByTitleIgnoreCase(name)
+                .map(GameDtoMapper::map);
+    }
 
     /**
      * This method adds a new game to the repository.
@@ -180,10 +191,9 @@ public class GameService {
      * It also handles the case where the poster is not null and saves the image.
      *
      * @param gameSaveDto  The DTO object containing the game details to be saved.
-     * @param mainCategory The main category of the game.
      */
     @Transactional
-    public void addGame(GameSaveDto gameSaveDto, String mainCategory) {
+    public void addGame(GameSaveDto gameSaveDto) {
         Game game = new Game();
         game.setTitle(gameSaveDto.getTitle().trim());
         game.setShortDescription(gameSaveDto.getShortDescription().trim());
@@ -200,7 +210,7 @@ public class GameService {
                 .orElseThrow(CompanyNotFoundException::new);
         game.setPublisher(publisher);
 
-        game.setCategory(getUserCategory(gameSaveDto.getCategory(), mainCategory));
+        game.setCategory(getUserCategory(gameSaveDto.getCategory(), gameSaveDto.getMainCategory()));
 
         game.setGamePlatform(getUserPlatforms(gameSaveDto.getPlatform()));
 
@@ -209,9 +219,10 @@ public class GameService {
         game.setPlayerRange(getPlayersRange(gameSaveDto.getPlayerRange()));
 
         game.setPromoted(gameSaveDto.isPromoted());
-        if (gameSaveDto.getPoster() != null && !gameSaveDto.getPoster().isEmpty()) {
 
-            String savedFileName = fileStorageService.saveImage(gameSaveDto.getPoster(), gameSaveDto.getTitle());
+
+        if (gameSaveDto.getPoster() != null && !gameSaveDto.getPoster().isEmpty()) {
+            String savedFileName = fileStorageService.saveImage(gameSaveDto.getPoster(), gameSaveDto.getTitle(),true,false);
             game.setPoster(savedFileName);
         }
         gameRepository.save(game);
@@ -297,7 +308,7 @@ public class GameService {
     }
 
     private void setMainCategory(List<String> categoriesDto, String mainCategory, List<Category> resulCategories) {
-        if (mainCategory.isEmpty() ) {
+        if (mainCategory.isEmpty()) {
             mainCategory = categoriesDto.get(0);
         }
 

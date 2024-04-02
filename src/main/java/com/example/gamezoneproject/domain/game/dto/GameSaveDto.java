@@ -1,6 +1,19 @@
 package com.example.gamezoneproject.domain.game.dto;
 
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
+import com.example.gamezoneproject.domain.validation.category.CategoryExists;
+import com.example.gamezoneproject.domain.validation.company.CompanyExists;
+import com.example.gamezoneproject.domain.validation.file.MaxFileSize;
+import com.example.gamezoneproject.domain.validation.game.NoGameDuplication;
+import com.example.gamezoneproject.domain.validation.other.containsh2.ContainsH2;
+import com.example.gamezoneproject.domain.validation.other.date.Date;
+import com.example.gamezoneproject.domain.validation.other.illegalexpression.NoIllegalExpression;
+import com.example.gamezoneproject.domain.validation.other.alphanumeric.Alphanumeric;
+import com.example.gamezoneproject.domain.validation.platform.PlatformExists;
+import com.example.gamezoneproject.domain.validation.playersrange.PlayersRange;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -15,18 +28,43 @@ import java.util.Set;
  * set of platforms names,list of game modes names, producer, publisher, is promoted, poster and players range.
  */
 public class GameSaveDto {
+    @Size(min = 2, max = 99)
+    @NoGameDuplication
+    @NoIllegalExpression
     private String title;
+    @Size(min = 4, max = 30)
+    @Alphanumeric
     private String dailymotionTrailerId;
+    @NoIllegalExpression
+    @Size(min = 100, max = 320)
     private String shortDescription;
+    @NoIllegalExpression
+    @Size(min = 200, max = 105_000)
+    @ContainsH2
     private String description;
+    @Date(min = 1980, max = 3000)
     private LocalDate releaseYear;
+    @Size(min = 4, max = 14)
+    @CategoryExists
     private LinkedList<String> category;
+    @CategoryExists
+    private String mainCategory;
+    @Size(min = 1, max = 14)
+    @PlatformExists
     private Set<String> platform;
+    @NotEmpty
     private List<String> gameModes;
+    @NotNull
     private boolean promoted;
+    @NotEmpty
+    @CompanyExists
     private String producer;
+    @NotEmpty
+    @CompanyExists
     private String publisher;
+    @MaxFileSize(maxSizeMb = 1)
     private MultipartFile poster;
+    @PlayersRange(rangeMin = 1, rangeMax = 2000,maxMin=1000)
     private PlayerRange playerRange;
 
     public String getTitle() {
@@ -131,5 +169,13 @@ public class GameSaveDto {
 
     public void setPlayerRange(PlayerRange playerRange) {
         this.playerRange = playerRange;
+    }
+
+    public String getMainCategory() {
+        return mainCategory;
+    }
+
+    public void setMainCategory(String mainCategory) {
+        this.mainCategory = mainCategory;
     }
 }

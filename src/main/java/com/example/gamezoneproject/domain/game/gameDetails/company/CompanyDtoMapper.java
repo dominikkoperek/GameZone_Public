@@ -20,7 +20,8 @@ public class CompanyDtoMapper {
                 company.getCountry(),
                 company.getProducer(),
                 company.getPublisher(),
-                company.getDescription()
+                company.getDescription(),
+                company.getPoster()
         );
     }
 

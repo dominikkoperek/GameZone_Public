@@ -14,6 +14,15 @@ public class Company {
     private Boolean isPublisher;
 
     private String description;
+    private String poster;
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
 
     public Long getId() {
         return id;

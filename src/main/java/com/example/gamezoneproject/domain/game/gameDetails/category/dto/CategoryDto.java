@@ -1,7 +1,7 @@
 package com.example.gamezoneproject.domain.game.gameDetails.category.dto;
 
-import com.example.gamezoneproject.domain.validation.NoCategoryDuplication;
-import jakarta.validation.constraints.NotBlank;
+import com.example.gamezoneproject.domain.validation.category.NoCategoryDuplication;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 /**
@@ -12,10 +12,10 @@ import jakarta.validation.constraints.Size;
 public class CategoryDto {
     private Long id;
     @NoCategoryDuplication
-    @NotBlank
+    @NotEmpty
     @Size(min = 3, max = 20)
     private String name;
-    @NotBlank
+    @NotEmpty
     @Size(min = 50, max = 800)
     private String description;
 

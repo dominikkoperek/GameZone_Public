@@ -1,7 +1,6 @@
 //DISABLE FORM BEFORE VALIDATION
 const gameFormButton = document.getElementById("game-add-form-button");
 const gameForm = document.getElementById("add-content-form")
-
 gameForm.addEventListener("submit", function (ev) {
     ev.preventDefault();
 })
@@ -239,9 +238,9 @@ const validateGameTitle = async () => {
         return false;
     }
 
-    if (gameTitleValue.length > 120) {
+    if (gameTitleValue.length > 99) {
         gameTitle.classList.add('error-input');
-        gameTitleError.innerHTML = 'Tytuł może mieć maksymalnie 120 znaków';
+        gameTitleError.innerHTML = 'Tytuł może mieć maksymalnie 99 znaków';
         return false;
     }
     gameTitle.classList.remove('error-input');
@@ -303,7 +302,7 @@ const validateGameLongDescription = () => {
     }
     if (gameLongDescriptionValue.length > 105_000) {
         gameLongDescription.classList.add('error-input');
-        gameLongDescriptionError.innerHTML = "Opis może mieć maksymalnie 100000 znaków";
+        gameLongDescriptionError.innerHTML = "Opis może mieć maksymalnie 105000 znaków";
         return false;
     }
     if (!(gameLongDescriptionValue.includes('<h2>') && gameLongDescriptionValue.includes('</h2>'))) {
@@ -480,9 +479,9 @@ const validatePlayersRange = () => {
         playerRangeError.innerHTML = "Minimalna wartość to 1";
         return false;
     }
-    if (minPlayersValue > 999) {
+    if (minPlayersValue > 1000) {
         minPlayers.classList.add("error-input");
-        playerRangeError.innerHTML = "Minimalna wartość to 999";
+        playerRangeError.innerHTML = "Maksymalna wartość dla min to 1000";
         return false;
     }
     if (maxPlayerValue < 1) {
@@ -492,7 +491,7 @@ const validatePlayersRange = () => {
     }
     if (maxPlayerValue > 2000) {
         maxPlayers.classList.add("error-input");
-        playerRangeError.innerHTML = "Maksymalna wartość to 2000";
+        playerRangeError.innerHTML = "Maksymalna wartość dla max to 2000";
         return false;
     }
 
@@ -520,7 +519,7 @@ const validateGamePlatforms = () => {
     }
     platform.classList.remove("error-input");
     platformsError.innerHTML = "";
-    return  true;
+    return true;
 }
 //VALIDATE CATEGORIES
 
@@ -530,9 +529,9 @@ const categoriesError = document.getElementById("game-categories-error");
 function validateCategories() {
     const itemCategories = document.querySelectorAll(".item-categories");
 
-    if (itemCategories.length < 1) {
+    if (itemCategories.length < 4) {
         categories.classList.add("error-input");
-        categoriesError.innerHTML = "Dodaj przynajmniej 1 kategorie";
+        categoriesError.innerHTML = "Dodaj przynajmniej 4 kategorie";
         return false;
     }
     if (itemCategories.length > 14) {
@@ -540,13 +539,45 @@ function validateCategories() {
         categoriesError.innerHTML = "Maksymalna ilość kategorii to 14";
         return false;
     }
-    if(!document.querySelector(".chosen")){
+    if (!document.querySelector(".chosen")) {
         categories.classList.add("error-input");
         categoriesError.innerHTML = "Wybierz główną kategorię";
         return false;
     }
     categories.classList.remove("error-input");
     categoriesError.innerHTML = "";
+    return true;
+}
+
+//VALIDATE POSTER
+const poster = document.getElementById("image");
+const posterError = document.getElementById("poster-error");
+
+const validateGamePoster = () => {
+    let size;
+    let extension;
+    if (poster.value !== "") {
+        size = ((poster.files[0].size / 1024) / 1024).toString().slice(0, 4);
+        extension = poster.files[0].type;
+    }
+    if (poster.value === "") {
+        poster.classList.add("error-input");
+        posterError.innerHTML = "Dodaj obraz";
+        return false;
+    }
+    if (size > 1 && poster.value !== "") {
+        poster.classList.add("error-input");
+        posterError.innerHTML = "Obraz jest za duży " + size + "Mb";
+        return false;
+    }
+    if (extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg" && poster.value !== "") {
+        poster.classList.add("error-input");
+        posterError.innerHTML = "Nieobsługiwany format pliku!";
+        removeUpload();
+        return false;
+    }
+    poster.classList.remove("error-input");
+    posterError.innerHTML = "";
     return true;
 }
 
@@ -563,15 +594,15 @@ async function validateGameForm() {
     let gameModes = validateGameMode();
     let playerRange = validatePlayersRange();
     let platforms = validateGamePlatforms();
-    // let poster = validateGamePoster();
+    let poster = validateGamePoster();
     return gameTitle && gameShortDescription && gameLongDescription && trailerId && producer && publisher &&
-        date && categories && gameModes && playerRange && platforms;
+        date && gameModes && playerRange && platforms && poster && categories;
 }
 
 function sendForm() {
     validateGameForm().then(result => {
         if (result) {
-            form.submit();
+            gameForm.submit();
         } else {
             gameTitleError.classList.add("button-error");
             gameShortDescriptionError.classList.add("button-error");
@@ -584,7 +615,7 @@ function sendForm() {
             gameModesError.classList.add("button-error");
             playerRangeError.classList.add("button-error");
             platformsError.classList.add("button-error");
-            // poster.classList.add("button-error");
+            posterError.classList.add("button-error");
             gameFormButton.classList.add("button-error");
         }
         setTimeout(function () {
@@ -599,7 +630,7 @@ function sendForm() {
             gameModesError.classList.remove("button-error");
             playerRangeError.classList.remove("button-error");
             platformsError.classList.remove("button-error");
-            // poster.classList.remove("button-error");
+            posterError.classList.remove("button-error");
             gameFormButton.classList.remove("button-error");
         }, 500)
     }).catch(error => {
@@ -610,19 +641,24 @@ function sendForm() {
 //IMAGE PREVIEW
 function previewBeforeUpload(id) {
     document.querySelector("#" + id).addEventListener("change", function (e) {
-
         let file = e.target.files[0];
         let url = URL.createObjectURL(file);
-        document.querySelector("#" + id + "-preview div").innerText = file.name;
-        document.querySelector("#" + id + "-preview img").src = url;
+        if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg") {
+            document.querySelector("#" + id + "-preview div").innerText = file.name;
+            document.querySelector("#" + id + "-preview img").src = url;
+        }
     });
 }
-function removeUpload(id="image"){
-    document.querySelector("#" + id + "-preview div").innerHTML="<span>+</span>";
+
+function removeUpload(id = "image") {
+    document.querySelector("#" + id + "-preview div").innerHTML = "<span>+</span>";
     document.querySelector("#" + id + "-preview img").src = '/img/notfound.png';
 }
 
-previewBeforeUpload("image");
+poster.addEventListener("input", function () {
+    previewBeforeUpload("image");
+})
+
 
 //RESET FORM BUTTON
 
@@ -660,6 +696,10 @@ function clearGameForm() {
     showPlayersRange.classList.remove("show-players-range");
     gameModesContainer.classList.remove("error-input");
     gameModesError.innerHTML = '';
+    platformsError.innerHTML = '';
+    platform.classList.remove("error-input");
+    poster.classList.remove("error-input");
+    posterError.innerHTML = '';
     removeUpload();
 }
 

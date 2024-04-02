@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
-
+/**
+ * Controller for game.
+ */
 @Controller
 public class GameController {
     private final GameService gameService;
@@ -17,6 +19,13 @@ public class GameController {
         this.gameService = gameService;
     }
 
+    /**
+     * Display game.
+     * @param id The id of the game.
+     * @param gameTitle The title of the game.
+     * @param model The Model object that add attributes.
+     * @return The view name of the game.
+     */
     @GetMapping("/gry/{gameTitle}/{id}")
     public String game(@PathVariable Long id,
                        @PathVariable String gameTitle,

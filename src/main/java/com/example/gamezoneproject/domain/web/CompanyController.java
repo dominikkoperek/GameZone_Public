@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
+/**
+ * Controller for companies list.
+ */
 @Controller
 public class CompanyController {
     private final static String POLISH_NAME  = "Polska";
@@ -24,32 +26,33 @@ public class CompanyController {
         this.gameService = gameService;
     }
 
+    /**
+     * Method for display all available companies from DB.
+     * @param model The Model object that add attributes.
+     * @return The view name of company-listing.
+     */
     @GetMapping("/firma")
     public String getAllCompanies(Model model) {
-
-        List<CompanyDto> allCompanies = companyService.findAllCompanies();
-        List<CompanyDto> polishProducers = companyService.findAllPolishProducers();
-        List<CompanyDto> polishPublishers = companyService.findAllPolishPublishers();
-        List<CompanyDto> allPublishers = companyService.findAllPublishers();
-        List<CompanyDto> allProducers = companyService.findAllProducers();
-
-        model.addAttribute("allCompanies", allCompanies);
-        model.addAttribute("polishProducers", polishProducers);
-        model.addAttribute("polishPublishers", polishPublishers);
-        model.addAttribute("allPublishers", allPublishers);
-        model.addAttribute("allProducers", allProducers);
-
-        model.addAttribute("heading", "Producenci i wydawcy gier komputerowych");
-        model.addAttribute("description", "Lista światowych i polskich producentów (deweloperów)" +
-                " oraz wydawców gier. Zawiera zarówno firmy, które do tej pory funkcjonują w branży gier komputerowych " +
-                "i konsolowych, jak i nieistniejące już przedsiębiorstwa. Klikając na nazwę firmy, możesz zapoznać się " +
-                "z jej portfolio, a w niektórych przypadkach także przeczytać o jej historii.");
+        addModelAttributes(model);
         return "company-listing";
     }
+
+    /**
+     * Display company info.
+     * @param id The id of the company.
+     * @param companyName Name of the company.
+     * @param model The Model object that add attributes.
+     * @return The view name of company.
+     */
     @GetMapping("/firma/{companyName}/{id}")
     public String company(@PathVariable Long id,
                           @PathVariable String companyName,
                           Model model) {
+        addModelAttributes(id, companyName, model);
+        return "company";
+    }
+
+    private void addModelAttributes(Long id, String companyName, Model model) {
         CompanyDto companyDto = companyService
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -76,8 +79,26 @@ public class CompanyController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return "company";
     }
 
+    private void addModelAttributes(Model model) {
+        List<CompanyDto> allCompanies = companyService.findAllCompanies();
+        List<CompanyDto> polishProducers = companyService.findAllPolishProducers();
+        List<CompanyDto> polishPublishers = companyService.findAllPolishPublishers();
+        List<CompanyDto> allPublishers = companyService.findAllPublishers();
+        List<CompanyDto> allProducers = companyService.findAllProducers();
+
+        model.addAttribute("allCompanies", allCompanies);
+        model.addAttribute("polishProducers", polishProducers);
+        model.addAttribute("polishPublishers", polishPublishers);
+        model.addAttribute("allPublishers", allPublishers);
+        model.addAttribute("allProducers", allProducers);
+
+        model.addAttribute("heading", "Producenci i wydawcy gier komputerowych");
+        model.addAttribute("description", "Lista światowych i polskich producentów (deweloperów)" +
+                " oraz wydawców gier. Zawiera zarówno firmy, które do tej pory funkcjonują w branży gier komputerowych " +
+                "i konsolowych, jak i nieistniejące już przedsiębiorstwa. Klikając na nazwę firmy, możesz zapoznać się " +
+                "z jej portfolio, a w niektórych przypadkach także przeczytać o jej historii.");
+    }
 
 }

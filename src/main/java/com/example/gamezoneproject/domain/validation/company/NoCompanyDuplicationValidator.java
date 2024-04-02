@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.validation;
+package com.example.gamezoneproject.domain.validation.company;
 
 import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyService;
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDto;

@@ -7,9 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * Home controller for all games.
+ */
 @Controller
 public class HomeController {
     private final GameService gameService;
@@ -20,9 +24,17 @@ public class HomeController {
         this.gamePlatformService = gamePlatformService;
     }
 
+    /**
+     * Display all games sorted by release year reversed.
+     * @param model The Model object that add attributes.
+     * @return The view name of game-listing.
+     */
     @GetMapping("/")
     public String home(Model model) {
-        List<GameDto> allGames = gameService.findAllGames();
+        List<GameDto> allGames = gameService.findAllGames()
+                .stream()
+                .sorted(Comparator.comparing(GameDto::getReleaseYear).reversed())
+                .toList();
         LinkedHashMap<String, String> gamePlatforms = gamePlatformService.findAllGamePlatforms();
 
         model.addAttribute("platforms", gamePlatforms);

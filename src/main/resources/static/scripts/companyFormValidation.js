@@ -132,7 +132,15 @@ const validateCompanyShortDescription = () => {
 }
 
 const validateCompanyLongDescription = () => {
-    let companyLongDescriptionValue = tinymce.get("companyLongDescription").getContent();
+    let companyLongDescriptionValue;
+    try {
+        companyLongDescriptionValue = tinymce.get("companyLongDescription").getContent();
+    } catch (e) {
+        if (e instanceof ReferenceError) {
+            companyLongDescriptionValue = companyLongDescription.value.trim();
+        }
+
+    }
 
     if (companyLongDescriptionValue === '') {
         companyLongDescription.classList.add('error-input');

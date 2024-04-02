@@ -87,14 +87,16 @@
         <div class="checkbox-center-container">
             <div class="checkbox-margin-box">
                 <label class="checkbox-container">Producent
-                    <input type="checkbox" name="is-producer" id="is-producer" onclick="validateIsProducerOrIsPublisher()">
+                    <input type="checkbox"
+                           onclick="validateIsProducerOrIsPublisher()" id="is-producer" th:field="*{producer}">
                     <span class="checkmark"></span>
                 </label>
             </div>
 
             <div class="checkbox-margin-box">
                 <label class="checkbox-container">Wydawca
-                    <input type="checkbox" name="is-publisher" id="is-publisher" onclick="validateIsProducerOrIsPublisher()">
+                    <input type="checkbox"
+                           onclick="validateIsProducerOrIsPublisher()" id="is-publisher"  th:field="*{publisher}">
                     <span class="checkmark"></span>
                 </label>
             </div>
