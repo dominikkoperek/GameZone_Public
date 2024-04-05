@@ -15,7 +15,6 @@ public class NoCompanyDuplicationValidator implements ConstraintValidator<NoComp
     }
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        Optional<CompanyDto> companyDto = companyService.findCompanyByName(value);
-        return companyDto.map(company -> !company.getName().equalsIgnoreCase(value)).orElse(true);
+        return companyService.isCompanyAvailable(value);
     }
 }

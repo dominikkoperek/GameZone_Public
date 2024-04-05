@@ -14,6 +14,9 @@ public class NoIllegalExpressionValidator implements ConstraintValidator<NoIlleg
                 || s.contains("<h5>") || s.contains("<h6>")) {
             return false;
         }
+        if (s.contains("<iframe>")) {
+            return false;
+        }
         return !s.contains("<script>");
     }
 }

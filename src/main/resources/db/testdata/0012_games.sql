@@ -93,4 +93,10 @@ funkcjonującego gatunku, poczynając od najniższego szczebla drabiny ewolucji.
 
 <div id="scroller-mid-direct"></div>
 
-<p>Spore Creatures Creator, czyli edytor stwork&oacute;w, udostępniono w sprzedaży na kilka miesięcy przed premierą właściwej gry, jako samodzielną aplikację. Niemniej jednak jest on także częścią samego&nbsp;Spore.</p>',1,1,'Spore.jpg');
+<p>Spore Creatures Creator, czyli edytor stwork&oacute;w, udostępniono w sprzedaży na kilka miesięcy przed premierą właściwej gry, jako samodzielną aplikację. Niemniej jednak jest on także częścią samego&nbsp;Spore.</p>'
+           ,1,1,'Spore.jpg');
+INSERT INTO game
+(title, short_description, dailymotion_trailer_id, release_year, promoted,
+ producer_id,publisher_id,description,min_players,max_players,poster)
+VALUES ('Stellar Blade', 'Gra RPG akcji inspirowana przez takie hity, jak NieR: Automata oraz God of War. W Stellar Blade (znanym wcześniej jako Project Eve) trafiamy do postapokaliptycznego świata i wcielamy się w wojowniczkę walczącą z potworami, które go opanowały.',
+        'x8w7vu8', '2024-04-26', true, 3 ,3,'Gra',1,1,'stellarblade.jpg');

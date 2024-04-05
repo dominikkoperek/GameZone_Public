@@ -20,8 +20,9 @@
                 <i class="fa-solid fa-rotate-right logo"></i>
             </button>
         </div>
-        <label for="categoryName">Nazwa (3 - 20 znaków)</label>
-        <input type="text" id="categoryName" placeholder="spacja = zajęte kategorie"
+
+        <label for="category-name">Nazwa (3 - 20 znaków)</label>
+        <input type="text" id="category-name" placeholder="spacja = zajęte kategorie"
                th:field="*{name}"
                th:classappend="${#fields.hasErrors('name')} ? 'error-input' : ''"
                aria-autocomplete="none"
@@ -30,7 +31,7 @@
                onkeyup="validateCategoryName()">
         <ul id="notification-bar-categories" class="hide-notification"></ul>
         <div class="input-validation-container">
-            <p class="notification-error" id="name-error"></p>
+            <p class="notification-error" id="category-name-error"></p>
             <p class="notification-error" th:errors="${category.name}">Powiadomienia</p>
         </div>
 
@@ -44,7 +45,7 @@
                   onkeyup="validateCategoryDescription()">
         </textarea>
         <div class="input-validation-container">
-            <p class="notification-error" id="description-error"></p>
+            <p class="notification-error" id="category-description-error"></p>
             <p class="notification-error" th:errors="${category.description}">Powiadomienia</p>
         </div>
 

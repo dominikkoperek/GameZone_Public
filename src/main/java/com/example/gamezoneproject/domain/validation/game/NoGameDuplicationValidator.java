@@ -13,9 +13,6 @@ public class NoGameDuplicationValidator implements ConstraintValidator<NoGameDup
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return gameService
-                .findByTitle(s)
-                .map(game->!game.getTitle().equalsIgnoreCase(s))
-                .orElse(true);
+        return  gameService.isTitleAvailable(s);
     }
 }

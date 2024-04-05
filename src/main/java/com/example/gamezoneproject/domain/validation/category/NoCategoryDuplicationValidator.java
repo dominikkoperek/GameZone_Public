@@ -16,7 +16,6 @@ public class NoCategoryDuplicationValidator implements ConstraintValidator<NoCat
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        Optional<CategoryDto> categoryOptional = categoryService.findCategoryByName(value);
-        return categoryOptional.map(category -> !category.getName().equalsIgnoreCase(value)).orElse(true);
+        return categoryService.isCategoryAvailable(value);
     }
 }

@@ -36,9 +36,13 @@ public class PlatformManagementController {
     @GetMapping("/admin/dodaj-platforme")
     public String addPlatformForm(Model model) {
         model.addAttribute("platform", new GamePlatformDto());
+        addModelAttributes(model);
+        return "admin/platform-add-form";
+    }
+
+    private void addModelAttributes(Model model) {
         LinkedHashMap<String, String> allGamePlatforms = gamePlatformService.findAllGamePlatforms();
         model.addAttribute("allGamePlatforms", allGamePlatforms);
-        return "admin/platform-add-form";
     }
 
     /**
@@ -51,8 +55,10 @@ public class PlatformManagementController {
     @PostMapping("/admin/dodaj-platforme")
     public String addPlatform(@Valid @ModelAttribute("platform") GamePlatformDto gamePlatformDto,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes) {
+                              RedirectAttributes redirectAttributes,
+                              Model model) {
         if (bindingResult.hasErrors()) {
+            addModelAttributes(model);
             return "admin/platform-add-form";
         } else {
             platformService.addGamePlatform(gamePlatformDto);

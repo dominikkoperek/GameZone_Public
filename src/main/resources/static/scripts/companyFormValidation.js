@@ -1,24 +1,41 @@
-let companyName = document.getElementById("company-name");
-let companyShortDescription = document.getElementById("company-short-description");
-let companyLongDescription = document.getElementById("company-long-description");
 let companyListSuggestion = document.getElementById("show-suggestion-list");
-let companyFormError = document.querySelector(".notification-error");
-let form = document.getElementById("add-content-form");
-let formNameError = document.getElementById("name-error");
-let formShortDescriptionError = document.getElementById("short-description-error");
-let formLongDescriptionError = document.getElementById("long-description-error");
-let formCountryError = document.getElementById("country-error");
 let timerCompanySuggestions;
 let companySuggestions = [];
-let isProducer = document.getElementById("is-producer");
-let isPublisher = document.getElementById("is-publisher");
-let isCompanyError = document.getElementById("is-company-error")
 
-let companyCountry = document.getElementById("company-country");
-let countryValue = document.getElementById("country-value");
-let countriesListSuggestion = document.getElementById("show-countries-list");
-let timerCountrySuggestions;
-let countriesSuggestions = [];
+
+//VALIDATE COMPANY NAME
+const companyName = document.getElementById("company-name");
+const companyNameError = document.getElementById("name-error");
+
+validateCompanyName = async () => {
+    const companyNameValue = companyName.value.trim();
+    if (companyNameValue === '') {
+        companyName.classList.add('error-input');
+        companyNameError.innerHTML = 'Nazwa nie może być pusta!';
+        return false;
+    }
+    if (companyNameValue.length < 3) {
+        companyName.classList.add('error-input');
+        companyNameError.innerHTML = 'Nazwa musi mieć przynajmniej 3 znaki';
+        return false;
+    }
+    if (companyNameValue.length > 35) {
+        companyName.classList.add('error-input');
+        companyNameError.innerHTML = 'Nazwa może mieć maksymalnie 35 znaków';
+        return false;
+    }
+    let isCompanyAvailable = await checkCompanyAvailability(companyNameValue);
+
+    if (!isCompanyAvailable) {
+        companyName.classList.add('error-input');
+        companyNameError.innerHTML = 'Firma już istnieje';
+        return false;
+    }
+    companyName.classList.remove('error-input');
+    companyNameError.innerHTML = '';
+    return true;
+}
+//SHOW USED NAMES FOR COMPANY
 
 companyName.addEventListener('keyup', function () {
     clearTimeout(timerCompanySuggestions);
@@ -27,110 +44,58 @@ companyName.addEventListener('keyup', function () {
     }, 450)
 });
 
-companyCountry.addEventListener('keyup', function () {
-    clearTimeout(timerCountrySuggestions);
-    timerCountrySuggestions = setTimeout(function () {
-        getCountriesSuggestion(companyCountry.value);
-    }, 450)
-});
-
-
-const validateCompanyName = async () => {
-    let companyNameValue = companyName.value.trim();
-    if (companyNameValue === '') {
-        companyName.classList.add('error-input');
-        companyFormError.innerHTML = 'Nazwa nie może być pusta!';
-        return false;
-    }
-    if (companyNameValue.length < 3) {
-        companyName.classList.add('error-input');
-        companyFormError.innerHTML = 'Nazwa musi mieć przynajmniej 3 znaki';
-        return false;
-    }
-    if (companyNameValue.length > 35) {
-        companyName.classList.add('error-input');
-        companyFormError.innerHTML = 'Nazwa może mieć maksymalnie 35 znaków';
-        return false;
-    }
-    let isCompanyAvailable = await checkCompanyAvailability(companyNameValue);
-
-    if (!isCompanyAvailable) {
-        companyName.classList.add('error-input');
-        companyFormError.innerHTML = 'Wydawca już istnieje';
-        return false;
-    }
-    companyName.classList.remove('error-input');
-    companyFormError.innerHTML = '';
-    return true;
-}
-const clearCompanyForm = () => {
-    form.reset();
-    companyName.classList.remove('error-input');
-    companyShortDescription.classList.remove('error-input');
-    countryValue.classList.remove('error-input');
-    companyLongDescription.classList.remove('error-input');
-    isProducer.classList.remove('error-input');
-    isPublisher.classList.remove('error-input');
-
-    isCompanyError.innerHTML = '';
-    companyFormError.innerHTML = '';
-    formNameError.innerHTML = '';
-    formShortDescriptionError.innerHTML = '';
-    formLongDescriptionError.innerHTML = '';
-    companyListSuggestion.innerHTML = '';
-    countriesListSuggestion.innerHTML = '';
-    formCountryError.innerHTML = '';
-
-}
+//VALIDATE COUNTRY
+const companyCountry = document.getElementById("company-country");
+const companyCountryError = document.getElementById("country-error");
 const validateCountry = () => {
-    let countryValueTrim = countryValue.value.trim();
+    let countryValueTrim = companyCountry.value.trim();
     if (countryValueTrim === '') {
-        countryValue.classList.add('error-input');
-        formCountryError.innerHTML = 'Kraj nie może być pusty'
+        companyCountry.classList.add('error-input');
+        companyCountryError.innerHTML = 'Kraj nie może być pusty'
         return false;
     }
     if (countryValueTrim.length < 4) {
-        countryValue.classList.add('error-input');
-        formCountryError.innerHTML = 'Kraj musi mieć przynajmniej 4 znaki'
+        companyCountry.classList.add('error-input');
+        companyCountryError.innerHTML = 'Kraj musi mieć przynajmniej 4 znaki'
         return false;
     }
     if (countryValueTrim.length > 33) {
-        countryValue.classList.add('error-input');
-        formCountryError.innerHTML = 'Kraj może mieć maksymalnie 33 znaki'
+        companyCountry.classList.add('error-input');
+        companyCountryError.innerHTML = 'Kraj może mieć maksymalnie 33 znaki'
         return false;
     }
-    if (countryValueTrim !== companyCountry.value) {
-        countryValue.classList.add('error-input');
-        formCountryError.innerHTML = 'Wartośći w obu polach muszą być takie same';
-        return false;
-    }
-    formCountryError.innerHTML = '';
-    countryValue.classList.remove('error-input');
+    companyCountryError.innerHTML = '';
+    companyCountry.classList.remove('error-input');
     return true;
 }
+//VALIDATE COMPANY SHORT DESCRIPTION
+const companyShortDescription = document.getElementById("company-short-description");
+const companyShortDescriptionError = document.getElementById("short-description-error");
 const validateCompanyShortDescription = () => {
     let companyShortDescriptionValue = companyShortDescription.value.trim();
 
     if (companyShortDescriptionValue === '') {
         companyShortDescription.classList.add('error-input');
-        formShortDescriptionError.innerHTML = 'Opis nie może być pusty'
+        companyShortDescriptionError.innerHTML = 'Opis nie może być pusty'
         return false;
     }
     if (companyShortDescriptionValue.length < 100) {
         companyShortDescription.classList.add('error-input');
-        formShortDescriptionError.innerHTML = 'Opis musi mieć przynajmniej 100 znaków'
+        companyShortDescriptionError.innerHTML = 'Opis musi mieć przynajmniej 100 znaków'
         return false;
     }
     if (companyShortDescriptionValue.length > 1000) {
         companyShortDescription.classList.add('error-input');
-        formShortDescriptionError.innerHTML = 'Opis może mieć maksymalnie 1000 znaków'
+        companyShortDescriptionError.innerHTML = 'Opis może mieć maksymalnie 1000 znaków'
         return false;
     }
-    formShortDescriptionError.innerHTML = '';
+    companyShortDescriptionError.innerHTML = '';
     companyShortDescription.classList.remove('error-input');
     return true;
 }
-
+//VALIDATE LONG DESCRIPTION
+let companyLongDescription = document.getElementById("company-long-description");
+let companyLongDescriptionError = document.getElementById("long-description-error");
 const validateCompanyLongDescription = () => {
     let companyLongDescriptionValue;
     try {
@@ -144,24 +109,127 @@ const validateCompanyLongDescription = () => {
 
     if (companyLongDescriptionValue === '') {
         companyLongDescription.classList.add('error-input');
-        formLongDescriptionError.innerHTML = 'Opis nie może być pusty'
+        companyLongDescriptionError.innerHTML = 'Opis nie może być pusty'
         return false;
     }
     if (companyLongDescriptionValue.length < 200) {
         companyLongDescription.classList.add('error-input');
-        formLongDescriptionError.innerHTML = 'Opis musi mieć przynajmniej 200 znaków'
+        companyLongDescriptionError.innerHTML = 'Opis musi mieć przynajmniej 200 znaków'
         return false;
     }
 
     if (companyLongDescriptionValue.length > 105_000) {
         companyLongDescription.classList.add('error-input');
-        formLongDescriptionError.innerHTML = 'Opis może mieć maksymalnie 100000 znaków'
+        companyLongDescriptionError.innerHTML = 'Opis może mieć maksymalnie 105000 znaków'
         return false;
     }
-    formLongDescriptionError.innerHTML = '';
+    if (!(companyLongDescriptionValue.includes('<h2>') && companyLongDescriptionValue.includes('</h2>'))) {
+        companyLongDescription.classList.add('error-input');
+        companyLongDescriptionError.innerHTML = "Opis musi zawierać przynajmniej 1 nagłówek &lt;h2&gt; &lt;/h2&gt; ";
+        return false;
+    }
+    if (companyLongDescriptionValue.includes('<h1>') || companyLongDescriptionValue.includes('<h3>') ||
+        companyLongDescriptionValue.includes('<h4>') || companyLongDescriptionValue.includes('<h5>') ||
+        companyLongDescriptionValue.includes('<h6>')) {
+        companyLongDescription.classList.add('error-input');
+        companyLongDescriptionError.innerHTML = "Opis może zawierac tylko nagłówki &lt;h2&gt; ";
+        return false;
+    }
+    if (companyLongDescriptionValue.includes("<script>") ||
+        companyLongDescriptionValue.includes("<iframe>")) {
+        companyLongDescription.classList.add('error-input');
+        companyLongDescriptionError.innerHTML = 'Opis zawiera niedozwolone frazy';
+        return false;
+    }
+
+    companyLongDescriptionError.innerHTML = '';
     companyLongDescription.classList.remove('error-input');
     return true;
 }
+//VALIDATE COMPANY POSTER
+
+const companyPoster = document.getElementById("poster");
+const companyPosterError = document.getElementById("company-poster-error");
+const companyImageProportionHeight = document.getElementById("company-image-proportion-height");
+const companyImageProportionWidth = document.getElementById("company-image-proportion-width");
+const validateCompanyPoster = async () => {
+    companyImageProportionHeight.innerHTML = "";
+    companyImageProportionWidth.innerHTML = "";
+    let size;
+    let extension;
+    let width;
+    let height;
+    if (companyPoster.value !== "") {
+        size = ((companyPoster.files[0].size / 1024) / 1024).toString().slice(0, 4);
+        extension = companyPoster.files[0].type;
+
+        const img = new Image();
+        img.src = window.URL.createObjectURL(companyPoster.files[0]);
+        await new Promise((resolve) => {
+            img.onload = () => {
+                width = img.width;
+                height = img.height;
+                resolve();
+            };
+        });
+    }
+    let proportionHeightWidth = height / width;
+    let slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
+    let proportionWidthHeight = width / height;
+    let slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
+
+    if (companyPoster.value === "") {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Dodaj obraz";
+        removeUpload();
+        return false;
+    }
+    if (width > 1200 && companyPoster.value !== "") {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px";
+        return false;
+    }
+    if (height > 1200 && companyPoster.value !== "") {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px";
+        return false;
+    }
+
+
+    if (proportionHeightWidth < 0.9 && proportionHeightWidth < 1.1) {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 0.9-1.1 jest " + slicedProportionHeightWidth;
+        return false;
+    }
+    if (proportionWidthHeight < 0.9 && proportionWidthHeight < 1.1) {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 0.9-1.1 jest " + slicedProportionWidthHeight;
+        return false;
+    }
+
+    if (size > 2 && companyPoster.value !== "") {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Obraz jest za duży " + size + "Mb";
+        return false;
+    }
+    if (extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg" && companyPoster.value !== "") {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Nieobsługiwany format pliku!";
+        removeUpload();
+        return false;
+    }
+
+    companyImageProportionHeight.innerHTML = "wysokość/szerokość = " + slicedProportionHeightWidth;
+    companyImageProportionWidth.innerHTML = "szerokość/wysokość = " + slicedProportionWidthHeight;
+    companyPoster.classList.remove("error-input");
+    companyPosterError.innerHTML = "";
+    return true;
+}
+
+//VALIDATE IS PRODUCER AND IS PUBLISHER
+const isProducer = document.getElementById("is-producer");
+const isPublisher = document.getElementById("is-publisher");
+const isCompanyError = document.getElementById("is-company-error")
 
 function validateIsProducerOrIsPublisher() {
     if (!isPublisher.checked && !isProducer.checked) {
@@ -177,40 +245,48 @@ function validateIsProducerOrIsPublisher() {
 
 }
 
+//DISABLE DEFAULT FORM BEFORE VALIDATION
+const companyForm = document.getElementById("add-content-form");
 const formButton = document.getElementById("form-button");
-formButton.addEventListener("click", function (ev) {
+companyForm.addEventListener("submit", function (ev) {
     ev.preventDefault();
 })
 
+//VALIDATE EACH FIELD IN FORM BEFORE SEND
 async function checkIsFormValid() {
     let companyName = await validateCompanyName();
     let companyShortDescription = validateCompanyShortDescription();
     let companyLongDescription = validateCompanyLongDescription();
     let country = validateCountry();
     let isProducerOrPublisher = validateIsProducerOrIsPublisher();
+    let isPosterValid = validateCompanyPoster();
 
-    return companyName && companyShortDescription && companyLongDescription && country && isProducerOrPublisher;
+    return companyName && companyShortDescription && companyLongDescription
+        && country && isProducerOrPublisher && isPosterValid;
 }
 
+//VALIDATE COMPANY FORM AND SEND IT OR SHOW ERROR
 function validateCompanyForm() {
     checkIsFormValid().then(result => {
         if (result) {
-            form.submit();
+            companyForm.submit();
         } else {
-            formNameError.classList.add("button-error");
-            formShortDescriptionError.classList.add("button-error");
-            formLongDescriptionError.classList.add("button-error");
+            companyNameError.classList.add("button-error");
+            companyShortDescriptionError.classList.add("button-error");
+            companyLongDescriptionError.classList.add("button-error");
             formButton.classList.add("button-error");
-            formCountryError.classList.add("button-error");
+            companyCountryError.classList.add("button-error");
             isCompanyError.classList.add("button-error");
+            companyPosterError.classList.add("button-error");
         }
         setTimeout(function () {
             formButton.classList.remove("button-error");
-            formNameError.classList.remove("button-error");
-            formShortDescriptionError.classList.remove("button-error");
-            formLongDescriptionError.classList.remove("button-error");
-            formCountryError.classList.remove("button-error");
+            companyNameError.classList.remove("button-error");
+            companyShortDescriptionError.classList.remove("button-error");
+            companyLongDescriptionError.classList.remove("button-error");
+            companyCountryError.classList.remove("button-error");
             isCompanyError.classList.remove("button-error");
+            companyPosterError.classList.remove("button-error");
         }, 500)
     }).catch(error => {
         console.error('Wystąpił błąd podczas walidacji ', error)
@@ -243,8 +319,8 @@ function getCompanySuggestion(input) {
 function showSuggestions(input) {
     let filteredSuggestions = companySuggestions.filter(suggestion => suggestion.toLowerCase().trim()
         .includes(input.trim().toLowerCase()));
-    filteredSuggestions = filteredSuggestions.sort((a, b) => a.localeCompare(b));
-    if (!input) {
+    filteredSuggestions = filteredSuggestions.sort((a, b) => a.localeCompare(b)).slice(0, 8);
+    if (!input.trim()) {
         companyListSuggestion.innerHTML = '';
         return;
     }
@@ -255,57 +331,6 @@ function showSuggestions(input) {
         listItem.textContent = suggestion;
         companyListSuggestion.appendChild(listItem);
     });
-}
-
-function getCountriesSuggestion(input) {
-    $.ajax({
-        url: '/api/country/allCountries',
-        type: 'GET',
-        success: function (data) {
-            countriesSuggestions = data;
-            showCountries(input);
-            if (countriesListSuggestion.children.length > 0 && companyCountry.value !== '') {
-                countriesListSuggestion.classList.add("show-notification")
-                countriesListSuggestion.classList.remove("hide-notification")
-            } else {
-                countriesListSuggestion.classList.remove("show-notification")
-                countriesListSuggestion.classList.add("hide-notification")
-            }
-
-        },
-        error: function (error) {
-            console.error('Error: ', error);
-        }
-    });
-}
-
-function showCountries(input) {
-    let filteredSuggestions = countriesSuggestions.filter(suggestion => suggestion.toLowerCase().trim()
-        .includes(input.trim().toLowerCase()));
-    filteredSuggestions = filteredSuggestions.sort((a, b) => a.localeCompare(b)).slice(0, 9);
-    if (!input.trim()) {
-        countriesListSuggestion.innerHTML = '';
-        return;
-    }
-    countriesListSuggestion.innerHTML = '';
-    filteredSuggestions.forEach(suggestion => {
-        let listItem = document.createElement('li');
-        listItem.className = 'hint-listing hint-listing-country';
-        let listButton = document.createElement('button');
-        listButton.className = 'hint-element';
-        listButton.type = 'button';
-        listButton.value = suggestion;
-        listButton.textContent = suggestion;
-        listItem.appendChild(listButton);
-        countriesListSuggestion.appendChild(listItem);
-
-        listButton.addEventListener('click', () => {
-            companyCountry.value = listButton.value;
-            countryValue.value = (listButton.value);
-            validateCountry();
-        })
-    });
-
 }
 
 
@@ -328,6 +353,51 @@ function checkCompanyAvailability(name) {
             }
         })
     })
+}
+
+//CLEAR FORM BUTTON
+function clearCompanyForm() {
+    companyForm.reset();
+    companyName.classList.remove('error-input');
+    companyNameError.innerHTML = '';
+    companyCountry.classList.remove("error-input");
+    companyCountryError.innerHTML = '';
+    companyShortDescription.classList.remove('error-input');
+    companyShortDescriptionError.innerHTML = '';
+
+
+    companyLongDescription.classList.remove('error-input');
+    isProducer.classList.remove('error-input');
+    isPublisher.classList.remove('error-input');
+    companyPoster.classList.remove("error-input");
+
+    companyPosterError.innerHTML = '';
+    isCompanyError.innerHTML = '';
+    companyLongDescriptionError.innerHTML = '';
+    companyListSuggestion.innerHTML = '';
+    removeUpload();
 
 }
+
+//POSTER UPLOAD/DELETE
+
+function previewCompanyPoster(id) {
+    document.querySelector("#" + id).addEventListener("change", function (e) {
+        let file = e.target.files[0];
+        let url = URL.createObjectURL(file);
+        if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg") {
+            document.querySelector("#" + id + "-preview div").innerText = file.name;
+            document.querySelector("#" + id + "-preview img").src = url;
+        }
+    });
+}
+
+function removeUpload(id = "poster") {
+    document.querySelector("#" + id + "-preview div").innerHTML = "<span>+</span>";
+    document.querySelector("#" + id + "-preview img").src = '/img/notfound.png';
+}
+
+companyPoster.addEventListener("input", function () {
+    previewCompanyPoster("poster");
+})
 

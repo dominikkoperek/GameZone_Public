@@ -1,5 +1,10 @@
 package com.example.gamezoneproject.domain.game.gameDetails.platform.dto;
 
+import com.example.gamezoneproject.domain.validation.other.containsh2.ContainsH2;
+import com.example.gamezoneproject.domain.validation.other.illegalexpression.NoIllegalExpression;
+import com.example.gamezoneproject.domain.validation.other.nohtmltags.NoHtmlTags;
+import com.example.gamezoneproject.domain.validation.other.svg.SvgImage;
+import com.example.gamezoneproject.domain.validation.platform.NoPlatformDuplication;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 /**
@@ -9,10 +14,17 @@ import jakarta.validation.constraints.Size;
  */
 public class GamePlatformDto {
     private Long id;
-    @NotBlank
     @Size(min = 2,max = 10)
+    @NoIllegalExpression
+    @NoPlatformDuplication
+    @NoHtmlTags
     private String name;
+    @Size(min = 50, max = 800)
+    @NoHtmlTags
     private String description;
+    @Size(min = 100,max = 30_000)
+    @NoIllegalExpression
+    @SvgImage
     private String logoAddress;
 
     public GamePlatformDto(Long id, String name, String description, String logoAddress) {

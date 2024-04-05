@@ -4,10 +4,10 @@ import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryServ
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class MainCategoryExistsValidator implements ConstraintValidator<CategoryExists, String> {
+public class MainCategoryNotExistsValidator implements ConstraintValidator<CategoryNotExists, String> {
     private final CategoryService categoryService;
 
-    public MainCategoryExistsValidator(CategoryService categoryService) {
+    public MainCategoryNotExistsValidator(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

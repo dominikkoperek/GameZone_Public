@@ -1,15 +1,15 @@
 package com.example.gamezoneproject.storage;
 
 import com.example.gamezoneproject.domain.exceptions.InvalidFileExtensionException;
+import com.mortennobel.imagescaling.ResampleFilters;
+import com.mortennobel.imagescaling.ResampleOp;
 import org.apache.commons.io.FilenameUtils;
-import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
@@ -120,6 +120,8 @@ public class FileStorageService {
      * @param file                File to be saved
      * @param fileStorageLocation Storage location for the file
      * @param fileName            Title of the game used to rename the file
+     * @param isGame boolean info is saving image is for game.
+     * @param isCompany boolean info is saving image is for company.
      * @return Name of the saved file
      */
     private String saveFile(MultipartFile file, String fileStorageLocation, String fileName, boolean isGame, boolean isCompany) {
@@ -127,28 +129,44 @@ public class FileStorageService {
         try {
             int targetWidth = 0;
             int targetHeight = 0;
-            Scalr.Mode fitMode = Scalr.Mode.FIT_TO_HEIGHT;
 
             if (isGame) {
-                targetWidth = 401;
+                targetWidth = 400;
                 targetHeight = 600;
-                fitMode= Scalr.Mode.FIT_EXACT;
             }
             if (isCompany) {
-                targetWidth = 300;
-                fitMode = Scalr.Mode.FIT_EXACT;
+                targetWidth = 160;
+                targetHeight = 160;
             }
-            BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-            BufferedImage resize = Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, fitMode, targetWidth, targetHeight);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(resize, "jpg", baos);
-            InputStream is = new ByteArrayInputStream(baos.toByteArray());
+            InputStream is = changeFileToInputStream(file, targetWidth, targetHeight);
 
             Files.copy(is, filePath, StandardCopyOption.REPLACE_EXISTING);
             return filePath.getFileName().toString();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    /**
+     * This method is for transform MultiPartFile to BufferedImage and return InputSteam.
+     *
+     * @param file         MultipartFile to transform.
+     * @param targetWidth Target width for image in px.
+     * @param targetHeight Target height for image in px.
+     * @return Image saved as InputStream.
+     * @throws IOException when ImageIO read() can't read file.
+     */
+    private static InputStream changeFileToInputStream(MultipartFile file, int targetWidth, int targetHeight) throws IOException {
+        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+
+        ResampleOp resampleOp = new ResampleOp(targetWidth,targetHeight);
+        resampleOp.setFilter(ResampleFilters.getLanczos3Filter());
+        BufferedImage sc = resampleOp.filter(bufferedImage,null);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        ImageIO.write(sc, "jpeg", baos);
+        return new ByteArrayInputStream(baos.toByteArray());
     }
 
     /**

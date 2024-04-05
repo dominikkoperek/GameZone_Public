@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Dodaj kategorie gry</title>
+    <title>Dodaj platformę gry</title>
 </head>
 <body>
 <main class="main-content margin-box" layout:fragment="content">
@@ -21,8 +21,8 @@
             </button>
         </div>
 
-        <label for="platformName">Nazwa (2 - 10 znaków)</label>
-        <input type="text" id="platformName" placeholder="spacja = zajęte platformy"
+        <label for="platform-name">Nazwa (2 - 10 znaków)</label>
+        <input type="text" id="platform-name" placeholder="spacja = zajęte platformy"
                th:field="*{name}"
                th:classappend="${#fields.hasErrors('name')} ? 'error-input' : ''"
                aria-autocomplete="none"
@@ -31,12 +31,12 @@
                onkeyup="validatePlatformName()">
         <ul id="show-suggestion-list" class="hide-notification"></ul>
         <div class="input-validation-container">
-            <p class="notification-error" id="name-error"></p>
+            <p class="notification-error" id="platform-name-error"></p>
             <p class="notification-error" th:errors="${platform.name}">Powiadomienia</p>
         </div>
 
-        <label for="platformDescription">Opis (50 - 800 znaków)</label>
-        <textarea rows="8" id="platformDescription"
+        <label for="platform-description">Opis (50 - 800 znaków)</label>
+        <textarea rows="8" id="platform-description"
                   th:classappend="${#fields.hasErrors('description')} ? 'error-input' : ''"
                   th:field="*{description}"
                   aria-autocomplete="none"
@@ -45,12 +45,12 @@
                   onkeyup="validatePlatformDescription()">
         </textarea>
         <div class="input-validation-container">
-            <p class="notification-error" id="description-error"></p>
+            <p class="notification-error" id="platform-description-error"></p>
             <p class="notification-error" th:errors="${platform.description}">Powiadomienia</p>
         </div>
 
-        <label for="platformLogoAddress">Logo kod SVG(100 - 30.000 znaków)</label>
-        <textarea rows="6" id="platformLogoAddress"
+        <label for="platform-logo-address">Logo kod SVG(100 - 30.000 znaków)</label>
+        <textarea rows="6" id="platform-logo-address"
                   th:classappend="${#fields.hasErrors('logoAddress')} ? 'error-input' : ''"
                   th:field="*{logoAddress}"
                   aria-autocomplete="none"
@@ -60,12 +60,11 @@
                   placeholder="Pamiętaj dodać po <svg class=&quot;platform-logo&quot;">
         </textarea>
         <div class="input-validation-container">
-            <p class="notification-error" id="file-error-message"></p>
-            <p class="notification-error" id="logoAddress-error"></p>
+            <p class="notification-error" id="logo-address-error"></p>
+            <p class="notification-error" id="file-error"></p>
             <p class="notification-error" th:errors="${platform.logoAddress}">Powiadomienia</p>
         </div>
         <div class="file-center-container">
-
             <div class="file-container">
                 <input type="file" accept=".svg" class="input-file" id="svg-file" oninput="addFile(this)">
             </div>
@@ -74,10 +73,10 @@
                 <ul class="platform-list all-platform-list">
                     <li class="platform-element svg-platform-element"  th:each="platforms:${allGamePlatforms}">
                         <button class="platform-item all-platform-item" type="button">
-                            <div class="icon-container ">
+                            <span class="icon-container ">
                                 <span class="platform-logo copy-svg" th:utext="${platforms.value}"></span>
                                 <span class="platform-text all_platform_text" th:text="${platforms.key}">Pc</span>
-                            </div>
+                            </span>
                         </button>
                     </li>
                         <li class="platform-element svg-platform-element">
@@ -93,7 +92,7 @@
 
         </div>
 
-        <button onclick="return validatePlatformForm()" type="submit" id="form-button">Dodaj</button>
+        <button onclick="return validatePlatformForm()" type="submit" id="platform-form-button">Dodaj</button>
     </form>
     <script src="/static/scripts/platformFormValidation.js" th:src="@{/scripts/platformFormValidation.js}"></script>
 

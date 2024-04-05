@@ -1,40 +1,17 @@
-let platformName = document.getElementById("platformName");
-let platformListSuggestion = document.getElementById("show-suggestion-list");
-let platformDescription = document.getElementById("platformDescription");
-let platformLogoAddress = document.getElementById("platformLogoAddress");
-let platformNameError = document.getElementById("name-error");
-let platformDescriptionError = document.getElementById("description-error");
-let platformLogoAddressError = document.getElementById("logoAddress-error");
-let formErrorNotification = document.querySelector(".notification-error");
-let form = document.getElementById("add-content-form");
-let svgFile = document.getElementById("svg-file");
-let fileErrorMessage = document.getElementById("file-error-message");
-let formButton = document.getElementById("form-button");
-let userSvgUpload = document.getElementById("user-svg-upload");
-let userSvgName = document.getElementById("user-svg-name");
-let testSvgLogo = document.getElementById("test-svg-logo");
-let copySvg = document.querySelectorAll('.copy-svg');
-let copySvgContainer = document.querySelectorAll('.platform-element');
-
 let timerPlatformSuggestions;
 let platformSuggestions = [];
 
-formButton.addEventListener("click", function (ev) {
+//DISABLE FORM BEFORE VALIDATION
+const platformFormButton = document.getElementById("platform-form-button");
+const platformForm = document.getElementById("add-content-form");
+platformForm.addEventListener("submit", function (ev) {
     ev.preventDefault();
 })
-copySvgContainer.forEach(copySvgContainer => {
-    copySvgContainer.addEventListener("click", function (ev) {
-        let clickedElement = ev.currentTarget;
-        let svgElement = clickedElement.querySelector('.copy-svg svg');
-        if (svgElement) {
-            platformLogoAddress.value = svgElement.outerHTML;
-            platformLogoAddress.innerHTML = svgElement.outerHTML;
-            validatePlatformLogoAddress();
-        }
-    })
-})
 
-
+//VALIDATE PLATFORM NAME
+const platformName = document.getElementById("platform-name");
+const platformListSuggestion = document.getElementById("show-suggestion-list");
+const platformNameError = document.getElementById("platform-name-error");
 const validatePlatformName = async () => {
     let platformNameValue = platformName.value.trim();
 
@@ -49,29 +26,32 @@ const validatePlatformName = async () => {
 
     if (platformNameValue === '') {
         platformName.classList.add('error-input');
-        formErrorNotification.innerHTML = 'Nazwa nie może być pusta!';
+        platformNameError.innerHTML = 'Nazwa nie może być pusta!';
         return false;
     }
     if (platformNameValue.length < 2) {
         platformName.classList.add('error-input');
-        formErrorNotification.innerHTML = 'Nazwa musi mieć przynajmniej 2 znaki';
+        platformNameError.innerHTML = 'Nazwa musi mieć przynajmniej 2 znaki';
         return false;
     }
     if (platformNameValue.length > 10) {
         platformName.classList.add('error-input');
-        formErrorNotification.innerHTML = 'Nazwa może mieć maksymalnie 10 znaków';
+        platformNameError.innerHTML = 'Nazwa może mieć maksymalnie 10 znaków';
         return false;
     }
     let isPlatformAvailable = await checkPlatformAvailability(platformNameValue);
     if (!isPlatformAvailable) {
         platformName.classList.add('error-input');
-        formErrorNotification.innerHTML = 'Platforma jest już zajęta!';
+        platformNameError.innerHTML = 'Platforma jest już zajęta!';
         return false;
     }
-    formErrorNotification.innerHTML = '';
+    platformNameError.innerHTML = '';
     platformName.classList.remove('error-input');
     return true;
 }
+//VALIDATE PLATFORM DESCRIPTION
+const platformDescription = document.getElementById("platform-description");
+const platformDescriptionError = document.getElementById("platform-description-error");
 const validatePlatformDescription = () => {
     let platformDescriptionValue = platformDescription.value.trim();
     if (platformDescriptionValue === '') {
@@ -89,11 +69,31 @@ const validatePlatformDescription = () => {
         platformDescriptionError.innerHTML = 'Opis może mieć maksymalnie 800 znaków';
         return false;
     }
+    let reg = "<\\w+\\s*[^>]*>";
+    if (platformDescriptionValue.match(reg)){
+        platformDescription.classList.add('error-input');
+        platformDescriptionError.innerHTML = "Opis nie może zawierac tagów html!";
+        return false;
+    }
+    if (platformDescriptionValue.includes("<script>") || platformDescriptionValue.includes("<iframe>")) {
+        platformDescription.classList.add('error-input');
+        platformDescriptionError.innerHTML = 'Opis zawiera niedozwolone frazy';
+        return false;
+    }
 
     platformDescription.classList.remove('error-input');
     platformDescriptionError.innerHTML = '';
     return true;
 }
+//VALIDATE SVG CODE
+const svgFile = document.getElementById("svg-file");
+const userSvgUpload = document.getElementById("user-svg-upload");
+const userSvgName = document.getElementById("user-svg-name");
+const testSvgLogo = document.getElementById("test-svg-logo");
+const copySvgContainer = document.querySelectorAll('.platform-element');
+
+const platformLogoAddress = document.getElementById("platform-logo-address");
+const platformLogoAddressError = document.getElementById("logo-address-error");
 const validatePlatformLogoAddress = () => {
     let platformLogoAddressValue = platformLogoAddress.value.trim();
     if (platformLogoAddressValue === '') {
@@ -123,7 +123,8 @@ const validatePlatformLogoAddress = () => {
         platformLogoAddressError.innerHTML = 'Kod svg musi się kończyć na &lt/svg&gt';
         return false;
     }
-    if (platformLogoAddressValue.includes('<script>') || platformLogoAddressValue.includes('script')) {
+    if (platformLogoAddressValue.includes('<script>') || platformLogoAddressValue.includes('script')||
+         platformLogoAddressValue.includes('<iframe>')) {
         platformLogoAddress.classList.add('error-input');
         platformLogoAddressError.innerHTML = 'Kod zawiera niedozwolone frazy! &ltscript&gt';
         return false;
@@ -137,42 +138,54 @@ const validatePlatformLogoAddress = () => {
         return false;
     }
 
-
     platformLogoAddress.classList.remove('error-input');
     platformLogoAddressError.innerHTML = '';
     return true
 }
 
+// COPY SVG IMAGE FROM SHOWED BY CLICK
+copySvgContainer.forEach(copySvgContainer => {
+    copySvgContainer.addEventListener("click", function (ev) {
+        let clickedElement = ev.currentTarget;
+        let svgElement = clickedElement.querySelector('.copy-svg svg');
+        if (svgElement) {
+            platformLogoAddress.value = svgElement.outerHTML;
+            platformLogoAddress.innerHTML = svgElement.outerHTML;
+            validatePlatformLogoAddress();
+        }
+    });
+});
+//VALIDATE ALL FORM INPUTS
 async function checkIsFormValid() {
     let platformName = await validatePlatformName();
     let platformDescription = validatePlatformDescription();
     let platformLogoAddress = validatePlatformLogoAddress();
     return platformName && platformDescription && platformLogoAddress;
 }
-
+//VALIDATE INPUTS AND SEND FORM OR SHOW ERROR
 function validatePlatformForm() {
     checkIsFormValid().then(result => {
         if (result) {
-            form.submit();
+            platformForm.submit();
         } else {
             platformNameError.classList.add("button-error");
             platformDescriptionError.classList.add("button-error");
             platformLogoAddressError.classList.add("button-error");
-            formButton.classList.add("button-error");
+            platformFormButton.classList.add("button-error");
 
         }
         setTimeout(function () {
             platformNameError.classList.remove("button-error");
             platformDescriptionError.classList.remove("button-error");
             platformLogoAddressError.classList.remove("button-error");
-            formButton.classList.remove("button-error");
+            platformFormButton.classList.remove("button-error");
         }, 500)
     }).catch(error => {
         console.error('Wystąpił błąd podczas walidacji', error)
     })
 }
-
-
+//ADD SVG FILE
+const fileErrorMessage=document.getElementById("fileErrorMessage");
 function addFile() {
     let file = svgFile.files[0];
 
@@ -202,7 +215,7 @@ function addFile() {
     }
 }
 
-
+// DISPLAY NAMES HINTS
 platformName.addEventListener('keyup', function () {
     clearTimeout(timerPlatformSuggestions);
     timerPlatformSuggestions = setTimeout(function () {
@@ -234,19 +247,22 @@ function getPlatformSuggestion(input) {
 
 function showSuggestions(input) {
     let filteredSuggestions = platformSuggestions.filter(suggestion => suggestion.toLowerCase().trim()
-        .includes(input.trim().toLowerCase()));
+        .includes(input.trim().toLowerCase())).slice(0, 8);
 
-    if (!input) {
+    if (!input.trim()) {
         platformListSuggestion.innerHTML = '';
         return;
     }
     platformListSuggestion.innerHTML = '';
     filteredSuggestions.forEach(suggestion => {
-        platformListSuggestion.innerHTML += '<li class="hint-listing">' + suggestion + '</li>';
+        let listItem = document.createElement("li");
+        listItem.className = 'hint-listing hint-listing-platform';
+        listItem.textContent = suggestion;
+        platformListSuggestion.appendChild(listItem);
     });
 }
 
-
+//CHECK NAME AVAILABILITY
 function checkPlatformAvailability(platform) {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -267,9 +283,9 @@ function checkPlatformAvailability(platform) {
         })
     })
 }
-
+//CLEAR FORM
 const clearPlatformForm = () => {
-    form.reset();
+    platformForm.reset();
     platformName.classList.remove('error-input');
     platformNameError.innerHTML = '';
     platformListSuggestion.innerHTML = '';

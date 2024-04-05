@@ -130,7 +130,8 @@ public class CompanyService {
      * @return True if the provided name does not exist in the database, and false if the company already exists in the database.
      */
     public boolean isCompanyAvailable(String companyName) {
-        return companyRepository.findByNameIgnoreCase(companyName).isEmpty();
+        return companyRepository.findByNameIgnoreCase(companyName)
+                .isEmpty();
     }
 
     /**

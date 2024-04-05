@@ -20,3 +20,8 @@ INSERT INTO game_category (game_id, category_id) VALUES (3, 16);
 INSERT INTO game_category (game_id, category_id) VALUES (4, 7);
 INSERT INTO game_category (game_id, category_id) VALUES (4, 8);
 INSERT INTO game_category (game_id, category_id) VALUES (4, 15);
+
+INSERT INTO game_category (game_id, category_id) VALUES (5, 3);
+INSERT INTO game_category (game_id, category_id) VALUES (5, 4);
+INSERT INTO game_category (game_id, category_id) VALUES (5, 18);
+INSERT INTO game_category (game_id, category_id) VALUES (5, 20);

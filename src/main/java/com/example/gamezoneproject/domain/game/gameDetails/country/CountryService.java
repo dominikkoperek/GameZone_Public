@@ -29,4 +29,15 @@ public class CountryService {
                 .map(CountryDto::getName)
                 .toList();
     }
+    /**
+     * This method uses the repository to check if a country with the provided name already exists in the database.
+     *
+     * @param countryName The name of the country.
+     * @return True if the provided name does not exist in the database, and false if the company already exists in the database.
+     */
+    public boolean isCountryAvailable(String countryName){
+        return countryRepository.findByNameIgnoreCase(countryName)
+                .isEmpty();
+
+    }
 }

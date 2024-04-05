@@ -234,7 +234,7 @@ p {
 .poster-list-wrapper{
     display: block;
     width: 12.5rem;
-    height: 16.75rem;
+    height: 15.75rem;
 }
 .game-list-item-poster {
     width: 100%;
@@ -1149,6 +1149,10 @@ input[type="file"]::file-selector-button:hover {
     outline: 1px solid #282828;
     box-shadow: 1px 1px 6px #8c8c8c;
 }
+.company-form-element{
+    width: 160px;
+    height: 160px;
+}
 
 .form-element input {
     display: none;
@@ -1157,7 +1161,7 @@ input[type="file"]::file-selector-button:hover {
 .form-element img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
 }
 
 .form-element div {
@@ -1168,7 +1172,6 @@ input[type="file"]::file-selector-button:hover {
     line-height: 2rem;
     color: #cccccc;
     font-size: 1rem;
-
     background-color: rgba(93, 93, 93, 0.57);
 }
 
@@ -1334,10 +1337,9 @@ input[type="file"]::file-selector-button:hover {
 
 .hint-listing-country,
 .hint-listing-producer,
-.hint-listing-publisher {
+.hint-listing-publisher{
     padding: 0;
 }
-
 .hint-element {
     display: block;
     color: inherit;
@@ -1349,7 +1351,7 @@ input[type="file"]::file-selector-button:hover {
     padding: 0.4rem;
 }
 
-.show-notification > li:hover {
+.show-notification > li:hover >button {
     background-color: #4b4b4b;
     outline: 1px solid #9a7a37;
 }
@@ -1473,9 +1475,9 @@ input:read-only {
     height: 6rem;
     float: left;
     margin: 0.2rem 0.5rem 0 0;
-    padding: 0.1rem;
-    border: 1px dotted #5b5b5b;
-
+    padding: 0.2rem;
+    border: 1px solid #5b5b5b;
+    background-color: #282828;
 }
 
 #min-players, #max-players {
@@ -1713,6 +1715,9 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.mult-select-tag button:disabled i{
+    color: red;
 }
 
 .mult-select-tag button i {

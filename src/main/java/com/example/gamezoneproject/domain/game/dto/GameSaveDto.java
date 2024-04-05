@@ -1,15 +1,15 @@
 package com.example.gamezoneproject.domain.game.dto;
 
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
-import com.example.gamezoneproject.domain.validation.category.CategoryExists;
-import com.example.gamezoneproject.domain.validation.company.CompanyExists;
+import com.example.gamezoneproject.domain.validation.category.CategoryNotExists;
+import com.example.gamezoneproject.domain.validation.company.CompanyNotExists;
 import com.example.gamezoneproject.domain.validation.file.MaxFileSize;
 import com.example.gamezoneproject.domain.validation.game.NoGameDuplication;
 import com.example.gamezoneproject.domain.validation.other.containsh2.ContainsH2;
 import com.example.gamezoneproject.domain.validation.other.date.Date;
 import com.example.gamezoneproject.domain.validation.other.illegalexpression.NoIllegalExpression;
 import com.example.gamezoneproject.domain.validation.other.alphanumeric.Alphanumeric;
-import com.example.gamezoneproject.domain.validation.platform.PlatformExists;
+import com.example.gamezoneproject.domain.validation.platform.PlatformNotExists;
 import com.example.gamezoneproject.domain.validation.playersrange.PlayersRange;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -45,22 +45,22 @@ public class GameSaveDto {
     @Date(min = 1980, max = 3000)
     private LocalDate releaseYear;
     @Size(min = 4, max = 14)
-    @CategoryExists
+    @CategoryNotExists
     private LinkedList<String> category;
-    @CategoryExists
+    @CategoryNotExists
     private String mainCategory;
     @Size(min = 1, max = 14)
-    @PlatformExists
+    @PlatformNotExists
     private Set<String> platform;
     @NotEmpty
     private List<String> gameModes;
     @NotNull
     private boolean promoted;
     @NotEmpty
-    @CompanyExists
+    @CompanyNotExists
     private String producer;
     @NotEmpty
-    @CompanyExists
+    @CompanyNotExists
     private String publisher;
     @MaxFileSize(maxSizeMb = 1)
     private MultipartFile poster;

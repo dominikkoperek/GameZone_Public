@@ -4,13 +4,12 @@ import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.util.List;
 import java.util.Set;
 
-public class PlatformExistsValidator implements ConstraintValidator<PlatformExists, Set<String>> {
+public class PlatformNotExistsValidator implements ConstraintValidator<PlatformNotExists, Set<String>> {
     private final GamePlatformService gamePlatformService;
 
-    public PlatformExistsValidator(GamePlatformService gamePlatformService) {
+    public PlatformNotExistsValidator(GamePlatformService gamePlatformService) {
         this.gamePlatformService = gamePlatformService;
     }
 

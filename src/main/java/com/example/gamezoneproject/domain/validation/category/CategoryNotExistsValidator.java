@@ -6,10 +6,10 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.LinkedList;
 
-public class CategoryExistsValidator implements ConstraintValidator<CategoryExists, LinkedList<String>> {
+public class CategoryNotExistsValidator implements ConstraintValidator<CategoryNotExists, LinkedList<String>> {
     private final CategoryService categoryService;
 
-    public CategoryExistsValidator(CategoryService categoryService) {
+    public CategoryNotExistsValidator(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

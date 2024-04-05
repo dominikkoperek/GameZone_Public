@@ -19,3 +19,7 @@ INSERT INTO game_platform (game_id,platform_id) VALUES (3,9);
 
 INSERT INTO game_platform (game_id,platform_id) VALUES (4,1);
 INSERT INTO game_platform (game_id,platform_id) VALUES (4,10);
+
+INSERT INTO game_platform (game_id,platform_id) VALUES (5,1);
+INSERT INTO game_platform (game_id,platform_id) VALUES (5,4);
+INSERT INTO game_platform (game_id,platform_id) VALUES (5,7);

@@ -1,6 +1,5 @@
-package com.example.gamezoneproject.domain.validation.company;
+package com.example.gamezoneproject.domain.validation.platform;
 
-import com.example.gamezoneproject.domain.validation.platform.PlatformExistsValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -13,14 +12,14 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Checks if the String company exists.
+ * Checks if the Set of platforms exists.
  */
 @Documented
-@Constraint(validatedBy = CompanyExistsValidator.class)
+@Constraint(validatedBy = PlatformNotExistsValidator.class)
 @Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
-public @interface CompanyExists {
-    String message () default "{jakarta.validation.constraints.CompanyExists.message}";
+public @interface PlatformNotExists {
+    String message () default "{jakarta.validation.constraints.PlatformNotExists.message}";
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

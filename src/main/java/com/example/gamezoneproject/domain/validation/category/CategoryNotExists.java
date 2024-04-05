@@ -16,11 +16,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
      * Checks if the String category exists.
      */
     @Documented
-    @Constraint(validatedBy = {CategoryExistsValidator.class,MainCategoryExistsValidator.class})
+    @Constraint(validatedBy = {CategoryNotExistsValidator.class, MainCategoryNotExistsValidator.class})
     @Target({FIELD, PARAMETER})
     @Retention(RUNTIME)
-    public @interface CategoryExists {
-        String message() default "{jakarta.validation.constraints.CategoryExists.message}";
+    public @interface CategoryNotExists {
+        String message() default "{jakarta.validation.constraints.CategoryNotExists.message}";
 
         Class<?>[] groups() default {};
 

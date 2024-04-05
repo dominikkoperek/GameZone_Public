@@ -4,10 +4,10 @@ import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyServic
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class CompanyExistsValidator implements ConstraintValidator<CompanyExists, String> {
+public class CompanyNotExistsValidator implements ConstraintValidator<CompanyNotExists, String> {
     private final CompanyService companyService;
 
-    public CompanyExistsValidator(CompanyService companyService) {
+    public CompanyNotExistsValidator(CompanyService companyService) {
         this.companyService = companyService;
     }
 
@@ -16,7 +16,6 @@ public class CompanyExistsValidator implements ConstraintValidator<CompanyExists
         if (company == null) {
             return false;
         }
-
         return !companyService.isCompanyAvailable(company);
     }
 }

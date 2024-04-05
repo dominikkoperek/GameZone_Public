@@ -12,7 +12,7 @@
     <h3 class="list-description">Dodaj nową firmę</h3>
 
     <form action="" method="post" class="add-content-form" id="add-content-form" th:object="${company}"
-          autocomplete="off">
+          autocomplete="off" enctype="multipart/form-data">
         <div class="form-button-container">
             <a class="form-back-button" href="#" th:href="@{/admin}">
                 <i class="fa-solid fa-chevron-left logo"></i>wróć
@@ -23,37 +23,30 @@
         </div>
 
         <label for="company-name">Nazwa (max 35 znaków)</label>
-        <input type="text" id="company-name" placeholder="spacja = lista wydawców"
+        <input type="text" id="company-name" placeholder="Firma"
                th:field="*{name}"
                th:classappend="${#fields.hasErrors('name')} ?'error-input':'' "
                aria-autocomplete="none"
                autocomplete="off"
                autocorrect="off"
-               onkeyup="validateCompanyName()">
+               oninput="validateCompanyName()">
         <ul id="show-suggestion-list" class="hide-notification"></ul>
         <div class="input-validation-container">
             <p class="notification-error" id="name-error"></p>
             <p class="notification-error" th:errors="${company.name}">Powiadomienie</p>
         </div>
 
-        <div class="input-border">
             <label for="company-country">Kraj pochodzenia (Wyszukiwarka)</label>
 
-            <input type="text" id="company-country"
-                   th:classappend="${#fields.hasErrors('country')} ?'error-input':'' "
-                   aria-autocomplete="none"
-                   autocomplete="off"
-                   autocorrect="off"
-                   onkeyup="validateCountry()">
-            <ul id="show-countries-list" class="hide-notification"></ul>
-            <label for="country-value">Wybrany Kraj</label>
-            <input readonly type="text" th:field="*{country}" id="country-value">
+            <select multiple id="company-country" th:field="*{country}">
+                <option th:each="country:${allCountries}" th:value="${country}"
+                        th:text="${country}"></option>
+            </select>
 
             <div class="input-validation-container">
                 <p class="notification-error" id="country-error"></p>
                 <p class="notification-error" th:errors="${company.country}">Powiadomienie</p>
             </div>
-        </div>
 
         <label for="company-short-description">Krótki opis(100 - 1000 znaków)</label>
         <textarea rows="8" id="company-short-description"
@@ -83,6 +76,28 @@
             <p class="notification-error" th:errors="${company.description}">Powiadomienie</p>
         </div>
 
+        <label for="poster">Logo firmy (max 1200px x 1200px)</label>
+        <span id="company-image-proportion-height"></span>
+        <span id="company-image-proportion-width"></span>
+        <div class="file-container">
+            <div class="form-element company-form-element">
+
+                <input type="file" id="poster" accept="image/jpeg,image/jpg,image/png"
+                       th:field="*{poster}"
+                       th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
+                       onchange="validateCompanyPoster()">
+                <label for="poster" id="poster-preview">
+                    <img th:src="@{/img/notfound.png}" alt="not-upload">
+                    <div class="image-name">
+                        <span>+</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="input-validation-container">
+            <p class="notification-error" id="company-poster-error"></p>
+            <p class="notification-error" th:errors="${company.poster}">Powiadomienie</p>
+        </div>
 
         <div class="checkbox-center-container">
             <div class="checkbox-margin-box">
@@ -96,7 +111,7 @@
             <div class="checkbox-margin-box">
                 <label class="checkbox-container">Wydawca
                     <input type="checkbox"
-                           onclick="validateIsProducerOrIsPublisher()" id="is-publisher"  th:field="*{publisher}">
+                           onclick="validateIsProducerOrIsPublisher()" id="is-publisher" th:field="*{publisher}">
                     <span class="checkmark"></span>
                 </label>
             </div>
@@ -106,32 +121,36 @@
             <p class="notification-error" th:errors="${company.publisher}">Powiadomienie</p>
             <p class="notification-error" th:errors="${company.producer}">Powiadomienie</p>
         </div>
+
         <button onclick="return validateCompanyForm()" type="submit" id="form-button">Dodaj</button>
     </form>
 
+    <script src="/scripts/MultipleFormSelect.js" th:src="@{/scripts/MultipleFormSelect.js}"></script>
     <script src="/scripts/companyFormValidation.js" th:src="@{/scripts/companyFormValidation.js}"></script>
-<!--    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"-->
-<!--            referrerpolicy="origin"></script>-->
-<!--    <script>-->
-<!--         tinymce.init({-->
-<!--             selector: '.contentEditor',-->
-<!--             plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",-->
-<!--             toolbar: 'undo|redo|removeformat|numlist |bullist | outdent |indent| bold|italic| h2 | link | preview|',-->
-<!--             menubar: '',-->
-<!--             toolbar_sticky: false,-->
-<!--             icons: 'thin',-->
-<!--             content_css: "/styles/tinymce.css",-->
-<!--             setup: function (editor) {-->
-<!--                editor.on('keyup', function (e) {-->
-<!--                     validateCompanyLongDescription();-->
-<!--                 });-->
-<!--             },-->
-<!--             min_height: 400,-->
-<!--             max_height: 800,-->
-<!--         });-->
+    <!--    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"-->
+    <!--            referrerpolicy="origin"></script>-->
+    <!--    <script>-->
+    <!--         tinymce.init({-->
+    <!--             selector: '.contentEditor',-->
+    <!--             plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",-->
+    <!--             toolbar: 'undo|redo|removeformat|numlist |bullist | outdent |indent| bold|italic| h2 | link | preview|',-->
+    <!--             menubar: '',-->
+    <!--             toolbar_sticky: false,-->
+    <!--             icons: 'thin',-->
+    <!--             content_css: "/styles/tinymce.css",-->
+    <!--             setup: function (editor) {-->
+    <!--                editor.on('keyup', function (e) {-->
+    <!--                     validateCompanyLongDescription();-->
+    <!--                 });-->
+    <!--             },-->
+    <!--             min_height: 400,-->
+    <!--             max_height: 800,-->
+    <!--         });-->
 
-<!--    </script>-->
+    <!--    </script>-->
+    <script>
+        new MultiSelectTag('company-country');
+    </script>
 </main>
-
 </body>
 </html>

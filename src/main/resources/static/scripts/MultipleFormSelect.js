@@ -18,19 +18,21 @@ function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
 
     let gameResetButton = document.getElementById("game-reset-button");
     // Remove all selected items when reset button clicked
+    if (gameResetButton) {
 
-    gameResetButton.addEventListener("click",function (){
-        const selectedItems = inputContainer.querySelectorAll('.item-container');
-        selectedItems.forEach(item => {
-            const value = item.querySelector('.item-label').dataset.value;
-            const unselectOption = options.find(op => op.value === value);
-            unselectOption.selected = false;
-            inputContainer.removeChild(item);
+
+        gameResetButton.addEventListener("click", function () {
+            const selectedItems = inputContainer.querySelectorAll('.item-container');
+            selectedItems.forEach(item => {
+                const value = item.querySelector('.item-label').dataset.value;
+                const unselectOption = options.find(op => op.value === value);
+                unselectOption.selected = false;
+                inputContainer.removeChild(item);
+            });
+            setValues();
+            resetErrorMessages();
         });
-        setValues();
-        resetErrorMessages();
-    });
-
+    }
 
     function init() {
         element = document.getElementById(el)
@@ -179,11 +181,14 @@ function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
         itemDiv.classList.add('item-container');
 
         const itemLabel = document.createElement('div');
-        if(el==="categories"){
+        if (el === "categories") {
             itemLabel.classList.add("item-categories")
         }
-        if(el==="platforms"){
+        if (el === "platforms") {
             itemLabel.classList.add("item-platforms")
+        }
+        if (el === "company-country") {
+            itemLabel.classList.add("item-country");
         }
         itemLabel.classList.add('item-label');
         itemLabel.innerHTML = option.label
@@ -193,6 +198,9 @@ function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
         if (el === "categories") {
             itemMainCategory = document.createElement('i');
             itemMainCategory.classList.add('fa', 'fa-solid', 'fa-crown', "main-category");
+        }
+        if (el === 'company-country' && itemLabel.classList.contains("item-country")) {
+            button.setAttribute("disabled", "");
         }
         const itemClose = document.createElement('i');
 
@@ -262,6 +270,9 @@ function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
                 inputContainer.removeChild(child)
             }
         }
+        if (el === "company-country") {
+            button.removeAttribute("disabled", "");
+        }
     }
 
     function setValues(fireEvent = true) {
@@ -286,12 +297,16 @@ function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
         }
         return selected_values;
     }
-    customSelectContainer.addEventListener("click",function (){
+
+    customSelectContainer.addEventListener("click", function () {
         if (el === "categories") {
             validateCategories();
         }
         if (el === "platforms") {
             validateGamePlatforms();
+        }
+        if (el === "company-country") {
+            validateCountry();
         }
 
     });

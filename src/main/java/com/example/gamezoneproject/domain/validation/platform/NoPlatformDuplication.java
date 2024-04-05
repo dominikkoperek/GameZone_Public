@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.validation.file;
+package com.example.gamezoneproject.domain.validation.platform;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -11,18 +11,15 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-
 /**
- * Checks if the File size is not too big.
+ * Checks if the String platform exists.
  */
 @Documented
-@Constraint(validatedBy = MaxFileSizeValidator.class)
+@Constraint(validatedBy = NoPlatformDuplicationValidator.class)
 @Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
-public @interface MaxFileSize {
-    int maxSizeMb() default 0;
-    String message() default "{jakarta.validation.constraints.MainCategoryExists.message}";
-
+public @interface NoPlatformDuplication {
+    String message () default "{jakarta.validation.constraints.NoPlatformDuplication.message}";
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
