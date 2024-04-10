@@ -199,24 +199,41 @@
                 <p class="notification-error" th:errors="*{platform}">Powiadomienie</p>
             </div>
 
-        <label for="image">Plakat gry max 1Mb (jpg, png, jpeg)</label>
+        <label for="game-poster">Plakat gry max 1Mb (jpg, png, jpeg)</label>
         <div class="file-container">
             <div class="form-element">
-                <input type="file" id="image" accept="image/jpeg,image/jpg,image/png"
+                <input type="file" id="game-poster" accept="image/jpeg,image/jpg,image/png"
                        th:field="*{poster}"
                        th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
                        onchange="validateGamePoster()"
                 >
-                <label for="image" id="image-preview">
-                    <img class="image-preview" th:src="@{/img/notfound.png}" alt="not-upload">
-                    <div class="image-name">
+                <label for="game-poster" id="game-poster-preview">
+                    <img class="game-poster-preview" th:src="@{/img/notfound.png}" alt="not-upload">
+                    <div class="game-poster-name">
                         <span>+</span>
                     </div>
 
                 </label>
             </div>
-
         </div>
+
+<!--        <label for="big-add-image">Duży banner reklamowy 5Mb (jpg, png, jpeg)</label>-->
+<!--        <div class="file-container">-->
+<!--            <div class="form-element">-->
+<!--                <input type="file" id="big-add-image" accept="image/jpeg,image/jpg,image/png"-->
+<!--                       th:field="*{poster}"-->
+<!--                       th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "-->
+<!--                       onchange="validateGamePoster()"-->
+<!--                >-->
+<!--                <label for="game-poster" id="big-add-image-preview">-->
+<!--                    <img class="image-preview" th:src="@{/img/notfound.png}" alt="not-upload">-->
+<!--                    <div class="image-name">-->
+<!--                        <span>+</span>-->
+<!--                    </div>-->
+
+<!--                </label>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="input-validation-container">
             <p class="notification-error" id="poster-error"></p>

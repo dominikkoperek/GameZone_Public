@@ -15,6 +15,7 @@ import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformRepository;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import com.example.gamezoneproject.storage.FileStorageService;
+import com.example.gamezoneproject.storage.ImageStorageFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,8 +55,7 @@ public class GameService {
      */
     public List<GameDto> findAllPromotedGames() {
         return gameRepository.findAllByPromotedIsTrue()
-                .stream()
-                .map(GameDtoMapper::map)
+                .stream().map(GameDtoMapper::map)
                 .toList();
     }
 
@@ -67,8 +67,17 @@ public class GameService {
      */
 
     public Optional<GameDto> findById(Long gameId) {
-        return gameRepository
-                .findById(gameId)
+        return gameRepository.findById(gameId)
+                .map(GameDtoMapper::map);
+    }
+
+    /**
+     * Finds game by closest premier day to present day, and map it to GameDto.
+     *
+     * @return Option containing GameDto if game is found, or empty if not.
+     */
+    public Optional<GameDto> findGameByClosestPremierDate() {
+        return gameRepository.findGameByClosestReleaseDate()
                 .map(GameDtoMapper::map);
     }
 
@@ -130,7 +139,8 @@ public class GameService {
      * @return List of all games mapped to GameDto.
      */
     public List<GameDto> findAllGames() {
-        return StreamSupport.stream(gameRepository.findAll().spliterator(), false)
+        return StreamSupport
+                .stream(gameRepository.findAll().spliterator(), false)
                 .map(GameDtoMapper::map)
                 .toList();
 
@@ -173,6 +183,7 @@ public class GameService {
                 .sorted(Comparator.comparing(GameByCompanyDto::getReleaseYear).reversed())
                 .toList();
     }
+
     /**
      * This method uses the repository to find game by name param.
      * It maps the result to a GameDto
@@ -181,8 +192,7 @@ public class GameService {
      * @return Optional containing a GameDto if the name exists, or empty optional.
      */
     public Optional<GameDto> findByTitle(String name) {
-        return gameRepository.findByTitleIgnoreCase(name)
-                .map(GameDtoMapper::map);
+        return gameRepository.findByTitleIgnoreCase(name).map(GameDtoMapper::map);
     }
 
     /**
@@ -190,7 +200,7 @@ public class GameService {
      * It sets the properties of the game from the provided GameSaveDto object and the main category string.
      * It also handles the case where the poster is not null and saves the image.
      *
-     * @param gameSaveDto  The DTO object containing the game details to be saved.
+     * @param gameSaveDto The DTO object containing the game details to be saved.
      */
     @Transactional
     public void addGame(GameSaveDto gameSaveDto) {
@@ -222,7 +232,8 @@ public class GameService {
 
 
         if (gameSaveDto.getPoster() != null && !gameSaveDto.getPoster().isEmpty()) {
-            String savedFileName = fileStorageService.saveImage(gameSaveDto.getPoster(), gameSaveDto.getTitle(),true,false);
+            String savedFileName = fileStorageService.saveImage(gameSaveDto.getPoster(), gameSaveDto.getTitle(),
+                    ImageStorageFile.GAME_POSTER);
             game.setPoster(savedFileName);
         }
         gameRepository.save(game);
@@ -264,8 +275,7 @@ public class GameService {
     private List<GameMode> getGameModes(List<String> gameModesDto) {
         List<GameMode> resultModes = new ArrayList<>();
         for (String gameMode : gameModesDto) {
-            GameMode gameModeByName = gameModeRepository
-                    .findByNameIgnoreCase(gameMode).orElseThrow();
+            GameMode gameModeByName = gameModeRepository.findByNameIgnoreCase(gameMode).orElseThrow();
             resultModes.add(gameModeByName);
         }
         return resultModes;
@@ -280,8 +290,7 @@ public class GameService {
     private Set<GamePlatform> getUserPlatforms(Set<String> platformDto) {
         Set<GamePlatform> resultPlatforms = new HashSet<>();
         for (String gamePlatform : platformDto) {
-            GamePlatform platformByName = gamePlatformRepository
-                    .findByNameIgnoreCase(gamePlatform).orElseThrow();
+            GamePlatform platformByName = gamePlatformRepository.findByNameIgnoreCase(gamePlatform).orElseThrow();
             resultPlatforms.add(platformByName);
         }
         return resultPlatforms;
@@ -298,9 +307,7 @@ public class GameService {
     private List<Category> getUserCategory(List<String> categoriesDto, String mainCategory) {
         List<Category> resulCategories = new ArrayList<>();
         for (String category : categoriesDto) {
-            Category categoryByName = categoryRepository
-                    .findByNameIgnoreCase(category)
-                    .orElseThrow();
+            Category categoryByName = categoryRepository.findByNameIgnoreCase(category).orElseThrow();
             resulCategories.add(categoryByName);
         }
         setMainCategory(categoriesDto, mainCategory, resulCategories);
@@ -312,8 +319,7 @@ public class GameService {
             mainCategory = categoriesDto.get(0);
         }
 
-        Category mainCategoryToFind = categoryRepository.findByNameIgnoreCase(mainCategory)
-                .orElseThrow(CategoryNotFoundException::new);
+        Category mainCategoryToFind = categoryRepository.findByNameIgnoreCase(mainCategory).orElseThrow(CategoryNotFoundException::new);
 
         int indexOfMainCategory = resulCategories.indexOf(mainCategoryToFind);
         Category temp = resulCategories.get(indexOfMainCategory);

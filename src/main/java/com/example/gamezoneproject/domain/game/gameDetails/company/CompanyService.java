@@ -3,6 +3,7 @@ package com.example.gamezoneproject.domain.game.gameDetails.company;
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDto;
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanySaveDto;
 import com.example.gamezoneproject.storage.FileStorageService;
+import com.example.gamezoneproject.storage.ImageStorageFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -116,7 +117,7 @@ public class CompanyService {
         companyToSave.setPublisher(companySaveDto.isPublisher());
             if (companySaveDto.getPoster() != null && !companySaveDto.getPoster().isEmpty()) {
                 String savedFileName = fileStorageService
-                        .saveImage(companySaveDto.getPoster(), companySaveDto.getName(), false, true);
+                        .saveImage(companySaveDto.getPoster(), companySaveDto.getName(), ImageStorageFile.COMPANY_POSTER);
                 companyToSave.setPoster(savedFileName);
             }
 

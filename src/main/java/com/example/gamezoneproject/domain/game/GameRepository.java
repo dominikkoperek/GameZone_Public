@@ -1,5 +1,6 @@
 package com.example.gamezoneproject.domain.game;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
@@ -64,4 +65,11 @@ public interface GameRepository extends CrudRepository<Game, Long> {
      */
     Optional<Game> findByTitleIgnoreCase(String title);
 
+    /**
+     * Find a game where the releaseYear is closest to present day
+     * @return
+     */
+
+    @Query("SELECT e FROM Game e ORDER BY ABS(DATEDIFF(DAY, e.releaseYear, CURDATE())) LIMIT 1")
+    Optional<Game> findGameByClosestReleaseDate();
 }

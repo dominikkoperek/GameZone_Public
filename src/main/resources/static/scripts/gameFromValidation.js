@@ -550,33 +550,73 @@ function validateCategories() {
 }
 
 //VALIDATE POSTER
-const poster = document.getElementById("image");
+const gamePoster = document.getElementById("game-poster");
 const posterError = document.getElementById("poster-error");
 
-const validateGamePoster = () => {
+const validateGamePoster = async () => {
     let size;
     let extension;
-    if (poster.value !== "") {
-        size = ((poster.files[0].size / 1024) / 1024).toString().slice(0, 4);
-        extension = poster.files[0].type;
+    let width;
+    let height;
+
+    if (gamePoster.value !== "") {
+        size = ((gamePoster.files[0].size / 1024) / 1024).toString().slice(0, 4);
+        extension = gamePoster.files[0].type;
+
+        const img = new Image();
+        img.src = window.URL.createObjectURL(gamePoster.files[0]);
+        await new Promise((resolve) => {
+            img.onload = () => {
+                width = img.width;
+                height = img.height;
+                resolve();
+            };
+        });
     }
-    if (poster.value === "") {
-        poster.classList.add("error-input");
+    let proportionHeightWidth = height / width;
+    let slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
+
+    let proportionWidthHeight = width / height;
+    let slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
+
+    if (gamePoster.value === "") {
+        gamePoster.classList.add("error-input");
         posterError.innerHTML = "Dodaj obraz";
+        removeUpload();
         return false;
     }
-    if (size > 1 && poster.value !== "") {
-        poster.classList.add("error-input");
+    if (size > 1 && gamePoster.value !== "") {
+        gamePoster.classList.add("error-input");
         posterError.innerHTML = "Obraz jest za duży " + size + "Mb";
         return false;
     }
-    if (extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg" && poster.value !== "") {
-        poster.classList.add("error-input");
+    if (height > 1200 && gamePoster.value !== "") {
+        gamePoster.classList.add("error-input");
+        posterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px" + " (max 1200px)";
+        return false;
+    }
+    if (width > 800 && gamePoster.value !== "") {
+        gamePoster.classList.add("error-input");
+        posterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 800px)";
+        return false;
+    }
+    if (proportionHeightWidth < 1.3 && proportionHeightWidth < 1.5) {
+        gamePoster.classList.add("error-input");
+        posterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 1.3-1.5 jest " + slicedProportionHeightWidth;
+        return false;
+    }
+    if (proportionHeightWidth < 0.6 && proportionHeightWidth < 0.7) {
+        gamePoster.classList.add("error-input");
+        posterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 1.3-1.5 jest " + slicedProportionWidthHeight;
+        return false;
+    }
+    if (extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg" && gamePoster.value !== "") {
+        gamePoster.classList.add("error-input");
         posterError.innerHTML = "Nieobsługiwany format pliku!";
         removeUpload();
         return false;
     }
-    poster.classList.remove("error-input");
+    gamePoster.classList.remove("error-input");
     posterError.innerHTML = "";
     return true;
 }
@@ -650,13 +690,13 @@ function previewBeforeUpload(id) {
     });
 }
 
-function removeUpload(id = "image") {
+function removeUpload(id = "game-poster") {
     document.querySelector("#" + id + "-preview div").innerHTML = "<span>+</span>";
     document.querySelector("#" + id + "-preview img").src = '/img/notfound.png';
 }
 
-poster.addEventListener("input", function () {
-    previewBeforeUpload("image");
+gamePoster.addEventListener("input", function () {
+    previewBeforeUpload("game-poster");
 })
 
 
@@ -698,7 +738,7 @@ function clearGameForm() {
     gameModesError.innerHTML = '';
     platformsError.innerHTML = '';
     platform.classList.remove("error-input");
-    poster.classList.remove("error-input");
+    gamePoster.classList.remove("error-input");
     posterError.innerHTML = '';
     removeUpload();
 }
