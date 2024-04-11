@@ -9,7 +9,7 @@ let categoryName = document.getElementById("category-name");
 const categoryNameError = document.getElementById("category-name-error");
 const validateCategoryName = async () => {
 
-    let format = /[!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?~]/;
+    let format = /[!@#$%^&*()_+=\[\]{};'`:"\\|,.<>\/?~]/;
     let categoryNameValue = categoryName.value.trim();
 
     if (categoryNameValue === '') {

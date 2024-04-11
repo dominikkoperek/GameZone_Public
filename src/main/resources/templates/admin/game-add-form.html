@@ -117,13 +117,13 @@
         </div>
 
         <label for="release-date">Data wydania</label>
-        <span>(jeśli jest nieznana zostaw puste)</span>
+        <span>(Jeśli jest nieznana zostaw puste)</span>
         <input type="date" id="release-date"
                min="1980-01-01"
                max="2099-01-01"
                th:field="*{releaseYear}"
                th:classappend="${#fields.hasErrors('releaseYear')} ?'error-input':'' "
-               onkeyup="validateGameReleaseDate()">
+               oninput="validateGameReleaseDate()">
 
         <div class="input-validation-container">
             <p class="notification-error" id="release-date-error"></p>
@@ -189,15 +189,15 @@
             </div>
         </div>
 
-            <label for="platforms">Platformy (wybierz z listy)</label>
-            <select multiple id="platforms" th:field="*{platform}">
-                <option th:each="platforms:${allAvailableGamePlatforms}" th:value="${platforms}"
-                        th:text="${platforms}"></option>
-            </select>
-            <div class="input-validation-container">
-                <p class="notification-error" id="game-platforms-error"></p>
-                <p class="notification-error" th:errors="*{platform}">Powiadomienie</p>
-            </div>
+        <label for="platforms">Platformy (wybierz z listy)</label>
+        <select multiple id="platforms" th:field="*{platform}">
+            <option th:each="platforms:${allAvailableGamePlatforms}" th:value="${platforms}"
+                    th:text="${platforms}"></option>
+        </select>
+        <div class="input-validation-container">
+            <p class="notification-error" id="game-platforms-error"></p>
+            <p class="notification-error" th:errors="*{platform}">Powiadomienie</p>
+        </div>
 
         <label for="game-poster">Plakat gry max 1Mb (jpg, png, jpeg)</label>
         <div class="file-container">
@@ -205,10 +205,9 @@
                 <input type="file" id="game-poster" accept="image/jpeg,image/jpg,image/png"
                        th:field="*{poster}"
                        th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
-                       onchange="validateGamePoster()"
-                >
+                       onchange="validateGamePoster()">
                 <label for="game-poster" id="game-poster-preview">
-                    <img class="game-poster-preview" th:src="@{/img/notfound.png}" alt="not-upload">
+                    <img class="game-poster-preview" th:src="@{/img/notfound.jpg}" alt="not-upload">
                     <div class="game-poster-name">
                         <span>+</span>
                     </div>
@@ -217,28 +216,37 @@
             </div>
         </div>
 
-<!--        <label for="big-add-image">Duży banner reklamowy 5Mb (jpg, png, jpeg)</label>-->
-<!--        <div class="file-container">-->
-<!--            <div class="form-element">-->
-<!--                <input type="file" id="big-add-image" accept="image/jpeg,image/jpg,image/png"-->
-<!--                       th:field="*{poster}"-->
-<!--                       th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "-->
-<!--                       onchange="validateGamePoster()"-->
-<!--                >-->
-<!--                <label for="game-poster" id="big-add-image-preview">-->
-<!--                    <img class="image-preview" th:src="@{/img/notfound.png}" alt="not-upload">-->
-<!--                    <div class="image-name">-->
-<!--                        <span>+</span>-->
-<!--                    </div>-->
-
-<!--                </label>-->
-<!--            </div>-->
-<!--        </div>-->
-
         <div class="input-validation-container">
             <p class="notification-error" id="poster-error"></p>
             <p class="notification-error" th:errors="${game.poster}">Powiadomienie</p>
         </div>
+
+        <div id="big-suggestion-poster-display" class="hide-big-suggestion-poster">
+            <label for="big-suggestion-poster">Duży plakat promocyjny 1Mb (jpg, png, jpeg)</label>
+            <p>(Jeżeli data premiery jest w przyszłości dodaj duży plakat)</p>
+            <div class="file-container">
+                <div class="form-element big-suggestion-element">
+                    <input type="file" id="big-suggestion-poster" accept="image/jpeg,image/jpg,image/png"
+                           th:field="*{bigPosterSuggestion}"
+                           th:classappend="${#fields.hasErrors('bigPosterSuggestion')} ?'error-input':'' "
+                           onchange="validateBigSuggestionPoster()">
+
+                    <label for="big-suggestion-poster" id="big-suggestion-poster-preview">
+                        <img class="big-suggestion-poster-preview" th:src="@{/img/notfoundhorizontal.jpg}"
+                             alt="not-upload">
+                        <div class="big-suggestion-poster-name">
+                            <span>+</span>
+                        </div>
+
+                    </label>
+                </div>
+            </div>
+            <div class="input-validation-container">
+                <p class="notification-error" id="big-suggestion-poster-error"></p>
+                <p class="notification-error" th:errors="${game.bigPosterSuggestion}">Powiadomienie</p>
+            </div>
+        </div>
+
 
         <div class="checkbox-margin-box">
             <label class="checkbox-container">Gra polecana przez redakcje

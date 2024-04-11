@@ -66,10 +66,10 @@ public interface GameRepository extends CrudRepository<Game, Long> {
     Optional<Game> findByTitleIgnoreCase(String title);
 
     /**
-     * Find a game where the releaseYear is closest to present day
+     * Find a game where the future release year is closest to present day
      * @return
      */
 
-    @Query("SELECT e FROM Game e ORDER BY ABS(DATEDIFF(DAY, e.releaseYear, CURDATE())) LIMIT 1")
+    @Query("SELECT e FROM Game e WHERE e.releaseYear>CURDATE() ORDER BY ABS(DATEDIFF(DAY, e.releaseYear, CURDATE())) LIMIT 1")
     Optional<Game> findGameByClosestReleaseDate();
 }

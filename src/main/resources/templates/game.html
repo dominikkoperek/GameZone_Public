@@ -18,8 +18,8 @@
                 <div class="game-container">
                     <div class="game-summary">
                         <div class="summary-cover-wrapper">
-                            <img src="../static/img/notfound.png"
-                                 th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
+                            <img src="../static/img/notfound.jpg"
+                                 th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.jpg}"
                                  th:alt="${game.title}"
                                  alt="tytuł gry"
                                  class="game-summary-cover"

@@ -41,8 +41,8 @@ public class FileStorageService {
         this.fileStorageLocation = storageLocation + "/pliki/";
         this.gameImageStorageLocation = storageLocation + "/galeria/gry/";
         this.companyImageStorageLocation = storageLocation + "/galeria/firmy/";
-        this.bigAddImageStorageLocation = storageLocation + "/galeria/propozycje/d";
-        this.smallAddImageStorageLocation = storageLocation + "/galeria/propozycje/m";
+        this.bigAddImageStorageLocation = storageLocation + "/galeria/rekomendacje/l";
+        this.smallAddImageStorageLocation = storageLocation + "/galeria/rekomendacje/s";
 
         Path fileStoragePath = Path.of(this.fileStorageLocation);
         Path gameImageStorageLocationPath = Path.of(this.gameImageStorageLocation);
@@ -146,19 +146,19 @@ public class FileStorageService {
      * @return Name of the saved file
      */
     private String saveFile(MultipartFile file, String fileStorageLocation, String fileName, ImageStorageFile imageStorageFile) {
-        Path filePath = createFilePath(file, fileStorageLocation, fileName);
+        Path filePath = createFilePath(file, fileStorageLocation, fileName, imageStorageFile);
         try {
             int targetWidth;
             int targetHeight;
 
             targetHeight = switch (imageStorageFile) {
-                case BIG_ADD_POSTER -> 1200;
+                case BIG_ADD_POSTER -> 350;
                 case SMALL_ADD_POSTER -> 100;
                 case COMPANY_POSTER -> 160;
                 case GAME_POSTER -> 600;
             };
             targetWidth = switch (imageStorageFile) {
-                case BIG_ADD_POSTER -> 350;
+                case BIG_ADD_POSTER -> 110;
                 case SMALL_ADD_POSTER -> 300;
                 case COMPANY_POSTER -> 160;
                 case GAME_POSTER -> 400;
@@ -203,13 +203,19 @@ public class FileStorageService {
      * @param fileName        Title of the game used to rename the file
      * @return Unique file path
      */
-    private Path createFilePath(MultipartFile file, String storageLocation, String fileName) {
+    private Path createFilePath(MultipartFile file, String storageLocation, String fileName, ImageStorageFile imageStorageFile) {
         String originalFileName = file.getOriginalFilename();
         String fileExtension = FilenameUtils.getExtension(originalFileName);
         String completeFilename;
         Path filePath;
         int fileIndex = 0;
         String preparedFileName = prepareFileName(fileName);
+        preparedFileName = switch (imageStorageFile) {
+            case SMALL_ADD_POSTER -> preparedFileName += "_s";
+            case BIG_ADD_POSTER -> preparedFileName += "_b";
+            case COMPANY_POSTER, GAME_POSTER -> preparedFileName;
+        };
+
         do {
             completeFilename = preparedFileName + "_" + fileIndex + "." + fileExtension;
             filePath = Paths.get(storageLocation, completeFilename);

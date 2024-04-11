@@ -48,6 +48,9 @@ public class Game {
 
     private boolean promoted;
     private String poster;
+
+    private String smallPosterSuggestion;
+    private String bigPosterSuggestion;
     private PlayerRange playerRange;
 
     public Long getId() {
@@ -162,5 +165,21 @@ public class Game {
 
     public void setPlayerRange(PlayerRange playerRange) {
         this.playerRange = playerRange;
+    }
+
+    public String getSmallPosterSuggestion() {
+        return smallPosterSuggestion;
+    }
+
+    public void setSmallPosterSuggestion(String smallPosterSuggestion) {
+        this.smallPosterSuggestion = smallPosterSuggestion;
+    }
+
+    public String getBigPosterSuggestion() {
+        return bigPosterSuggestion;
+    }
+
+    public void setBigPosterSuggestion(String bigPosterSuggestion) {
+        this.bigPosterSuggestion = bigPosterSuggestion;
     }
 }

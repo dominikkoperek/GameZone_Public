@@ -1,7 +1,9 @@
 package com.example.gamezoneproject.domain.web;
 
+import com.example.gamezoneproject.domain.exceptions.GameNotFoundException;
 import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameDto;
+import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryService;
 import com.example.gamezoneproject.domain.game.gameDetails.category.dto.CategoryDto;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,8 @@ public class CategoryController {
         model.addAttribute("heading", category.getName());
         model.addAttribute("description", category.getDescription());
         model.addAttribute("games", games);
+
+        model.addAttribute("closestPremierGame", new GameSuggestionsDto());
         return "game-listing";
     }
 

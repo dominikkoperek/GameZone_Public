@@ -394,7 +394,7 @@ function previewCompanyPoster(id) {
 
 function removeUpload(id = "poster") {
     document.querySelector("#" + id + "-preview div").innerHTML = "<span>+</span>";
-    document.querySelector("#" + id + "-preview img").src = '/img/notfound.png';
+    document.querySelector("#" + id + "-preview img").src = '/img/notfound.jpg';
 }
 
 companyPoster.addEventListener("input", function () {

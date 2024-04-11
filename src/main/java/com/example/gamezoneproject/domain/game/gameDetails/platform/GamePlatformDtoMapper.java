@@ -1,6 +1,8 @@
 package com.example.gamezoneproject.domain.game.gameDetails.platform;
 
 import com.example.gamezoneproject.domain.game.gameDetails.platform.dto.GamePlatformDto;
+import com.example.gamezoneproject.domain.game.gameDetails.platform.dto.PlatformSuggestionsDto;
+
 /**
  * Mapper class that maps from a GamePlatform entity to a GamePlatformDto.
  * It maps the id, name, description and logo address from the GamePlatform entity to the GamePlatformDto.
@@ -20,4 +22,13 @@ public class GamePlatformDtoMapper {
                 gamePlatform.getLogoAddress()
         );
     }
+
+    static PlatformSuggestionsDto mapToPlatformSuggestionsDto(GamePlatform gamePlatform) {
+        return new PlatformSuggestionsDto(
+                gamePlatform.getId(),
+                gamePlatform.getName(),
+                gamePlatform.getLogoAddressImage()
+        );
+    }
 }
+

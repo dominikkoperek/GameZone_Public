@@ -15,6 +15,8 @@
             <column name="release_year" type="DATE"/>
             <column name="promoted" type="BOOLEAN"/>
             <column name="poster" type="VARCHAR(100)"/>
+            <column name="small_Poster_Suggestion" type="VARCHAR(100)"/>
+            <column name="big_Poster_Suggestion" type="VARCHAR(100)"/>
 
             <column name="producer_id" type="BIGINT">
                 <constraints nullable="false"

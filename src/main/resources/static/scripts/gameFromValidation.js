@@ -326,6 +326,7 @@ const validateGameLongDescription = () => {
     gameLongDescriptionError.innerHTML = "";
     return true;
 }
+//VALIDATE GAME TRAILER ID
 const gameTrailerId = document.getElementById("game-trailer-id");
 const gameTrailerError = document.getElementById("game-trailer-id-error");
 
@@ -339,6 +340,11 @@ const validateGameTrailerId = () => {
     if (gameTrailerIdValue.length < 4) {
         gameTrailerId.classList.add('error-input');
         gameTrailerError.innerHTML = 'Id zwiastunu musi mieć przynajmniej 4 znaki'
+        return false;
+    }
+    if (gameTrailerIdValue.length > 30) {
+        gameTrailerId.classList.add('error-input');
+        gameTrailerError.innerHTML = 'Id zwiastunu może mieć maksymalnie 30 znaków'
         return false;
     }
     if (gameTrailerIdValue.length > 30) {
@@ -408,10 +414,13 @@ const validateGamePublisher = () => {
 //VALIDATE RELEASE DATE
 const releaseDate = document.getElementById('release-date');
 const releaseDateError = document.getElementById('release-date-error');
+let releaseDateValue;
+let formDate;
+let isReleaseInFuture;
 const validateGameReleaseDate = () => {
-    let releaseDateValue = releaseDate.value;
-    let formDate = new Date(releaseDateValue);
-
+    releaseDateValue = releaseDate.value;
+    let todayDate = Date.now();
+    formDate = new Date(releaseDateValue);
     if (formDate.getFullYear() < 1980) {
         releaseDate.classList.add('error-input');
         releaseDateError.innerHTML = 'Rok nie może być wcześniejszy niż 1980';
@@ -421,6 +430,14 @@ const validateGameReleaseDate = () => {
         releaseDate.classList.add('error-input');
         releaseDateError.innerHTML = 'Rok nie może być poźniejszy niż 2099';
         return false;
+    }
+
+    if (formDate > todayDate) {
+        bigSuggestionPosterDisplayContainer.classList.remove("hide-big-suggestion-poster");
+        isReleaseInFuture = true;
+    } else {
+        bigSuggestionPosterDisplayContainer.classList.add("hide-big-suggestion-poster");
+        isReleaseInFuture = false;
     }
 
     releaseDate.classList.remove('error-input');
@@ -439,7 +456,6 @@ const playerRangeError = document.getElementById("player-range-error");
 const gameModesContainer = document.getElementById("game-modes-input-container");
 
 const validateGameMode = () => {
-
     if (multiplayerCheckBox.checked) {
         (showPlayersRange.classList.contains("hide-players-range"))
         showPlayersRange.classList.remove("hide-players-range");
@@ -582,7 +598,7 @@ const validateGamePoster = async () => {
     if (gamePoster.value === "") {
         gamePoster.classList.add("error-input");
         posterError.innerHTML = "Dodaj obraz";
-        removeUpload();
+        removeGamePoster();
         return false;
     }
     if (size > 1 && gamePoster.value !== "") {
@@ -613,11 +629,53 @@ const validateGamePoster = async () => {
     if (extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg" && gamePoster.value !== "") {
         gamePoster.classList.add("error-input");
         posterError.innerHTML = "Nieobsługiwany format pliku!";
-        removeUpload();
+        removeGamePoster();
         return false;
     }
     gamePoster.classList.remove("error-input");
     posterError.innerHTML = "";
+    return true;
+}
+//VALIDATE GAME SUGGESTION POSTER BIG
+const bigSuggestionPoster = document.getElementById("big-suggestion-poster");
+const bigSuggestionPosterError = document.getElementById("big-suggestion-poster-error");
+const bigSuggestionPosterDisplayContainer = document.getElementById("big-suggestion-poster-display");
+
+
+const validateBigSuggestionPoster = async () => {
+    let size;
+    let extension;
+    let width;
+    let height;
+
+    if (bigSuggestionPoster.value !== "") {
+        size = ((bigSuggestionPoster.files[0].size / 1024) / 1024).toString().slice(0, 4);
+        extension = bigSuggestionPoster.files[0].type;
+
+        const img = new Image();
+        img.src = window.URL.createObjectURL(bigSuggestionPoster.files[0]);
+        await new Promise((resolve) => {
+            img.onload = () => {
+                width = img.width;
+                height = img.height;
+                resolve();
+            };
+        });
+    }
+    let proportionHeightWidth = height / width;
+    let slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
+
+    let proportionWidthHeight = width / height;
+    let slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
+
+    if (bigSuggestionPoster.value === "") {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Dodaj obraz";
+        removeBigSuggestionPoster();
+        return false;
+    }
+    bigSuggestionPoster.classList.remove("error-input");
+    bigSuggestionPosterError.innerHTML = "";
     return true;
 }
 
@@ -635,8 +693,12 @@ async function validateGameForm() {
     let playerRange = validatePlayersRange();
     let platforms = validateGamePlatforms();
     let poster = validateGamePoster();
+    let bigPoster = true;
+    if (date) {
+        bigPoster = validateBigSuggestionPoster();
+    }
     return gameTitle && gameShortDescription && gameLongDescription && trailerId && producer && publisher &&
-        date && gameModes && playerRange && platforms && poster && categories;
+        date && gameModes && playerRange && platforms && poster && bigPoster && categories;
 }
 
 function sendForm() {
@@ -656,7 +718,9 @@ function sendForm() {
             playerRangeError.classList.add("button-error");
             platformsError.classList.add("button-error");
             posterError.classList.add("button-error");
+            bigSuggestionPosterError.classList.add("button-error");
             gameFormButton.classList.add("button-error");
+
         }
         setTimeout(function () {
             gameTitleError.classList.remove("button-error");
@@ -671,6 +735,7 @@ function sendForm() {
             playerRangeError.classList.remove("button-error");
             platformsError.classList.remove("button-error");
             posterError.classList.remove("button-error");
+            bigSuggestionPosterError.classList.remove("button-error");
             gameFormButton.classList.remove("button-error");
         }, 500)
     }).catch(error => {
@@ -690,14 +755,25 @@ function previewBeforeUpload(id) {
     });
 }
 
-function removeUpload(id = "game-poster") {
+//REMOVE GAME POSTER
+function removeGamePoster(id = "game-poster") {
     document.querySelector("#" + id + "-preview div").innerHTML = "<span>+</span>";
-    document.querySelector("#" + id + "-preview img").src = '/img/notfound.png';
+    document.querySelector("#" + id + "-preview img").src = '/img/notfound.jpg';
 }
 
 gamePoster.addEventListener("input", function () {
     previewBeforeUpload("game-poster");
-})
+});
+
+//REMOVE BIG SUGGESTION POSTER
+function removeBigSuggestionPoster(id = "big-suggestion-poster") {
+    document.querySelector("#" + id + "-preview div").innerHTML = "<span>+</span>";
+    document.querySelector("#" + id + "-preview img").src = '/img/notfoundhorizontal.jpg';
+}
+
+bigSuggestionPoster.addEventListener("input", function () {
+    previewBeforeUpload("big-suggestion-poster");
+});
 
 
 //RESET FORM BUTTON
@@ -734,13 +810,20 @@ function clearGameForm() {
 
     showPlayersRange.classList.add("hide-players-range");
     showPlayersRange.classList.remove("show-players-range");
+
     gameModesContainer.classList.remove("error-input");
     gameModesError.innerHTML = '';
-    platformsError.innerHTML = '';
+
     platform.classList.remove("error-input");
+    platformsError.innerHTML = '';
+
     gamePoster.classList.remove("error-input");
     posterError.innerHTML = '';
-    removeUpload();
+    bigSuggestionPosterError.innerHTML = '';
+    bigSuggestionPosterDisplayContainer.classList.add("hide-big-suggestion-poster");
+    isReleaseInFuture = false;
+    removeGamePoster();
+    removeBigSuggestionPoster();
 }
 
 //RESET ERRORS MESSAGE WHEN PAGE LOAD

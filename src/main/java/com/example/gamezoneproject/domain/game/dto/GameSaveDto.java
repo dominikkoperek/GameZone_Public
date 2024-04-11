@@ -67,6 +67,9 @@ public class GameSaveDto {
     @PlayersRange(rangeMin = 1, rangeMax = 2000,maxMin=1000)
     private PlayerRange playerRange;
 
+    private MultipartFile smallPosterSuggestion;
+    private MultipartFile bigPosterSuggestion;
+
     public String getTitle() {
         return title;
     }
@@ -177,5 +180,21 @@ public class GameSaveDto {
 
     public void setMainCategory(String mainCategory) {
         this.mainCategory = mainCategory;
+    }
+
+    public MultipartFile getSmallPosterSuggestion() {
+        return smallPosterSuggestion;
+    }
+
+    public void setSmallPosterSuggestion(MultipartFile smallPosterSuggestion) {
+        this.smallPosterSuggestion = smallPosterSuggestion;
+    }
+
+    public MultipartFile getBigPosterSuggestion() {
+        return bigPosterSuggestion;
+    }
+
+    public void setBigPosterSuggestion(MultipartFile bigPosterSuggestion) {
+        this.bigPosterSuggestion = bigPosterSuggestion;
     }
 }

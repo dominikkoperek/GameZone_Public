@@ -9,38 +9,64 @@
 
     <main class="main-content" layout:fragment="content">
 
-        <section class="content-recommendation-box" th:if="${daysBeforeRelease>=0}">
-            <div class="latest-game-premier">
-                <a href="#" th:href="@{|/gry/${#strings.replace(closestPremier.title,' ','-')}/${closestPremier.id}|}">
-                    <picture class="image-container">
+        <div th:if="${closestGameReleaseDate ne null}">
+            <section class="content-recommendation-box"
+                     th:if="${closestGameReleaseDate} ne null and ${closestGameReleaseDate.daysBeforeRelease>=0}">
+                <div class="latest-game-premier">
+                    <a href="#"
+                       th:href="@{|/gry/${#strings.replace(closestGameReleaseDate.title,' ','-')}/${closestGameReleaseDate.id}|}">
+                        <div class="suggestion-platforms-container">
+                            <ul>
+                                <li th:each="closestGame:${closestGameReleaseDate.platform}">
+                                    <img class="suggestion-platform-logo"
+                                         th:src="${closestGame.value ne null} ? @{|/galeria/platformy/${closestGame.value}|} : @{/galeria/gry/game-poster-placeholder.jpg}"
+                                    >
+                                    <span class="suggestion-platform-name" th:text="${closestGame.key}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <picture class="image-container">
                             <img
                                     class="latest-game-image"
-                                    src="../static/img/notfound.png"
-                                    th:src="@{/galeria/propozycje/d/stellarblade0.jpg}"
+                                    src="../static/img/notfound.jpg"
+                                    th:src="@{|/galeria/rekomendacje/l/${closestGameReleaseDate.getBigPosterSuggestion()}|}"
                                     alt="tytuł gry">
-                    </picture>
-                    <div class="latest-game-premier-date">
+                        </picture>
+                        <div class="latest-game-premier-date">
                         <span class="latest-game-info"
-                              th:text="${daysBeforeRelease eq 0} ? 'Premiera ' : 'Premiera za: ' "}>Premiera za: </span>
+                              th:text="${closestGameReleaseDate.daysBeforeRelease eq 0} ? 'Premiera ' : 'Premiera za: ' "
+                              }>Premiera za: </span>
 
-                        <span class="latest-game-premier-counter" th:if="${daysBeforeRelease gt 0}" th:text="${daysBeforeRelease}"></span>
-                        <span class="latest-game-premier-counter" th:if="${daysBeforeRelease eq 0}">dzisiaj</span>
-                        <span class="latest-game-premier-number" th:if="${daysBeforeRelease eq 1}">dzień</span>
-                        <span class="latest-game-premier-number" th:if="${daysBeforeRelease ge 2}">dni</span>
-                    </div>
-                </a>
+                            <span class="latest-game-premier-counter"
+                                  th:if="${closestGameReleaseDate.daysBeforeRelease gt 0}"
+                                  th:text="${closestGameReleaseDate.daysBeforeRelease}">
+                        </span>
+                            <span class="latest-game-premier-counter"
+                                  th:if="${closestGameReleaseDate.daysBeforeRelease eq 0}">dzisiaj</span>
+                            <span class="latest-game-premier-number"
+                                  th:if="${closestGameReleaseDate.daysBeforeRelease eq 1}">dzień</span>
+                            <span class="latest-game-premier-number"
+                                  th:if="${closestGameReleaseDate.daysBeforeRelease ge 2}">dni</span>
+                        </div>
+                    </a>
 
-            </div>
-        </section>
+                </div>
+            </section>
+        </div>
 
-        <div class="content-recommendation">
+        <h2 class="list-heading">Polecane dla Ciebie!</h2>
+        <p class="list-description">Nasz serwis dostosowuje rekomendacje do Twoich preferencji, bazując na Twoim
+            zachowaniu na stronie oraz ocenach gier. Jeśli często przeglądasz gry z kategorii “romans”, to w naszych rekomendacjach
+            znajdziesz więcej takich tytułów. Dodatkowo, jeśli wysoko oceniłeś gry akcji, zwiększymy szanse na pojawienie
+            się podobnych gier w Twoich polecanych. Dzięki temu, rekomendacje są jak najbardziej dopasowane do Twoich gustów..</p>
+        <div class="content-suggestion">
             <div class="suggestion-box">
                 <a href="#" th:href="@{/gry/Stellar-Blade/5}">
                     <picture class="image-list-test">
                         <img
-                                class="test-image"
-                                src="../static/img/notfound.png"
-                                th:src="@{/galeria/gry/baldur.jpg}"
+                                class="small-image-suggestion"
+                                src="../static/img/notfound.jpg"
+                                th:src="@{/galeria/rekomendacje/s/baldursgate3_s_0.jpg}"
                                 alt="tytuł gry">
                     </picture>
                 </a>
@@ -49,9 +75,9 @@
                 <a href="#" th:href="@{/gry/Stellar-Blade/5}">
                     <picture class="image-list-test">
                         <img
-                                class="test-image"
-                                src="../static/img/notfound.png"
-                                th:src="@{/galeria/gry/diablo.jpg}"
+                                class="small-image-suggestion"
+                                src="../static/img/notfound.jpg"
+                                th:src="@{/galeria/rekomendacje/s/diablo_s_0.jpg}"
                                 alt="tytuł gry">
                     </picture>
                 </a>
@@ -60,20 +86,20 @@
                 <a href="#" th:href="@{/gry/Stellar-Blade/5}">
                     <picture class="image-list-test">
                         <img
-                                class="test-image"
-                                src="../static/img/notfound.png"
-                                th:src="@{/galeria/gry/frostpunk20.jpg}"
+                                class="small-image-suggestion"
+                                src="../static/img/notfound.jpg"
+                                th:src="@{/galeria/rekomendacje/s/frostpunk_s_0.jpg}"
                                 alt="tytuł gry">
                     </picture>
                 </a>
             </div>
             <div class="suggestion-box">
-                <a href="#" th:href="@{/gry/Stellar-Blade/5}">
+                <a href="#" th:href="@{/gry/Mass-effect-3/1}">
                     <picture class="image-list-test">
                         <img
-                                class="test-image"
-                                src="../static/img/notfound.png"
-                                th:src="@{/galeria/propozycje/m/stellarblade1.jpg}"
+                                class="small-image-suggestion"
+                                src="../static/img/notfound.jpg"
+                                th:src="@{/galeria/rekomendacje/s/masseffect3_s_0.jpg}"
                                 alt="tytuł gry">
                     </picture>
                 </a>
@@ -112,8 +138,8 @@
                     <div class="game-poster-wrapper">
                         <div class="poster-list-wrapper">
                             <a href="#" th:href="@{|/gry/${#strings.replace(game.title,' ','-')}/${game.id}|}"> <img
-                                    src="../static/img/notfound.png"
-                                    th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.png}"
+                                    src="../static/img/notfound.jpg"
+                                    th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.jpg}"
                                     alt="tytuł gry"
                                     class="game-list-item-poster">
                             </a>
@@ -170,7 +196,7 @@
 
                 <li class="game-list-item">
                     <a href="#">
-                        <img src="../static/img/notfound.png"
+                        <img src="../static/img/notfound.jpg"
                              alt="tytuł gry"
                              class="game-list-item-poster">
                     </a>

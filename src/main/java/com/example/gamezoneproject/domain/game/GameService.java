@@ -5,6 +5,7 @@ import com.example.gamezoneproject.domain.exceptions.CompanyNotFoundException;
 import com.example.gamezoneproject.domain.game.dto.GameDto;
 import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;
 import com.example.gamezoneproject.domain.game.dto.GameSaveDto;
+import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryRepository;
 import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
@@ -72,13 +73,13 @@ public class GameService {
     }
 
     /**
-     * Finds game by closest premier day to present day, and map it to GameDto.
+     * Finds game by closest premier day to present day, and map it to GameSuggestionsDto.
      *
-     * @return Option containing GameDto if game is found, or empty if not.
+     * @return Option containing GameSuggestionsDto if game is found, or empty if not.
      */
-    public Optional<GameDto> findGameByClosestPremierDate() {
+    public Optional<GameSuggestionsDto> findGameByClosestPremierDate() {
         return gameRepository.findGameByClosestReleaseDate()
-                .map(GameDtoMapper::map);
+                .map(GameDtoMapper::mapToGameSuggestionsDto);
     }
 
     /**
@@ -209,25 +210,17 @@ public class GameService {
         game.setShortDescription(gameSaveDto.getShortDescription().trim());
         game.setDescription(gameSaveDto.getDescription().trim());
         game.setDailymotionTrailerId(gameSaveDto.getDailymotionTrailerId().trim());
-
         game.setReleaseYear(getReleaseDate(gameSaveDto.getReleaseYear()));
-
         Company producer = companyRepository.findByNameIgnoreCase(gameSaveDto.getProducer())
                 .orElseThrow(CompanyNotFoundException::new);
         game.setProducer(producer);
-
         Company publisher = companyRepository.findByNameIgnoreCase(gameSaveDto.getPublisher())
                 .orElseThrow(CompanyNotFoundException::new);
         game.setPublisher(publisher);
-
         game.setCategory(getUserCategory(gameSaveDto.getCategory(), gameSaveDto.getMainCategory()));
-
         game.setGamePlatform(getUserPlatforms(gameSaveDto.getPlatform()));
-
         game.setGameModes(getGameModes(gameSaveDto.getGameModes()));
-
         game.setPlayerRange(getPlayersRange(gameSaveDto.getPlayerRange()));
-
         game.setPromoted(gameSaveDto.isPromoted());
 
 
@@ -235,6 +228,16 @@ public class GameService {
             String savedFileName = fileStorageService.saveImage(gameSaveDto.getPoster(), gameSaveDto.getTitle(),
                     ImageStorageFile.GAME_POSTER);
             game.setPoster(savedFileName);
+        }
+        if (gameSaveDto.getSmallPosterSuggestion() != null && !gameSaveDto.getSmallPosterSuggestion().isEmpty()) {
+            String savedSmallPoster = fileStorageService.saveImage(gameSaveDto.getSmallPosterSuggestion(), gameSaveDto.getTitle(),
+                    ImageStorageFile.SMALL_ADD_POSTER);
+            game.setSmallPosterSuggestion(savedSmallPoster);
+        }
+        if (gameSaveDto.getBigPosterSuggestion() != null && !gameSaveDto.getBigPosterSuggestion().isEmpty()) {
+            String savedBigPoster = fileStorageService.saveImage(gameSaveDto.getBigPosterSuggestion(), gameSaveDto.getTitle(),
+                    ImageStorageFile.BIG_ADD_POSTER);
+            game.setBigPosterSuggestion(savedBigPoster);
         }
         gameRepository.save(game);
     }

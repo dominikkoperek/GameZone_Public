@@ -11,6 +11,7 @@ public class GamePlatform {
     private String name;
     private String description;
     private String logoAddress;
+    private String logoAddressImage;
 
 
     public Long getId() {
@@ -43,5 +44,13 @@ public class GamePlatform {
 
     public void setLogoAddress(String logoAddress) {
         this.logoAddress = logoAddress;
+    }
+
+    public String getLogoAddressImage() {
+        return logoAddressImage;
+    }
+
+    public void setLogoAddressImage(String logoAddressImage) {
+        this.logoAddressImage = logoAddressImage;
     }
 }
