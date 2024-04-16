@@ -1,5 +1,6 @@
 package com.example.gamezoneproject.domain.game.gameDetails.company;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -39,10 +40,29 @@ public interface CompanyRepository extends CrudRepository<Company, Long> {
      * @return A list of all companies that are publishers.
      */
     List<Company> findAllByIsPublisherIsTrue();
+
     /**
      * Finds all companies that are producers.
      *
      * @return A list of all companies that are producers.
      */
     List<Company> findAllByIsProducerIsTrue();
+
+    /**
+     * Find all companies that name start with the param letter.
+     *
+     * @param letter First letter of searching company name.
+     * @return List of all companies that names is starting from a letter param.
+     */
+    List<Company> findAllByNameStartingWith(String letter);
+
+    /**
+     * Finds all companies that name start with digit.
+     *
+     * @return List of all companies that names is starting from digit.
+     */
+
+    @Query (value = "SELECT * FROM Company WHERE Company.name REGEXP '^[0-9]'",nativeQuery = true)
+    List<Company> findAllByNameStartingWithDigit();
+
 }

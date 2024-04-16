@@ -1,4 +1,3 @@
-
 let categoryListError = document.getElementById("notification-bar-categories");
 let timerShowSuggestions;
 let categorySuggestions = [];
@@ -94,6 +93,7 @@ async function checkFromIsGood() {
 
     return categoryName && descriptionName;
 }
+
 //DISABLE FORM BEFORE VALIDATION
 const categoryForm = document.getElementById("add-content-form");
 const categoryFormButton = document.getElementById("form-button");
@@ -143,25 +143,29 @@ function checkCategoryAvailability(category) {
 
 
 function getSuggestions(input) {
-    $.ajax({
-        url: '/api/category/allCategories',
-        type: 'GET',
-        success: function (data) {
-            categorySuggestions = data;
-            showSuggestions(input);
-            if (categoryListError.children.length > 0 && categoryName.value !== '') {
-                categoryListError.classList.remove("hide-notification")
-                categoryListError.classList.add("show-notification")
-            }else {
-                categoryListError.classList.remove("show-notification");
-                categoryListError.classList.add("hide-notification");
-            }
+    if (categorySuggestions.length > 1) {
+        showSuggestions(input);
+    } else {
+        $.ajax({
+            url: '/api/category/allCategories',
+            type: 'GET',
+            success: function (data) {
+                categorySuggestions = data;
+                showSuggestions(input);
+                if (categoryListError.children.length > 0 && categoryName.value !== '') {
+                    categoryListError.classList.remove("hide-notification")
+                    categoryListError.classList.add("show-notification")
+                } else {
+                    categoryListError.classList.remove("show-notification");
+                    categoryListError.classList.add("hide-notification");
+                }
 
-        },
-        error: function (error) {
-            console.error('Wystąpił błąd:', error);
-        }
-    });
+            },
+            error: function (error) {
+                console.error('Wystąpił błąd:', error);
+            }
+        });
+    }
 }
 
 function showSuggestions(input) {

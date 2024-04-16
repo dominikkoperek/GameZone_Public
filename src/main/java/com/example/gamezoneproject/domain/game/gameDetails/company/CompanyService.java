@@ -7,7 +7,6 @@ import com.example.gamezoneproject.storage.ImageStorageFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -115,11 +114,11 @@ public class CompanyService {
         companyToSave.setCountry(companySaveDto.getCountry());
         companyToSave.setProducer(companySaveDto.isProducer());
         companyToSave.setPublisher(companySaveDto.isPublisher());
-            if (companySaveDto.getPoster() != null && !companySaveDto.getPoster().isEmpty()) {
-                String savedFileName = fileStorageService
-                        .saveImage(companySaveDto.getPoster(), companySaveDto.getName(), ImageStorageFile.COMPANY_POSTER);
-                companyToSave.setPoster(savedFileName);
-            }
+        if (companySaveDto.getPoster() != null && !companySaveDto.getPoster().isEmpty()) {
+            String savedFileName = fileStorageService
+                    .saveImage(companySaveDto.getPoster(), companySaveDto.getName(), ImageStorageFile.COMPANY_POSTER);
+            companyToSave.setPoster(savedFileName);
+        }
 
         companyRepository.save(companyToSave);
     }
@@ -145,6 +144,32 @@ public class CompanyService {
         return companyRepository
                 .findById(id)
                 .map(CompanyDtoMapper::map);
+    }
+
+    /**
+     * Method uses the repository to find all companies by the first letter of their name.
+     *
+     * @param letter First letter of the company name.
+     * @return List of CompanyDto filled with companies that first letter is param letter.
+     */
+    public List<CompanyDto> findAllCompaniesByFirstLetter(String letter) {
+        return companyRepository.findAllByNameStartingWith(letter)
+                .stream()
+                .map(CompanyDtoMapper::map)
+                .toList();
+    }
+
+    /**
+     * Method uses the repository to find all companies where first letter of the name is digit.
+     *
+     * @return List of company dto with companies that names starts with digit.
+     */
+    public List<CompanyDto> findAllCompaniesByNameStartWithDigit() {
+        return companyRepository.findAllByNameStartingWithDigit()
+                .stream()
+                .map(CompanyDtoMapper::map)
+                .toList();
+
     }
 
 }

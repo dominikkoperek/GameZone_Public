@@ -19,24 +19,29 @@ gameTitle.addEventListener('keyup', function () {
 });
 
 function getGameTitleSuggestions(input) {
-    $.ajax({
-        url: '/api/games/allGames',
-        type: 'GET',
-        success: function (data) {
-            gameTitleHintsResult = data;
-            showGameTitleSuggestions(input);
-            if (gameListSuggestions.children.length > 0 && gameTitle.value !== '') {
-                gameListSuggestions.classList.add("show-notification");
-                gameListSuggestions.classList.remove("hide-notification");
-            } else {
-                gameListSuggestions.classList.add("hide-notification");
-                gameListSuggestions.classList.remove("show-notification");
+    if (gameTitleHintsResult.length > 1) {
+        showGameTitleSuggestions(input);
+    } else {
+
+        $.ajax({
+            url: '/api/games/allGames',
+            type: 'GET',
+            success: function (data) {
+                gameTitleHintsResult = data;
+                showGameTitleSuggestions(input);
+                if (gameListSuggestions.children.length > 0 && gameTitle.value !== '') {
+                    gameListSuggestions.classList.add("show-notification");
+                    gameListSuggestions.classList.remove("hide-notification");
+                } else {
+                    gameListSuggestions.classList.add("hide-notification");
+                    gameListSuggestions.classList.remove("show-notification");
+                }
+            },
+            error: function (error) {
+                console.error('Error: ', error);
             }
-        },
-        error: function (error) {
-            console.error('Error: ', error);
-        }
-    });
+        });
+    }
 }
 
 function showGameTitleSuggestions(input) {
@@ -263,9 +268,10 @@ const validateGameShortDescription = () => {
         gameShortDescriptionError.innerHTML = 'Opis musi mieć przynajmniej 100 znaków'
         return false;
     }
-    if (gameShortDescriptionValue.includes("<script>")) {
+    let reg = "<\\w+\\s*[^>]*>";
+    if (gameShortDescriptionValue.match(reg)) {
         gameShortDescription.classList.add('error-input');
-        gameShortDescriptionError.innerHTML = 'Opis zawiera niedozwolone frazy';
+        gameShortDescriptionError.innerHTML = "Opis nie może zawierac tagów html!";
         return false;
     }
     if (gameShortDescriptionValue.length > 320) {
@@ -434,9 +440,11 @@ const validateGameReleaseDate = () => {
 
     if (formDate > todayDate) {
         bigSuggestionPosterDisplayContainer.classList.remove("hide-big-suggestion-poster");
+        bigSuggestionPosterDisplayContainer.classList.add("show-big-suggestion-poster");
         isReleaseInFuture = true;
     } else {
         bigSuggestionPosterDisplayContainer.classList.add("hide-big-suggestion-poster");
+        bigSuggestionPosterDisplayContainer.classList.remove("show-big-suggestion-poster");
         isReleaseInFuture = false;
     }
 
@@ -568,12 +576,17 @@ function validateCategories() {
 //VALIDATE POSTER
 const gamePoster = document.getElementById("game-poster");
 const posterError = document.getElementById("poster-error");
+const gamePosterHeightWidth = document.getElementById("game-poster-proportion-height");
+const gamePosterWidthHeight = document.getElementById("game-poster-proportion-width");
 
 const validateGamePoster = async () => {
     let size;
     let extension;
     let width;
     let height;
+    gamePosterHeightWidth.innerHTML = '';
+    gamePosterWidthHeight.innerHTML = '';
+
 
     if (gamePoster.value !== "") {
         size = ((gamePoster.files[0].size / 1024) / 1024).toString().slice(0, 4);
@@ -595,35 +608,47 @@ const validateGamePoster = async () => {
     let proportionWidthHeight = width / height;
     let slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
 
+
     if (gamePoster.value === "") {
         gamePoster.classList.add("error-input");
         posterError.innerHTML = "Dodaj obraz";
         removeGamePoster();
         return false;
     }
-    if (size > 1 && gamePoster.value !== "") {
+    if (gamePoster.value !== "" && size > 1) {
         gamePoster.classList.add("error-input");
         posterError.innerHTML = "Obraz jest za duży " + size + "Mb";
         return false;
     }
-    if (height > 1200 && gamePoster.value !== "") {
+    if (gamePoster.value !== "" && height > 1200) {
         gamePoster.classList.add("error-input");
         posterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px" + " (max 1200px)";
         return false;
     }
-    if (width > 800 && gamePoster.value !== "") {
+    if (gamePoster.value !== "" && width > 800) {
         gamePoster.classList.add("error-input");
         posterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 800px)";
         return false;
     }
-    if (proportionHeightWidth < 1.3 && proportionHeightWidth < 1.5) {
+    if (gamePoster.value !== "" && height < 600) {
+        gamePoster.classList.add("error-input");
+        posterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px" + " (min 600px)";
+        return false;
+    }
+    if (gamePoster.value !== "" && width < 400) {
+        gamePoster.classList.add("error-input");
+        posterError.innerHTML = "Szerokość obrazu jest za mała " + width + "px" + " (min 400px)";
+        return false;
+    }
+
+    if (proportionHeightWidth < 1.3 || proportionHeightWidth > 1.5) {
         gamePoster.classList.add("error-input");
         posterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 1.3-1.5 jest " + slicedProportionHeightWidth;
         return false;
     }
-    if (proportionHeightWidth < 0.6 && proportionHeightWidth < 0.7) {
+    if (proportionWidthHeight < 0.6 || proportionWidthHeight > 0.8) {
         gamePoster.classList.add("error-input");
-        posterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 1.3-1.5 jest " + slicedProportionWidthHeight;
+        posterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 0.6-0.8 jest " + slicedProportionWidthHeight;
         return false;
     }
     if (extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg" && gamePoster.value !== "") {
@@ -632,6 +657,9 @@ const validateGamePoster = async () => {
         removeGamePoster();
         return false;
     }
+    gamePosterHeightWidth.innerHTML = "wysokość/szerokość = " + slicedProportionHeightWidth;
+    gamePosterWidthHeight.innerHTML = "szerokość/wysokość = " + slicedProportionWidthHeight;
+
     gamePoster.classList.remove("error-input");
     posterError.innerHTML = "";
     return true;
@@ -640,13 +668,21 @@ const validateGamePoster = async () => {
 const bigSuggestionPoster = document.getElementById("big-suggestion-poster");
 const bigSuggestionPosterError = document.getElementById("big-suggestion-poster-error");
 const bigSuggestionPosterDisplayContainer = document.getElementById("big-suggestion-poster-display");
-
+const bigSuggestionWidthHeight = document.getElementById("big-suggestion-proportion-height");
+const bigSuggestionHeightWidth = document.getElementById("big-suggestion-proportion-width");
 
 const validateBigSuggestionPoster = async () => {
     let size;
     let extension;
     let width;
     let height;
+    let proportionHeightWidth;
+    let slicedProportionHeightWidth;
+    let proportionWidthHeight;
+    let slicedProportionWidthHeight;
+
+    bigSuggestionWidthHeight.innerHTML = '';
+    bigSuggestionHeightWidth.innerHTML = '';
 
     if (bigSuggestionPoster.value !== "") {
         size = ((bigSuggestionPoster.files[0].size / 1024) / 1024).toString().slice(0, 4);
@@ -658,22 +694,67 @@ const validateBigSuggestionPoster = async () => {
             img.onload = () => {
                 width = img.width;
                 height = img.height;
+                proportionHeightWidth = height / width;
+                slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
+
+                proportionWidthHeight = width / height;
+                slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
                 resolve();
             };
         });
+
     }
-    let proportionHeightWidth = height / width;
-    let slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
-
-    let proportionWidthHeight = width / height;
-    let slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
-
     if (bigSuggestionPoster.value === "") {
         bigSuggestionPoster.classList.add("error-input");
         bigSuggestionPosterError.innerHTML = "Dodaj obraz";
         removeBigSuggestionPoster();
         return false;
     }
+    if ((bigSuggestionPoster.value !== "" && size > 1)) {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Obraz jest za duży " + size + "Mb";
+        return false;
+    }
+    if ((bigSuggestionPoster.value !== "" && height > 1200)) {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px" + " (max 700px)";
+        return false;
+    }
+    if ((bigSuggestionPoster.value !== "" && width > 2400)) {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 2200px)";
+        return false;
+    }
+    if ((bigSuggestionPoster.value !== "" && height < 350)) {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px" + " (min 350px)";
+        return false;
+    }
+    if ((bigSuggestionPoster.value !== "" && width < 1100)) {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Szerokość obrazu jest za mała " + width + "px" + " (min 1100px)";
+        return false;
+    }
+    if (proportionHeightWidth < 0.31 || proportionHeightWidth > 0.51) {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 0.3-0.5 jest " + slicedProportionHeightWidth;
+        return false;
+    }
+    if (proportionWidthHeight < 2 || proportionWidthHeight > 3.2) {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 2.0-3.2 jest " + slicedProportionWidthHeight;
+        return false;
+    }
+    if (bigSuggestionPoster.value !== "" && extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg") {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Nieobsługiwany format pliku!";
+        removeBigSuggestionPoster();
+        return false;
+    }
+
+    bigSuggestionHeightWidth.innerHTML = "wysokość/szerokość = " + slicedProportionHeightWidth;
+    bigSuggestionWidthHeight.innerHTML = "szerokość/wysokość = " + slicedProportionWidthHeight;
+
     bigSuggestionPoster.classList.remove("error-input");
     bigSuggestionPosterError.innerHTML = "";
     return true;
@@ -692,10 +773,10 @@ async function validateGameForm() {
     let gameModes = validateGameMode();
     let playerRange = validatePlayersRange();
     let platforms = validateGamePlatforms();
-    let poster = validateGamePoster();
-    let bigPoster = true;
+    let poster = await validateGamePoster();
+    let bigPoster;
     if (date) {
-        bigPoster = validateBigSuggestionPoster();
+        bigPoster = await validateBigSuggestionPoster();
     }
     return gameTitle && gameShortDescription && gameLongDescription && trailerId && producer && publisher &&
         date && gameModes && playerRange && platforms && poster && bigPoster && categories;
@@ -821,6 +902,13 @@ function clearGameForm() {
     posterError.innerHTML = '';
     bigSuggestionPosterError.innerHTML = '';
     bigSuggestionPosterDisplayContainer.classList.add("hide-big-suggestion-poster");
+    bigSuggestionPosterDisplayContainer.classList.remove("show-big-suggestion-poster");
+
+    bigSuggestionWidthHeight.innerHTML = '';
+    bigSuggestionHeightWidth.innerHTML = '';
+    gamePosterHeightWidth.innerHTML = '';
+    gamePosterWidthHeight.innerHTML = '';
+
     isReleaseInFuture = false;
     removeGamePoster();
     removeBigSuggestionPoster();

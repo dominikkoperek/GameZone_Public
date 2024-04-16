@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
  * Controller for category list and game list sorted by categories.
  */
 @Controller
+
 public class CategoryController {
     private final CategoryService categoryService;
     private final GameService gameService;
@@ -44,7 +45,8 @@ public class CategoryController {
         model.addAttribute("heading", category.getName());
         model.addAttribute("description", category.getDescription());
         model.addAttribute("games", games);
-
+        model.addAttribute("recommendationHeading","Polecane dla Ciebie!");
+        model.addAttribute("recommendationDescription","Nasz serwis dostosowuje rekomendacje do Twoich preferencji, bazując na Twoimzachowaniu na stronie oraz ocenach gier. Jeśli często przeglądasz gry z kategorii “romans”, to w naszychrekomendacjachznajdziesz więcej takich tytułów. Dodatkowo, jeśli wysoko oceniłeś gry akcji, zwiększymy szanse napojawienie się podobnych gier w Twoich polecanych. Dzięki temu, rekomendacje są jak najbardziej dopasowane doTwoich gustów.");
         model.addAttribute("closestPremierGame", new GameSuggestionsDto());
         return "game-listing";
     }
@@ -54,7 +56,7 @@ public class CategoryController {
      * @param model The Model object that add attributes, CategoryDto and messages, heading and description.
      * @return The view name of the categories-listing.
      */
-    @GetMapping("/gry/kategoria")
+    @GetMapping("/gry/kategorie")
     public String getCategoryList(Model model) {
         List<CategoryDto> categories = categoryService.findAllGameCategories()
                 .stream()
@@ -64,6 +66,7 @@ public class CategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("heading", "Kategorie gier");
         model.addAttribute("description", " Każda gra ma jeden główny gatunek: Akcji, Bijatyki, Logiczne, Przygodowe, RPG, Sportowe, Strategiczne, Symulacje, Romanse, Wyścigi, Zręcznościowe itp. Dodatkowo każda gra ma kilka pobocznych kategorii dzięki którym znajdziesz swój ulubiony tytuł!");
+
         return "categories-listing";
     }
 }

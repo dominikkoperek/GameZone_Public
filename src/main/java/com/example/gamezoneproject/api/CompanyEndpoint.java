@@ -1,6 +1,8 @@
 package com.example.gamezoneproject.api;
 
+import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyDtoMapper;
 import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyService;
+import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyApiDto;
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,14 +47,15 @@ public class CompanyEndpoint {
      * @return ResponseEntity containing a list of all companies names.
      */
     @GetMapping("/allCompanies")
-    public ResponseEntity<List<String>> findAllCompanies() {
-        List<String> allCompanies = companyService
+    public ResponseEntity<List<CompanyApiDto>> findAllCompanies() {
+        List<CompanyApiDto> allCompanies = companyService
                 .findAllCompanies()
                 .stream()
-                .map(CompanyDto::getName)
+                .map(CompanyDtoMapper::mapToApiDto)
                 .toList();
         return ResponseEntity.ok(allCompanies);
     }
+
 
     /**
      * Endpoint that finds all companies in database that are producers and maps them to get their names.

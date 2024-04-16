@@ -1,5 +1,6 @@
 package com.example.gamezoneproject.domain.game.gameDetails.company;
 
+import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyApiDto;
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDto;
 
 /**
@@ -22,6 +23,18 @@ public class CompanyDtoMapper {
                 company.getPublisher(),
                 company.getDescription(),
                 company.getPoster()
+        );
+    }
+    /**
+     * This static method is responsible for mapping a CompanyDto entity to a CompanyApiDto.
+     *
+     * @param companyDto The CompanyDto object to be mapped.
+     * @return A new CompanyApiDto object with fields mapped from the companyDto object.
+     */
+    public static CompanyApiDto mapToApiDto(CompanyDto companyDto){
+        return new CompanyApiDto(
+                companyDto.getId(),
+                companyDto.getName()
         );
     }
 

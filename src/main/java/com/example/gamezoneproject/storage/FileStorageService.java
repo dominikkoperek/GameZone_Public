@@ -158,7 +158,7 @@ public class FileStorageService {
                 case GAME_POSTER -> 600;
             };
             targetWidth = switch (imageStorageFile) {
-                case BIG_ADD_POSTER -> 110;
+                case BIG_ADD_POSTER -> 1100;
                 case SMALL_ADD_POSTER -> 300;
                 case COMPANY_POSTER -> 160;
                 case GAME_POSTER -> 400;

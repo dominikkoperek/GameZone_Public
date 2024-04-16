@@ -70,7 +70,7 @@ const validatePlatformDescription = () => {
         return false;
     }
     let reg = "<\\w+\\s*[^>]*>";
-    if (platformDescriptionValue.match(reg)){
+    if (platformDescriptionValue.match(reg)) {
         platformDescription.classList.add('error-input');
         platformDescriptionError.innerHTML = "Opis nie może zawierac tagów html!";
         return false;
@@ -123,8 +123,8 @@ const validatePlatformLogoAddress = () => {
         platformLogoAddressError.innerHTML = 'Kod svg musi się kończyć na &lt/svg&gt';
         return false;
     }
-    if (platformLogoAddressValue.includes('<script>') || platformLogoAddressValue.includes('script')||
-         platformLogoAddressValue.includes('<iframe>')) {
+    if (platformLogoAddressValue.includes('<script>') || platformLogoAddressValue.includes('script') ||
+        platformLogoAddressValue.includes('<iframe>')) {
         platformLogoAddress.classList.add('error-input');
         platformLogoAddressError.innerHTML = 'Kod zawiera niedozwolone frazy! &ltscript&gt';
         return false;
@@ -155,6 +155,7 @@ copySvgContainer.forEach(copySvgContainer => {
         }
     });
 });
+
 //VALIDATE ALL FORM INPUTS
 async function checkIsFormValid() {
     let platformName = await validatePlatformName();
@@ -162,6 +163,7 @@ async function checkIsFormValid() {
     let platformLogoAddress = validatePlatformLogoAddress();
     return platformName && platformDescription && platformLogoAddress;
 }
+
 //VALIDATE INPUTS AND SEND FORM OR SHOW ERROR
 function validatePlatformForm() {
     checkIsFormValid().then(result => {
@@ -184,8 +186,10 @@ function validatePlatformForm() {
         console.error('Wystąpił błąd podczas walidacji', error)
     })
 }
+
 //ADD SVG FILE
-const fileErrorMessage=document.getElementById("fileErrorMessage");
+const fileErrorMessage = document.getElementById("fileErrorMessage");
+
 function addFile() {
     let file = svgFile.files[0];
 
@@ -224,25 +228,29 @@ platformName.addEventListener('keyup', function () {
 });
 
 function getPlatformSuggestion(input) {
-    $.ajax({
-        url: '/api/platform/allPlatforms',
-        type: 'GET',
-        success: function (data) {
-            platformSuggestions = data;
-            showSuggestions(input);
-            if (platformListSuggestion.children.length > 0 && platformName.value !== '') {
-                platformListSuggestion.classList.add("show-notification")
-                platformListSuggestion.classList.remove("hide-notification")
-            } else {
-                platformListSuggestion.classList.remove("show-notification")
-                platformListSuggestion.classList.add("hide-notification")
-            }
+    if (platformSuggestions.length > 1) {
+        showSuggestions(input);
+    } else {
+        $.ajax({
+            url: '/api/platform/allPlatforms',
+            type: 'GET',
+            success: function (data) {
+                platformSuggestions = data;
+                showSuggestions(input);
+                if (platformListSuggestion.children.length > 0 && platformName.value !== '') {
+                    platformListSuggestion.classList.add("show-notification")
+                    platformListSuggestion.classList.remove("hide-notification")
+                } else {
+                    platformListSuggestion.classList.remove("show-notification")
+                    platformListSuggestion.classList.add("hide-notification")
+                }
 
-        },
-        error: function (error) {
-            console.error('Wystąpił błąd:', error);
-        }
-    });
+            },
+            error: function (error) {
+                console.error('Wystąpił błąd:', error);
+            }
+        });
+    }
 }
 
 function showSuggestions(input) {
@@ -283,6 +291,7 @@ function checkPlatformAvailability(platform) {
         })
     })
 }
+
 //CLEAR FORM
 const clearPlatformForm = () => {
     platformForm.reset();

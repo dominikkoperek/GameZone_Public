@@ -10,7 +10,8 @@
 <main class="main-content margin-box" layout:fragment="content">
     <h2 class="list-heading display-inline-flex" th:text="${heading}">Tytuł</h2>
     <img class="company-logo-cover" src="/img/notfound.jpg"
-         th:src="${company.poster ne null} ? @{|/galeria/firmy/${company.poster}|} :@{/galeria/gry/game-poster-placeholder.jpg}" th:alt="|${company.name} logo|">
+         th:src="${company.poster ne null} ? @{|/galeria/firmy/${company.poster}|} :@{/galeria/gry/game-poster-placeholder.jpg}"
+         th:alt="|${company.name} logo|">
     <p class="list-description display-block" th:text="${description}">Opis</p>
     <div class="company-details-center-box">
         <p th:text="|Kraj: ${country}|">Opis</p>
@@ -24,12 +25,19 @@
 
 
     <div class="company-button-container">
-        <a class="company-type-button" href="#">Polscy Producenci Gier</a>
-        <a class="company-type-button" href="#">Polscy Wydawcy Gier</a>
-        <a class="company-type-button" href="#">Producenci Gier</a>
-        <a class="company-type-button" href="#">Wydawcy Gier</a>
+        <a class="company-type-button" href="/katalog-firm/firma/polscy-producenci"
+           th:href="@{/katalog-firm/firma/polscy-producenci}">Polscy Producenci Gier</a>
+
+        <a class="company-type-button" href="/katalog-firm/firma/polscy-wydawcy"
+           th:href="@{/katalog-firm/firma/polscy-wydawcy}">Polscy Wydawcy Gier</a>
+
+        <a class="company-type-button" href="/katalog-firm/firma/producenci/top-producenci"
+           th:href="@{/katalog-firm/firma/producenci/top-producenci}">Producenci Gier</a>
+
+        <a class="company-type-button" href="/katalog-firm/firma/wydawcy/top-wydawcy"
+           th:href="@{/katalog-firm/firma/wydawcy/top-wydawcy}">Wydawcy Gier</a>
         <div class="company-search-container">
-            <form class="company-search-form" id="company-search-form" role="search">
+            <div class="company-search-row" id="company-search-row">
                 <input type="text" id="company-search-input"
                        class="company-search-input"
                        placeholder="szukaj firmy"
@@ -37,17 +45,16 @@
                        aria-autocomplete="none"
                        autocomplete="off"
                        autocorrect="off">
-                <button class="company-search-button">
-                    <svg viewBox="0 0 1024 1024">
-                        <path class="path1"
-                              d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path>
-                    </svg>
-                </button>
-            </form>
+                <button class="company-search-button"><i class="fa-solid fa-xmark"></i></button>
+                <div class="company-result-box company-result-box-hide" id="company-result-box">
+                    <div id="company-result-list">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="game-full-description">
-        <section class="game-section" >
+        <section class="game-section">
             <section th:utext="${company.description}"></section>
         </section>
     </div>
@@ -55,7 +62,7 @@
     <div class="popular-produced-games" th:unless="${allPromotedGamesByProducerId.isEmpty()}">
         <h2 class="article-heading" th:text="|Popularne gry wyprodukowane przez ${company.name}|">
             Gry wyprodukowane przez</h2>
-        <section class="company-games-container">
+        <section class="companies-list-container">
             <a href="#" th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}"
                class="company-game-cover" th:each="allGames,count:${allPromotedGamesByProducerId}"
                th:if="${count.index lt 6}">
@@ -71,7 +78,7 @@
     <div class="popular-produced-games" th:unless="${allGamesByPublisherId.isEmpty()}">
         <h2 class="article-heading" th:text="|Popularne gry wydane przez ${company.name}|">
             Gry wydane przez</h2>
-        <section class="company-games-container">
+        <section class="companies-list-container">
             <a href="#" th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}"
                class="company-game-cover" th:each="allGames,count:${allPromotedGamesByPublisherId}"
                th:if="${count.index lt 6}">
@@ -92,7 +99,8 @@
                     <a class="games-list-container" href="#"
                        th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}">
                         <span class="all-games-list" th:text="${allGames.title}"></span>
-                        <span class="games-date"  th:text="${allGames.releaseYear.getYear() ne 9999} ? ${allGames.releaseYear.getYear()} : 'nieogłoszona' "></span>
+                        <span class="games-date"
+                              th:text="${allGames.releaseYear.getYear() ne 9999} ? ${allGames.releaseYear.getYear()} : 'nieogłoszona' "></span>
 
                     </a>
                 </li>
@@ -125,6 +133,7 @@
         </section>
     </div>
     <script src="/static/scripts/company.js" th:src="@{/scripts/company.js}"></script>
+    <script src="/scripts/companySearch.js" th:src="@{/scripts/companySearch.js}"></script>
 </main>
 </body>
 </html>

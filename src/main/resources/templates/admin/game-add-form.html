@@ -200,6 +200,8 @@
         </div>
 
         <label for="game-poster">Plakat gry max 1Mb (jpg, png, jpeg)</label>
+        <p id="game-poster-proportion-height"></p>
+        <p id="game-poster-proportion-width"></p>
         <div class="file-container">
             <div class="form-element">
                 <input type="file" id="game-poster" accept="image/jpeg,image/jpg,image/png"
@@ -222,8 +224,9 @@
         </div>
 
         <div id="big-suggestion-poster-display" class="hide-big-suggestion-poster">
-            <label for="big-suggestion-poster">Duży plakat promocyjny 1Mb (jpg, png, jpeg)</label>
-            <p>(Jeżeli data premiery jest w przyszłości dodaj duży plakat)</p>
+            <label for="big-suggestion-poster">Duży plakat promocyjny (dla gier który dopiero będą miały premiere) 1Mb (jpg, png, jpeg)</label>
+            <p id="big-suggestion-proportion-height"></p>
+            <p id="big-suggestion-proportion-width"></p>
             <div class="file-container">
                 <div class="form-element big-suggestion-element">
                     <input type="file" id="big-suggestion-poster" accept="image/jpeg,image/jpg,image/png"

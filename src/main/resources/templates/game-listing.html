@@ -53,59 +53,56 @@
                 </div>
             </section>
         </div>
-
-        <h2 class="list-heading">Polecane dla Ciebie!</h2>
-        <p class="list-description">Nasz serwis dostosowuje rekomendacje do Twoich preferencji, bazując na Twoim
-            zachowaniu na stronie oraz ocenach gier. Jeśli często przeglądasz gry z kategorii “romans”, to w naszych rekomendacjach
-            znajdziesz więcej takich tytułów. Dodatkowo, jeśli wysoko oceniłeś gry akcji, zwiększymy szanse na pojawienie
-            się podobnych gier w Twoich polecanych. Dzięki temu, rekomendacje są jak najbardziej dopasowane do Twoich gustów..</p>
-        <div class="content-suggestion">
-            <div class="suggestion-box">
-                <a href="#" th:href="@{/gry/Stellar-Blade/5}">
-                    <picture class="image-list-test">
-                        <img
-                                class="small-image-suggestion"
-                                src="../static/img/notfound.jpg"
-                                th:src="@{/galeria/rekomendacje/s/baldursgate3_s_0.jpg}"
-                                alt="tytuł gry">
-                    </picture>
-                </a>
-            </div>
-            <div class="suggestion-box">
-                <a href="#" th:href="@{/gry/Stellar-Blade/5}">
-                    <picture class="image-list-test">
-                        <img
-                                class="small-image-suggestion"
-                                src="../static/img/notfound.jpg"
-                                th:src="@{/galeria/rekomendacje/s/diablo_s_0.jpg}"
-                                alt="tytuł gry">
-                    </picture>
-                </a>
-            </div>
-            <div class="suggestion-box">
-                <a href="#" th:href="@{/gry/Stellar-Blade/5}">
-                    <picture class="image-list-test">
-                        <img
-                                class="small-image-suggestion"
-                                src="../static/img/notfound.jpg"
-                                th:src="@{/galeria/rekomendacje/s/frostpunk_s_0.jpg}"
-                                alt="tytuł gry">
-                    </picture>
-                </a>
-            </div>
-            <div class="suggestion-box">
-                <a href="#" th:href="@{/gry/Mass-effect-3/1}">
-                    <picture class="image-list-test">
-                        <img
-                                class="small-image-suggestion"
-                                src="../static/img/notfound.jpg"
-                                th:src="@{/galeria/rekomendacje/s/masseffect3_s_0.jpg}"
-                                alt="tytuł gry">
-                    </picture>
-                </a>
-            </div>
-        </div>
         <div class="margin-box">
+            <h2 class="list-heading" th:text="${recommendationHeading}">Polecane dla Ciebie!</h2>
+            <p class="list-description" th:text="${recommendationDescription}">Opis</p>
+            <div class="content-suggestion">
+                <div class="suggestion-box">
+                    <a href="#" th:href="@{/gry/Stellar-Blade/5}">
+                        <picture class="image-list-test">
+                            <img
+                                    class="small-image-suggestion"
+                                    src="../static/img/notfound.jpg"
+                                    th:src="@{/galeria/rekomendacje/s/baldursgate3_s_0.jpg}"
+                                    alt="tytuł gry">
+                        </picture>
+                    </a>
+                </div>
+                <div class="suggestion-box">
+                    <a href="#" th:href="@{/gry/Stellar-Blade/5}">
+                        <picture class="image-list-test">
+                            <img
+                                    class="small-image-suggestion"
+                                    src="../static/img/notfound.jpg"
+                                    th:src="@{/galeria/rekomendacje/s/diablo_s_0.jpg}"
+                                    alt="tytuł gry">
+                        </picture>
+                    </a>
+                </div>
+                <div class="suggestion-box">
+                    <a href="#" th:href="@{/gry/Stellar-Blade/5}">
+                        <picture class="image-list-test">
+                            <img
+                                    class="small-image-suggestion"
+                                    src="../static/img/notfound.jpg"
+                                    th:src="@{/galeria/rekomendacje/s/frostpunk_s_0.jpg}"
+                                    alt="tytuł gry">
+                        </picture>
+                    </a>
+                </div>
+                <div class="suggestion-box">
+                    <a href="#" th:href="@{/gry/Mass-effect-3/1}">
+                        <picture class="image-list-test">
+                            <img
+                                    class="small-image-suggestion"
+                                    src="../static/img/notfound.jpg"
+                                    th:src="@{/galeria/rekomendacje/s/masseffect3_s_0.jpg}"
+                                    alt="tytuł gry">
+                        </picture>
+                    </a>
+                </div>
+            </div>
+
 
             <h2 class="list-heading" th:text="${#strings.capitalize(heading)}">Popularne gry/ Nazwa Kategorii</h2>
             <p class="list-description" th:text="${description}"> Opis sekcji,kategoria,strony głównej</p>

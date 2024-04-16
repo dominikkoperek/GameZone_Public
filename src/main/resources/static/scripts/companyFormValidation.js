@@ -295,31 +295,35 @@ function validateCompanyForm() {
 
 
 function getCompanySuggestion(input) {
-    $.ajax({
-        url: '/api/company/allCompanies',
-        type: 'GET',
-        success: function (data) {
-            companySuggestions = data;
-            showSuggestions(input);
-            if (companyListSuggestion.children.length > 0 && companyName.value !== '') {
-                companyListSuggestion.classList.add("show-notification")
-                companyListSuggestion.classList.remove("hide-notification")
-            } else {
-                companyListSuggestion.classList.add("hide-notification")
-                companyListSuggestion.classList.remove("show-notification")
-            }
+    if (companySuggestions.length > 1) {
+        showSuggestions(input);
+    } else {
+        $.ajax({
+            url: '/api/company/allCompanies',
+            type: 'GET',
+            success: function (data) {
+                companySuggestions = data;
+                showSuggestions(input);
+                if (companyListSuggestion.children.length > 0 && companyName.value !== '') {
+                    companyListSuggestion.classList.add("show-notification")
+                    companyListSuggestion.classList.remove("hide-notification")
+                } else {
+                    companyListSuggestion.classList.add("hide-notification")
+                    companyListSuggestion.classList.remove("show-notification")
+                }
 
-        },
-        error: function (error) {
-            console.error('Error: ', error);
-        }
-    });
+            },
+            error: function (error) {
+                console.error('Error: ', error);
+            }
+        });
+    }
 }
 
 function showSuggestions(input) {
-    let filteredSuggestions = companySuggestions.filter(suggestion => suggestion.toLowerCase().trim()
+    let filteredSuggestions = companySuggestions.filter(suggestion => suggestion.name.toLowerCase().trim()
         .includes(input.trim().toLowerCase()));
-    filteredSuggestions = filteredSuggestions.sort((a, b) => a.localeCompare(b)).slice(0, 8);
+    filteredSuggestions = filteredSuggestions.sort((a, b) => a.name.localeCompare(b.name)).slice(0, 8);
     if (!input.trim()) {
         companyListSuggestion.innerHTML = '';
         return;
@@ -328,7 +332,7 @@ function showSuggestions(input) {
     filteredSuggestions.forEach(suggestion => {
         let listItem = document.createElement('li');
         listItem.className = 'hint-listing';
-        listItem.textContent = suggestion;
+        listItem.textContent = suggestion.name;
         companyListSuggestion.appendChild(listItem);
     });
 }

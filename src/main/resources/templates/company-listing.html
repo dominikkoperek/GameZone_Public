@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Kategorie gier - Game-zone</title>
+    <title th:text="${title}">Kategorie gier - Game-zone</title>
 </head>
 <body>
 <main class="main-content margin-box" layout:fragment="content">
@@ -12,12 +12,19 @@
     <p class="list-description" th:text="${description}">Opis</p>
     <div class="company-container">
         <div class="company-button-container">
-            <a class="company-type-button" href="#">Polscy Producenci Gier</a>
-            <a class="company-type-button" href="#">Polscy Wydawcy Gier</a>
-            <a class="company-type-button" href="#">Producenci Gier</a>
-            <a class="company-type-button" href="#">Wydawcy Gier</a>
+            <a class="company-type-button" href="/katalog-firm/firma/polscy-producenci"
+               th:href="@{/katalog-firm/firma/polscy-producenci}">Polscy Producenci Gier</a>
+
+            <a class="company-type-button" href="/katalog-firm/firma/polscy-wydawcy"
+               th:href="@{/katalog-firm/firma/polscy-wydawcy}">Polscy Wydawcy Gier</a>
+
+            <a class="company-type-button" href="/katalog-firm/firma/producenci/top-producenci"
+               th:href="@{/katalog-firm/firma/producenci/top-producenci}">Producenci Gier</a>
+
+            <a class="company-type-button" href="/katalog-firm/firma/wydawcy/top-wydawcy"
+               th:href="@{/katalog-firm/firma/wydawcy/top-wydawcy}">Wydawcy Gier</a>
             <div class="company-search-container">
-                <form class="company-search-form" id="company-search-form" role="search">
+                <div class="company-search-row" id="company-search-row">
                     <input type="text" id="company-search-input"
                            class="company-search-input"
                            placeholder="szukaj firmy"
@@ -25,51 +32,151 @@
                            aria-autocomplete="none"
                            autocomplete="off"
                            autocorrect="off">
-                    <button class="company-search-button">
-                        <svg viewBox="0 0 1024 1024">
-                            <path class="path1"
-                                  d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"></path>
-                        </svg>
-                    </button>
-                </form>
+                    <button class="company-search-button"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="company-result-box company-result-box-hide" id="company-result-box">
+                        <div id="company-result-list">
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
-        <div class="company-center-container">
+
+        <div class="company-center-container" id="all-companies-limited-to-24"
+             th:unless="${displayPolishProducersFlag} or ${displayPolishPublishersFlag}
+              or ${displayProducerFlag} or ${displayPublisherFlag}">
+
             <h2 class="company-heading">Polscy Producenci Gier</h2>
             <ul class="company-list">
-                <li th:each="polishProducer,count :${polishProducers}" th:if="${count.index lt 20}">
-                    <a href="#" th:href="@{|/firma/${#strings.replace(polishProducer.name,' ','-')}/${polishProducer.id}|}"
+                <li th:each="polishProducer,count :${polishProducers}" th:if="${count.index lt 24}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(polishProducer.name,' ','-')}/${polishProducer.id}|}"
                        th:text="${polishProducer.name}">Cd Projekt Red</a>
                 </li>
             </ul>
 
             <h2 class="company-heading">Polscy Wydawcy Gier</h2>
             <ul class="company-list">
-                <li th:each="polishPublisher,count :${polishPublishers}" th:if="${count.index lt 20}">
-                    <a href="#" th:href="@{|/firma/${#strings.replace(polishPublisher.name,' ','-')}/${polishPublisher.id}|}"
+                <li th:each="polishPublisher,count :${polishPublishers}" th:if="${count.index lt 24}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(polishPublisher.name,' ','-')}/${polishPublisher.id}|}"
                        th:text="${polishPublisher.name}">Cd Projekt Red</a>
                 </li>
             </ul>
 
             <h2 class="company-heading">Producenci Gier</h2>
             <ul class="company-list">
-                <li th:each="allProducer,count :${allProducers}" th:if="${count.index lt 20}">
-                    <a href="#" th:href="@{|/firma/${#strings.replace(allProducer.name,' ','-')}/${allProducer.id}|}"
+                <li th:each="allProducer,count :${allProducers}" th:if="${count.index lt 24}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(allProducer.name,' ','-')}/${allProducer.id}|}"
                        th:text="${allProducer.name}">Cd Projekt Red</a>
                 </li>
-
             </ul>
+
             <h2 class="company-heading">Wydawcy Gier</h2>
             <ul class="company-list">
-                <li th:each="allPublisher,count :${allPublishers}" th:if="${count.index lt 20}">
-                    <a href="#" th:href="@{|/firma/${#strings.replace(allPublisher.name,' ','-')}/${allPublisher.id}|}"
+                <li th:each="allPublisher,count :${allPublishers}" th:if="${count.index lt 24}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(allPublisher.name,' ','-')}/${allPublisher.id}|}"
                        th:text="${allPublisher.name}">Cd Projekt Red</a>
                 </li>
             </ul>
-
         </div>
+
+        <div class="company-center-container" id="polish-producers" th:if="${displayPolishProducersFlag}">
+            <h2 class="company-heading">Polscy Producenci Gier</h2>
+            <ul class="company-list">
+                <li th:each="polishProducer :${polishProducers}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(polishProducer.name,' ','-')}/${polishProducer.id}|}"
+                       th:text="${polishProducer.name}">Cd Projekt Red</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="company-center-container" id="polish-publishers" th:if="${displayPolishPublishersFlag}">
+            <h2 class="company-heading">Polscy Wydawcy Gier</h2>
+            <ul class="company-list">
+                <li th:each="polishPublisher :${polishPublishers}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(polishPublisher.name,' ','-')}/${polishPublisher.id}|}"
+                       th:text="${polishPublisher.name}">Cd Projekt Red</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="companies-list-container" id="all-producers"
+             th:if=" ${displayProducerFlag}">
+            <span class="decoration-line"></span>
+            <div class="company-letter-container">
+                        <a class="company-letter-button" href="/katalog-firm/firma/producenci/top-producenci"
+                           th:href="@{/katalog-firm/firma/producenci/top-producenci}">Top 100</a>
+                        <a class="company-letter-button" href="/katalog-firm/firma/producenci/0-9"
+                           th:href="@{/katalog-firm/firma/producenci/0-9}">#</a>
+                        <a  th:each="letter:${alphabet}" class="company-letter-button" href="/katalog-firm/firma/producenci/"
+                           th:href="@{'/katalog-firm/firma/producenci/'+${letter}}" th:text="${letter}">a</a>
+            </div>
+            <h2 class="company-heading" th:if="${allProducers}">Producenci Gier - top 100</h2>
+            <h2 class="company-heading" th:if="${producersByLetter}" th:text="|Producenci Gier - na litere ${letter}|">Producenci Gier - top 100</h2>
+            <h2 class="company-heading" th:if="${producersByDigit}" th:text="|Producenci Gier - na ${letter}|">Producenci Gier - top 100</h2>
+            <ul class="company-list">
+                <li  th:each="allProducer,count :${allProducers}" th:if="${count.index lt 100}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(allProducer.name,' ','-')}/${allProducer.id}|}"
+                       th:text="${allProducer.name}">Cd Projekt Red</a>
+                </li>
+
+                <li  th:each="producersByLetter :${producersByLetter}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(producersByLetter.name,' ','-')}/${producersByLetter.id}|}"
+                       th:text="${producersByLetter.name}">Cd Projekt Red</a>
+                </li>
+
+                <li  th:each="producersByDigit :${producersByDigit}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(producersByDigit.name,' ','-')}/${producersByDigit.id}|}"
+                       th:text="${producersByDigit.name}">Cd Projekt Red</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="companies-list-container" id="all-publishers"
+             th:if="${displayPublisherFlag}">
+            <span class="decoration-line"></span>
+            <div class="company-letter-container">
+                <a class="company-letter-button" href="/katalog-firm/firma/wydawcy/top-wydawcy"
+                   th:href="@{/katalog-firm/firma/wydawcy/top-wydawcy}">Top 100</a>
+                <a class="company-letter-button" href="/katalog-firm/firma/wydawcy/0-9"
+                   th:href="@{/katalog-firm/firma/wydawcy/0-9}">#</a>
+                <a  th:each="letter:${alphabet}" class="company-letter-button" href="/katalog-firm/firma/wydawcy"
+                    th:href="@{'/katalog-firm/firma/wydawcy/'+${letter}}" th:text="${letter}">a</a>
+            </div>
+            <h2 class="company-heading" th:if="${allPublishers}">Wydawcy Gier - top 100</h2>
+            <h2 class="company-heading" th:if="${publishersByLetter}" th:text="|Wydawcy Gier - na litere ${letter}|">Wydawcy Gier - na litere A</h2>
+            <h2 class="company-heading" th:if="${publishersByDigit}" th:text="|Wydawcy Gier - na ${letter}|">Wydawcy Gier - na 0-9</h2>
+            <ul class="company-list">
+                <li  th:each="allPublishers,count :${allPublishers}" th:if="${count.index lt 100}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(allPublishers.name,' ','-')}/${allPublishers.id}|}"
+                       th:text="${allPublishers.name}">Cd Projekt Red</a>
+                </li>
+
+                <li  th:each="publisherByLetter :${publishersByLetter}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(publisherByLetter.name,' ','-')}/${publisherByLetter.id}|}"
+                       th:text="${publisherByLetter.name}">Cd Projekt Red</a>
+                </li>
+
+                <li  th:each="publisherByDigit :${publishersByDigit}">
+                    <a href="#"
+                       th:href="@{|/katalog-firm/firma/${#strings.replace(publisherByDigit.name,' ','-')}/${publisherByDigit.id}|}"
+                       th:text="${publisherByDigit.name}">Cd Projekt Red</a>
+                </li>
+            </ul>
+        </div>
+
     </div>
+    <script src="/scripts/companySearch.js" th:src="@{/scripts/companySearch.js}"></script>
 </main>
 </body>
 </html>

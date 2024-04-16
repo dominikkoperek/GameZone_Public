@@ -43,6 +43,8 @@ public class RecommendedGamesController {
         model.addAttribute("description", "Gry rekomendowane przez nasz zespół");
         model.addAttribute("allPlatforms", "Wszystkie");
         model.addAttribute("games", promotedGames);
+        model.addAttribute("recommendationHeading","Polecane dla Ciebie!");
+        model.addAttribute("recommendationDescription","Nasz serwis dostosowuje rekomendacje do Twoich preferencji, bazując na Twoimzachowaniu na stronie oraz ocenach gier. Jeśli często przeglądasz gry z kategorii “romans”, to w naszychrekomendacjachznajdziesz więcej takich tytułów. Dodatkowo, jeśli wysoko oceniłeś gry akcji, zwiększymy szanse napojawienie się podobnych gier w Twoich polecanych. Dzięki temu, rekomendacje są jak najbardziej dopasowane doTwoich gustów.");
         return "game-listing";
     }
 }

@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     color: #cccccc;
@@ -92,6 +92,7 @@ p {
 .footer {
     padding: 8px;
     text-align: center;
+    margin-top: 3rem;
 }
 
 /*RESPONSIVE*/
@@ -458,8 +459,6 @@ p {
     padding-right: 0.35rem;
 }
 
-.game-summary-category > li:not(:first-child) {
-}
 
 .game-summary-category > li a:hover {
     opacity: 1;
@@ -718,19 +717,23 @@ ul.game-summary-item > a > i {
 
 /* GAME DESCRIPTION*/
 .game-section h2, .article-heading {
-    margin-bottom: 8px;
-    margin-top: 8px;
+    margin-bottom: 12px;
+    letter-spacing: -.4px;
+    margin-top: 12px;
     border-bottom: 1px dotted rgba(245, 184, 0, 0.36);
     color: #f5b800;
     overflow-wrap: break-word;
     word-break: break-word;
 }
 
-.container-limit {
+.game-section section > *:not(h2) {
+    font-weight: 400;
+    font-size: 1.1rem;
+    font-family: BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-
 .game-full-description p {
+
     line-height: 1.5;
     text-align: justify;
     text-justify: auto;
@@ -742,6 +745,10 @@ ul.game-summary-item > a > i {
 .game-section ul, ol li {
     margin-left: 2rem;
     line-height: 1.4rem;
+}
+
+.game-section strong {
+    font-weight: 600;
 }
 
 
@@ -847,7 +854,7 @@ textarea {
 }
 
 .add-content-form {
-    padding: 2rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     margin: 0 0.5rem;
@@ -856,17 +863,23 @@ textarea {
     box-shadow: inset 1px 1px 1rem rgba(213, 213, 213, 0.09);
 }
 
+.show-big-suggestion-poster {
+    display: flex;
+    flex-direction: column;
+
+}
+
 .add-content-form > *::placeholder {
     opacity: 75%;
     color: #545454;
 }
 
-.add-content-form > label {
-}
 
-.add-content-form > * {
+.add-content-form > *,
+.add-content-form > div > * {
     margin-top: 0.4rem;
 }
+
 
 .add-content-form > button {
     background-color: #f5b800;
@@ -1227,27 +1240,50 @@ input[type="file"]::file-selector-button:hover {
 }
 
 /*COMPANY*/
+
+.company-letter-container {
+    gap: 0.4rem;
+    display: flex;
+    width: 100%;
+    list-style: none;
+    flex-wrap: wrap;
+
+}
+
+.company-letter-container > a:not(:first-child) {
+    width: 1rem;
+}
+
+.company-type-button {
+    margin-right: 0.4rem;
+    margin-top: 0.4rem;
+    height: 1.2rem;
+
+}
+
+.company-letter-button,
 .company-type-button {
     font-size: 0.9rem;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     color: #cccccc;
-    margin-right: 0.4rem;
-    margin-top: 0.4rem;
-    padding: 0 0.4rem;
-    background-color: #415F75;
-    height: 2rem;
-    border: 1px solid rgba(126, 178, 217, 0.51);
+    padding: 0.43rem 0.43rem;
+    background-color: #38576e;
+    border: 1px solid rgba(114, 165, 203, 0.51);
     border-radius: 5px;
     flex-wrap: wrap;
     transition: ease-in-out background-color 100ms;
+
 }
 
-.company-type-button:hover {
+.company-letter-button:hover,
+.company-type-button:hover
+{
     cursor: pointer;
     color: #1f1f1f;
     background-color: #2AABBC;
+    border: 1px solid rgba(33, 68, 94, 0.51);
 }
 
 .company-button-container {
@@ -1255,25 +1291,85 @@ input[type="file"]::file-selector-button:hover {
     flex-wrap: wrap;
 }
 
-.company-search-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(220, 220, 220);
-    width: 12rem;
-    height: 2rem;
+/*search company*/
+.company-search-container {
+    width: 10rem;
+    max-height: 10rem;
+    background-color: #c9c9c9;
     margin-top: 0.5rem;
     border-radius: 5px;
-    flex-direction: row;
+}
+
+.company-search-row {
+    display: block;
+}
+.company-result-box{
+    display: flex;
+    background-color: #c9c9c9;
+    width: 10rem;
+    position: absolute;
+    z-index: 40;
+    border-radius: 5px;
+    border-top: 1px dotted rgb(100, 100, 100);
+}
+.company-result-box-hide{
+    display: none;
+}
+.company-result-box #company-result-list{
+    display: flex;
+    padding: 8px 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+.company-result-box #company-result-list a {
+    background-color: transparent;
+    list-style: none;
+    padding: 6px 6px;
+    cursor: pointer;
+    color: #1f1f1f;
+    border-radius: 0;
+    overflow: hidden;
+    height: 1rem;
+    width: 100%;
+}
+.company-result-box #company-result-list a:not(:first-child){
+    border-top: 1px solid #7e7e7e;
+}
+.company-result-box #company-result-list a:hover {
+    background-color: rgb(201, 214, 215);
 }
 
 .company-search-input {
-    all: unset;
-    color: #1f1f1f;
+    padding: 6px 0 ;
+    flex: 1;
     height: 100%;
-    width: 100%;
-    padding: 0.5rem 0.5rem;
+    width: 80%;
+    outline: none;
+    border: none;
+    margin-left: 4px;
+    margin-top: 4px;
+    background-color: transparent;
+    color: #1f1f1f;
 }
+
+.company-search-button {
+    all: unset;
+    cursor: pointer;
+}
+
+.company-search-button i {
+    font-size: 1rem;
+    color: #9b9cb7;
+
+}
+
+.company-search-button:hover > i {
+    color: #8083FF;
+}
+
 
 .company-search-input::placeholder {
     opacity: 0.7;
@@ -1282,35 +1378,28 @@ input[type="file"]::file-selector-button:hover {
 .company-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 290px));
-    gap: 4px;
+    gap: 1rem;
     padding: 0;
     width: 100%;
     list-style: none;
 
 }
 
-.company-search-button {
-    all: unset;
-    cursor: pointer;
-    width: 44px;
-    height: 44px;
-}
-
-.company-search-button > svg {
-    width: 24px;
-    height: 24px;
-    padding: 10px;
-}
-
-.company-search-button > svg:hover {
-    fill: #8083FF;
-}
-
 .company-heading {
+    display: flex;
+    width: 100%;
     color: #C2C2C2;
     padding-bottom: 0.5rem;
     border-bottom: 1px #5b5b5b dotted;
     margin: 2rem 0;
+}
+
+.decoration-line {
+    display: block;
+    width: 100%;
+    border-bottom: 1px #5b5b5b dotted;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .company-list > li > a:hover {
@@ -1388,7 +1477,7 @@ input:read-only {
     cursor: context-menu;
 }
 
-.company-games-container {
+.companies-list-container {
     display: flex;
     align-items: center;
     justify-content: left;
@@ -1847,7 +1936,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .hidden,
-.hide-big-suggestion-poster{
+.hide-big-suggestion-poster {
     display: none;
 }
 
@@ -1911,15 +2000,18 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     flex-wrap: wrap;
     gap: 0.2rem;
 }
+
 .suggestion-platforms-container > ul > li {
- box-shadow: 1px 1px 5px #2d2d2d;
+    box-shadow: 1px 1px 5px #2d2d2d;
 }
-.suggestion-platform-logo{
+
+.suggestion-platform-logo {
     display: flex;
     max-width: 2.5rem;
     max-height: 2.5rem;
 }
-.suggestion-platform-name{
+
+.suggestion-platform-name {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1929,7 +2021,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 
-.latest-game-premier .latest-game-image:hover >img,
+.latest-game-premier .latest-game-image:hover > img,
 .latest-game-premier:hover .latest-game-image {
     transform: scale(1.05);
 }
@@ -1993,13 +2085,15 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
         max-width: 6.5rem;
     }
 }
+
 @media (max-width: 1000px) {
-    .suggestion-platforms-container{
+    .suggestion-platforms-container {
         display: none;
     }
 
 }
-.hide-big-suggestion-poster{
+
+.hide-big-suggestion-poster {
     display: none;
 }
 
