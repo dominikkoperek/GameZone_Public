@@ -110,11 +110,11 @@ The service utilizes a simple API and, in conjunction with AJAX technology, it a
 ```
 ## Screenshots
 Game list page
-![App Screenshot](https://i.imgur.com/aHKW8A8.png)
+![App Screenshot](https://i.imgur.com/p7WLQhI.png)
 Game page
 ![App Screenshot](https://i.imgur.com/bA6YDD8.png)
 Company list page
-![App Screenshot](https://i.imgur.com/vbWG8Q7.png)
+![App Screenshot](https://i.imgur.com/xWt7SWM.png)
 Company page
 ![App Screenshot](https://i.imgur.com/7j4IUaA.png)
 Admin panel
