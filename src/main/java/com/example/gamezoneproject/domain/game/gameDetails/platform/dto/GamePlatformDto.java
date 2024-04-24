@@ -6,6 +6,7 @@ import com.example.gamezoneproject.domain.validation.other.nohtmltags.NoHtmlTags
 import com.example.gamezoneproject.domain.validation.other.svg.SvgImage;
 import com.example.gamezoneproject.domain.validation.platform.NoPlatformDuplication;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 /**
  * Main DTO class for the GamePlatform.
@@ -18,10 +19,13 @@ public class GamePlatformDto {
     @NoIllegalExpression
     @NoPlatformDuplication
     @NoHtmlTags
+    @NotBlank
     private String name;
+    @NotBlank
     @Size(min = 50, max = 800)
     @NoHtmlTags
     private String description;
+    @NotBlank
     @Size(min = 100,max = 30_000)
     @NoIllegalExpression
     @SvgImage

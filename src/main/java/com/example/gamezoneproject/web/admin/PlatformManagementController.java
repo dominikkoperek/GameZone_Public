@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.web.admin;
+package com.example.gamezoneproject.web.admin;
 
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.dto.GamePlatformDto;

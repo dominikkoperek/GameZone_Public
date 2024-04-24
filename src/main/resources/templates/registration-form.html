@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Załóż konto</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <section class="login-center-box">
+        <div class="login-container-wrapper margin-box">
+            <h2 class="list-heading">Zarejestruj się</h2>
+            <form action="#" th:action="@{/rejestracja}" method="post" class="login-form" th:object="${user}" id="register-form">
+
+                <div class="register-input-box">
+                    <input type="text" name="username" placeholder="Login"
+                           th:field="*{login}" id="login" onkeyup="validateRegisterLogin()"
+                           maxlength="20"
+                           autocorrect="off"
+                           autocomplete="off"
+                           spellcheck="false"
+                           autocapitalize="off"
+                           aria-autocomplete="none">
+                    <button type="button" class="register-info-button">
+                        <i class="fa-solid fa-circle-question " id="login-info"></i>
+                    </button>
+                    <div class="register-info-box hide-info-box" id="login-info-box">
+                        <p>Minimum 3 znaki dozwolone są litery/cyfry/znaki - i _ </p>
+                    </div>
+
+                </div>
+                <div class="input-validation-container">
+                    <p class="notification-error" id="login-error"></p>
+                    <p class="notification-error login-errors" th:errors="${user.login}">Powiadomienie</p>
+                </div>
+
+                <div class="register-input-box">
+                    <input type="email" name="email" placeholder="email" th:field="*{email}"
+                           id="email" onkeyup="validateEmail()" maxlength="50"
+                           autocorrect="off"
+                           autocomplete="off"
+                           spellcheck="false"
+                           autocapitalize="off"
+                           aria-autocomplete="none"
+                    >
+                    <button type="button" class="register-info-button">
+                        <i class="fa-solid fa-circle-question " id="email-info"></i>
+                    </button>
+                    <div class="register-info-box hide-info-box" id="email-info-box">
+                        <p>Tymczasowe konta email są blokowane</p>
+                    </div>
+                </div>
+                <div class="input-validation-container">
+                    <p class="notification-error" id="email-error"></p>
+                    <p class="notification-error login-errors" th:errors="${user.email}">Powiadomienie</p>
+                </div>
+
+                <div class="register-input-box password-input-box">
+                    <input type="password"
+                           name="password" placeholder="Hasło" th:field="*{password}" id="password"
+                           autocorrect="off"
+                           autocomplete="new-password"
+                           spellcheck="false"
+                           autocapitalize="off"
+                           aria-autocomplete="none"
+                           onkeyup="validatePassword()"
+                    >
+                    <div class="password-validation-container">
+                        <div class="password-param" id="first-password-param"></div>
+                        <div class="password-param" id="second-password-param"></div>
+                        <div class="password-param" id="third-password-param"></div>
+                    </div>
+
+                    <button type="button" class="register-info-button">
+                        <i class="fa-solid fa-eye" id="show-password"></i>
+                        <i class="fa-solid fa-eye-slash hide-password-icon" id="hide-password"></i>
+                    </button>
+
+                </div>
+                <div class="input-validation-container">
+                    <p class="notification-error" id="password-error"></p>
+                    <p class="notification-error login-errors" th:errors="${user.password}">Powiadomienie</p>
+                </div>
+
+
+                <button type="submit" class="login-button" title="Załóż konto"
+                        onclick="senRegisterForm()" id="register-button">Załóż konto</button>
+                <div class="register-link">
+                    <p>Masz już konto? <a href="#" th:href="@{/zaloguj}">Zaloguj się</a></p>
+                </div>
+                <div class="register-error">
+
+                </div>
+            </form>
+        </div>
+        <script src="/static/scripts/registrationFormValidation.js"
+                th:src="@{/scripts/registrationFormValidation.js}"></script>
+</main>
+</body>
+</html>

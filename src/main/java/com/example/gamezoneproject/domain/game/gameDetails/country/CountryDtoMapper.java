@@ -12,7 +12,7 @@ public class CountryDtoMapper {
      * @param country The Country object to be mapped.
      * @return A new CountryDto object with fields mapped from the Country object.
      */
-    public static CountryDto map(Country country) {
+     static CountryDto map(Country country) {
         return new CountryDto(
                 country.getName()
         );

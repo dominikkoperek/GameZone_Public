@@ -22,13 +22,5 @@ public class GamePlatformDtoMapper {
                 gamePlatform.getLogoAddress()
         );
     }
-
-    static PlatformSuggestionsDto mapToPlatformSuggestionsDto(GamePlatform gamePlatform) {
-        return new PlatformSuggestionsDto(
-                gamePlatform.getId(),
-                gamePlatform.getName(),
-                gamePlatform.getLogoAddressImage()
-        );
-    }
 }
 

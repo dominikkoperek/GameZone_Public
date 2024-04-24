@@ -11,6 +11,7 @@ import com.example.gamezoneproject.domain.validation.other.illegalexpression.NoI
 import com.example.gamezoneproject.domain.validation.other.alphanumeric.Alphanumeric;
 import com.example.gamezoneproject.domain.validation.platform.PlatformNotExists;
 import com.example.gamezoneproject.domain.validation.playersrange.PlayersRange;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -31,24 +32,30 @@ public class GameSaveDto {
     @Size(min = 2, max = 99)
     @NoGameDuplication
     @NoIllegalExpression
+    @NotBlank
     private String title;
+    @NotBlank
     @Size(min = 4, max = 30)
     @Alphanumeric
     private String dailymotionTrailerId;
+    @NotBlank
     @NoIllegalExpression
     @Size(min = 100, max = 320)
     private String shortDescription;
+    @NotBlank
     @NoIllegalExpression
     @Size(min = 200, max = 105_000)
     @ContainsH2
     private String description;
     @Date(min = 1980, max = 3000)
     private LocalDate releaseYear;
+    @NotEmpty
     @Size(min = 4, max = 14)
     @CategoryNotExists
     private LinkedList<String> category;
     @CategoryNotExists
     private String mainCategory;
+    @NotEmpty
     @Size(min = 1, max = 14)
     @PlatformNotExists
     private Set<String> platform;
@@ -56,18 +63,22 @@ public class GameSaveDto {
     private List<String> gameModes;
     @NotNull
     private boolean promoted;
-    @NotEmpty
+    @NotBlank
     @CompanyNotExists
     private String producer;
-    @NotEmpty
+    @NotBlank
     @CompanyNotExists
     private String publisher;
+    @NotNull
     @MaxFileSize(maxSizeMb = 1)
     private MultipartFile poster;
     @PlayersRange(rangeMin = 1, rangeMax = 2000,maxMin=1000)
     private PlayerRange playerRange;
 
+    @MaxFileSize(maxSizeMb = 1)
     private MultipartFile smallPosterSuggestion;
+
+    @MaxFileSize(maxSizeMb = 1)
     private MultipartFile bigPosterSuggestion;
 
     public String getTitle() {

@@ -2,13 +2,13 @@ package com.example.gamezoneproject.domain.validation.other.notwhitespace;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.apache.commons.lang3.StringUtils;
 
 public class NotWhitespaceValidator implements ConstraintValidator<NotWhitespace, String> {
 
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        boolean containWhitespace = value.matches(".*\\s+.*");
-        return !containWhitespace;
+         return !StringUtils.containsWhitespace(value);
     }
 }

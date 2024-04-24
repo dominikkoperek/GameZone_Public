@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.web;
+package com.example.gamezoneproject.web;
 
 import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;

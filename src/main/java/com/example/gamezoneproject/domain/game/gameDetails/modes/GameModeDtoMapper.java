@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode;
+package com.example.gamezoneproject.domain.game.gameDetails.modes;
 
 import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeDto;
 
@@ -13,7 +13,7 @@ public class GameModeDtoMapper {
      * @param gamemode The GameMode object to be mapped.
      * @return A new GameModeDto object with fields mapped from the GameMode object.
      */
-    public static GameModeDto map(GameMode gamemode) {
+     static GameModeDto map(GameMode gamemode) {
         return new GameModeDto(
                 gamemode.getName()
         );

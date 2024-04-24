@@ -5,29 +5,37 @@ import com.example.gamezoneproject.domain.validation.country.CountryNotExists;
 import com.example.gamezoneproject.domain.validation.file.MaxFileSize;
 import com.example.gamezoneproject.domain.validation.other.containsh2.ContainsH2;
 import com.example.gamezoneproject.domain.validation.other.illegalexpression.NoIllegalExpression;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 public class CompanySaveDto {
+    @NotBlank
     @Size(min = 3,max = 35)
     @NoCompanyDuplication
     @NoIllegalExpression
     private String name;
+    @NotBlank
     @Size(min = 100,max = 1000)
     @NoIllegalExpression
     private String shortDescription;
+    @NotBlank
     @NoIllegalExpression
     @Size(min = 200, max = 105_000)
     @ContainsH2
     private String description;
+    @NotBlank
     @CountryNotExists
     private String country;
+
     @NotNull
     private boolean isProducer;
     @NotNull
     private boolean isPublisher;
-    @MaxFileSize(maxSizeMb = 2)
+    @NotNull
+    @MaxFileSize(maxSizeMb = 1)
     private MultipartFile poster;
 
 

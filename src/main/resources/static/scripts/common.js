@@ -20,13 +20,13 @@ function notificationBar() {
             setTimeout(function () {
                 notificationElement.style.opacity = '0';
                 notificationElement.style.transition = 'opacity 200ms';
-            }, 4000);
+            }, 7000);
 
             setTimeout(function () {
                 notificationElement.style.height = '0';
                 notificationElement.style.padding = '0';
                 notificationElement.style.transition = 'all 200ms';
-            }, 4050);
+            }, 7050);
         }
     });
 }

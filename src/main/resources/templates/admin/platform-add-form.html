@@ -11,7 +11,8 @@
     <h2 class="list-heading">Panel administracyjny</h2>
     <h3 class="list-description">Dodaj nową platformę gier</h3>
 
-    <form action="" method="post" class="add-content-form" id="add-content-form" th:object="${platform}"
+    <form action="" th:action="@{/admin/dodaj-platforme}" method="post"
+          class="add-content-form" id="add-content-form" th:object="${platform}"
           autocomplete="off">
         <div class="form-button-container">
             <a class="form-back-button" href="#" th:href="@{/admin}"><i
@@ -71,7 +72,7 @@
 
             <div class="platforms-container all-platforms-container">
                 <ul class="platform-list all-platform-list">
-                    <li class="platform-element svg-platform-element"  th:each="platforms:${allGamePlatforms}">
+                    <li class="platform-element svg-platform-element" th:each="platforms:${allGamePlatforms}">
                         <button class="platform-item all-platform-item" type="button">
                             <span class="icon-container ">
                                 <span class="platform-logo copy-svg" th:utext="${platforms.value}"></span>
@@ -79,14 +80,14 @@
                             </span>
                         </button>
                     </li>
-                        <li class="platform-element svg-platform-element">
-                            <button class="platform-item all-platform-item" type="button">
-                                <div class="icon-container" id="test-svg-logo">
-                                    <span id="user-svg-upload" class="platform-logo"></span>
-                                    <span id="user-svg-name" class="platform-text all_platform_text">Test</span>
-                                </div>
-                            </button>
-                        </li>
+                    <li class="platform-element svg-platform-element">
+                        <button class="platform-item all-platform-item" type="button">
+                            <div class="icon-container" id="test-svg-logo">
+                                <span id="user-svg-upload" class="platform-logo"></span>
+                                <span id="user-svg-name" class="platform-text all_platform_text">Test</span>
+                            </div>
+                        </button>
+                    </li>
                 </ul>
             </div>
 

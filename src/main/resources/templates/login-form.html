@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Zaloguj się</title>
+</head>
+<body>
+<main class="main-content" layout:fragment="content">
+    <p class="notification-bar user-notification-bar" th:if="${notification}" th:text="${notification}">Powiadomienia</p>
+
+    <section class="login-center-box">
+        <div class="login-container-wrapper margin-box">
+            <h2 class="list-heading">Zaloguj się</h2>
+            <form action="#" th:action="@{/zaloguj}" method="post" class="login-form">
+
+                <div class="login-input-box">
+                    <input type="text" name="username" placeholder="Login">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="login-input-box">
+                    <input type="password" name="password" placeholder="Hasło">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="login-remember-forgot">
+                    <label><input type="checkbox">Nie wylogowywuj</label>
+                    <a href="#">Zapomniałeś hasła?</a>
+                </div>
+                <button type="submit" class="login-button">Zaloguj</button>
+                <div class="register-link">
+                    <p>Nie masz konta? <a href="/rejestracja" th:href="@{/rejestracja}">Załóż konto</a></p>
+                </div>
+                <div class="register-error">
+                    <p th:if="${param.blad}">Błędny login lub hasło!</p>
+                </div>
+            </form>
+        </div>
+
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.web.admin;
+package com.example.gamezoneproject.web.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

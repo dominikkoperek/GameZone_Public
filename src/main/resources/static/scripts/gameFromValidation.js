@@ -422,7 +422,7 @@ const releaseDate = document.getElementById('release-date');
 const releaseDateError = document.getElementById('release-date-error');
 let releaseDateValue;
 let formDate;
-let isReleaseInFuture;
+let isPremiereInFuture;
 const validateGameReleaseDate = () => {
     releaseDateValue = releaseDate.value;
     let todayDate = Date.now();
@@ -441,11 +441,12 @@ const validateGameReleaseDate = () => {
     if (formDate > todayDate) {
         bigSuggestionPosterDisplayContainer.classList.remove("hide-big-suggestion-poster");
         bigSuggestionPosterDisplayContainer.classList.add("show-big-suggestion-poster");
-        isReleaseInFuture = true;
+        isPremiereInFuture = true;
     } else {
         bigSuggestionPosterDisplayContainer.classList.add("hide-big-suggestion-poster");
         bigSuggestionPosterDisplayContainer.classList.remove("show-big-suggestion-poster");
-        isReleaseInFuture = false;
+        isPremiereInFuture = false;
+        removeBigSuggestionPoster();
     }
 
     releaseDate.classList.remove('error-input');
@@ -717,12 +718,12 @@ const validateBigSuggestionPoster = async () => {
     }
     if ((bigSuggestionPoster.value !== "" && height > 1200)) {
         bigSuggestionPoster.classList.add("error-input");
-        bigSuggestionPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px" + " (max 700px)";
+        bigSuggestionPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px" + " (max 1200px)";
         return false;
     }
     if ((bigSuggestionPoster.value !== "" && width > 2400)) {
         bigSuggestionPoster.classList.add("error-input");
-        bigSuggestionPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 2200px)";
+        bigSuggestionPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 2400px)";
         return false;
     }
     if ((bigSuggestionPoster.value !== "" && height < 350)) {
@@ -760,6 +761,100 @@ const validateBigSuggestionPoster = async () => {
     return true;
 }
 
+//VALIDATE SMALL SUGGESTION POSTER
+const smallSuggestionPoster = document.getElementById("small-suggestion-poster");
+const smallSuggestionPosterError = document.getElementById("small-suggestion-poster-error");
+const smallSuggestionWidthHeight = document.getElementById("small-suggestion-proportion-height");
+const smallSuggestionHeightWidth = document.getElementById("small-suggestion-proportion-width");
+const validateSmallSuggestionPoster = async () => {
+    let size;
+    let extension;
+    let width;
+    let height;
+    let proportionHeightWidth;
+    let slicedProportionHeightWidth;
+    let proportionWidthHeight;
+    let slicedProportionWidthHeight;
+
+    smallSuggestionWidthHeight.innerHTML = '';
+    smallSuggestionHeightWidth.innerHTML = '';
+
+    if (smallSuggestionPoster.value !== "") {
+        size = ((smallSuggestionPoster.files[0].size / 1024) / 1024).toString().slice(0, 4);
+        extension = smallSuggestionPoster.files[0].type;
+
+        const img = new Image();
+        img.src = window.URL.createObjectURL(smallSuggestionPoster.files[0]);
+        await new Promise((resolve) => {
+            img.onload = () => {
+                width = img.width;
+                height = img.height;
+                proportionHeightWidth = height / width;
+                slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
+
+                proportionWidthHeight = width / height;
+                slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
+                resolve();
+            };
+        });
+
+    }
+    if (smallSuggestionPoster.value === "") {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Dodaj obraz";
+        removeSmallSuggestionPoster();
+        return false;
+    }
+    if ((smallSuggestionPoster.value !== "" && size > 1)) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Obraz jest za duży " + size + "Mb";
+        return false;
+    }
+    if ((smallSuggestionPoster.value !== "" && height > 600)) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px" + " (max 600px)";
+        return false;
+    }
+    if ((smallSuggestionPoster.value !== "" && width > 1800)) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 1800px)";
+        return false;
+    }
+    if ((smallSuggestionPoster.value !== "" && height < 200)) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px" + " (min 200px)";
+        return false;
+    }
+    if ((smallSuggestionPoster.value !== "" && width < 600)) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Szerokość obrazu jest za mała " + width + "px" + " (min 600px)";
+        return false;
+    }
+    if (proportionHeightWidth < 0.3 || proportionHeightWidth > 0.50) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 0.3-0.5 jest " + slicedProportionHeightWidth;
+        return false;
+    }
+    if (proportionWidthHeight < 2.6 || proportionWidthHeight > 3.2) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 2.6-3.2 jest " + slicedProportionWidthHeight;
+        return false;
+    }
+    if (bigSuggestionPoster.value !== "" && extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg") {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Nieobsługiwany format pliku!";
+        removeSmallSuggestionPoster();
+        return false;
+    }
+
+    smallSuggestionHeightWidth.innerHTML = "wysokość/szerokość = " + slicedProportionHeightWidth;
+    smallSuggestionWidthHeight.innerHTML = "szerokość/wysokość = " + slicedProportionWidthHeight;
+
+    smallSuggestionPoster.classList.remove("error-input");
+    smallSuggestionPosterError.innerHTML = "";
+    return true;
+}
+
 //VALIDATE IF FORM CONTAINS ERROR
 async function validateGameForm() {
     let gameTitle = await validateGameTitle();
@@ -774,12 +869,15 @@ async function validateGameForm() {
     let playerRange = validatePlayersRange();
     let platforms = validateGamePlatforms();
     let poster = await validateGamePoster();
+    let smallPoster = await validateSmallSuggestionPoster();
     let bigPoster;
-    if (date) {
+    if (isPremiereInFuture) {
         bigPoster = await validateBigSuggestionPoster();
+    } else {
+        bigPoster = true;
     }
     return gameTitle && gameShortDescription && gameLongDescription && trailerId && producer && publisher &&
-        date && gameModes && playerRange && platforms && poster && bigPoster && categories;
+        date && gameModes && playerRange && platforms && poster && bigPoster && categories && smallPoster;
 }
 
 function sendForm() {
@@ -801,6 +899,7 @@ function sendForm() {
             posterError.classList.add("button-error");
             bigSuggestionPosterError.classList.add("button-error");
             gameFormButton.classList.add("button-error");
+            smallSuggestionPosterError.classList.add("button-error");
 
         }
         setTimeout(function () {
@@ -818,6 +917,7 @@ function sendForm() {
             posterError.classList.remove("button-error");
             bigSuggestionPosterError.classList.remove("button-error");
             gameFormButton.classList.remove("button-error");
+            smallSuggestionPosterError.classList.remove("button-error");
         }, 500)
     }).catch(error => {
         console.error('Wystąpił błąd podczas walidacji', error)
@@ -850,10 +950,21 @@ gamePoster.addEventListener("input", function () {
 function removeBigSuggestionPoster(id = "big-suggestion-poster") {
     document.querySelector("#" + id + "-preview div").innerHTML = "<span>+</span>";
     document.querySelector("#" + id + "-preview img").src = '/img/notfoundhorizontal.jpg';
+    bigSuggestionPoster.value = '';
 }
 
 bigSuggestionPoster.addEventListener("input", function () {
     previewBeforeUpload("big-suggestion-poster");
+});
+
+//REMOVE SMALL SUGGESTION POSTER
+function removeSmallSuggestionPoster(id = "small-suggestion-poster") {
+    document.querySelector("#" + id + "-preview div").innerHTML = "<span>+</span>";
+    document.querySelector("#" + id + "-preview img").src = '/img/notfoundhorizontal.jpg';
+}
+
+smallSuggestionPoster.addEventListener("input", function () {
+    previewBeforeUpload("small-suggestion-poster");
 });
 
 
@@ -908,10 +1019,10 @@ function clearGameForm() {
     bigSuggestionHeightWidth.innerHTML = '';
     gamePosterHeightWidth.innerHTML = '';
     gamePosterWidthHeight.innerHTML = '';
-
-    isReleaseInFuture = false;
+    isPremiereInFuture = false;
     removeGamePoster();
     removeBigSuggestionPoster();
+    removeSmallSuggestionPoster();
 }
 
 //RESET ERRORS MESSAGE WHEN PAGE LOAD

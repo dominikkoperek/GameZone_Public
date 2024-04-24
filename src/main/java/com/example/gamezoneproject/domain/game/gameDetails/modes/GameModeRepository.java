@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode;
+package com.example.gamezoneproject.domain.game.gameDetails.modes;
 
 import org.springframework.data.repository.CrudRepository;
 

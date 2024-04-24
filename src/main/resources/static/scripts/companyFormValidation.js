@@ -207,7 +207,7 @@ const validateCompanyPoster = async () => {
         return false;
     }
 
-    if (size > 2 && companyPoster.value !== "") {
+    if (size > 1 && companyPoster.value !== "") {
         companyPoster.classList.add("error-input");
         companyPosterError.innerHTML = "Obraz jest za duży " + size + "Mb";
         return false;

@@ -163,7 +163,6 @@ public class FileStorageService {
                 case COMPANY_POSTER -> 160;
                 case GAME_POSTER -> 400;
             };
-
             InputStream is = changeFileToInputStream(file, targetWidth, targetHeight);
 
             Files.copy(is, filePath, StandardCopyOption.REPLACE_EXISTING);
@@ -189,9 +188,10 @@ public class FileStorageService {
         resampleOp.setFilter(ResampleFilters.getLanczos3Filter());
         BufferedImage sc = resampleOp.filter(bufferedImage, null);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
-        ImageIO.write(sc, "jpeg", baos);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(sc, extension, baos);
         return new ByteArrayInputStream(baos.toByteArray());
     }
 

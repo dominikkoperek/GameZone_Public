@@ -2,7 +2,7 @@ package com.example.gamezoneproject.domain.game.dto;
 
 import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
-import com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode.GameMode;
+import com.example.gamezoneproject.domain.game.gameDetails.modes.GameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 
 import java.time.LocalDate;

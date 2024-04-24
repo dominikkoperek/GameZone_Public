@@ -11,7 +11,7 @@
     <h2 class="list-heading">Panel administracyjny</h2>
     <h3 class="list-description">Dodaj nową grę</h3>
 
-    <form action="" method="post" enctype="multipart/form-data"
+    <form action=""  th:action="@{/admin/dodaj-gre}" method="post" enctype="multipart/form-data"
           class="add-content-form" id="add-content-form" autocomplete="off" th:object="${game}">
 
         <div class="form-button-container">
@@ -199,7 +199,7 @@
             <p class="notification-error" th:errors="*{platform}">Powiadomienie</p>
         </div>
 
-        <label for="game-poster">Plakat gry max 1Mb (jpg, png, jpeg)</label>
+        <label for="game-poster">Plakat gry max min 400x600 rozmiar 1Mb (jpg, png, jpeg)</label>
         <p id="game-poster-proportion-height"></p>
         <p id="game-poster-proportion-width"></p>
         <div class="file-container">
@@ -223,8 +223,35 @@
             <p class="notification-error" th:errors="${game.poster}">Powiadomienie</p>
         </div>
 
+        <label for="small-suggestion-poster">Mały baner reklamowy min rozmiar 600x200 max 1Mb (jpg, png, jpeg)</label>
+        <p id="small-suggestion-proportion-height"></p>
+        <p id="small-suggestion-proportion-width"></p>
+        <div class="file-container">
+            <div class="form-element small-image-element" >
+                <input type="file" id="small-suggestion-poster" accept="image/jpeg,image/jpg,image/png"
+                       th:field="*{smallPosterSuggestion}"
+                       th:classappend="${#fields.hasErrors('smallPosterSuggestion')} ?'error-input':'' "
+                       onchange="validateSmallSuggestionPoster()">
+                <label for="small-suggestion-poster" id="small-suggestion-poster-preview">
+                    <img class="small-suggestion-poster-preview" th:src="@{/img/notfoundhorizontal.jpg}"
+                         alt="not-upload">
+                    <div class="small-suggestion-poster-name">
+                        <span>+</span>
+                    </div>
+
+                </label>
+            </div>
+        </div>
+
+        <div class="input-validation-container">
+            <p class="notification-error" id="small-suggestion-poster-error"></p>
+            <p class="notification-error" th:errors="${game.smallPosterSuggestion}">Powiadomienie</p>
+        </div>
+
+
+
         <div id="big-suggestion-poster-display" class="hide-big-suggestion-poster">
-            <label for="big-suggestion-poster">Duży plakat promocyjny (dla gier który dopiero będą miały premiere) 1Mb (jpg, png, jpeg)</label>
+            <label for="big-suggestion-poster">Duży plakat promocyjny (dla gier przed premierą) min rozmiar 1100x350 1Mb (jpg, png, jpeg)</label>
             <p id="big-suggestion-proportion-height"></p>
             <p id="big-suggestion-proportion-width"></p>
             <div class="file-container">
@@ -261,7 +288,7 @@
         <button onclick="return sendForm()" type="submit" id="game-add-form-button">Dodaj</button>
     </form>
     <script src="/scripts/gameFromValidation.js" th:src="@{/scripts/gameFromValidation.js}"></script>
-    <script src="/scripts/MultipleFormSelect.js" th:src="@{/scripts/MultipleFormSelect.js}"></script>
+    <script src="/scripts/multipleFormSelect.js" th:src="@{/scripts/multipleFormSelect.js}"></script>
 
     <!--    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"-->
     <!--            referrerpolicy="origin"></script>-->

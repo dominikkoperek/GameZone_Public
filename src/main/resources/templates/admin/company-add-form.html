@@ -11,7 +11,7 @@
     <h2 class="list-heading">Panel administracyjny</h2>
     <h3 class="list-description">Dodaj nową firmę</h3>
 
-    <form action="" method="post" class="add-content-form" id="add-content-form" th:object="${company}"
+    <form action=""  th:action="@{/admin/dodaj-firme}" method="post" class="add-content-form" id="add-content-form" th:object="${company}"
           autocomplete="off" enctype="multipart/form-data">
         <div class="form-button-container">
             <a class="form-back-button" href="#" th:href="@{/admin}">
@@ -76,7 +76,7 @@
             <p class="notification-error" th:errors="${company.description}">Powiadomienie</p>
         </div>
 
-        <label for="poster">Logo firmy (max 1200px x 1200px)</label>
+        <label for="poster">Logo firmy 1Mb (max 1200px x 1200px)</label>
         <span id="company-image-proportion-height"></span>
         <span id="company-image-proportion-width"></span>
         <div class="file-container">
@@ -125,7 +125,7 @@
         <button onclick="return validateCompanyForm()" type="submit" id="form-button">Dodaj</button>
     </form>
 
-    <script src="/scripts/MultipleFormSelect.js" th:src="@{/scripts/MultipleFormSelect.js}"></script>
+    <script src="/scripts/multipleFormSelect.js" th:src="@{/scripts/multipleFormSelect.js}"></script>
     <script src="/scripts/companyFormValidation.js" th:src="@{/scripts/companyFormValidation.js}"></script>
     <!--    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"-->
     <!--            referrerpolicy="origin"></script>-->

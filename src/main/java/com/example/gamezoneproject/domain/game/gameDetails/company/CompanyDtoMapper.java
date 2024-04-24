@@ -13,7 +13,7 @@ public class CompanyDtoMapper {
      * @param company The Company object to be mapped.
      * @return A new CompanyDto object with fields mapped from the Company object.
      */
-    public static CompanyDto map(Company company) {
+     static CompanyDto map(Company company) {
         return new CompanyDto(
                 company.getId(),
                 company.getName(),
@@ -31,7 +31,7 @@ public class CompanyDtoMapper {
      * @param companyDto The CompanyDto object to be mapped.
      * @return A new CompanyApiDto object with fields mapped from the companyDto object.
      */
-    public static CompanyApiDto mapToApiDto(CompanyDto companyDto){
+     public static CompanyApiDto mapToApiDto(CompanyDto companyDto){
         return new CompanyApiDto(
                 companyDto.getId(),
                 companyDto.getName()

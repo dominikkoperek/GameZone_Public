@@ -1,14 +1,17 @@
-package com.example.gamezoneproject.domain.web.admin;
+package com.example.gamezoneproject.web.admin;
 
 import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameSaveDto;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryService;
 import com.example.gamezoneproject.domain.game.gameDetails.category.dto.CategoryDto;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeDto;
-import com.example.gamezoneproject.domain.game.gameDetails.modes.gameMode.GameModeService;
+import com.example.gamezoneproject.domain.game.gameDetails.modes.GameModeService;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import jakarta.validation.Valid;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,7 +53,6 @@ public class GameManagementController {
         model.addAttribute("game", game);
         addAttributesToModel(model);
         setMinAndMaxPlayers(game);
-
         return "admin/game-add-form";
     }
 
@@ -70,7 +72,6 @@ public class GameManagementController {
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes,
                           Model model) {
-
         if (bindingResult.hasErrors()) {
             addAttributesToModel(model);
             return "admin/game-add-form";

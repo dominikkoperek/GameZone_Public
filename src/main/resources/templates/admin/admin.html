@@ -2,6 +2,7 @@
 <html lang="pl"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +20,7 @@
         <li><a class="admin-listing" href="#" th:href="@{/admin/edytuj-gre}">Edytuj gre</a></li>
         <li><a class="admin-listing" href="#" th:href="@{/admin/dodaj-kategorie}">Dodaj kategorię</a></li>
         <li><a class="admin-listing" href="#" th:href="@{/admin/edytuj-kategorie}">Edytuj kategorię</a></li>
-        <li><a class="admin-listing" href="#" th:href="@{/admin/dodaj-platforme}">Dodaj platforme</a></li>
+        <li sec:authorize="hasAnyRole('ADMIN')"><a class="admin-listing" href="#" th:href="@{/admin/dodaj-platforme}" >Dodaj platforme</a></li>
         <li><a class="admin-listing" href="#" th:href="@{/admin/edytuj-platforme}">Edytuj platforme</a></li>
 
     </ul>

@@ -12,7 +12,7 @@ public class CategoryDtoMapper {
      * @param category The Category object to be mapped.
      * @return A new CategoryDto object with fields mapped from the Category object.
      */
-    public static CategoryDto map(Category category) {
+     static CategoryDto map(Category category) {
         return new CategoryDto(
                 category.getId(),
                 category.getName(),

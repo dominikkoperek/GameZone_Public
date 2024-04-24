@@ -11,7 +11,8 @@
     <h2 class="list-heading">Panel administracyjny</h2>
     <h3 class="list-description">Dodaj nową kategorie gier</h3>
 
-    <form action="" method="post" class="add-content-form" id="add-content-form" th:object="${category}"
+    <form action="" th:action="@{/admin/dodaj-kategorie}" method="post" class="add-content-form"
+          id="add-content-form" th:object="${category}"
           autocomplete="off">
         <div class="form-button-container">
             <a class="form-back-button" href="#" th:href="@{/admin}">

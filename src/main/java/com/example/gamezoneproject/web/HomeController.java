@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.web;
+package com.example.gamezoneproject.web;
 
 import com.example.gamezoneproject.domain.exceptions.GameNotFoundException;
 import com.example.gamezoneproject.domain.game.GameService;
@@ -34,6 +34,7 @@ public class HomeController {
      */
     @GetMapping("/")
     public String home(Model model) {
+
         addModelAttributes(model);
         return"game-listing";
     }
@@ -50,8 +51,6 @@ public class HomeController {
                 " trailery, daty premier, wymagania sprzętowe, oceny i recenzje gier zarówno przed, jak i po premierze. Wszystkie gry w jednym miejscu!");
         model.addAttribute("games", allGames);
         model.addAttribute("allPlatforms", "Wszystkie");
-        model.addAttribute("recommendationHeading","Polecane dla Ciebie!");
-        model.addAttribute("recommendationDescription","Nasz serwis dostosowuje rekomendacje do Twoich preferencji, bazując na Twoimzachowaniu na stronie oraz ocenach gier. Jeśli często przeglądasz gry z kategorii “romans”, to w naszychrekomendacjachznajdziesz więcej takich tytułów. Dodatkowo, jeśli wysoko oceniłeś gry akcji, zwiększymy szanse napojawienie się podobnych gier w Twoich polecanych. Dzięki temu, rekomendacje są jak najbardziej dopasowane doTwoich gustów.");
 
         GameSuggestionsDto gameByClosestPremierDate = gameService
                 .findGameByClosestPremierDate().orElseThrow(GameNotFoundException::new);

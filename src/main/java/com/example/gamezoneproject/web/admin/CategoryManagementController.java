@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.web.admin;
+package com.example.gamezoneproject.web.admin;
 
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryService;
 import com.example.gamezoneproject.domain.game.gameDetails.category.dto.CategoryDto;
@@ -51,7 +51,7 @@ public class CategoryManagementController {
         } else {
             categoryService.addCategory(categoryDto);
             redirectAttributes.addFlashAttribute(AdminController.NOTIFICATION_ATTRIBUTE,
-                    "Gatunek %s został dodany".formatted(categoryDto.getName()));
+                    "Kategoria %s została dodana".formatted(categoryDto.getName()));
             return "redirect:/admin";
         }
     }
