@@ -9,4 +9,6 @@ public interface UserRepository extends CrudRepository<User,Long> {
     Optional<User> findByLoginIgnoreCase(String login);
 
     Optional<User> findByEmailIgnoreCase(String email);
+    Optional<User> findByToken_id(Long id);
+
 }

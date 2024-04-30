@@ -13,9 +13,15 @@
                 <constraints unique="true" nullable="false"/>
             </column>
             <column name="login" type="VARCHAR(20)">
-                <constraints unique="true"  nullable="false"/>
+                <constraints unique="true" nullable="false"/>
             </column>
             <column name="password" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="temporary_token_id" type="BIGINT">
+                <constraints nullable="true" unique="true"/>
+            </column>
+            <column name="is_active" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
         </createTable>

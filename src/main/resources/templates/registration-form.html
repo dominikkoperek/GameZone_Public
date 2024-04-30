@@ -16,6 +16,7 @@
 
                 <div class="register-input-box">
                     <input type="text" name="username" placeholder="Login"
+                           tabindex="1"
                            th:field="*{login}" id="login" onkeyup="validateRegisterLogin()"
                            maxlength="20"
                            autocorrect="off"
@@ -38,6 +39,7 @@
 
                 <div class="register-input-box">
                     <input type="email" name="email" placeholder="email" th:field="*{email}"
+                           tabindex="2"
                            id="email" onkeyup="validateEmail()" maxlength="50"
                            autocorrect="off"
                            autocomplete="off"
@@ -59,6 +61,7 @@
 
                 <div class="register-input-box password-input-box">
                     <input type="password"
+                           tabindex="3"
                            name="password" placeholder="Hasło" th:field="*{password}" id="password"
                            autocorrect="off"
                            autocomplete="new-password"
@@ -85,7 +88,7 @@
                 </div>
 
 
-                <button type="submit" class="login-button" title="Załóż konto"
+                <button type="submit" class="login-button" title="Załóż konto" tabindex="4"
                         onclick="senRegisterForm()" id="register-button">Załóż konto</button>
                 <div class="register-link">
                     <p>Masz już konto? <a href="#" th:href="@{/zaloguj}">Zaloguj się</a></p>

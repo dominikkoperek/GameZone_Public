@@ -1,5 +1,6 @@
 package com.example.gamezoneproject.config.secuirty;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.util.UUID;
+
 @Configuration
 public class CustomSecurityConfig {
     private final static String USER_ROLE = "USER";
@@ -21,25 +24,28 @@ public class CustomSecurityConfig {
     private final static String ADMIN_ROLE = "ADMIN";
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(@Value("${remember-me.token}") String token, HttpSecurity http ) throws Exception {
         http.authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/admin/dodaj-platforme").hasAnyRole(ADMIN_ROLE)
                         .requestMatchers("/admin/**").hasAnyRole(ADMIN_ROLE, MODERATOR_ROLE)
                         .requestMatchers("/**").permitAll()
                         .requestMatchers("/img/**","/scripts/**","/styles/**","/galeria/**").permitAll()
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
                         .loginPage("/zaloguj")
                         .failureUrl("/zaloguj?blad")
                         .permitAll())
+                .rememberMe(rememberMeConfigurer->rememberMeConfigurer
+                        .key(token)
+                        .tokenValiditySeconds(86_400))
 
                 .logout((logout) -> logout
+                        .deleteCookies("JSESSIONID")
                         .logoutSuccessUrl("/")
                         .logoutUrl("/wyloguj")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/wyloguj/**", HttpMethod.GET.name()))
-                        .logoutSuccessUrl("/").permitAll()
+                        .logoutSuccessUrl("/?wyloguj").permitAll()
                         .permitAll()
                 );
 

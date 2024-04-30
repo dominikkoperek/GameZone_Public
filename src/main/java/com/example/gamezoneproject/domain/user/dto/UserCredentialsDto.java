@@ -6,11 +6,13 @@ public class UserCredentialsDto {
     private final String login;
     private final String password;
     private final Set<String> roles;
+    private final boolean isActive;
 
-    public UserCredentialsDto(String login, String password, Set<String> roles) {
+    public UserCredentialsDto(String login, String password, Set<String> roles, boolean isActive) {
         this.login = login;
         this.password = password;
         this.roles = roles;
+        this.isActive = isActive;
     }
 
     public String getLogin() {
@@ -23,5 +25,9 @@ public class UserCredentialsDto {
 
     public Set<String> getRoles() {
         return roles;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }

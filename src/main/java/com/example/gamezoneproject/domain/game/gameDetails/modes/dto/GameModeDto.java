@@ -5,11 +5,12 @@ package com.example.gamezoneproject.domain.game.gameDetails.modes.dto;
  *   This DTO contain name field.
  */
 public class GameModeDto {
+
+    private String name;
+
     public GameModeDto(String name) {
         this.name = name;
     }
-
-    private String name;
 
     public String getName() {
         return name;

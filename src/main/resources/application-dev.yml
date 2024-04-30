@@ -20,3 +20,11 @@ app:
 server:
   tomcat:
     max-swallow-size: -1
+  servlet:
+    session:
+      timeout: 30
+temporary-token:
+  length: 64
+  life-time: 15
+remember-me:
+  token: b4907550-4818-423f-a240-9dd408a521b6

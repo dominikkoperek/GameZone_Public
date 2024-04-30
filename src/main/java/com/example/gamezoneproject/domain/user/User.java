@@ -1,8 +1,11 @@
 package com.example.gamezoneproject.domain.user;
 
+import com.example.gamezoneproject.domain.userToken.TemporaryToken;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,11 +17,16 @@ public class User {
     private String email;
     private String login;
     private String password;
+    private boolean isActive;
+    @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @JoinColumn(name = "temporary_token_id",unique = true)
+    private TemporaryToken token;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
-            joinColumns = @JoinColumn(name="user_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<UserRole> roles = new HashSet<>();
 
@@ -60,6 +68,22 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public TemporaryToken getToken() {
+        return token;
+    }
+
+    public void setToken(TemporaryToken token) {
+        this.token = token;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
 

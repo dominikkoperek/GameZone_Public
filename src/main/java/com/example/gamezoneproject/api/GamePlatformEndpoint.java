@@ -2,6 +2,7 @@ package com.example.gamezoneproject.api;
 
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class GamePlatformEndpoint {
      * @return ResponseEntity containing true/false if the platform param is provided, or a ResponseEntity containing list
      * of all platforms if the platform param is null.
      */
-    @RequestMapping("/availability")
+    @GetMapping("/availability")
     public ResponseEntity<?> checkPlatformAvailability(@RequestParam(required = false) String platform) {
         boolean isPlatformAvailable = gamePlatformService.isGamePlatformAvailable(platform);
         if (platform == null) {
@@ -44,7 +45,7 @@ public class GamePlatformEndpoint {
      *
      * @return ResponseEntity containing list of game's platforms names.
      */
-    @RequestMapping("/allPlatforms")
+    @GetMapping("/allPlatforms")
     public ResponseEntity<List<String>> findAllPlatforms() {
         List<String> strings = gamePlatformService.findAllGamePlatforms()
                 .keySet()

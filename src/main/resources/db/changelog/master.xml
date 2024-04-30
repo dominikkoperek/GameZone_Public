@@ -13,7 +13,8 @@
     <include file="0007_create_table_game_game_mode.xml" relativeToChangelogFile="true"/>
     <include file="0008_create_table_company.xml" relativeToChangelogFile="true"/>
     <include file="0009_create_table_game.xml" relativeToChangelogFile="true"/>
-    <include file="0010_create_table_users_and_role.xml" relativeToChangelogFile="true"/>
+    <include file="0010_create_table_temporary_token_and_user_tokens.xml" relativeToChangelogFile="true"/>
+    <include file="0011_create_table_users_and_role.xml" relativeToChangelogFile="true"/>
 
     <!--    Test data-->
     <include file="../testdata/0001_categories.sql" relativeToChangelogFile="true" context="dev"/>

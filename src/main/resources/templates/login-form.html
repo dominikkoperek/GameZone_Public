@@ -17,24 +17,28 @@
             <form action="#" th:action="@{/zaloguj}" method="post" class="login-form">
 
                 <div class="login-input-box">
-                    <input type="text" name="username" placeholder="Login">
+                    <input type="text" name="username" placeholder="Login" tabindex="1">
                     <i class="fa-solid fa-user"></i>
                 </div>
 
                 <div class="login-input-box">
-                    <input type="password" name="password" placeholder="Hasło">
-                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="login-password" name="login-password" placeholder="Hasło" tabindex="2">
+                    <button type="button" class="register-info-button">
+                        <i class="fa-solid fa-eye" id="login-show-password"></i>
+                        <i class="fa-solid fa-eye-slash hide-password-icon" id="login-hide-password"></i>
+                    </button>
                 </div>
                 <div class="login-remember-forgot">
-                    <label><input type="checkbox">Nie wylogowywuj</label>
+                    <label><input type="checkbox" name="remember-me">Nie wylogowywuj</label>
                     <a href="#">Zapomniałeś hasła?</a>
                 </div>
-                <button type="submit" class="login-button">Zaloguj</button>
+                <button type="submit" class="login-button" tabindex="3">Zaloguj</button>
                 <div class="register-link">
                     <p>Nie masz konta? <a href="/rejestracja" th:href="@{/rejestracja}">Załóż konto</a></p>
                 </div>
                 <div class="register-error">
-                    <p th:if="${param.blad}">Błędny login lub hasło!</p>
+                    <p th:if="${param.blad}  and  ${session['SPRING_SECURITY_LAST_EXCEPTION'].message eq 'Konto użytkownika jest wyłączone'}">Konto jest nieaktywne</p>
+                    <p th:if="${param.blad}  and ${session['SPRING_SECURITY_LAST_EXCEPTION'].message eq 'Niepoprawne dane uwierzytelniające'}">Niepoprawne dane</p>
                 </div>
             </form>
         </div>

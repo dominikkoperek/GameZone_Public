@@ -46,7 +46,7 @@ p {
 .logo,
 #toggle-icon,
 .game-category:hover,
-.menu-item a:hover{
+.menu-item a:hover {
     color: #f5b800;
 }
 
@@ -981,10 +981,12 @@ textarea {
     color: #ef3535;
     transition: all ease-in-out 300ms;
 }
-.login-errors{
+
+.login-errors {
     justify-content: center;
     align-items: center;
 }
+
 .notification-error {
     min-height: 1.2rem;
 }
@@ -1168,7 +1170,7 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .big-suggestion-element,
-.small-image-element{
+.small-image-element {
     width: 300px;
     height: 100px;
 }
@@ -2089,7 +2091,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
         padding-bottom: 0.5rem;
         font-size: 1rem;
     }
-    .notification-error{
+
+    .notification-error {
         font-size: 0.9rem;
     }
 }
@@ -2130,7 +2133,6 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 
-
 .login-container-wrapper {
     background: rgba(84, 84, 84, 0.26);
     border: 2px solid rgba(194, 194, 194, 0.13);
@@ -2153,18 +2155,20 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     height: 3rem;
     margin: 2rem 0;
 }
+
 .login-container-wrapper .register-input-box {
     position: relative;
     width: 100%;
     height: 3rem;
     margin: 0.8rem 0;
 }
+
 .login-container-wrapper .password-input-box {
-    margin-bottom:1.1rem;
+    margin-bottom: 1.1rem;
 }
 
 .login-input-box input,
-.register-input-box input{
+.register-input-box input {
     outline: none;
     all: unset;
     box-sizing: border-box;
@@ -2176,13 +2180,15 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     font-size: 1.2rem;
     text-align: center;
 }
-.register-input-box input.error-input{
+
+.register-input-box input.error-input {
     border: none;
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
+input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px #363636 inset, 0 0 0 1px rgba(204, 204, 204, 0.51) !important;
     -webkit-text-fill-color: #cccccc;
     border: none;
@@ -2199,7 +2205,7 @@ input::-ms-clear {
 }
 
 .login-input-box i,
-.register-input-box i{
+.register-input-box i {
     position: absolute;
     right: 20px;
     top: 50%;
@@ -2208,14 +2214,16 @@ input::-ms-clear {
     padding: 0.8rem;
     color: #777777;
 }
-.register-info-button{
+
+.register-info-button {
     all: unset;
 }
-.register-info-box{
+
+.register-info-box {
     display: block;
     text-align: center;
     position: absolute;
-    right:55px;
+    right: 55px;
     top: 50%;
     transform: translateY(-50%);
     background-color: #7a6f60;
@@ -2225,24 +2233,29 @@ input::-ms-clear {
     max-width: 11rem;
     z-index: 99;
 }
+
 .hide-info-box,
-.hide-password-icon{
+.hide-password-icon {
     display: none;
 }
 
 .register-info-box p {
     font-size: 0.90rem;
 }
-.register-input-box i:hover{
+
+.register-input-box i:hover,
+.login-input-box i:hover {
     cursor: pointer;
 }
-.password-validation-container{
+
+.password-validation-container {
     display: flex;
     margin-top: 0.4rem;
     width: 100%;
     height: 0.3rem;
 }
-.password-param{
+
+.password-param {
     display: flex;
     width: 33%;
     height: auto;
@@ -2250,16 +2263,18 @@ input::-ms-clear {
     justify-content: space-evenly;
     background-color: #6a7067;
 }
-.password-validation-container >#first-password-param{
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
+
+.password-validation-container > #first-password-param {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
-.password-validation-container >#third-password-param{
+
+.password-validation-container > #third-password-param {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.password-param-good{
+.password-param-good {
     background-color: #6cff6c;
 }
 
@@ -2295,8 +2310,11 @@ input::-ms-clear {
     margin-top: 0.5rem;
     transition: background-color ease-in-out 150ms;
 }
-.login-container-wrapper .login-button:hover{
+
+.login-container-wrapper .login-button:hover,
+.login-container-wrapper .login-button:focus {
     background-color: #ccfaba;
+    border: 1px dotted #1f1f1f;
     transition: background-color ease-in-out 150ms;
 }
 
@@ -2309,33 +2327,39 @@ input::-ms-clear {
 .register-link p a {
     font-weight: 600;
 }
-.login-container-wrapper .register-error{
+
+.login-container-wrapper .register-error {
     display: block;
     min-height: 0.5rem;
 }
 
-.login-container-wrapper .register-error p{
+.login-container-wrapper .register-error p {
     text-align: center;
     color: #e52c2c;
     height: 0.5rem;
 }
-.user-details-info{
+
+.user-details-info {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 }
-.user-details-info p{
+
+.user-details-info p {
     color: #ffe6cb;
     margin-right: 2px;
 }
-.user-details-info i{
+
+.user-details-info i {
     color: #6c6b6b;
 }
+
 .user-details-info p:hover {
-   color: #f5b800;
+    color: #f5b800;
 }
-.user-details-info i:hover{
+
+.user-details-info i:hover {
     color: #cb4444;
 }
 

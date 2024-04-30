@@ -5,13 +5,17 @@ import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameDto;
 import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
+import com.example.gamezoneproject.domain.userToken.TemporaryTokenService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Home controller for all games.
@@ -26,6 +30,7 @@ public class HomeController {
         this.gamePlatformService = gamePlatformService;
     }
 
+
     /**
      * Display all games sorted by release year reversed.
      *
@@ -34,7 +39,6 @@ public class HomeController {
      */
     @GetMapping("/")
     public String home(Model model) {
-
         addModelAttributes(model);
         return"game-listing";
     }
@@ -53,7 +57,7 @@ public class HomeController {
         model.addAttribute("allPlatforms", "Wszystkie");
 
         GameSuggestionsDto gameByClosestPremierDate = gameService
-                .findGameByClosestPremierDate().orElseThrow(GameNotFoundException::new);
+                .findGameByClosestPremierDate().orElse(null);
         model.addAttribute("closestGameReleaseDate", gameByClosestPremierDate);
     }
 

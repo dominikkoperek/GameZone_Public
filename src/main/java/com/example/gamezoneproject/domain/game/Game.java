@@ -40,7 +40,7 @@ public class Game {
     )
     private Set<GamePlatform> gamePlatform = new HashSet<>();
 
-    @ManyToMany@JoinTable(name = "game_game_mode",
+    @ManyToMany @JoinTable(name = "game_game_mode",
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "game_mode_id", referencedColumnName = "id")
     )

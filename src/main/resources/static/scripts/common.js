@@ -42,5 +42,29 @@ window.onload = function () {
     showYear();
     notificationBar();
 };
+//show password
+let loginPasswordShowIcon = document.getElementById("login-show-password");
+let loginPasswordHideIcon = document.getElementById("login-hide-password");
+let loginPasswordInput = document.getElementById("login-password")
+
+loginPasswordShowIcon.addEventListener('click', () => {
+    loginPasswordShowIcon.classList.add("hide-password-icon");
+    loginPasswordHideIcon.classList.remove("hide-password-icon");
+    if (loginPasswordInput.type === "password") {
+        loginPasswordInput.type = "text";
+    } else {
+        loginPasswordInput.type = "password";
+    }
+
+});
+loginPasswordHideIcon.addEventListener('click', () => {
+    loginPasswordShowIcon.classList.remove("hide-password-icon");
+    loginPasswordHideIcon.classList.add("hide-password-icon");
+    if (loginPasswordInput.type === "text") {
+        loginPasswordInput.type = "password";
+    } else {
+        loginPasswordInput.type = "text";
+    }
+});
 
 
