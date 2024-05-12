@@ -12,19 +12,24 @@ spring:
       static-locations: classpath:/static/,file:uploads/
   servlet:
     multipart:
-      max-file-size: -1
-      max-request-size: -1
+      max-file-size: 5
+      max-request-size: 5
 app:
   storage:
     location: uploads
 server:
   tomcat:
-    max-swallow-size: -1
+    max-swallow-size: 5
   servlet:
     session:
       timeout: 30
 temporary-token:
   length: 64
-  life-time: 15
+  life-time: 30
 remember-me:
-  token: b4907550-4818-423f-a240-9dd408a521b6
+  token: 3452180c-a4b0-436f-9d29-ee067b97ddc5
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

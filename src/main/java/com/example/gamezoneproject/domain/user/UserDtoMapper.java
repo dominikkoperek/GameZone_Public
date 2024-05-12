@@ -25,6 +25,8 @@ public class UserDtoMapper {
                 user.isActive()
         );
     }
+
+
     /**
      * Method to map user entity to UserTokenDto for generating temporary token.
      * @param user User entity
@@ -34,7 +36,8 @@ public class UserDtoMapper {
         return new UserTokenDto(
                 user.getId(),
                 user.getLogin(),
-                user.getToken().getToken()
+                user.getToken().getToken(),
+                user.getEmail()
         );
     }
 }

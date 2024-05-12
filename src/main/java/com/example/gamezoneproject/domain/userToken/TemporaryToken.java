@@ -1,8 +1,6 @@
 package com.example.gamezoneproject.domain.userToken;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDateTime;
 @Entity
@@ -14,6 +12,7 @@ public class TemporaryToken {
     private String token;
 
     private LocalDateTime tokenExperienceTime;
+    private LocalDateTime lastTokenSend;
 
     public String getTokenName() {
         return tokenName;
@@ -45,5 +44,13 @@ public class TemporaryToken {
 
     public void setTokenExperienceTime(LocalDateTime tokenExperienceTime) {
         this.tokenExperienceTime = tokenExperienceTime;
+    }
+
+    public LocalDateTime getLastTokenSend() {
+        return lastTokenSend;
+    }
+
+    public void setLastTokenSend(LocalDateTime lastTokenSend) {
+        this.lastTokenSend = lastTokenSend;
     }
 }

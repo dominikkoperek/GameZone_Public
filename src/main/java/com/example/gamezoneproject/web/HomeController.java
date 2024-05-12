@@ -7,6 +7,7 @@ import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.userToken.TemporaryTokenService;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,12 @@ import java.util.UUID;
 public class HomeController {
     private final GameService gameService;
     private final GamePlatformService gamePlatformService;
+    private final PasswordEncoder passwordEncoder;
 
-    public HomeController(GameService gameService, GamePlatformService gamePlatformService) {
+    public HomeController(GameService gameService, GamePlatformService gamePlatformService, PasswordEncoder passwordEncoder) {
         this.gameService = gameService;
         this.gamePlatformService = gamePlatformService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 

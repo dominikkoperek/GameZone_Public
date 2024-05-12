@@ -14,15 +14,15 @@
     <section class="login-center-box">
         <div class="login-container-wrapper margin-box">
             <h2 class="list-heading">Zaloguj się</h2>
-            <form action="#" th:action="@{/zaloguj}" method="post" class="login-form">
+            <form  th:action="@{/zaloguj}" method="post" class="login-form">
 
                 <div class="login-input-box">
                     <input type="text" name="username" placeholder="Login" tabindex="1">
                     <i class="fa-solid fa-user"></i>
                 </div>
 
-                <div class="login-input-box">
-                    <input type="password" id="login-password" name="login-password" placeholder="Hasło" tabindex="2">
+                <div class="login-input-box eye-icon">
+                    <input type="password" id="login-password" name="password" placeholder="Hasło" tabindex="2">
                     <button type="button" class="register-info-button">
                         <i class="fa-solid fa-eye" id="login-show-password"></i>
                         <i class="fa-solid fa-eye-slash hide-password-icon" id="login-hide-password"></i>
@@ -30,15 +30,15 @@
                 </div>
                 <div class="login-remember-forgot">
                     <label><input type="checkbox" name="remember-me">Nie wylogowywuj</label>
-                    <a href="#">Zapomniałeś hasła?</a>
+                    <a href="/resetuj-haslo" th:href="@{/resetuj-haslo}">Zapomniałeś hasła?</a>
                 </div>
                 <button type="submit" class="login-button" tabindex="3">Zaloguj</button>
                 <div class="register-link">
                     <p>Nie masz konta? <a href="/rejestracja" th:href="@{/rejestracja}">Załóż konto</a></p>
                 </div>
-                <div class="register-error">
-                    <p th:if="${param.blad}  and  ${session['SPRING_SECURITY_LAST_EXCEPTION'].message eq 'Konto użytkownika jest wyłączone'}">Konto jest nieaktywne</p>
-                    <p th:if="${param.blad}  and ${session['SPRING_SECURITY_LAST_EXCEPTION'].message eq 'Niepoprawne dane uwierzytelniające'}">Niepoprawne dane</p>
+                <div class="register-error" th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] ne null}">
+                    <p th:if="${param.blad} and ${session['SPRING_SECURITY_LAST_EXCEPTION'].message eq 'Konto użytkownika jest wyłączone'}">Konto jest nieaktywne</p>
+                    <p th:if="${param.blad} and ${session['SPRING_SECURITY_LAST_EXCEPTION'].message eq 'Niepoprawne dane uwierzytelniające'}">Niepoprawne dane</p>
                 </div>
             </form>
         </div>

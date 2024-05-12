@@ -17,5 +17,4 @@ public class GameZoneProjectApplication {
     public SecureRandom getRandom(){
         return  new SecureRandom();
     }
-
 }

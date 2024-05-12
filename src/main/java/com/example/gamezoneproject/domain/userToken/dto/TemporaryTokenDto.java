@@ -1,20 +1,22 @@
 package com.example.gamezoneproject.domain.userToken.dto;
 
-import com.example.gamezoneproject.domain.userToken.TemporaryTokenNames;
+import com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy.TemporaryTokenStrategy;
 
 import java.time.LocalDateTime;
 
 public class TemporaryTokenDto {
     private Long id;
-    private TemporaryTokenNames tokenName;
+    private String tokenName;
     private String token;
 
     private LocalDateTime tokenExperienceTime;
+    private LocalDateTime lastTokenSend;
 
-    public TemporaryTokenDto( TemporaryTokenNames tokenName, String token, LocalDateTime tokenExperienceTime) {
+    public TemporaryTokenDto(String tokenName, String token, LocalDateTime tokenExperienceTime, LocalDateTime lastTokenSend) {
         this.tokenName = tokenName;
         this.token = token;
         this.tokenExperienceTime = tokenExperienceTime;
+        this.lastTokenSend = lastTokenSend;
     }
 
     public TemporaryTokenDto() {
@@ -28,11 +30,11 @@ public class TemporaryTokenDto {
         this.id = id;
     }
 
-    public TemporaryTokenNames getTokenName() {
+    public String getTokenName() {
         return tokenName;
     }
 
-    public void setTokenName(TemporaryTokenNames tokenName) {
+    public void setTokenName(String tokenName) {
         this.tokenName = tokenName;
     }
 
@@ -50,5 +52,13 @@ public class TemporaryTokenDto {
 
     public void setTokenExperienceTime(LocalDateTime tokenExperienceTime) {
         this.tokenExperienceTime = tokenExperienceTime;
+    }
+
+    public LocalDateTime getLastTokenSend() {
+        return lastTokenSend;
+    }
+
+    public void setLastTokenSend(LocalDateTime lastTokenSend) {
+        this.lastTokenSend = lastTokenSend;
     }
 }

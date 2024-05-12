@@ -12,9 +12,10 @@
     <section class="login-center-box">
         <div class="login-container-wrapper margin-box">
             <h2 class="list-heading">Zarejestruj się</h2>
-            <form action="#" th:action="@{/rejestracja}" method="post" class="login-form" th:object="${user}" id="register-form">
+            <form action="#" th:action="@{/rejestracja}" method="post" class="login-form" th:object="${user}"
+                  id="register-form">
 
-                <div class="register-input-box">
+                <div class="register-input-box eye-icon">
                     <input type="text" name="username" placeholder="Login"
                            tabindex="1"
                            th:field="*{login}" id="login" onkeyup="validateRegisterLogin()"
@@ -37,7 +38,7 @@
                     <p class="notification-error login-errors" th:errors="${user.login}">Powiadomienie</p>
                 </div>
 
-                <div class="register-input-box">
+                <div class="register-input-box eye-icon">
                     <input type="email" name="email" placeholder="email" th:field="*{email}"
                            tabindex="2"
                            id="email" onkeyup="validateEmail()" maxlength="50"
@@ -59,7 +60,7 @@
                     <p class="notification-error login-errors" th:errors="${user.email}">Powiadomienie</p>
                 </div>
 
-                <div class="register-input-box password-input-box">
+                <div class="register-input-box password-input-box eye-icon">
                     <input type="password"
                            tabindex="3"
                            name="password" placeholder="Hasło" th:field="*{password}" id="password"
@@ -89,7 +90,8 @@
 
 
                 <button type="submit" class="login-button" title="Załóż konto" tabindex="4"
-                        onclick="senRegisterForm()" id="register-button">Załóż konto</button>
+                        onclick="senRegisterForm()" id="register-button">Załóż konto
+                </button>
                 <div class="register-link">
                     <p>Masz już konto? <a href="#" th:href="@{/zaloguj}">Zaloguj się</a></p>
                 </div>
@@ -100,6 +102,7 @@
         </div>
         <script src="/static/scripts/registrationFormValidation.js"
                 th:src="@{/scripts/registrationFormValidation.js}"></script>
+    </section>
 </main>
 </body>
 </html>

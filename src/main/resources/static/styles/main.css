@@ -2156,6 +2156,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     margin: 2rem 0;
 }
 
+
 .login-container-wrapper .register-input-box {
     position: relative;
     width: 100%;
@@ -2243,8 +2244,8 @@ input::-ms-clear {
     font-size: 0.90rem;
 }
 
-.register-input-box i:hover,
-.login-input-box i:hover {
+.eye-icon i:hover,
+.eye-icon i:hover {
     cursor: pointer;
 }
 

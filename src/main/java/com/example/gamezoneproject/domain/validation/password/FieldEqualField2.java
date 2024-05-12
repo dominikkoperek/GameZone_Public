@@ -7,22 +7,23 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 
 /**
- * Checks if the Password is password contains all necessary chars.
+ * Checks if 2 fields are the same.
  */
 @Documented
-@Constraint(validatedBy = PasswordValidator.class)
-@Target({FIELD, PARAMETER})
+@Constraint(validatedBy = FieldEqualField2Validator.class)
+@Target({TYPE})
 @Retention(RUNTIME)
-public @interface Password {
-    String message() default "{jakarta.validation.constraints.Password.message}";
+public @interface FieldEqualField2 {
+    String message() default "{jakarta.validation.constraints.FieldEqualField2.message}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+    String field1 () ;
+    String field2 () ;
 }

@@ -1,12 +1,11 @@
 package com.example.gamezoneproject.domain.user.dto;
 
+import com.example.gamezoneproject.domain.validation.other.email.Email;
 import com.example.gamezoneproject.domain.validation.other.notwhitespace.NotWhitespace;
 import com.example.gamezoneproject.domain.validation.other.registrationAlphanumeric.AlphanumericAndSpecialSymbols;
 import com.example.gamezoneproject.domain.validation.password.Password;
 import jakarta.validation.constraints.*;
 
-import java.util.List;
-import java.util.Set;
 
 public class UserRegistrationDto {
     @NotBlank
@@ -23,7 +22,7 @@ public class UserRegistrationDto {
     @NotBlank
     @Size(min = 5,max = 100)
     private String email;
-    private Set<Long> tokens;
+    private Long token;
 
     public String getLogin() {
         return login;
@@ -49,11 +48,11 @@ public class UserRegistrationDto {
         this.email = email;
     }
 
-    public Set<Long> getTokens() {
-        return tokens;
+    public Long getToken() {
+        return token;
     }
 
-    public void setTokens(Set<Long> tokens) {
-        this.tokens = tokens;
+    public void setToken(Long token) {
+        this.token = token;
     }
 }
