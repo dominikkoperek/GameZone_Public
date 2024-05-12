@@ -1,10 +1,6 @@
 spring:
   mail:
-    host: smtp.gmail.com
-    port: 587
-    protocol: smtp
-    username: gamezonepomoc@gmail.com
-    password: peiu asyu wgia lkjx
+
     default-encoding: UTF-8
     properties:
       mail:

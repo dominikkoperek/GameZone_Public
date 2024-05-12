@@ -125,7 +125,7 @@ public class TemporaryTokenService {
     public TemporaryTokenDto buildTemporaryToken(TemporaryTokenStrategy tokenPurpose) {
         return new TemporaryTokenDto(
                 tokenPurpose.getName(),
-                generateTokenValue(),
+               generateTokenValue(),
                 LocalDateTime.now().plusMinutes(tokenPurpose.getTokenLifeTimeMinutes()).withNano(0),
                 LocalDateTime.now().withNano(0)
 
