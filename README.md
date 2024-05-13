@@ -124,17 +124,23 @@ Admin part of add game form
 
 
 
+
 ## Roadmap
 
-- Add spring security (login system)
 
 - Add to admin panel content edit options/ users options (ban,shadow ban)
 - Add comment system
 - Add recommender algorithm
 - Add remove option for content (game/category/platform)
 - Add user sites
-- Improve validation (server site)
+
 - Implement game rating system
-- Implement Company seraching buttons
-- Implement adding company pictures in form
+  
+~~- Implement Company seraching buttons~~
+
+~~- Implement adding company pictures in form~~
+
+~~- Improve validation (server site)~~
+
+~~- Add spring security (login system)~~
 
