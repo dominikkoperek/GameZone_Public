@@ -4,7 +4,7 @@ import com.example.gamezoneproject.domain.user.User;
 import com.example.gamezoneproject.domain.user.UserDtoMapper;
 import com.example.gamezoneproject.domain.user.dto.UserTokenDto;
 import com.example.gamezoneproject.domain.userToken.TemporaryTokenService;
-import com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy.TemporaryTokenStrategy;
+import com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy.TemporaryTokenStrategy;
 import com.example.gamezoneproject.domain.userToken.dto.TemporaryTokenDto;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;

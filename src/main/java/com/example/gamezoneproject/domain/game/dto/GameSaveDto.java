@@ -3,6 +3,9 @@ package com.example.gamezoneproject.domain.game.dto;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import com.example.gamezoneproject.domain.validation.category.CategoryNotExists;
 import com.example.gamezoneproject.domain.validation.company.CompanyNotExists;
+import com.example.gamezoneproject.domain.validation.file.CorruptedImageExtension;
+import com.example.gamezoneproject.domain.validation.file.ImageHeight;
+import com.example.gamezoneproject.domain.validation.file.ImageWidth;
 import com.example.gamezoneproject.domain.validation.file.MaxFileSize;
 import com.example.gamezoneproject.domain.validation.game.NoGameDuplication;
 import com.example.gamezoneproject.domain.validation.other.containsh2.ContainsH2;
@@ -71,13 +74,20 @@ public class GameSaveDto {
     private String publisher;
     @NotNull
     @MaxFileSize(maxSizeMb = 1)
+    @CorruptedImageExtension
+    @ImageWidth(minImageWidth =400 ,maxImageWidth =800)
+    @ImageHeight(minImageHeight =600 ,maxImageHeight =1200)
     private MultipartFile poster;
     @PlayersRange(rangeMin = 1, rangeMax = 2000,maxMin=1000)
     private PlayerRange playerRange;
-
+    @CorruptedImageExtension
+    @ImageWidth(minImageWidth =600 ,maxImageWidth =1800)
+    @ImageHeight(minImageHeight =200 ,maxImageHeight =600)
     @MaxFileSize(maxSizeMb = 1)
     private MultipartFile smallPosterSuggestion;
-
+    @ImageWidth(minImageWidth =1100 ,maxImageWidth =2400)
+    @ImageHeight(minImageHeight =350 ,maxImageHeight =1200)
+    @CorruptedImageExtension
     @MaxFileSize(maxSizeMb = 1)
     private MultipartFile bigPosterSuggestion;
 

@@ -11,7 +11,7 @@
 
         <div th:if="${closestGameReleaseDate ne null}">
             <section class="content-recommendation-box"
-                     th:if="${closestGameReleaseDate} ne null and ${closestGameReleaseDate.daysBeforeRelease>=0}">
+                     th:if="${closestGameReleaseDate.daysBeforeRelease>=0}">
                 <div class="latest-game-premier">
                     <a href="#"
                        th:href="@{|/gry/${#strings.replace(closestGameReleaseDate.title,' ','-')}/${closestGameReleaseDate.id}|}">
@@ -20,8 +20,8 @@
                                 <li th:each="closestGame:${closestGameReleaseDate.platform}">
                                     <img class="suggestion-platform-logo"
                                          th:src="${closestGame.value ne null} ? @{|/galeria/platformy/${closestGame.value}|} : @{/galeria/gry/game-poster-placeholder.jpg}"
+                                         th:alt="${closestGame.key}"
                                     >
-                                    <span class="suggestion-platform-name" th:text="${closestGame.key}"></span>
                                 </li>
                             </ul>
                         </div>
@@ -30,6 +30,7 @@
                                     class="latest-game-image"
                                     src="../static/img/notfound.jpg"
                                     th:src="@{|/galeria/rekomendacje/l/${closestGameReleaseDate.getBigPosterSuggestion()}|}"
+                                    th:alt="${closestGameReleaseDate.title}"
                                     alt="tytuł gry">
                         </picture>
                         <div class="latest-game-premier-date">

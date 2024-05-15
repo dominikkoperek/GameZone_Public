@@ -2,6 +2,9 @@ package com.example.gamezoneproject.domain.game.gameDetails.company.dto;
 
 import com.example.gamezoneproject.domain.validation.company.NoCompanyDuplication;
 import com.example.gamezoneproject.domain.validation.country.CountryNotExists;
+import com.example.gamezoneproject.domain.validation.file.CorruptedImageExtension;
+import com.example.gamezoneproject.domain.validation.file.ImageHeight;
+import com.example.gamezoneproject.domain.validation.file.ImageWidth;
 import com.example.gamezoneproject.domain.validation.file.MaxFileSize;
 import com.example.gamezoneproject.domain.validation.other.containsh2.ContainsH2;
 import com.example.gamezoneproject.domain.validation.other.illegalexpression.NoIllegalExpression;
@@ -36,6 +39,9 @@ public class CompanySaveDto {
     private boolean isPublisher;
     @NotNull
     @MaxFileSize(maxSizeMb = 1)
+    @CorruptedImageExtension
+    @ImageWidth(minImageWidth = 300,maxImageWidth =1200 )
+    @ImageHeight(minImageHeight = 300,maxImageHeight =1200 )
     private MultipartFile poster;
 
 

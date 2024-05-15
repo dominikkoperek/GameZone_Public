@@ -2,7 +2,7 @@ package com.example.gamezoneproject.mail;
 
 import com.example.gamezoneproject.domain.user.User;
 import com.example.gamezoneproject.domain.user.dto.UserTokenDto;
-import com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy.TemporaryTokenStrategy;
+import com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy.TemporaryTokenStrategy;
 
 public interface MailService {
 

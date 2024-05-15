@@ -3,7 +3,7 @@ package com.example.gamezoneproject.domain.userToken;
 import com.example.gamezoneproject.domain.user.UserDtoMapper;
 import com.example.gamezoneproject.domain.user.UserRepository;
 import com.example.gamezoneproject.domain.user.dto.UserTokenDto;
-import com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy.TemporaryTokenStrategy;
+import com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy.TemporaryTokenStrategy;
 import com.example.gamezoneproject.domain.userToken.dto.TemporaryTokenDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -125,7 +125,7 @@ public class TemporaryTokenService {
     public TemporaryTokenDto buildTemporaryToken(TemporaryTokenStrategy tokenPurpose) {
         return new TemporaryTokenDto(
                 tokenPurpose.getName(),
-               generateTokenValue(),
+                generateTokenValue(),
                 LocalDateTime.now().plusMinutes(tokenPurpose.getTokenLifeTimeMinutes()).withNano(0),
                 LocalDateTime.now().withNano(0)
 

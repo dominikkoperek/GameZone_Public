@@ -62,7 +62,7 @@
                         i konflikcie z prastarą rasą Żniwiarzy.
                     </p>
                     <div class="game-summary-details">
-                        <ul class="game-summary-item game-summary-category">
+                        <ul class="game-summary-item game-summary-category" th:if="${game.category}">
                             <li th:each="gameCategory : ${game.category}">
                                 <a href="#"
                                    th:if="${!game.category.isEmpty()}"

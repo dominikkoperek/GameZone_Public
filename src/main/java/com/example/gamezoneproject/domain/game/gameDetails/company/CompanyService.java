@@ -4,6 +4,7 @@ import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDt
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanySaveDto;
 import com.example.gamezoneproject.storage.FileStorageService;
 import com.example.gamezoneproject.storage.ImageStorageFile;
+import com.example.gamezoneproject.storage.storageStrategy.CompanyPoster;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +21,12 @@ public class CompanyService {
     private final static String POLISH_COUNTRY_NAME = "Polska";
     private final CompanyRepository companyRepository;
     private final FileStorageService fileStorageService;
+    private final CompanyPoster companyPoster;
 
-    public CompanyService(CompanyRepository companyRepository, FileStorageService fileStorageService) {
+    public CompanyService(CompanyRepository companyRepository, FileStorageService fileStorageService, CompanyPoster companyPoster) {
         this.companyRepository = companyRepository;
         this.fileStorageService = fileStorageService;
+        this.companyPoster = companyPoster;
     }
 
     /**
@@ -116,7 +119,7 @@ public class CompanyService {
         companyToSave.setPublisher(companySaveDto.isPublisher());
         if (companySaveDto.getPoster() != null && !companySaveDto.getPoster().isEmpty()) {
             String savedFileName = fileStorageService
-                    .saveImage(companySaveDto.getPoster(), companySaveDto.getName(), ImageStorageFile.COMPANY_POSTER);
+                    .saveImage(companySaveDto.getPoster(), companySaveDto.getName(), companyPoster);
             companyToSave.setPoster(savedFileName);
         }
 

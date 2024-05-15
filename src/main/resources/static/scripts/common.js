@@ -46,6 +46,9 @@ window.onload = function () {
 let loginPasswordShowIcon = document.getElementById("login-show-password");
 let loginPasswordHideIcon = document.getElementById("login-hide-password");
 let loginPasswordInput = document.getElementById("login-password")
+if(loginPasswordShowIcon){
+
+
 
 loginPasswordShowIcon.addEventListener('click', () => {
     loginPasswordShowIcon.classList.add("hide-password-icon");
@@ -66,5 +69,5 @@ loginPasswordHideIcon.addEventListener('click', () => {
         loginPasswordInput.type = "text";
     }
 });
-
+}
 

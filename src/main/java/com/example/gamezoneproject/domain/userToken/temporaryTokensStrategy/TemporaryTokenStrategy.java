@@ -1,8 +1,4 @@
-package com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy;
-
-import com.example.gamezoneproject.domain.userToken.TemporaryTokenService;
-
-import java.time.LocalDateTime;
+package com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy;
 
 public interface TemporaryTokenStrategy {
 

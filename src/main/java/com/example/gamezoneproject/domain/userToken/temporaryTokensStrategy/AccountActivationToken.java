@@ -1,10 +1,7 @@
-package com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy;
+package com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy;
 
 import com.example.gamezoneproject.domain.userToken.TemporaryTokenService;
-import com.example.gamezoneproject.domain.userToken.dto.TemporaryTokenDto;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class AccountActivationToken implements TemporaryTokenStrategy {

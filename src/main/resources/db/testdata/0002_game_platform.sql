@@ -23,3 +23,12 @@ INSERT INTO game_platform (game_id,platform_id) VALUES (4,10);
 INSERT INTO game_platform (game_id,platform_id) VALUES (5,1);
 INSERT INTO game_platform (game_id,platform_id) VALUES (5,4);
 INSERT INTO game_platform (game_id,platform_id) VALUES (5,7);
+
+INSERT INTO game_platform (game_id,platform_id) VALUES (6,1);
+INSERT INTO game_platform (game_id,platform_id) VALUES (6,4);
+INSERT INTO game_platform (game_id,platform_id) VALUES (6,7);
+INSERT INTO game_platform (game_id,platform_id) VALUES (6,8);
+INSERT INTO game_platform (game_id,platform_id) VALUES (6,9);
+INSERT INTO game_platform (game_id,platform_id) VALUES (6,10);
+INSERT INTO game_platform (game_id,platform_id) VALUES (6,11);
+INSERT INTO game_platform (game_id,platform_id) VALUES (6,12);

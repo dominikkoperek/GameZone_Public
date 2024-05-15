@@ -1,8 +1,6 @@
-package com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy;
+package com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy;
 
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class PasswordResetToken implements TemporaryTokenStrategy{

@@ -17,6 +17,9 @@ import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import com.example.gamezoneproject.storage.FileStorageService;
 import com.example.gamezoneproject.storage.ImageStorageFile;
+import com.example.gamezoneproject.storage.storageStrategy.BigPoster;
+import com.example.gamezoneproject.storage.storageStrategy.GamePoster;
+import com.example.gamezoneproject.storage.storageStrategy.SmallPoster;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,16 +40,22 @@ public class GameService {
     private final CompanyRepository companyRepository;
     private final CategoryRepository categoryRepository;
     private final GameModeRepository gameModeRepository;
+    private final GamePoster gamePoster;
+    private final SmallPoster smallPoster;
+    private final BigPoster bigPoster;
 
     public GameService(FileStorageService fileStorageService, GameRepository gameRepository,
                        GamePlatformRepository gamePlatformRepository, CompanyRepository companyRepository,
-                       CategoryRepository categoryRepository, GameModeRepository gameModeRepository) {
+                       CategoryRepository categoryRepository, GameModeRepository gameModeRepository, GamePoster gamePoster, SmallPoster smallPoster, BigPoster bigPoster) {
         this.fileStorageService = fileStorageService;
         this.gameRepository = gameRepository;
         this.gamePlatformRepository = gamePlatformRepository;
         this.companyRepository = companyRepository;
         this.categoryRepository = categoryRepository;
         this.gameModeRepository = gameModeRepository;
+        this.gamePoster = gamePoster;
+        this.smallPoster = smallPoster;
+        this.bigPoster = bigPoster;
     }
 
     /**
@@ -226,17 +235,17 @@ public class GameService {
 
         if (gameSaveDto.getPoster() != null && !gameSaveDto.getPoster().isEmpty()) {
             String savedFileName = fileStorageService.saveImage(gameSaveDto.getPoster(), gameSaveDto.getTitle(),
-                    ImageStorageFile.GAME_POSTER);
+                    gamePoster);
             game.setPoster(savedFileName);
         }
         if (gameSaveDto.getSmallPosterSuggestion() != null && !gameSaveDto.getSmallPosterSuggestion().isEmpty()) {
             String savedSmallPoster = fileStorageService.saveImage(gameSaveDto.getSmallPosterSuggestion(), gameSaveDto.getTitle(),
-                    ImageStorageFile.SMALL_ADD_POSTER);
+                    smallPoster);
             game.setSmallPosterSuggestion(savedSmallPoster);
         }
         if (gameSaveDto.getBigPosterSuggestion() != null && !gameSaveDto.getBigPosterSuggestion().isEmpty()) {
             String savedBigPoster = fileStorageService.saveImage(gameSaveDto.getBigPosterSuggestion(), gameSaveDto.getTitle(),
-                    ImageStorageFile.BIG_ADD_POSTER);
+                    bigPoster);
             game.setBigPosterSuggestion(savedBigPoster);
         }
         gameRepository.save(game);

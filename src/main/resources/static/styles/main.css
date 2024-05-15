@@ -1216,7 +1216,9 @@ input[type="file"]::file-selector-button:hover {
     cursor: pointer;
 }
 
-.game-poster-name {
+.game-poster-name,
+.small-suggestion-poster-name,
+.big-suggestion-poster-name {
     overflow: hidden;
 }
 
@@ -1994,7 +1996,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     align-items: center;
     position: absolute;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Tło półprzezroczyste, aby tekst był czytelny */
+    background: rgba(0, 0, 0, 0.5);
     width: 100%;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -2016,13 +2018,15 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .suggestion-platforms-container > ul > li {
-    box-shadow: 1px 1px 5px #2d2d2d;
+    box-shadow: 1px 1px 5px #333333;
 }
 
 .suggestion-platform-logo {
     display: flex;
-    max-width: 2.5rem;
-    max-height: 2.5rem;
+    width: 2.5rem;
+
+
+
 }
 
 .suggestion-platform-name {
@@ -2030,8 +2034,9 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #5b5757;
-    font-size: 0.8rem;
+    background-color: #4d4b4b;
+    font-size: 0.7rem;
+    overflow: hidden;
 }
 
 

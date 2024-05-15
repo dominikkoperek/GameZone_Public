@@ -585,6 +585,9 @@ const validateGamePoster = async () => {
     let extension;
     let width;
     let height;
+    let mimeType;
+    let proportionHeightWidth;
+    let proportionWidthHeight
     gamePosterHeightWidth.innerHTML = '';
     gamePosterWidthHeight.innerHTML = '';
 
@@ -596,17 +599,22 @@ const validateGamePoster = async () => {
         const img = new Image();
         img.src = window.URL.createObjectURL(gamePoster.files[0]);
         await new Promise((resolve) => {
-            img.onload = () => {
+            img.onload = async () => {
                 width = img.width;
                 height = img.height;
+                try {
+                    mimeType = await checkMimeType(gamePoster.files[0]);
+                } catch (error) {
+                    console.error(error);
+                }
                 resolve();
             };
         });
     }
-    let proportionHeightWidth = height / width;
+     proportionHeightWidth = height / width;
     let slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
 
-    let proportionWidthHeight = width / height;
+     proportionWidthHeight = width / height;
     let slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
 
 
@@ -619,6 +627,11 @@ const validateGamePoster = async () => {
     if (gamePoster.value !== "" && size > 1) {
         gamePoster.classList.add("error-input");
         posterError.innerHTML = "Obraz jest za duży " + size + "Mb";
+        return false;
+    }
+    if (mimeType !== extension) {
+        gamePoster.classList.add("error-input");
+        posterError.innerHTML = "Obraz jest uszkodzony i ma niepoprawne rozszerzenie wzgledem MIME(" + mimeType + ")";
         return false;
     }
     if (gamePoster.value !== "" && height > 1200) {
@@ -675,13 +688,13 @@ const bigSuggestionHeightWidth = document.getElementById("big-suggestion-proport
 const validateBigSuggestionPoster = async () => {
     let size;
     let extension;
-    let width;
-    let height;
-    let proportionHeightWidth;
-    let slicedProportionHeightWidth;
-    let proportionWidthHeight;
-    let slicedProportionWidthHeight;
-
+    let bigPosterWidth;
+    let bigPosterHeight;
+    let bigPosterProportionHeightWidth;
+    let bigPosterSlicedProportionHeightWidth;
+    let bigPosterProportionWidthHeight;
+    let bigPosterSlicedProportionWidthHeight;
+    let mimeType = '';
     bigSuggestionWidthHeight.innerHTML = '';
     bigSuggestionHeightWidth.innerHTML = '';
 
@@ -692,23 +705,36 @@ const validateBigSuggestionPoster = async () => {
         const img = new Image();
         img.src = window.URL.createObjectURL(bigSuggestionPoster.files[0]);
         await new Promise((resolve) => {
-            img.onload = () => {
-                width = img.width;
-                height = img.height;
-                proportionHeightWidth = height / width;
-                slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
+            img.onload = async () => {
+                bigPosterWidth = img.width;
+                bigPosterHeight = img.height;
+                bigPosterProportionHeightWidth = bigPosterHeight / bigPosterWidth;
+                bigPosterSlicedProportionHeightWidth = bigPosterProportionHeightWidth.toString().slice(0, 4);
 
-                proportionWidthHeight = width / height;
-                slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
+                bigPosterProportionWidthHeight = bigPosterWidth / bigPosterHeight;
+                bigPosterSlicedProportionWidthHeight = bigPosterProportionWidthHeight.toString().slice(0, 4);
+
+                try {
+                    mimeType = await checkMimeType(bigSuggestionPoster.files[0]);
+                } catch (error) {
+                    console.error(error);
+                }
                 resolve();
             };
         });
 
     }
+
+
     if (bigSuggestionPoster.value === "") {
         bigSuggestionPoster.classList.add("error-input");
         bigSuggestionPosterError.innerHTML = "Dodaj obraz";
         removeBigSuggestionPoster();
+        return false;
+    }
+    if (mimeType !== extension) {
+        bigSuggestionPoster.classList.add("error-input");
+        bigSuggestionPosterError.innerHTML = "Obraz jest uszkodzony i ma niepoprawne rozszerzenie wzgledem MIME(" + mimeType + ")";
         return false;
     }
     if ((bigSuggestionPoster.value !== "" && size > 1)) {
@@ -716,34 +742,34 @@ const validateBigSuggestionPoster = async () => {
         bigSuggestionPosterError.innerHTML = "Obraz jest za duży " + size + "Mb";
         return false;
     }
-    if ((bigSuggestionPoster.value !== "" && height > 1200)) {
+    if ((bigSuggestionPoster.value !== "" && bigPosterHeight > 1200)) {
         bigSuggestionPoster.classList.add("error-input");
-        bigSuggestionPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px" + " (max 1200px)";
+        bigSuggestionPosterError.innerHTML = "Wysokość obrazu jest za duża " + bigPosterHeight + "px" + " (max 1200px)";
         return false;
     }
-    if ((bigSuggestionPoster.value !== "" && width > 2400)) {
+    if ((bigSuggestionPoster.value !== "" && bigPosterWidth > 2400)) {
         bigSuggestionPoster.classList.add("error-input");
-        bigSuggestionPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 2400px)";
+        bigSuggestionPosterError.innerHTML = "Szerokość obrazu jest za duża " + bigPosterWidth + "px" + " (max 2400px)";
         return false;
     }
-    if ((bigSuggestionPoster.value !== "" && height < 350)) {
+    if ((bigSuggestionPoster.value !== "" && bigPosterHeight < 350)) {
         bigSuggestionPoster.classList.add("error-input");
-        bigSuggestionPosterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px" + " (min 350px)";
+        bigSuggestionPosterError.innerHTML = "Wysokość obrazu jest za mała " + bigPosterHeight + "px" + " (min 350px)";
         return false;
     }
-    if ((bigSuggestionPoster.value !== "" && width < 1100)) {
+    if ((bigSuggestionPoster.value !== "" && bigPosterWidth < 1100)) {
         bigSuggestionPoster.classList.add("error-input");
-        bigSuggestionPosterError.innerHTML = "Szerokość obrazu jest za mała " + width + "px" + " (min 1100px)";
+        bigSuggestionPosterError.innerHTML = "Szerokość obrazu jest za mała " + bigPosterWidth + "px" + " (min 1100px)";
         return false;
     }
-    if (proportionHeightWidth < 0.31 || proportionHeightWidth > 0.51) {
+    if (bigPosterProportionHeightWidth < 0.30 || bigPosterProportionHeightWidth > 0.60) {
         bigSuggestionPoster.classList.add("error-input");
-        bigSuggestionPosterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 0.3-0.5 jest " + slicedProportionHeightWidth;
+        bigSuggestionPosterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 0.3-0.6 jest " + bigPosterSlicedProportionHeightWidth;
         return false;
     }
-    if (proportionWidthHeight < 2 || proportionWidthHeight > 3.2) {
+    if (bigPosterProportionWidthHeight < 2 || bigPosterProportionWidthHeight > 3.3) {
         bigSuggestionPoster.classList.add("error-input");
-        bigSuggestionPosterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 2.0-3.2 jest " + slicedProportionWidthHeight;
+        bigSuggestionPosterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 2.0-3.3 jest " + bigPosterSlicedProportionWidthHeight;
         return false;
     }
     if (bigSuggestionPoster.value !== "" && extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg") {
@@ -752,13 +778,48 @@ const validateBigSuggestionPoster = async () => {
         removeBigSuggestionPoster();
         return false;
     }
-
-    bigSuggestionHeightWidth.innerHTML = "wysokość/szerokość = " + slicedProportionHeightWidth;
-    bigSuggestionWidthHeight.innerHTML = "szerokość/wysokość = " + slicedProportionWidthHeight;
+    bigSuggestionHeightWidth.innerHTML = "wysokość/szerokość = " + bigPosterSlicedProportionHeightWidth;
+    bigSuggestionWidthHeight.innerHTML = "szerokość/wysokość = " + bigPosterSlicedProportionWidthHeight;
 
     bigSuggestionPoster.classList.remove("error-input");
     bigSuggestionPosterError.innerHTML = "";
     return true;
+}
+
+//CHECK MIME TYPE EXTENSION FROM FILE
+function checkMimeType(file) {
+    return new Promise((resolve, reject) => {
+        if (file != null) {
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                const arr = (new Uint8Array(reader.result)).subarray(0, 4);
+                let header = "";
+                for (let i = 0; i < arr.length; i++) {
+                    header += arr[i].toString(16);
+                }
+                let mime = "";
+                switch (header) {
+                    case "89504e47":
+                        mime = "image/png";
+                        break;
+                    case "ffd8ffe0":
+                    case "ffd8ffe1":
+                    case "ffd8ffe2":
+                        mime = "image/jpeg";
+                        break;
+                    default:
+                        mime = "unknown";
+                        break;
+                }
+                resolve(mime);
+            };
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(file);
+        } else {
+            reject('No file provided');
+        }
+    });
 }
 
 //VALIDATE SMALL SUGGESTION POSTER
@@ -771,6 +832,7 @@ const validateSmallSuggestionPoster = async () => {
     let extension;
     let width;
     let height;
+    let mimeType;
     let proportionHeightWidth;
     let slicedProportionHeightWidth;
     let proportionWidthHeight;
@@ -786,7 +848,7 @@ const validateSmallSuggestionPoster = async () => {
         const img = new Image();
         img.src = window.URL.createObjectURL(smallSuggestionPoster.files[0]);
         await new Promise((resolve) => {
-            img.onload = () => {
+            img.onload = async () => {
                 width = img.width;
                 height = img.height;
                 proportionHeightWidth = height / width;
@@ -794,6 +856,11 @@ const validateSmallSuggestionPoster = async () => {
 
                 proportionWidthHeight = width / height;
                 slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
+                try {
+                    mimeType = await checkMimeType(smallSuggestionPoster.files[0]);
+                } catch (error) {
+                    console.error(error);
+                }
                 resolve();
             };
         });
@@ -805,9 +872,19 @@ const validateSmallSuggestionPoster = async () => {
         removeSmallSuggestionPoster();
         return false;
     }
+    if (mimeType !== extension) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Obraz jest uszkodzony i ma niepoprawne rozszerzenie wzgledem MIME(" + mimeType + ")";
+        return false;
+    }
     if ((smallSuggestionPoster.value !== "" && size > 1)) {
         smallSuggestionPoster.classList.add("error-input");
         smallSuggestionPosterError.innerHTML = "Obraz jest za duży " + size + "Mb";
+        return false;
+    }
+    if ((smallSuggestionPoster.value !== "" && height < 200)) {
+        smallSuggestionPoster.classList.add("error-input");
+        smallSuggestionPosterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px" + " (min 200px)";
         return false;
     }
     if ((smallSuggestionPoster.value !== "" && height > 600)) {
@@ -820,27 +897,22 @@ const validateSmallSuggestionPoster = async () => {
         smallSuggestionPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 1800px)";
         return false;
     }
-    if ((smallSuggestionPoster.value !== "" && height < 200)) {
-        smallSuggestionPoster.classList.add("error-input");
-        smallSuggestionPosterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px" + " (min 200px)";
-        return false;
-    }
-    if ((smallSuggestionPoster.value !== "" && width < 600)) {
+    if ((smallSuggestionPoster.value !== "" && width < 200)) {
         smallSuggestionPoster.classList.add("error-input");
         smallSuggestionPosterError.innerHTML = "Szerokość obrazu jest za mała " + width + "px" + " (min 600px)";
         return false;
     }
-    if (proportionHeightWidth < 0.3 || proportionHeightWidth > 0.50) {
+    if (proportionHeightWidth < 0.3 || proportionHeightWidth > 0.60) {
         smallSuggestionPoster.classList.add("error-input");
-        smallSuggestionPosterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 0.3-0.5 jest " + slicedProportionHeightWidth;
+        smallSuggestionPosterError.innerHTML = "Proporcje wysokośc/szerokość powinna być 0.3-0.6 jest " + slicedProportionHeightWidth;
         return false;
     }
-    if (proportionWidthHeight < 2.6 || proportionWidthHeight > 3.2) {
+    if (proportionWidthHeight < 2.6 || proportionWidthHeight > 3.4) {
         smallSuggestionPoster.classList.add("error-input");
-        smallSuggestionPosterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 2.6-3.2 jest " + slicedProportionWidthHeight;
+        smallSuggestionPosterError.innerHTML = "Proporcje szerokośc/wysokość powinna być 2.6-3.4 jest " + slicedProportionWidthHeight;
         return false;
     }
-    if (bigSuggestionPoster.value !== "" && extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg") {
+    if (smallSuggestionPoster.value !== "" && extension !== "image/jpeg" && extension !== "image/png" && extension !== "image/jpg") {
         smallSuggestionPoster.classList.add("error-input");
         smallSuggestionPosterError.innerHTML = "Nieobsługiwany format pliku!";
         removeSmallSuggestionPoster();
@@ -928,12 +1000,15 @@ function sendForm() {
 function previewBeforeUpload(id) {
     document.querySelector("#" + id).addEventListener("change", function (e) {
         let file = e.target.files[0];
-        let url = URL.createObjectURL(file);
-        if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg") {
-            document.querySelector("#" + id + "-preview div").innerText = file.name;
-            document.querySelector("#" + id + "-preview img").src = url;
+        if (file != null) {
+            let url = URL.createObjectURL(file);
+            if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg") {
+                document.querySelector("#" + id + "-preview div").innerText = file.name;
+                document.querySelector("#" + id + "-preview img").src = url;
+            }
         }
     });
+
 }
 
 //REMOVE GAME POSTER

@@ -1,7 +1,5 @@
 package com.example.gamezoneproject.domain.userToken.dto;
 
-import com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy.TemporaryTokenStrategy;
-
 import java.time.LocalDateTime;
 
 public class TemporaryTokenDto {

@@ -4,7 +4,7 @@ import com.example.gamezoneproject.domain.exceptions.AccountLockedException;
 import com.example.gamezoneproject.domain.exceptions.TokenIsActiveException;
 import com.example.gamezoneproject.domain.user.UserService;
 import com.example.gamezoneproject.domain.user.dto.EmailDto;
-import com.example.gamezoneproject.domain.userToken.TemporaryTokensStrategy.PasswordResetToken;
+import com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy.PasswordResetToken;
 import com.example.gamezoneproject.mail.EmailServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.Optional;
 
 @Controller
 public class PasswordResetController {

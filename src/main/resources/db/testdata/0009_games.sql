@@ -100,3 +100,8 @@ INSERT INTO game
  producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
 VALUES ('Stellar Blade', 'Gra RPG akcji inspirowana przez takie hity, jak NieR: Automata oraz God of War. W Stellar Blade (znanym wcześniej jako Project Eve) trafiamy do postapokaliptycznego świata i wcielamy się w wojowniczkę walczącą z potworami, które go opanowały.',
         'x8w7vu8', '2024-04-26', true, 3 ,3,'Gra',1,1,'stellarblade.jpg','stellarblade_s_0.jpg','stellarblade_b_0.jpg');
+INSERT INTO game
+(title, short_description, dailymotion_trailer_id, release_year, promoted,
+ producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
+VALUES ('Wuthering Waves', 'Gra RPG akcji TPP z otwartym światem. W Wuthering Waves trafiamy do fantastycznej krainy, którą przemierzamy, wykonując zadania i tocząc dynamiczne pojedynki z demonicznymi istotami znanymi jako Calamony.',
+        'kavx7WnlDdJkjAAE7RI', '2024-05-22', true, 3 ,3,'Gra',1,1,'wutheringwaves.jpg','stellarblade_s_0.jpg','wutheringwaves_b_0.jpg');

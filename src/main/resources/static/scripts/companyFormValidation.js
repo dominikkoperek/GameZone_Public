@@ -186,12 +186,22 @@ const validateCompanyPoster = async () => {
     }
     if (width > 1200 && companyPoster.value !== "") {
         companyPoster.classList.add("error-input");
-        companyPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px";
+        companyPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px"+" (max 1200px)";
+        return false;
+    }
+    if (width < 300 && companyPoster.value !== "") {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Szerokość obrazu jest za mała " + width + "px" +" (min 300px)";
         return false;
     }
     if (height > 1200 && companyPoster.value !== "") {
         companyPoster.classList.add("error-input");
-        companyPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px";
+        companyPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px"+" (max 1200px)";
+        return false;
+    }
+    if (height < 300 && companyPoster.value !== "") {
+        companyPoster.classList.add("error-input");
+        companyPosterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px"+" (min 300px)";
         return false;
     }
 
@@ -384,14 +394,15 @@ function clearCompanyForm() {
 }
 
 //POSTER UPLOAD/DELETE
-
 function previewCompanyPoster(id) {
     document.querySelector("#" + id).addEventListener("change", function (e) {
         let file = e.target.files[0];
-        let url = URL.createObjectURL(file);
-        if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg") {
-            document.querySelector("#" + id + "-preview div").innerText = file.name;
-            document.querySelector("#" + id + "-preview img").src = url;
+        if (file != null) {
+            let url = URL.createObjectURL(file);
+            if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg") {
+                document.querySelector("#" + id + "-preview div").innerText = file.name;
+                document.querySelector("#" + id + "-preview img").src = url;
+            }
         }
     });
 }

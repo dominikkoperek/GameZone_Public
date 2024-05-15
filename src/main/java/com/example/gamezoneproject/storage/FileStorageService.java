@@ -1,6 +1,7 @@
 package com.example.gamezoneproject.storage;
 
 import com.example.gamezoneproject.domain.exceptions.InvalidFileExtensionException;
+import com.example.gamezoneproject.storage.storageStrategy.*;
 import com.mortennobel.imagescaling.ResampleFilters;
 import com.mortennobel.imagescaling.ResampleOp;
 import org.apache.commons.io.FilenameUtils;
@@ -25,11 +26,13 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileStorageService {
     private final Logger logger = LoggerFactory.getLogger(FileStorageService.class);
-    private final String fileStorageLocation;
-    private final String gameImageStorageLocation;
-    private final String companyImageStorageLocation;
-    private final String bigAddImageStorageLocation;
-    private final String smallAddImageStorageLocation;
+
+    private final BigPoster bigPoster; // TO WYWAL I DODAJ W INTEREFJSE PRZEKAZYWANIE STORAGELOCATION
+    private final SmallPoster smallPoster;
+    private final GamePoster gamePoster;
+    private final CompanyPoster companyPoster;
+    private final OtherFiles otherFiles;
+    private final String baseLocation;
 
     /**
      * Constructor for FileStorageService.
@@ -37,18 +40,20 @@ public class FileStorageService {
      * @param storageLocation Base storage location for files and images
      */
 
-    public FileStorageService(@Value("${app.storage.location}") String storageLocation) {
-        this.fileStorageLocation = storageLocation + "/pliki/";
-        this.gameImageStorageLocation = storageLocation + "/galeria/gry/";
-        this.companyImageStorageLocation = storageLocation + "/galeria/firmy/";
-        this.bigAddImageStorageLocation = storageLocation + "/galeria/rekomendacje/l";
-        this.smallAddImageStorageLocation = storageLocation + "/galeria/rekomendacje/s";
+    public FileStorageService(@Value("${app.storage.location}") String storageLocation, BigPoster bigPoster,
+                              SmallPoster smallPoster, GamePoster gamePoster, CompanyPoster companyPoster, OtherFiles otherFiles) {
+        this.baseLocation = storageLocation;
+        this.bigPoster = bigPoster;
+        this.smallPoster = smallPoster;
+        this.gamePoster = gamePoster;
+        this.companyPoster = companyPoster;
+        this.otherFiles = otherFiles;
+        Path fileStoragePath = Path.of(otherFiles.setImageLocation(storageLocation));
+        Path gameImageStorageLocationPath = Path.of(gamePoster.setImageLocation(storageLocation));
+        Path companyImageStoragePath = Path.of(companyPoster.setImageLocation(storageLocation));
+        Path bigAddImageStorageLocationPath = Path.of(bigPoster.setImageLocation(storageLocation));
+        Path smallAddImageStorageLocationPath = Path.of(smallPoster.setImageLocation(storageLocation));
 
-        Path fileStoragePath = Path.of(this.fileStorageLocation);
-        Path gameImageStorageLocationPath = Path.of(this.gameImageStorageLocation);
-        Path companyImageStoragePath = Path.of(this.companyImageStorageLocation);
-        Path bigAddImageStorageLocationPath = Path.of(this.bigAddImageStorageLocation);
-        Path smallAddImageStorageLocationPath = Path.of(this.smallAddImageStorageLocation);
         prepareStorageDirectories(fileStoragePath, gameImageStorageLocationPath,
                 companyImageStoragePath, bigAddImageStorageLocationPath, smallAddImageStorageLocationPath);
     }
@@ -101,25 +106,18 @@ public class FileStorageService {
     /**
      * Saves the provided image file.
      *
-     * @param file     Image file to be saved
-     * @param fileName Title of the game used to rename the file
-     * @return Name of the saved file
-     * @throws InvalidFileExtensionException if the file extension is not allowed
+     * @param file     Image file to be saved.
+     * @param fileName Title of the game used to rename the file.
+     * @return String name of the saved file.
+     * @throws InvalidFileExtensionException if the file extension is not allowed.
      */
 
-    public String saveImage(MultipartFile file, String fileName, ImageStorageFile imageStorageFile) {
-        String fileStorageLocation = switch (imageStorageFile) {
-            case COMPANY_POSTER -> companyImageStorageLocation;
-            case GAME_POSTER -> gameImageStorageLocation;
-            case BIG_ADD_POSTER -> bigAddImageStorageLocation;
-            case SMALL_ADD_POSTER -> smallAddImageStorageLocation;
-        };
-
+    public String saveImage(MultipartFile file, String fileName, ImageStrategy imageStorageFile) {
 
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (extension != null) {
             if (extension.equals("jpg") || extension.equals("png") || extension.equals("jpeg")) {
-                return saveFile(file, fileStorageLocation, fileName, imageStorageFile);
+                return saveFile(file, fileName, imageStorageFile);
             }
         }
         throw new InvalidFileExtensionException("Invalid file extension: " + extension);
@@ -134,35 +132,23 @@ public class FileStorageService {
      * @return Name of the saved file
      */
     public String saveFile(MultipartFile file, String fileName) {
-        return saveFile(file, fileStorageLocation, fileName, ImageStorageFile.COMPANY_POSTER);
+        return saveFile(file, fileName, otherFiles);
     }
 
     /**
      * Saves the file to the specified storage location.
      *
-     * @param file                File to be saved
-     * @param fileStorageLocation Storage location for the file
-     * @param fileName            Title of the game used to rename the file
+     * @param file             File to be saved
+     * @param fileName         Title of the game used to rename the file
+     * @param imageStorageFile image type
      * @return Name of the saved file
      */
-    private String saveFile(MultipartFile file, String fileStorageLocation, String fileName, ImageStorageFile imageStorageFile) {
-        Path filePath = createFilePath(file, fileStorageLocation, fileName, imageStorageFile);
+    private String saveFile(MultipartFile file, String fileName, ImageStrategy imageStorageFile) {
+        Path filePath = createFilePath(file, fileName, imageStorageFile);
+        System.err.println(filePath);
         try {
-            int targetWidth;
-            int targetHeight;
-
-            targetHeight = switch (imageStorageFile) {
-                case BIG_ADD_POSTER -> 350;
-                case SMALL_ADD_POSTER -> 100;
-                case COMPANY_POSTER -> 160;
-                case GAME_POSTER -> 600;
-            };
-            targetWidth = switch (imageStorageFile) {
-                case BIG_ADD_POSTER -> 1100;
-                case SMALL_ADD_POSTER -> 300;
-                case COMPANY_POSTER -> 160;
-                case GAME_POSTER -> 400;
-            };
+            int targetWidth = imageStorageFile.getImageTargetWidth();
+            int targetHeight = imageStorageFile.getImageTargetHeight();
             InputStream is = changeFileToInputStream(file, targetWidth, targetHeight);
 
             Files.copy(is, filePath, StandardCopyOption.REPLACE_EXISTING);
@@ -189,7 +175,6 @@ public class FileStorageService {
         BufferedImage sc = resampleOp.filter(bufferedImage, null);
 
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(sc, extension, baos);
         return new ByteArrayInputStream(baos.toByteArray());
@@ -198,27 +183,23 @@ public class FileStorageService {
     /**
      * Creates a unique file path for the file to be saved. If file exists its rename file name by adding next number
      *
-     * @param file            File to be saved
-     * @param storageLocation Storage location for the file
-     * @param fileName        Title of the game used to rename the file
+     * @param file             File to be saved.
+     * @param fileName         Title of the game used to rename the file.
+     * @param imageStorageFile image type.
      * @return Unique file path
      */
-    private Path createFilePath(MultipartFile file, String storageLocation, String fileName, ImageStorageFile imageStorageFile) {
+    private Path createFilePath(MultipartFile file, String fileName, ImageStrategy imageStorageFile) {
         String originalFileName = file.getOriginalFilename();
         String fileExtension = FilenameUtils.getExtension(originalFileName);
         String completeFilename;
         Path filePath;
         int fileIndex = 0;
         String preparedFileName = prepareFileName(fileName);
-        preparedFileName = switch (imageStorageFile) {
-            case SMALL_ADD_POSTER -> preparedFileName += "_s";
-            case BIG_ADD_POSTER -> preparedFileName += "_b";
-            case COMPANY_POSTER, GAME_POSTER -> preparedFileName;
-        };
+        preparedFileName += imageStorageFile.getImagePreparedName();
 
         do {
             completeFilename = preparedFileName + "_" + fileIndex + "." + fileExtension;
-            filePath = Paths.get(storageLocation, completeFilename);
+            filePath = Paths.get(imageStorageFile.setImageLocation(baseLocation), completeFilename);
             fileIndex++;
         } while (Files.exists(filePath));
         return filePath;
