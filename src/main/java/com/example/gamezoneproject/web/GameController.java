@@ -34,9 +34,11 @@ public class GameController {
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+
         if (gameTitle.replaceAll("-", " ").equalsIgnoreCase(gameDto.getTitle())) {
             model.addAttribute("game", gameDto);
             model.addAttribute("gameTitle", gameDto.getTitle());
+            model.addAttribute("gameReleaseDates", gameService.mergeSameReleaseDates(gameDto));
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

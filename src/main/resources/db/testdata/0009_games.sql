@@ -1,10 +1,10 @@
 INSERT INTO game
-(title, short_description, dailymotion_trailer_id, release_year, promoted, producer_id,
+(title, short_description, dailymotion_trailer_id, promoted, producer_id,
  publisher_id,description,min_players,max_players,poster)
 VALUES ('Mass Effect 3', 'Trzecia odsłona osadzonej w konwencji space
 opery gry studia BioWare. Mass Effect 3 jest zwieńczeniem epickiej
 trylogii opowiadającej o losach komandora Sheparda i konflikcie z
-prastarą rasą Żniwiarzy.', 'k4JcwfjX1ekb6yzOook', '2012-03-06', true, 3,4,'<h2>Fabuła</h2>
+prastarą rasą Żniwiarzy.', 'k4JcwfjX1ekb6yzOook', true, 3,4,'<h2>Fabuła</h2>
 <p>Historia rozpoczyna się na Ziemi, gdzie znany z dw&oacute;ch poprzednich odsłon Shepard jest sądzony za czyny, kt&oacute;rych dopuścił się by odbić doktor Kenson z rąk Batarian (miało to miejsce w dodatku DLC <em>Mass Effect 2: The Arrival</em>). Jedną z rozpraw przerywa inwazja prastarej rasy Żniwiarzy na naszą planetę. W prologu udaje nam się uciec na pokład statku Normandia i rozpoczynamy gromadzenie sojusznik&oacute;w do wielkiej bitwy z najeźdźcami, mając na uwadze fakt, iż stawką jest tym razem przetrwanie całego gatunku ludzkiego. R&oacute;wnolegle zajmujemy się kompletowaniem załogii Normandii. W przygodach mogą nam towarzyszyć zar&oacute;wno doskonale znane z poprzednich części postacie, takie jak Tali, Garrus, Liara, Kaiden czy Ashley, jak i zupełnie nowe osoby, wśr&oacute;d kt&oacute;rych znalazł się między innymi urodzony na Ziemi James Vega. W trakcie rozgrywki przewija się r&oacute;wnież wiele innych znanych os&oacute;b, pełniąc rolę postaci niezależnych. Są to między innymi Wrex, Legion, Mordin, admirał Anderson oraz Człowiek Iluzja. Ten ostatni w dalszym ciągu zajmuje się kontrolowaniem organizacji o nazwie Cerberus, na każdym kroku pr&oacute;bując powstrzymać Sheparda i mając zgoła odmienne plany w stosunku do Żniwiarzy.</p>
 <p>Kampanię możemy rozpocząć na dwa sposoby - tworząc zupełnie nowego bohatera lub wczytując zapisany stan gry z dw&oacute;ch poprzednich odsłon cyklu. W tym drugim przypadku możemy liczyć nie tylko na zachowanie odblokowanych cech postaci, ale r&oacute;wnież na przeniesienie do nowego uniwersum informacji na temat wszystkich podjętych decyzji. Liczba zmian w rozgrywce jest jeszcze większa niż w przypadku poprzedniej odsłony cyklu, w rezultacie czego nasze wcześniejsze wybory mogą wpłynąć między innymi na relacje z niekt&oacute;ymi postaciami czy nastawienie gł&oacute;wnych ras Przymierza do Sheparda. Warto dodać, że tw&oacute;rcy przygotowali kilka r&oacute;żnych zakończeń gry. Finał trylogii w dużym stopniu zależy od tego, kogo mamy w swojej drużynie i jakich sojusznik&oacute;w udało nam się pozyskać.</p>
 <h2>Rozgrywka</h2>
@@ -15,12 +15,12 @@ prastarą rasą Żniwiarzy.', 'k4JcwfjX1ekb6yzOook', '2012-03-06', true, 3,4,'<h
 <p>Największą nowością w por&oacute;wnaniu do poprzednich odsłon cyklu jest wprowadzenie rozbudowanego trybu multiplayer o nazwie Galaktyczna Wojna, oferującego kooperacyjne zmagania dla maksymalnie czterech graczy. Co ciekawe, w trybie multiplayer niekoniecznie musimy sterować człowiekiem, bo możemy się też między innymi wcielić w reprezentanta rasy krogan, turian, quarian czy drell&oacute;w. Głębi rozgrywce multiplayer dodaje system rozwoju postaci, w ramach kt&oacute;rego zdobywamy nowe poziomy doświadczenia i ulepszamy uzbrojenie. Same walki rozgrywają się na mapkach znanych z kampanii dla pojedynczego gracza, zapewniając dość dużą r&oacute;żnorodność cel&oacute;w (zabicie wszystkich wrog&oacute;w, pozbycie się elitarnego przeciwnika, ściągnięcie danych z terminalu, ochrona ważnego punktu na mapie itp.) i zmuszając do eliminowania żołnierzy Cerberusa, geth&oacute;w lub wojsk Żniwiarzy. Tryby single i multiplayer są ponadto ze sobą ściśle powiązane, gdyż zaliczając misje w towarzystwie innych graczy podwyższamy wskaźnik gotowości bojowej, zwiększając tym samym swoje szanse w finałowej bitwie ze Żniwiarzami.</p></section>',1,4,'MassEffect3.jpg');
 
 INSERT INTO game
-(title, short_description, dailymotion_trailer_id, release_year, promoted,
+(title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster)
 VALUES ('Tomb Raider', 'Dziesiąta odsłona przygód Lary Croft,
 stanowiąca zarazem reboot serii przygodowych gier akcji
 Tomb Raider. Dewelopingiem tytułu zajęło się studio Crystal
-Dynamics przy wsparciu firmy Eidos Montreal.', 'k3hAOov5PoDOfQzOotY', '2011-04-02', true, 1,2,'<h2>Opis</h2>
+Dynamics przy wsparciu firmy Eidos Montreal.', 'k3hAOov5PoDOfQzOotY', true, 1,2,'<h2>Opis</h2>
 
 <p>Tomb Raider to najnowsza część klasycznej serii gier akcji wzbogaconych wątkami przygodowymi. Całość została opracowana przez studio Crystal Dynamics - to samo, kt&oacute;re stworzyło trzy poprzednie odcinki cyklu, czyli Anniversary, Legend oraz Underworld.</p>
 
@@ -41,12 +41,12 @@ Dynamics przy wsparciu firmy Eidos Montreal.', 'k3hAOov5PoDOfQzOotY', '2011-04-0
 <p>Produkcja napędzana jest przez silnik graficzny Crystal Engine. Dzięki niemu gra oferuje zapierające dech w piersiach widoki, tekstury w wysokiej rozdzielczości i szczeg&oacute;łowe modele postaci. R&oacute;wnież animacje bardzo zyskały na realizmie. Dodatkowo&nbsp;Tomb Raider został wzbogacony w zaawansowany silnik fizyczny.</p>',1,8,'TombRaider.jpg');
 
 INSERT INTO game
-(title, short_description, dailymotion_trailer_id, release_year, promoted,
+(title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster)
 VALUES ('The Witcher 3: Wild Hunt', 'Gra action RPG, stanowiąca trzecią część przygód Geralta z Rivii.
 Podobnie jak we wcześniejszych odsłonach cyklu, Wiedźmin 3: Dziki Gon bazuje na motywach
 twórczości literackiej Andrzeja Sapkowskiego, jednak nie jest bezpośrednią adaptacją żadnej
-z jego książek.', 'k2hFB1CRrJvH47AatMS', '2015-03-06', true, 1,1,'<h2>Next-gen update</h2>
+z jego książek.', 'k2hFB1CRrJvH47AatMS', true, 1,1,'<h2>Next-gen update</h2>
 
 <p>14 grudnia 2022 roku deweloperzy ze studia CD Projekt RED&nbsp;wypuścili darmową &bdquo;next-genową&rdquo; aktualizację&nbsp;Wiedźmina 3. Edycja kompletna gry &ndash; obejmująca wersję podstawową, wszystkie DLC i dodatki fabularne &ndash; opracowana została przede wszystkim z myślą o konsolach nowej generacji, choć i wersja pecetowa doczekała się kilku udoskonaleń.</p>
 
@@ -73,11 +73,11 @@ z jego książek.', 'k2hFB1CRrJvH47AatMS', '2015-03-06', true, 1,1,'<h2>Next-gen
 <p>Ważną rolę odgrywają tu starcia z przeciwnikami, podczas kt&oacute;rych musimy uważnie obserwować ruchy adwersarzy, wykonywać uniki oraz wyprowadzać szybkie kontrataki. W ich trakcie korzystamy przede wszystkim z broni białej (kultowych mieczy Geralta &ndash; jednego na ludzi, a drugiego na potwory) oraz tak zwanych Znak&oacute;w, przywodzących na myśl zaklęcia. Na naszej drodze stają zar&oacute;wno ludzie &ndash; oraz przedstawiciele innych inteligentnych ras &ndash; jak i wszelkiej maści bezrozumne bestie. Często pokonanie tych drugich wymaga od bohatera zwiększenia zasobu wiedzy na ich temat &ndash; gł&oacute;wnie po to, by poznać ich słabe punkty. Niekt&oacute;re z nich pozostawiają po sobie unikalne składniki, służące do alchemii (Geralt może przygotowywać i pić mikstury, zapewniające mu określon premie) oraz tworzenia nowych przedmiot&oacute;w bądź ulepszania już posiadanych. Poza tym w miarę postęp&oacute;w zdobywamy punkty doświadczenia i awansujemy na kolejne poziomy, stopniowo zwiększając potencjał bojowy Białego Wilka.</p>',1,1,'Witcher3.jpg');
 
 INSERT INTO game
-(title, short_description, dailymotion_trailer_id, release_year, promoted,
+(title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster)
 VALUES ('Spore', 'Nietypowa gra symulacyjna, w której zadaniem graczy jest stworzenie prężnie
 funkcjonującego gatunku, poczynając od najniższego szczebla drabiny ewolucji.',
-        'k5rGh06xQv9C0EzZBTw', '2008-09-03', false, 1 ,2,'<h2>Opis</h2>
+        'k5rGh06xQv9C0EzZBTw', false, 1 ,2,'<h2>Opis</h2>
 
 <p>Will Wright jest jedną z najsłynniejszych postaci związanych z branżą elektronicznej rozrywki na PeCety. To właśnie jemu zawdzięczamy sprzedające się w milionach egzemplarzy pozycje, takie jak SimCity, czy The Sims. Spore jest kolejną produkcją wspomnianego wyżej człowieka, kt&oacute;ra zwraca na siebie uwagę niespotykaną dotąd budową i charakterem rozgrywki.</p>
 
@@ -96,12 +96,25 @@ funkcjonującego gatunku, poczynając od najniższego szczebla drabiny ewolucji.
 <p>Spore Creatures Creator, czyli edytor stwork&oacute;w, udostępniono w sprzedaży na kilka miesięcy przed premierą właściwej gry, jako samodzielną aplikację. Niemniej jednak jest on także częścią samego&nbsp;Spore.</p>'
            ,1,1,'Spore.jpg');
 INSERT INTO game
-(title, short_description, dailymotion_trailer_id, release_year, promoted,
+(title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
 VALUES ('Stellar Blade', 'Gra RPG akcji inspirowana przez takie hity, jak NieR: Automata oraz God of War. W Stellar Blade (znanym wcześniej jako Project Eve) trafiamy do postapokaliptycznego świata i wcielamy się w wojowniczkę walczącą z potworami, które go opanowały.',
-        'x8w7vu8', '2024-04-26', true, 3 ,3,'Gra',1,1,'stellarblade.jpg','stellarblade_s_0.jpg','stellarblade_b_0.jpg');
+        'x8w7vu8', true, 3 ,3,'Gra',1,1,'stellarblade.jpg','stellarblade_s_0.jpg','stellarblade_b_0.jpg');
 INSERT INTO game
-(title, short_description, dailymotion_trailer_id, release_year, promoted,
+(title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
 VALUES ('Wuthering Waves', 'Gra RPG akcji TPP z otwartym światem. W Wuthering Waves trafiamy do fantastycznej krainy, którą przemierzamy, wykonując zadania i tocząc dynamiczne pojedynki z demonicznymi istotami znanymi jako Calamony.',
-        'kavx7WnlDdJkjAAE7RI', '2024-05-22', true, 3 ,3,'Gra',1,1,'wutheringwaves.jpg','stellarblade_s_0.jpg','wutheringwaves_b_0.jpg');
+        'kavx7WnlDdJkjAAE7RI', true, 3 ,3,'Gra',1,1,'wutheringwaves.jpg','stellarblade_s_0.jpg','wutheringwaves_b_0.jpg');
+INSERT INTO game
+(title, short_description, dailymotion_trailer_id, promoted,
+ producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
+VALUES ('WitchSpring R', 'Gra jRPG, w której wcielamy się w wiedźmę imieniem Pieberry. W WitchSpring R przemierzamy fantastyczny świat i poznajemy jego mieszkańców, a także stawiamy czoła niebezpieczeństwom.	',
+        'kavx7WnlDdJkjAAE7RI', true, 4 ,4,'<h2> Fabuła</h2>
+WitchSpring R przenosi nas do fantastycznego świata. Główną bohaterką gry jest Pieberry, czyli siwowłosa wiedźma z króliczymi uszami, która dorastała w lesie pełnym potworów. Pewnego dnia nasza podopieczna postanawia ożywić wspomnienia ze swojego dzieciństwa i nauczyć się żyć pośród ludzi. Nasza w tym głowa, by wyszła cało ze starcia z nowym dla siebie światem pełnym nieznanych dotąd doświadczeń.
+<h2>Mechanika</h2>
+W WitchSpring R akcję oglądamy głównie w widoku izometrycznym, choć w wielu momentach kamera prezentuje protagonistkę z innych ujęć. Przygoda wiedzie nas przez różnorodne lokacje; od wielkiego miasta, po malownicze plenery. Jej motorem są rozmowy prowadzone z postaciami neutralnymi oraz zadania wykonywane przez Pieberry.
+W trakcie zabawy naszym oczkiem w głowie powinien być rozwój bohaterki. Protagonistka rośnie w siłę, ćwicząc i doskonaląc swe umiejętności. Ponadto w trakcie zabawy zdobywamy rozmaite składniki, które służą nam do przyrządzania magicznych wywarów wzmacniających Pieberry bądź ulepszających jej kostur. Nowe przepisy odblokowujemy, zdobywając magiczne księgi i przepisy kulinarne, które rozrzucono po świecie gry.
+Jako że dookoła roi się od niebezpieczeństw, często przychodzi nam stawać do walki z przeciwnikami. Potyczki toczą się w trybie turowym, a w ich trakcie kluczem do sukcesu jest przede wszystkim umiejętne wykorzystywanie magicznych zdolności protagonistki. Warto przy tym pamiętać, że Pieberry nie jest skazana na samotną przeprawę. Bohaterka może bowiem oswajać różnorodne stworzenia, które następnie służą jej pomocą, między innymi w charakterze wierzchowców. Dodatkowo zabawę urozmaica szereg minigier.
+<h2>Kwestie techniczne</h2>
+WitchSpring R może się pochwalić barwną, mangową grafiką wysokiej jakości. Podobać się mogą zarówno modele postaci, jak i projekty lokacji. Tytuł doczekał się japońskiego dubbingu.'
+           ,1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');

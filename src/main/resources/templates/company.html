@@ -100,7 +100,7 @@
                        th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}">
                         <span class="all-games-list" th:text="${allGames.title}"></span>
                         <span class="games-date"
-                              th:text="${allGames.releaseYear.getYear() ne 9999} ? ${allGames.releaseYear.getYear()} : 'nieogłoszona' "></span>
+                              th:text="${allGames.firstReleaseDate.year ne 9999} ? ${allGames.firstReleaseDate.year} : 'nieogłoszona' "></span>
 
                     </a>
                 </li>
@@ -117,11 +117,27 @@
         <section>
             <h2 class="article-heading container-limit" th:text="|Wszystkie gry wydane przez ${company.name}|"></h2>
             <ul id="games-list-publisher" class="games-list-hide container-limit">
+                <li class="game-list-info">
+                    <p>Tytuł</p>
+                    <p>Platformy</p>
+                    <p>Data pierwszego wydania</p>
+                </li>
                 <li th:each="allGames:${allGamesByPublisherId}">
-                    <a class="games-list-container" href="#"
-                       th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}">
-                        <span class="all-games-list" th:text="${allGames.title}"></span>
-                        <span class="games-date" th:text="${allGames.releaseYear.getYear()}"></span>
+                    <div class="game-list-container">
+                        <p>
+                            <a href="#" th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}"
+                               class="game-link">
+                                <strong th:text="${allGames.title}"></strong>
+                                <i th:text="${allGames.platforms}">PC, XONE, X360</i>
+
+                            </a>
+                            <span class="game-date" th:text="${#temporals.format(allGames.firstReleaseDate, 'd MMM yyyy')}">2019</span>
+                        </p>
+                    </div>
+
+                    <!--                        <span class="all-games-list" th:text="${allGames.title}"></span>-->
+                    <!--                        <span class="all-games-platforms" th:text="${allGames.releaseYear.keySet()}"></span>-->
+                    <!--                        <span class="games-date" th:text="${allGames.releaseYear.values()}"></span>-->
                     </a>
                 </li>
                 <li th:if="${allGamesByPublisherId.size() ge 25}">

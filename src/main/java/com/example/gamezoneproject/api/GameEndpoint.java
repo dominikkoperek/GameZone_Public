@@ -6,7 +6,11 @@ import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * Endpoint controller responsible for getting info about games from database.
@@ -44,7 +48,7 @@ public class GameEndpoint {
     @GetMapping("/allGames")
     public ResponseEntity<List<String>> findAllGames() {
         List<String> games = gameService
-                .findAllGames()
+                .findAllGamesSortedByOldestReleaseDate()
                 .stream()
                 .map(GameDto::getTitle)
                 .toList();

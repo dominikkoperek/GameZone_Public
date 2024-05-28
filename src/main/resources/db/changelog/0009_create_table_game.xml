@@ -12,12 +12,10 @@
             <column name="title" type="VARCHAR(99)"/>
             <column name="short_description" type="VARCHAR(320)"/>
             <column name="dailymotion_Trailer_Id" type="VARCHAR(30)"/>
-            <column name="release_year" type="DATE"/>
             <column name="promoted" type="BOOLEAN"/>
             <column name="poster" type="VARCHAR(100)"/>
             <column name="small_Poster_Suggestion" type="VARCHAR(100)"/>
             <column name="big_Poster_Suggestion" type="VARCHAR(100)"/>
-
             <column name="producer_id" type="BIGINT">
                 <constraints nullable="false"
                              foreignKeyName="fk_game_producer"

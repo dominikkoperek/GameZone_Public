@@ -418,38 +418,61 @@ const validateGamePublisher = () => {
 }
 
 //VALIDATE RELEASE DATE
-const releaseDate = document.getElementById('release-date');
-const releaseDateError = document.getElementById('release-date-error');
-let releaseDateValue;
-let formDate;
+const releaseDateContainer = document.getElementById('game-date-input-container');
+let releaseDate;
+let releaseDateError;
+let releaseDateValue = [];
+let todayDate = new Date();
+todayDate.setHours(23);
+todayDate.setMinutes(59);
+todayDate.setSeconds(59);
+todayDate.setMilliseconds(0);
 let isPremiereInFuture;
-const validateGameReleaseDate = () => {
-    releaseDateValue = releaseDate.value;
-    let todayDate = Date.now();
-    formDate = new Date(releaseDateValue);
-    if (formDate.getFullYear() < 1980) {
-        releaseDate.classList.add('error-input');
-        releaseDateError.innerHTML = 'Rok nie może być wcześniejszy niż 1980';
-        return false;
-    }
-    if (formDate.getFullYear() > 2099) {
-        releaseDate.classList.add('error-input');
-        releaseDateError.innerHTML = 'Rok nie może być poźniejszy niż 2099';
-        return false;
-    }
 
-    if (formDate > todayDate) {
-        bigSuggestionPosterDisplayContainer.classList.remove("hide-big-suggestion-poster");
-        bigSuggestionPosterDisplayContainer.classList.add("show-big-suggestion-poster");
-        isPremiereInFuture = true;
-    } else {
+const validateGameReleaseDate = () => {
+    releaseDate = document.querySelectorAll('.date-platform-value');
+    releaseDateError = document.getElementById('release-date-error');
+    for (let i = 0; i < releaseDate.length; i++) {
+        releaseDateValue[i] = new Date(releaseDate[i].value);
+    }
+    if(releaseDateValue.length===0){
+        releaseDateContainer.classList.add('error-input');
+        releaseDateError.innerHTML = 'Dodaj przynajmniej 1 datę';
+        return false;
+    }
+    for (let date of releaseDateValue) {
+        if (isNaN(date.getDate())) {
+            releaseDateContainer.classList.add('error-input');
+            releaseDateError.innerHTML = 'Podaj date wydania';
+            return false;
+        }
+        if (date.getFullYear() < 1980) {
+            releaseDateContainer.classList.add('error-input');
+            releaseDateError.innerHTML = 'Rok nie może być wcześniejszy niż 1980';
+            return false;
+        }
+        if ((date.getFullYear() !== 8888 && date.getFullYear() !== 9999) && date.getFullYear() > 2099) {
+            releaseDateContainer.classList.add('error-input');
+            releaseDateError.innerHTML = 'Rok nie może być poźniejszy niż 2099';
+            return false;
+        }
+    }
+    for (let date of releaseDateValue) {
+        isPremiereInFuture = false;
+        if (date.getFullYear() <= 2099 && date > todayDate) {
+            bigSuggestionPosterDisplayContainer.classList.remove("hide-big-suggestion-poster");
+            bigSuggestionPosterDisplayContainer.classList.add("show-big-suggestion-poster");
+            isPremiereInFuture = true;
+            break;
+        }
+    }
+    if (!isPremiereInFuture) {
         bigSuggestionPosterDisplayContainer.classList.add("hide-big-suggestion-poster");
         bigSuggestionPosterDisplayContainer.classList.remove("show-big-suggestion-poster");
         isPremiereInFuture = false;
         removeBigSuggestionPoster();
     }
-
-    releaseDate.classList.remove('error-input');
+    releaseDateContainer.classList.remove('error-input');
     releaseDateError.innerHTML = '';
     return true;
 }
@@ -611,10 +634,10 @@ const validateGamePoster = async () => {
             };
         });
     }
-     proportionHeightWidth = height / width;
+    proportionHeightWidth = height / width;
     let slicedProportionHeightWidth = proportionHeightWidth.toString().slice(0, 4);
 
-     proportionWidthHeight = width / height;
+    proportionWidthHeight = width / height;
     let slicedProportionWidthHeight = proportionWidthHeight.toString().slice(0, 4);
 
 
@@ -955,6 +978,7 @@ async function validateGameForm() {
 function sendForm() {
     validateGameForm().then(result => {
         if (result) {
+            createMultiSelectDates();
             gameForm.submit();
         } else {
             gameTitleError.classList.add("button-error");
@@ -1069,7 +1093,7 @@ function clearGameForm() {
     gamePublisherError.innerHTML = '';
     gamePublisherList.innerHTML = '';
 
-    releaseDate.classList.remove("error-input");
+    releaseDateContainer.classList.remove('error-input');
     releaseDateError.innerHTML = '';
 
     categories.classList.remove("error-input");
@@ -1079,7 +1103,7 @@ function clearGameForm() {
     showPlayersRange.classList.remove("show-players-range");
 
     gameModesContainer.classList.remove("error-input");
-    gameModesError.innerHTML = '';
+    gameModesError.innerHTML = "";
 
     platform.classList.remove("error-input");
     platformsError.innerHTML = '';
@@ -1094,14 +1118,148 @@ function clearGameForm() {
     bigSuggestionHeightWidth.innerHTML = '';
     gamePosterHeightWidth.innerHTML = '';
     gamePosterWidthHeight.innerHTML = '';
+
+    smallSuggestionPosterError.innerHTML = '';
     isPremiereInFuture = false;
     removeGamePoster();
     removeBigSuggestionPoster();
     removeSmallSuggestionPoster();
+    removeAllDateTag();
 }
 
 //RESET ERRORS MESSAGE WHEN PAGE LOAD
 function resetErrorMessages() {
     categoriesError.innerHTML = '';
 }
+
+//ADD RELEASE DATE
+const addDateContainer = (platformName) => {
+    const platformBox = document.createElement('div');
+    platformBox.classList.add('platform-release-date-box');
+    platformBox.classList.add(platformName + "-box");
+
+    // Create the container for checkboxes
+    const releaseDateContainer = document.createElement('div');
+    releaseDateContainer.classList.add('release-date-container');
+
+    // Create the 'Nieznana' checkbox
+    const unknownCheckboxDiv = document.createElement('div');
+    unknownCheckboxDiv.classList.add('release-date-check-box');
+    const unknownLabel = document.createElement('label');
+    unknownLabel.classList.add('checkbox-container');
+    unknownLabel.classList.add('date-unknown');
+    unknownLabel.innerHTML = 'Nieznana';
+    const unknownCheckbox = document.createElement('input');
+    unknownCheckbox.type = 'checkbox';
+    const unknownCheckmark = document.createElement('span');
+    unknownCheckmark.classList.add('checkmark');
+    unknownLabel.appendChild(unknownCheckbox);
+    unknownLabel.appendChild(unknownCheckmark);
+    unknownCheckboxDiv.appendChild(unknownLabel);
+
+    // Create the 'Anulowana' checkbox
+    const cancelledCheckboxDiv = document.createElement('div');
+    cancelledCheckboxDiv.classList.add('release-date-check-box');
+    const cancelledLabel = document.createElement('label');
+    cancelledLabel.classList.add('checkbox-container');
+    cancelledLabel.classList.add('date-canceled');
+    cancelledLabel.innerHTML = 'Anulowana';
+    const cancelledCheckbox = document.createElement('input');
+    cancelledCheckbox.type = 'checkbox';
+    const cancelledCheckmark = document.createElement('span');
+    cancelledCheckmark.classList.add('checkmark');
+    cancelledLabel.appendChild(cancelledCheckbox);
+    cancelledLabel.appendChild(cancelledCheckmark);
+    cancelledCheckboxDiv.appendChild(cancelledLabel);
+
+    // Append checkboxes to the container
+    releaseDateContainer.appendChild(unknownCheckboxDiv);
+    releaseDateContainer.appendChild(cancelledCheckboxDiv);
+
+    // Create the container for inputs
+    const releaseDateInputs = document.createElement('div');
+    releaseDateInputs.classList.add('release-date-inputs');
+
+    // Create the platform name element
+    const platformNameElement = document.createElement('p');
+    platformNameElement.classList.add("date-platform-name")
+    platformNameElement.textContent = platformName;
+
+    // Create the date input element
+    const dateInput = document.createElement('input');
+    dateInput.classList.add("date-platform-value")
+    dateInput.type = 'date';
+    dateInput.min = '1980-01-01';
+    dateInput.max = '2099-01-01';
+    dateInput.setAttribute('oninput', 'validateGameReleaseDate()');
+
+    // Append platform name and date input to the inputs container
+    releaseDateInputs.appendChild(platformNameElement);
+    releaseDateInputs.appendChild(dateInput);
+
+    // Append all parts to the main container
+    platformBox.appendChild(releaseDateContainer);
+    platformBox.appendChild(releaseDateInputs);
+
+    // Append the main container to the release-date box
+    document.getElementById('release-date').appendChild(platformBox);
+
+    // Pass the new field to the dateUnknown function
+    dateUnknown(platformBox);
+}
+const removeDateTag = (platformName) => {
+    document.querySelector("." + platformName + "-box").remove();
+}
+const removeAllDateTag = () => {
+    const dateBox = document.getElementById("release-date");
+    dateBox.textContent = '';
+}
+const dateUnknown = (newField) => {
+    const checkBoxUnknown = newField.querySelector('.date-unknown > input');
+    const checkBoxCanceled = newField.querySelector('.date-canceled > input');
+    const dateBox = newField.querySelector('input[type=date]');
+
+    checkBoxUnknown.addEventListener('change', () => {
+        if (checkBoxUnknown.checked) {
+            checkBoxCanceled.checked = false;
+            dateBox.value = '8888-01-01';
+            dateBox.disabled = true;
+        } else if (!checkBoxCanceled.checked && !checkBoxUnknown.checked) {
+            dateBox.disabled = false;
+            dateBox.value = '';
+        }
+        validateGameReleaseDate();
+    });
+
+    checkBoxCanceled.addEventListener('change', () => {
+        if (checkBoxCanceled.checked) {
+            checkBoxUnknown.checked = false;
+            dateBox.value = '9999-01-01';
+            dateBox.disabled = true;
+        } else if (!checkBoxCanceled.checked && !checkBoxUnknown.checked) {
+            dateBox.disabled = false;
+            dateBox.value = ''
+        }
+        validateGameReleaseDate();
+
+    });
+};
+const createMultiSelectDates = () => {
+    const names = document.querySelectorAll('.date-platform-name');
+    const dates = document.querySelectorAll('.date-platform-value');
+    const namesSelect = document.getElementById("platformName");
+    const datesSelect = document.getElementById("releaseDate");
+    for (let i = 0; i < names.length; i++) {
+        let platformName = document.createElement('option');
+        platformName.selected = true;
+        platformName.value = names[i].textContent;
+        namesSelect.appendChild(platformName);
+        let datesOption = document.createElement('option');
+        datesOption.selected = true;
+        datesOption.value = dates[i].value;
+        datesSelect.appendChild(datesOption);
+    }
+
+}
+
 

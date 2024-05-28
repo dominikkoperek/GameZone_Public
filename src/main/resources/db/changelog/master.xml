@@ -13,8 +13,10 @@
     <include file="0007_create_table_game_game_mode.xml" relativeToChangelogFile="true"/>
     <include file="0008_create_table_company.xml" relativeToChangelogFile="true"/>
     <include file="0009_create_table_game.xml" relativeToChangelogFile="true"/>
-    <include file="0010_create_table_temporary_token_and_user_tokens.xml" relativeToChangelogFile="true"/>
-    <include file="0011_create_table_users_and_role.xml" relativeToChangelogFile="true"/>
+    <include file="0010_create_release_calendar.xml" relativeToChangelogFile="true"/>
+    <include file="0011_create_game_release_calendar.xml" relativeToChangelogFile="true"/>
+    <include file="0012_create_table_temporary_token_and_user_tokens.xml" relativeToChangelogFile="true"/>
+    <include file="0013_create_table_users_and_role.xml" relativeToChangelogFile="true"/>
 
     <!--    Test data-->
     <include file="../testdata/0001_categories.sql" relativeToChangelogFile="true" context="dev"/>
@@ -26,5 +28,7 @@
     <include file="../testdata/0007_game_mode.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0008_company.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0009_games.sql" relativeToChangelogFile="true" context="dev"/>
-    <include file="../testdata/0010_users_and_roles.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0010_release_calendar.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0011_game_release_calendar.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0012_users_and_roles.sql" relativeToChangelogFile="true" context="dev"/>
 </databaseChangeLog>

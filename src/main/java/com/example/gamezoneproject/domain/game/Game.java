@@ -5,9 +5,9 @@ import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.GameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
+import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendar;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -19,7 +19,11 @@ public class Game {
     private String dailymotionTrailerId;
     private String shortDescription;
     private String description;
-    private LocalDate releaseYear;
+    @ManyToMany
+    @JoinTable(name = "game_release_calendar",
+    joinColumns = @JoinColumn(name = "game_id",referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "release_calendar_id",referencedColumnName = "id"))
+    private List<ReleaseCalendar> releaseDate = new ArrayList<>();
     @ManyToMany
     @JoinTable(name = "game_category",
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
@@ -102,12 +106,12 @@ public class Game {
         this.description = description;
     }
 
-    public LocalDate getReleaseYear() {
-        return releaseYear;
+    public List<ReleaseCalendar> getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
-        this.releaseYear = releaseYear;
+    public void setReleaseDate(List<ReleaseCalendar> releaseYear) {
+        this.releaseDate = releaseYear;
     }
 
     public List<Category> getCategory() {

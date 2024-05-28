@@ -11,7 +11,7 @@
     <h2 class="list-heading">Panel administracyjny</h2>
     <h3 class="list-description">Dodaj nową grę</h3>
 
-    <form action=""  th:action="@{/admin/dodaj-gre}" method="post" enctype="multipart/form-data"
+    <form action="" th:action="@{/admin/dodaj-gre}" method="post" enctype="multipart/form-data"
           class="add-content-form" id="add-content-form" autocomplete="off" th:object="${game}">
 
         <div class="form-button-container">
@@ -116,19 +116,6 @@
             </div>
         </div>
 
-        <label for="release-date">Data wydania</label>
-        <span>(Jeśli jest nieznana zostaw puste)</span>
-        <input type="date" id="release-date"
-               min="1980-01-01"
-               max="2099-01-01"
-               th:field="*{releaseYear}"
-               th:classappend="${#fields.hasErrors('releaseYear')} ?'error-input':'' "
-               oninput="validateGameReleaseDate()">
-
-        <div class="input-validation-container">
-            <p class="notification-error" id="release-date-error"></p>
-            <p class="notification-error" th:errors="*{releaseYear}">Powiadomienie</p>
-        </div>
 
         <label for="categories">Kategorie (wybierz z listy)</label>
         <span><i class="fa fa-solid fa-crown"></i> główna kategoria</span>
@@ -199,6 +186,19 @@
             <p class="notification-error" th:errors="*{platform}">Powiadomienie</p>
         </div>
 
+        <div class="input-border" id="game-date-input-container">
+            <label for="release-date">Data wydania</label>
+            <select id="platformName" multiple name="platformName" style="display: none"></select>
+            <select id="releaseDate"multiple name="releaseDate" style="display: none"></select>
+            <div id="release-date" class="release-date-box">
+            </div>
+        </div>
+
+        <div class="input-validation-container">
+            <p class="notification-error" id="release-date-error"></p>
+            <p class="notification-error" th:errors="*{releaseYear}">Powiadomienie</p>
+        </div>
+
         <label for="game-poster">Plakat gry max min 400x600 rozmiar 1Mb (jpg, png, jpeg)</label>
         <p id="game-poster-proportion-height"></p>
         <p id="game-poster-proportion-width"></p>
@@ -227,7 +227,7 @@
         <p id="small-suggestion-proportion-height"></p>
         <p id="small-suggestion-proportion-width"></p>
         <div class="file-container">
-            <div class="form-element small-image-element" >
+            <div class="form-element small-image-element">
                 <input type="file" id="small-suggestion-poster" accept="image/jpeg,image/jpg,image/png"
                        th:field="*{smallPosterSuggestion}"
                        th:classappend="${#fields.hasErrors('smallPosterSuggestion')} ?'error-input':'' "
@@ -249,9 +249,9 @@
         </div>
 
 
-
         <div id="big-suggestion-poster-display" class="hide-big-suggestion-poster">
-            <label for="big-suggestion-poster">Duży plakat promocyjny (dla gier przed premierą) min rozmiar 1100x350 1Mb (jpg, png, jpeg)</label>
+            <label for="big-suggestion-poster">Duży plakat promocyjny (dla gier przed premierą) min rozmiar 1100x350 1Mb
+                (jpg, png, jpeg)</label>
             <p id="big-suggestion-proportion-height"></p>
             <p id="big-suggestion-proportion-width"></p>
             <div class="file-container">
@@ -314,6 +314,7 @@
         new MultiSelectTag('categories');
         new MultiSelectTag('platforms');
     </script>
+
 </main>
 </body>
 </html>

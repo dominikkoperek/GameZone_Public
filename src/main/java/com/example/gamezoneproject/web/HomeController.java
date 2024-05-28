@@ -1,22 +1,15 @@
 package com.example.gamezoneproject.web;
 
-import com.example.gamezoneproject.domain.exceptions.GameNotFoundException;
 import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameDto;
 import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
-import com.example.gamezoneproject.domain.userToken.TemporaryTokenService;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.security.SecureRandom;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Home controller for all games.
@@ -43,14 +36,12 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         addModelAttributes(model);
-        return"game-listing";
+        return "game-listing";
     }
 
     private void addModelAttributes(Model model) {
-        List<GameDto> allGames = gameService.findAllGames()
-                .stream()
-                .sorted(Comparator.comparing(GameDto::getReleaseYear).reversed())
-                .toList();
+        List<GameDto> allGames = gameService.findAllGamesSortedByOldestReleaseDate();
+
         LinkedHashMap<String, String> gamePlatforms = gamePlatformService.findAllGamePlatforms();
         model.addAttribute("platforms", gamePlatforms);
         model.addAttribute("heading", "Wielka encyklopedia gier");
@@ -60,7 +51,8 @@ public class HomeController {
         model.addAttribute("allPlatforms", "Wszystkie");
 
         GameSuggestionsDto gameByClosestPremierDate = gameService
-                .findGameByClosestPremierDate().orElse(null);
+                .findGameByClosestPremierDate()
+                .orElse(null);
         model.addAttribute("closestGameReleaseDate", gameByClosestPremierDate);
     }
 

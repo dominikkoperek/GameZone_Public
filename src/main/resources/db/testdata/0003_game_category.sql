@@ -25,3 +25,14 @@ INSERT INTO game_category (game_id, category_id) VALUES (5, 3);
 INSERT INTO game_category (game_id, category_id) VALUES (5, 4);
 INSERT INTO game_category (game_id, category_id) VALUES (5, 18);
 INSERT INTO game_category (game_id, category_id) VALUES (5, 20);
+
+INSERT INTO game_category (game_id, category_id) VALUES (6, 3);
+INSERT INTO game_category (game_id, category_id) VALUES (6, 4);
+INSERT INTO game_category (game_id, category_id) VALUES (6, 17);
+INSERT INTO game_category (game_id, category_id) VALUES (6, 15);
+
+INSERT INTO game_category (game_id, category_id) VALUES (7, 3);
+INSERT INTO game_category (game_id, category_id) VALUES (7, 17);
+INSERT INTO game_category (game_id, category_id) VALUES (7, 23);
+INSERT INTO game_category (game_id, category_id) VALUES (7, 22);
+INSERT INTO game_category (game_id, category_id) VALUES (7, 21);

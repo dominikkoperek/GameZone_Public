@@ -9,15 +9,13 @@ import com.example.gamezoneproject.domain.game.gameDetails.modes.GameModeService
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import jakarta.validation.Valid;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -70,12 +68,15 @@ public class GameManagementController {
     @PostMapping("/admin/dodaj-gre")
     public String addGame(@Valid @ModelAttribute("game") GameSaveDto gameSaveDto,
                           BindingResult bindingResult,
+                          @RequestParam List<String> platformName,
+                          @RequestParam List<String> releaseDate,
                           RedirectAttributes redirectAttributes,
                           Model model) {
         if (bindingResult.hasErrors()) {
             addAttributesToModel(model);
             return "admin/game-add-form";
         } else {
+            gameSaveDto.setReleaseYear(gameService.mapToReleaseDateMap(platformName, releaseDate));
             gameService.addGame(gameSaveDto);
             redirectAttributes.addFlashAttribute(AdminController.NOTIFICATION_ATTRIBUTE,
                     "Gra %s została dodana".formatted(gameSaveDto.getTitle()));
@@ -89,6 +90,7 @@ public class GameManagementController {
         playerRange.setMaxPlayers(1);
         game.setPlayerRange(playerRange);
     }
+
     private void addAttributesToModel(Model model) {
         List<GameModeDto> allGameModes = gameModeService.findAllGameModes();
         List<CategoryDto> categories = categoryService.findAllGameCategories();

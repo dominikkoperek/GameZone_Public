@@ -2,6 +2,7 @@ package com.example.gamezoneproject.web;
 
 import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;
+import com.example.gamezoneproject.domain.game.dto.PromotedGameByCompanyDto;
 import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyService;
 import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDto;
 import org.springframework.http.HttpStatus;
@@ -143,7 +144,7 @@ public class CompanyController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         List<GameByCompanyDto> allPromotedGamesByProducerId = gameService
                 .findAllPromotedGamesByProducerId(id);
-        List<GameByCompanyDto> allPromotedGamesByPublisherId = gameService.findAllPromotedGamesByPublisherId(id);
+        List<PromotedGameByCompanyDto> allPromotedGamesByPublisherId = gameService.findAllPromotedGamesByPublisherId(id);
         List<GameByCompanyDto> allGamesByProducerId = gameService.findAllGamesByProducerId(id);
         List<GameByCompanyDto> allGamesByPublisherId = gameService.findAllGamesByPublisherId(id);
         boolean isPolishCompany = companyDto.getCountry().equalsIgnoreCase(POLISH_NAME);

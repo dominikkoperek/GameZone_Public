@@ -2,10 +2,7 @@ package com.example.gamezoneproject.domain.game;
 
 import com.example.gamezoneproject.domain.exceptions.CategoryNotFoundException;
 import com.example.gamezoneproject.domain.exceptions.CompanyNotFoundException;
-import com.example.gamezoneproject.domain.game.dto.GameDto;
-import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;
-import com.example.gamezoneproject.domain.game.dto.GameSaveDto;
-import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
+import com.example.gamezoneproject.domain.game.dto.*;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryRepository;
 import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
@@ -15,8 +12,9 @@ import com.example.gamezoneproject.domain.game.gameDetails.modes.GameModeReposit
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformRepository;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
+import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendar;
+import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendarRepository;
 import com.example.gamezoneproject.storage.FileStorageService;
-import com.example.gamezoneproject.storage.ImageStorageFile;
 import com.example.gamezoneproject.storage.storageStrategy.BigPoster;
 import com.example.gamezoneproject.storage.storageStrategy.GamePoster;
 import com.example.gamezoneproject.storage.storageStrategy.SmallPoster;
@@ -25,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.StreamSupport;
 
 /**
  * This class shares public methods which allow to manage games.
@@ -40,19 +37,25 @@ public class GameService {
     private final CompanyRepository companyRepository;
     private final CategoryRepository categoryRepository;
     private final GameModeRepository gameModeRepository;
+    private final ReleaseCalendarRepository releaseDateRepository;
+    private final GameDtoMapper gameDtoMapper;
     private final GamePoster gamePoster;
     private final SmallPoster smallPoster;
     private final BigPoster bigPoster;
 
     public GameService(FileStorageService fileStorageService, GameRepository gameRepository,
                        GamePlatformRepository gamePlatformRepository, CompanyRepository companyRepository,
-                       CategoryRepository categoryRepository, GameModeRepository gameModeRepository, GamePoster gamePoster, SmallPoster smallPoster, BigPoster bigPoster) {
+                       CategoryRepository categoryRepository, GameModeRepository gameModeRepository,
+                       ReleaseCalendarRepository releaseDateRepository, GameDtoMapper gameDtoMapper, GamePoster gamePoster, SmallPoster smallPoster,
+                       BigPoster bigPoster) {
         this.fileStorageService = fileStorageService;
         this.gameRepository = gameRepository;
         this.gamePlatformRepository = gamePlatformRepository;
         this.companyRepository = companyRepository;
         this.categoryRepository = categoryRepository;
         this.gameModeRepository = gameModeRepository;
+        this.releaseDateRepository = releaseDateRepository;
+        this.gameDtoMapper = gameDtoMapper;
         this.gamePoster = gamePoster;
         this.smallPoster = smallPoster;
         this.bigPoster = bigPoster;
@@ -64,7 +67,7 @@ public class GameService {
      * @return A list of promoted games mapped to GameDto.
      */
     public List<GameDto> findAllPromotedGames() {
-        return gameRepository.findAllByPromotedIsTrue()
+        return gameRepository.findAllByPromotedIsTrueSortedByReleaseDate()
                 .stream().map(GameDtoMapper::map)
                 .toList();
     }
@@ -82,23 +85,13 @@ public class GameService {
     }
 
     /**
-     * Finds game by closest premier day to present day, and map it to GameSuggestionsDto.
-     *
-     * @return Option containing GameSuggestionsDto if game is found, or empty if not.
-     */
-    public Optional<GameSuggestionsDto> findGameByClosestPremierDate() {
-        return gameRepository.findGameByClosestReleaseDate()
-                .map(GameDtoMapper::mapToGameSuggestionsDto);
-    }
-
-    /**
      * Finds all games by category name, and map it to GameDto.
      *
      * @param category name of the category.
      * @return List of GameDto by the category.
      */
     public List<GameDto> findGamesByCategoryName(String category) {
-        return gameRepository.findAllByCategory_NameIgnoreCase(category)
+        return gameRepository.findAllByCategoryNameSortedByReleaseDateIgnoreCase(category)
                 .stream()
                 .map(GameDtoMapper::map)
                 .toList();
@@ -111,7 +104,7 @@ public class GameService {
      * @return List of GameDto by the game platform.
      */
     public List<GameDto> findGamesByGamePlatformName(String gamePlatform) {
-        return gameRepository.findAllByGamePlatform_NameIgnoreCase(gamePlatform)
+        return gameRepository.findAllGamesByPlatformSortedByReleaseDate(gamePlatform)
                 .stream()
                 .map(GameDtoMapper::map)
                 .toList();
@@ -126,7 +119,7 @@ public class GameService {
     public List<GameByCompanyDto> findAllPromotedGamesByProducerId(Long producerId) {
         return gameRepository.findAllByProducer_IdAndPromotedIsTrue(producerId)
                 .stream()
-                .map(GameDtoMapper::mapGameByCompanyId)
+                .map(gameDtoMapper::mapGameByCompanyId)
                 .toList();
     }
 
@@ -136,10 +129,10 @@ public class GameService {
      * @param publisherId The id of the publisher.
      * @return List of all promoted Games by publisher id.
      */
-    public List<GameByCompanyDto> findAllPromotedGamesByPublisherId(Long publisherId) {
+    public List<PromotedGameByCompanyDto> findAllPromotedGamesByPublisherId(Long publisherId) {
         return gameRepository.findAllByPublisher_IdAndPromotedIsTrue(publisherId)
                 .stream()
-                .map(GameDtoMapper::mapGameByCompanyId)
+                .map(GameDtoMapper::mapPromotedGameByCompanyId)
                 .toList();
     }
 
@@ -148,12 +141,28 @@ public class GameService {
      *
      * @return List of all games mapped to GameDto.
      */
-    public List<GameDto> findAllGames() {
-        return StreamSupport
-                .stream(gameRepository.findAll().spliterator(), false)
+    public List<GameDto> findAllGamesSortedByOldestReleaseDate() {
+        return gameRepository
+                .findAllSortedByOldestReleaseDate().stream()
                 .map(GameDtoMapper::map)
                 .toList();
 
+    }
+
+    /**
+     * Method sorting game release dates map by value (date) descending
+     *
+     * @param releaseDateMap map with all release dates for game.
+     * @return sorted map with all release dates for game.
+     */
+    public static Map<String, LocalDate> sortReleaseDates(Map<String, LocalDate> releaseDateMap) {
+        List<Map.Entry<String, LocalDate>> entryList = new ArrayList<>(releaseDateMap.entrySet());
+        entryList.sort(Map.Entry.comparingByValue());
+        Map<String, LocalDate> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, LocalDate> entry : entryList) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedMap;
     }
 
     /**
@@ -175,9 +184,39 @@ public class GameService {
     public List<GameByCompanyDto> findAllGamesByProducerId(Long producerId) {
         return gameRepository.findAllByProducer_Id(producerId)
                 .stream()
-                .map(GameDtoMapper::mapGameByCompanyId)
-                .sorted(Comparator.comparing(GameByCompanyDto::getReleaseYear).reversed())
+                .map(gameDtoMapper::mapGameByCompanyId)
+                //   .sorted(Comparator.comparing().reversed()) ************* FIX SORTOWANIE
                 .toList();
+    }
+
+
+    /**
+     * Finds game by closest premier day to present day, and map it to GameSuggestionsDto.
+     *
+     * @return Option containing GameSuggestionsDto if game is found, or empty if not.
+     */
+    public Optional<GameSuggestionsDto> findGameByClosestPremierDate() {
+        return gameRepository
+                .findGameByClosestPremierDate()
+                .map(gameDtoMapper::mapToGameSuggestionsDto);
+    }
+
+    /**
+     * This method merge all release dates to 1 if the date is the same for platforms.
+     *
+     * @param gameDto Game dto object.
+     * @return Merged map with  release date and list of platforms.
+     */
+    public Map<LocalDate, List<String>> mergeSameReleaseDates(GameDto gameDto) {
+        Map<LocalDate, List<String>> resultMap = new TreeMap<>();
+        for (Map.Entry<String, LocalDate> entry : gameDto.getReleaseYear().entrySet()) {
+            String platform = entry.getKey();
+            LocalDate date = entry.getValue();
+            resultMap
+                    .computeIfAbsent(date, k -> new ArrayList<>())
+                    .add(platform);
+        }
+        return resultMap;
     }
 
     /**
@@ -189,8 +228,8 @@ public class GameService {
     public List<GameByCompanyDto> findAllGamesByPublisherId(Long publisherId) {
         return gameRepository.findAllByPublisher_Id(publisherId)
                 .stream()
-                .map(GameDtoMapper::mapGameByCompanyId)
-                .sorted(Comparator.comparing(GameByCompanyDto::getReleaseYear).reversed())
+                .map(gameDtoMapper::mapGameByCompanyId)
+                // .sorted(Comparator.comparing(GameByCompanyDto::getReleaseYear).reversed()) FIX
                 .toList();
     }
 
@@ -219,7 +258,7 @@ public class GameService {
         game.setShortDescription(gameSaveDto.getShortDescription().trim());
         game.setDescription(gameSaveDto.getDescription().trim());
         game.setDailymotionTrailerId(gameSaveDto.getDailymotionTrailerId().trim());
-        game.setReleaseYear(getReleaseDate(gameSaveDto.getReleaseYear()));
+        game.setReleaseDate(getReleaseDate(gameSaveDto.getReleaseYear()));
         Company producer = companyRepository.findByNameIgnoreCase(gameSaveDto.getProducer())
                 .orElseThrow(CompanyNotFoundException::new);
         game.setProducer(producer);
@@ -251,6 +290,14 @@ public class GameService {
         gameRepository.save(game);
     }
 
+    public Map<String,LocalDate> mapToReleaseDateMap(List<String> platformName, List<String> releaseDate) {
+        Map<String,LocalDate> map = new HashMap<>();
+        for (int i = 0; i < platformName.size(); i++) {
+            map.put(platformName.get(i),LocalDate.parse(releaseDate.get(i)));
+        }
+        return map;
+    }
+
     /**
      * This method gets the release date of the game.
      * If the release year is null, it returns a default date.
@@ -258,11 +305,26 @@ public class GameService {
      * @param releaseYear The release year of the game.
      * @return The release date of the game.
      */
-    private LocalDate getReleaseDate(LocalDate releaseYear) {
-        if (releaseYear == null) {
-            return LocalDate.of(9999, 1, 1);
+    private List<ReleaseCalendar> getReleaseDate(Map<String, LocalDate> releaseYear) {
+        List<ReleaseCalendar> premiereDates = new ArrayList<>();
+        for (Map.Entry<String, LocalDate> localDateStringEntry : releaseYear.entrySet()) {
+            LocalDate localDate = localDateStringEntry.getValue();
+            String platform = localDateStringEntry.getKey();
+            Optional<ReleaseCalendar> byReleaseDateAndGamePlatform = releaseDateRepository
+                    .findByReleaseDateAndGamePlatform(localDate, platform);
+
+            if (byReleaseDateAndGamePlatform.isPresent()) {
+                premiereDates.add(byReleaseDateAndGamePlatform.get());
+            } else {
+                ReleaseCalendar releaseCalendar = new ReleaseCalendar();
+                releaseCalendar.setReleaseDate(localDate);
+                releaseCalendar.setGamePlatform(platform);
+                premiereDates.add(releaseCalendar);
+                releaseDateRepository.save(releaseCalendar);
+            }
+
         }
-        return LocalDate.of(releaseYear.getYear(), releaseYear.getMonth(), releaseYear.getDayOfMonth());
+        return premiereDates;
     }
 
     /**
@@ -328,10 +390,12 @@ public class GameService {
 
     private void setMainCategory(List<String> categoriesDto, String mainCategory, List<Category> resulCategories) {
         if (mainCategory.isEmpty()) {
-            mainCategory = categoriesDto.get(0);
+            mainCategory = categoriesDto.getFirst();
         }
 
-        Category mainCategoryToFind = categoryRepository.findByNameIgnoreCase(mainCategory).orElseThrow(CategoryNotFoundException::new);
+        Category mainCategoryToFind = categoryRepository
+                .findByNameIgnoreCase(mainCategory)
+                .orElseThrow(CategoryNotFoundException::new);
 
         int indexOfMainCategory = resulCategories.indexOf(mainCategoryToFind);
         Category temp = resulCategories.get(indexOfMainCategory);

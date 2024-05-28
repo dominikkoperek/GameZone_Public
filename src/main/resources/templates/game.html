@@ -86,21 +86,36 @@
                             <i th:if="${game.gameModes.isEmpty()}" title="brak" class="fa-solid fa-question"></i>
                         </ul>
 
-                        <p class="game-summary-item" th:if="${game.releaseYear.getYear() ne 9999}"
-                           th:text="|Premiera: ${#temporals.format(game.releaseYear, 'd MMM yyyy')}|">Premiera: 6 mar
-                            2012 </p>
-                        <p class="game-summary-item" th:unless="${game.releaseYear.getYear() ne 9999}">
-                            Premiera: nieogłoszona
+<!--                        <p class="game-summary-item" th:if="${game.releaseYear le 3000}"-->
+<!--                           th:text="|Premiera: ${#temporals.format(game.releaseYear, 'd MMM yyyy')}|">Premiera: 6 mar-->
+<!--                            2012 </p>-->
+<!--                        <p class="game-summary-item" th:unless="${game.releaseYear ne 9999}">-->
+<!--                            Premiera: nieogłoszona-->
+<!--                        </p>-->
+
+                        <p class="game-summary-item" th:each="date:${gameReleaseDates}">
+<!--                            <span th:if="${date.value.year le 3000}" th:text="${date.key}"></span>-->
+<!--                            <span th:if="${date.value.year le 3000}" th:text="${#temporals.format(date.value, 'd MMM yyyy')}"></span>-->
+
+                            <span th:if="${date.key.year le 3000}" th:text="${date.value}">Platforma</span>
+                            <span th:if="${date.key.year le 3000}" th:text="${#temporals.format(date.key, 'd MMM yyyy')}">Date</span>
+
+                            <span th:if="${date.key.year eq 8888}" th:text="${date.value}">Platforma</span>
+                            <span th:if="${date.key.year eq 8888}">nieznana</span>
+
+                            <span th:if="${date.key.year eq 9999}" th:text="${date.value}">Platforma</span>
+                            <span th:if="${date.key.year eq 9999}">anulowana</span>
                         </p>
+
                         <span class="game-summary-item">Producent:
                         <a href="#"
-                           th:href="@{|/firma/${#strings.replace(game.producer.name,' ','-')}/${game.producer.id}|}"
+                           th:href="@{|/katalog-firm/firma/${#strings.replace(game.producer.name,' ','-')}/${game.producer.id}|}"
                            th:text="${game.producer.name}">BioWare
                         </a>
                     </span>
                         <span class="game-summary-item">Wydawca:
                         <a href="#"
-                           th:href="@{|/firma/${#strings.replace(game.publisher.name,' ','-')}/${game.publisher.id}|}"
+                           th:href="@{|/katalog-firm/firma/${#strings.replace(game.publisher.name,' ','-')}/${game.publisher.id}|}"
                            th:text="${game.publisher.name}">Electronic Arts Inc.
                         </a>
                     </span>

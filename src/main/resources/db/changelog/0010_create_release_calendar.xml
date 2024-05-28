@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="0010-1" author="dominik">
+        <createTable tableName="release_calendar">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="game_platform" type="VARCHAR(50)"/>
+            <column name="release_date" type="DATE"/>
+
+        </createTable>
+        <addUniqueConstraint tableName="release_calendar" constraintName="unique_game_platform_release_date"
+                             columnNames="game_platform,release_date">
+        </addUniqueConstraint>
+    </changeSet>
+</databaseChangeLog>

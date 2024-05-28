@@ -19,7 +19,7 @@ public class GameDto {
     private String dailymotionTrailerId;
     private String shortDescription;
     private String description;
-    private LocalDate releaseYear;
+    private Map<String, LocalDate> releaseYear;
     private List<Category> category;
     private Map<String, String> platform;
     private List<GameMode> gameModes;
@@ -29,10 +29,10 @@ public class GameDto {
     private String poster;
     private PlayerRange playerRange;
 
-    public GameDto(Long id, String title, String dailymotionTrailerId, String shortDescription,
-                   String description, LocalDate releaseYear, List<Category> category,
-                   Map<String, String> platform, List<GameMode> gameModes, boolean promoted,
-                   Company producer, Company publisher, String poster, PlayerRange playerRange) {
+    public GameDto(Long id, String title, String dailymotionTrailerId, String shortDescription, String description,
+                   Map<String, LocalDate> releaseYear, List<Category> category, Map<String, String> platform,
+                   List<GameMode> gameModes, boolean promoted, Company producer, Company publisher, String poster,
+                   PlayerRange playerRange) {
         this.id = id;
         this.title = title;
         this.dailymotionTrailerId = dailymotionTrailerId;
@@ -98,11 +98,11 @@ public class GameDto {
         this.dailymotionTrailerId = dailymotionTrailerId;
     }
 
-    public LocalDate getReleaseYear() {
+    public Map<String, LocalDate> getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
+    public void setReleaseYear(Map<String, LocalDate> releaseYear) {
         this.releaseYear = releaseYear;
     }
 

@@ -1,6 +1,8 @@
 package com.example.gamezoneproject.domain.game.dto;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Simple DTO class for the Game entity.
@@ -10,13 +12,15 @@ import java.time.LocalDate;
 public class GameByCompanyDto {
     private Long id;
     private String title;
-    private LocalDate releaseYear;
+    private LocalDate firstReleaseDate;
+    private List<String> platforms;
     private String poster;
 
-    public GameByCompanyDto(Long id, String title, LocalDate releaseYear, String poster) {
+    public GameByCompanyDto(Long id, String title, LocalDate firstReleaseDate, List<String> platforms, String poster) {
         this.id = id;
         this.title = title;
-        this.releaseYear = releaseYear;
+        this.firstReleaseDate = firstReleaseDate;
+        this.platforms = platforms;
         this.poster = poster;
     }
 
@@ -36,12 +40,12 @@ public class GameByCompanyDto {
         this.title = title;
     }
 
-    public LocalDate getReleaseYear() {
-        return releaseYear;
+    public LocalDate getFirstReleaseDate() {
+        return firstReleaseDate;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
-        this.releaseYear = releaseYear;
+    public void setFirstReleaseDate(LocalDate firstReleaseDate) {
+        this.firstReleaseDate = firstReleaseDate;
     }
 
     public String getPoster() {
@@ -50,5 +54,13 @@ public class GameByCompanyDto {
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public List<String> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(List<String> platforms) {
+        this.platforms = platforms;
     }
 }

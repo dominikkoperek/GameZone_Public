@@ -2,6 +2,7 @@ package com.example.gamezoneproject.web;
 
 import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameDto;
+import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.dto.GamePlatformDto;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller for displaying games by platform
@@ -38,10 +40,8 @@ public class GamePlatformController {
     public String getCategory(@PathVariable String name, Model model) {
         GamePlatformDto gamePlatform = gamePlatformService.findGamePlatformByName(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
         List<GameDto> games = gameService.findGamesByGamePlatformName(name)
                 .stream()
-                .sorted(Comparator.comparing(GameDto::getReleaseYear).reversed())
                 .toList();
         LinkedHashMap<String, String> gamePlatforms = gamePlatformService.findAllGamePlatforms();
         model.addAttribute("platforms", gamePlatforms);

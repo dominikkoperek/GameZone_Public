@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -50,8 +51,8 @@ public class GameSaveDto {
     @Size(min = 200, max = 105_000)
     @ContainsH2
     private String description;
-    @Date(min = 1980, max = 3000)
-    private LocalDate releaseYear;
+    //@Date(min = 1980, max = 3000)
+    private Map<String,LocalDate> releaseYear;
     @NotEmpty
     @Size(min = 4, max = 14)
     @CategoryNotExists
@@ -123,11 +124,11 @@ public class GameSaveDto {
         this.description = description;
     }
 
-    public LocalDate getReleaseYear() {
+    public Map<String, LocalDate> getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
+    public void setReleaseYear(Map<String, LocalDate> releaseYear) {
         this.releaseYear = releaseYear;
     }
 

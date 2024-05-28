@@ -4,8 +4,9 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import java.time.LocalDate;
+import java.util.Map;
 
-public class DateValidator implements ConstraintValidator<Date, LocalDate> {
+public class DateValidator implements ConstraintValidator<Date, Map<String,LocalDate>> {
     private int min;
     private int max;
 
@@ -16,11 +17,10 @@ public class DateValidator implements ConstraintValidator<Date, LocalDate> {
     }
 
     @Override
-    public boolean isValid(LocalDate localDate, ConstraintValidatorContext constraintValidatorContext) {
-        if (localDate == null) {
-            return true;
-        }else {
-        return localDate.getYear() >= min && localDate.getYear() <= max;
-        }
+    public boolean isValid(Map<String, LocalDate> stringLocalDateMap, ConstraintValidatorContext constraintValidatorContext) {
+       return stringLocalDateMap
+               .values()
+               .stream()
+               .anyMatch(v->v.getYear()>=min && v.getYear()<=max);
     }
 }

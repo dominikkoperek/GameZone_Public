@@ -12,14 +12,14 @@ import java.util.TreeMap;
 public class GameSuggestionsDto {
     private Long id;
     private String title;
-    private LocalDate releaseYear;
+    private Map<String, LocalDate> releaseYear;
     private Map<String, String> platform;
     private String smallPosterSuggestion;
     private String bigPosterSuggestion;
     private int daysBeforeRelease;
 
-    public GameSuggestionsDto(Long id,String title, LocalDate releaseYear, Map<String, String> platform,
-                              String smallPosterSuggestion, String bigPosterSuggestion, int daysBeforeRelease) {
+    public GameSuggestionsDto(Long id, String title, Map<String, LocalDate> releaseYear, Map<String,
+            String> platform, String smallPosterSuggestion, String bigPosterSuggestion, int daysBeforeRelease) {
         this.id = id;
         this.title = title;
         this.releaseYear = releaseYear;
@@ -48,11 +48,11 @@ public class GameSuggestionsDto {
         this.title = title;
     }
 
-    public LocalDate getReleaseYear() {
+    public Map<String, LocalDate> getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(LocalDate releaseYear) {
+    public void setReleaseYear(Map<String, LocalDate> releaseYear) {
         this.releaseYear = releaseYear;
     }
 

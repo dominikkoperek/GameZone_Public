@@ -27,10 +27,6 @@ import java.nio.file.StandardCopyOption;
 public class FileStorageService {
     private final Logger logger = LoggerFactory.getLogger(FileStorageService.class);
 
-    private final BigPoster bigPoster; // TO WYWAL I DODAJ W INTEREFJSE PRZEKAZYWANIE STORAGELOCATION
-    private final SmallPoster smallPoster;
-    private final GamePoster gamePoster;
-    private final CompanyPoster companyPoster;
     private final OtherFiles otherFiles;
     private final String baseLocation;
 
@@ -43,10 +39,6 @@ public class FileStorageService {
     public FileStorageService(@Value("${app.storage.location}") String storageLocation, BigPoster bigPoster,
                               SmallPoster smallPoster, GamePoster gamePoster, CompanyPoster companyPoster, OtherFiles otherFiles) {
         this.baseLocation = storageLocation;
-        this.bigPoster = bigPoster;
-        this.smallPoster = smallPoster;
-        this.gamePoster = gamePoster;
-        this.companyPoster = companyPoster;
         this.otherFiles = otherFiles;
         Path fileStoragePath = Path.of(otherFiles.setImageLocation(storageLocation));
         Path gameImageStorageLocationPath = Path.of(gamePoster.setImageLocation(storageLocation));
@@ -145,7 +137,6 @@ public class FileStorageService {
      */
     private String saveFile(MultipartFile file, String fileName, ImageStrategy imageStorageFile) {
         Path filePath = createFilePath(file, fileName, imageStorageFile);
-        System.err.println(filePath);
         try {
             int targetWidth = imageStorageFile.getImageTargetWidth();
             int targetHeight = imageStorageFile.getImageTargetHeight();
@@ -208,7 +199,7 @@ public class FileStorageService {
     private String prepareFileName(String fileName) {
         return fileName.replaceAll(" ", "")
                 .trim()
-                .replaceAll("[^a-zA-Z0-9]+", "");
-
+                .replaceAll("[^a-zA-Z0-9]+", "")
+                .toLowerCase();
     }
 }

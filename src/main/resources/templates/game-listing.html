@@ -8,7 +8,6 @@
 <div class="container">
 
     <main class="main-content" layout:fragment="content">
-
         <div th:if="${closestGameReleaseDate ne null}">
             <section class="content-recommendation-box"
                      th:if="${closestGameReleaseDate.daysBeforeRelease>=0}">
@@ -92,12 +91,12 @@
                     </a>
                 </div>
                 <div class="suggestion-box">
-                    <a href="#" th:href="@{/gry/Tomb-Raider/2}">
+                    <a href="#" th:href="@{/gry/Wuthering-Waves/6}">
                         <picture class="image-list-test">
                             <img
                                     class="small-image-suggestion"
                                     src="../static/img/notfound.jpg"
-                                    th:src="@{/galeria/rekomendacje/s/tombraider_s_0.jpg}"
+                                    th:src="@{/galeria/rekomendacje/s/wutheringwave_s_0.png}"
                                     alt="tytuł gry">
                         </picture>
                     </a>
@@ -171,10 +170,17 @@
 
                             <h4 th:if="${game.platform.isEmpty()}" th:text="|Brak platformy|">Brak danych</h4>
                             <div class="game-details-container">
-                                <p th:if="${game.releaseYear.getYear() ne 9999}"
-                                   th:text="${game.releaseYear.getYear()}">
-                                    1999</p>
-                                <p th:unless="${game.releaseYear.getYear()ne 9999}">data nieogłoszona</p>
+                                <p th:if="${game.releaseYear}">
+                                        <span th:each="date:${game.releaseYear.entrySet()}"
+                                              th:if="${dateStat.index}==0">
+                                                <span th:if="${date.value.year}<3000"
+                                                      th:text="${date.value}"></span>
+                                                <span th:if="${date.value.year}==8888"
+                                                      th:text="'nieznana'"></span>
+                                                <span th:if="${date.value.year}==9999"
+                                                      th:text="'anulowana'"></span>
+                                            </span>
+                                </p>
 
                                 <a href="#"
                                    th:if="${!game.category.isEmpty()}"

@@ -185,6 +185,7 @@ function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
             itemLabel.classList.add("item-categories")
         }
         if (el === "platforms") {
+            itemDiv.classList.add('chosen-platforms')
             itemLabel.classList.add("item-platforms")
         }
         if (el === "company-country") {
@@ -213,6 +214,10 @@ function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
             removeTag(option.value)
             initOptions()
             setValues()
+            if (el === 'platforms') {
+                removeDateTag(option.value);
+                validateGameReleaseDate();
+            }
         });
         const container = document.querySelector('.input-container');
 
@@ -249,6 +254,9 @@ function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
                 initOptions()
                 setValues()
                 input.focus()
+                if (el === "platforms") {
+                    addDateContainer(li.textContent);
+                }
             })
         }
     }

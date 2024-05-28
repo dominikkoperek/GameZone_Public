@@ -1113,6 +1113,10 @@ textarea {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+input[type=checkbox]:disabled ~ .checkmark{
+    background-color: #ff6161;
+}
+
 
 /*FILE INPUT*/
 .add-content-form .input-file {
@@ -1472,10 +1476,59 @@ input[type="file"]::file-selector-button:hover {
 }
 
 #company-country, #country-value,
-#release-date,
 #game-trailer-id {
     max-width: 20rem;
 }
+
+.release-date-box {
+    display: flex;
+    justify-content: left;
+    align-content: space-between;
+    flex-wrap: wrap;
+    column-gap: 2.5rem;
+    row-gap: 1rem;
+
+}
+
+.release-date-box .platform-release-date-box {
+    display: flex;
+    padding: 0.2rem;
+    border: 1px solid #4f4f4f;
+    flex-direction: column;
+    justify-content: left;
+    margin:auto;
+}
+.release-date-check-box{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    grid-row: auto;
+}
+
+.release-date-container{
+    display: flex;
+   justify-content: space-between;
+}
+
+.platform-release-date-box p {
+    display: flex;
+    justify-content: center;
+    padding: 0.4rem 2rem;
+    background-color: #6e6e6e;
+    max-width: 0.8rem;
+    overflow: hidden;
+}
+.release-date-inputs{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.platform-release-date-box input {
+    margin: 0;
+    background-color: #b4b4b4;
+}
+
 
 input:read-only {
     background-color: #a9a9a9;
@@ -1544,32 +1597,68 @@ input:read-only {
 }
 
 .games-list-container {
-    display: flex;
     border-bottom: 1px solid #333333;
-    justify-content: space-between;
 }
 
-.all-games-list {
-    color: #ffe6cb;
-
+.game-list-container {
+    clear: both;
+    line-height: 1.5rem;
 }
 
-.games-date {
-    justify-content: space-evenly;
-    color: #ffe6cb;
-}
-
-.games-list-container span {
+.game-list-container p span {
+    float: right;
     transition: all ease-in-out 100ms;
 }
 
-.games-list-container:hover span {
-    transform: scale(1.1);
+.game-link i {
+    color: #7c7c7c;
+    font-size: 0.9rem;
+    font-style: normal;
+    transition: all ease-in-out 100ms;
+}
+
+.all-games-list, .game-link {
+    display: inline-block;
+    color: #ffe6cb;
+    transition: all ease-in-out 100ms;
+}
+
+.games-list-hide li:hover div strong,
+.games-list-hide li:hover div a {
+    transform: scale(1.03);
     color: #b08600;
+}
+
+.game-list-container p a strong {
+    font-weight: 400;
+    display: inline-block;
+    color: #ffe6cb;
+    transition: all ease-in-out 100ms;
+}
+
+.games-list-hide li:hover div p span {
+    background-color: rgba(176, 134, 0, 0.25);
 }
 
 .games-list-hide {
     list-style: none;
+}
+
+.games-list-hide li {
+    border-bottom: 1px solid #333333;
+}
+
+.game-list-info {
+    display: flex;
+    clear: both;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+}
+
+.game-list-info p {
+    font-size: 0.9rem;
+    color: #d9d9d9;
 }
 
 .games-list-hide li:nth-child(n+26):not(:last-child) {
@@ -2024,7 +2113,6 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .suggestion-platform-logo {
     display: flex;
     width: 2.5rem;
-
 
 
 }
