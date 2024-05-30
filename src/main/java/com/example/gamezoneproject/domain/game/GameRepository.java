@@ -82,7 +82,8 @@ public interface GameRepository extends CrudRepository<Game, Long> {
      * @return List of games sorted by release date descending
      */
     @Query("SELECT g,min(grc.releaseCalendar.releaseDate) FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id " +
-            "WHERE  year (grc.releaseCalendar.releaseDate)<3000 GROUP BY g.id ORDER BY min(grc.releaseCalendar.releaseDate) DESC")
+            "WHERE  year (grc.releaseCalendar.releaseDate)<3000 " +
+            "GROUP BY g.id ORDER BY min(grc.releaseCalendar.releaseDate) DESC")
     List<Game> findAllSortedByOldestReleaseDate();
 
     /**

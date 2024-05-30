@@ -21,10 +21,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Simple DTO class for the Game entity.
@@ -51,8 +48,8 @@ public class GameSaveDto {
     @Size(min = 200, max = 105_000)
     @ContainsH2
     private String description;
-    //@Date(min = 1980, max = 3000)
-    private Map<String,LocalDate> releaseYear;
+    @Date(min = 1980, max = 3000)
+    private Map<String,LocalDate> releaseYear = new HashMap<>();
     @NotEmpty
     @Size(min = 4, max = 14)
     @CategoryNotExists

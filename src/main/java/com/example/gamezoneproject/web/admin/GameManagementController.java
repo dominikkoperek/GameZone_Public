@@ -8,10 +8,10 @@ import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeDto
 import com.example.gamezoneproject.domain.game.gameDetails.modes.GameModeService;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,13 +29,15 @@ public class GameManagementController {
     private final GameModeService gameModeService;
     private final GamePlatformService gamePlatformService;
     private final CategoryService categoryService;
+    private final Validator validator;
 
     public GameManagementController(GameService gameService, GameModeService gameModeService,
-                                    GamePlatformService gamePlatformService, CategoryService categoryService) {
+                                    GamePlatformService gamePlatformService, CategoryService categoryService, Validator validator) {
         this.gameService = gameService;
         this.gameModeService = gameModeService;
         this.gamePlatformService = gamePlatformService;
         this.categoryService = categoryService;
+        this.validator = validator;
     }
 
     /**
@@ -66,17 +68,18 @@ public class GameManagementController {
      */
 
     @PostMapping("/admin/dodaj-gre")
-    public String addGame(@Valid @ModelAttribute("game") GameSaveDto gameSaveDto,
+    public String addGame(@ModelAttribute("game") GameSaveDto gameSaveDto,
                           BindingResult bindingResult,
                           @RequestParam List<String> platformName,
                           @RequestParam List<String> releaseDate,
                           RedirectAttributes redirectAttributes,
                           Model model) {
+        gameSaveDto.setReleaseYear(gameService.mapToReleaseDateMap(platformName, releaseDate));
+        validator.validate(gameSaveDto,bindingResult);
         if (bindingResult.hasErrors()) {
             addAttributesToModel(model);
             return "admin/game-add-form";
         } else {
-            gameSaveDto.setReleaseYear(gameService.mapToReleaseDateMap(platformName, releaseDate));
             gameService.addGame(gameSaveDto);
             redirectAttributes.addFlashAttribute(AdminController.NOTIFICATION_ATTRIBUTE,
                     "Gra %s została dodana".formatted(gameSaveDto.getTitle()));
@@ -84,12 +87,14 @@ public class GameManagementController {
         }
     }
 
-    private static void setMinAndMaxPlayers(GameSaveDto game) {
+
+    private void setMinAndMaxPlayers(GameSaveDto game) {
         PlayerRange playerRange = new PlayerRange();
         playerRange.setMinPlayers(1);
         playerRange.setMaxPlayers(1);
         game.setPlayerRange(playerRange);
     }
+
 
     private void addAttributesToModel(Model model) {
         List<GameModeDto> allGameModes = gameModeService.findAllGameModes();

@@ -1,5 +1,6 @@
 package com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar;
 
+import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,10 +13,12 @@ public class ReleaseCalendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String gamePlatform;
+    @ManyToOne
+    @JoinColumn(name = "Game_platform_id")
+    private GamePlatform gamePlatform;
     private LocalDate releaseDate;
 
-    public ReleaseCalendar(String gamePlatform, LocalDate releaseDate) {
+    public ReleaseCalendar(GamePlatform gamePlatform, LocalDate releaseDate) {
         this.gamePlatform = gamePlatform;
         this.releaseDate = releaseDate;
     }
@@ -27,11 +30,11 @@ public class ReleaseCalendar {
         this.id = id;
     }
 
-    public String getGamePlatform() {
+    public GamePlatform getGamePlatform() {
         return gamePlatform;
     }
 
-    public void setGamePlatform(String gamePlatform) {
+    public void setGamePlatform(GamePlatform gamePlatform) {
         this.gamePlatform = gamePlatform;
     }
 

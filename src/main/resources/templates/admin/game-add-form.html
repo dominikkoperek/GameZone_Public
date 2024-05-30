@@ -23,7 +23,7 @@
             </button>
         </div>
 
-        <label for="game-title">Tytuł (max 120 znaków)</label>
+        <label class="label-form" for="game-title">Tytuł (max 120 znaków)</label>
         <input type="text" id="game-title" placeholder="spacja = istniejące gry"
                th:field="*{title}"
                th:classappend="${#fields.hasErrors('title')} ?'error-input':'' "
@@ -37,7 +37,7 @@
             <p class="notification-error" th:errors="*{title}">Powiadomienie</p>
         </div>
 
-        <label for="game-short-description">Krótki opis(100 - 320 znaków)</label>
+        <label class="label-form" for="game-short-description">Krótki opis(100 - 320 znaków)</label>
         <textarea rows="5" id="game-short-description"
                   th:field="*{shortDescription}"
                   th:classappend="${#fields.hasErrors('shortDescription')} ? 'error-input':'' "
@@ -51,7 +51,7 @@
             <p class="notification-error" th:errors="*{shortDescription}">Powiadomienie</p>
         </div>
 
-        <label for="game-long-description">Pełny opis(200 - 100.000 znaków)</label>
+        <label class="label-form" for="game-long-description">Pełny opis(200 - 100.000 znaków)</label>
         <textarea rows="14" id="game-long-description" class="content-editor"
                   th:field="*{description}"
                   th:classappend="${#fields.hasErrors('description')} ? 'error-input': '' "
@@ -65,7 +65,7 @@
             <p class="notification-error" th:errors="*{description}">Powiadomienie</p>
         </div>
 
-        <label for="game-trailer-id">Id Trailera DailyMotion (max 30 znaków)</label>
+        <label class="label-form" for="game-trailer-id">Id Trailera DailyMotion (max 30 znaków)</label>
         <input type="text" id="game-trailer-id"
                th:field="*{dailymotionTrailerId}"
                th:classappend="${#fields.hasErrors('dailymotionTrailerId')} ?'error-input':'' "
@@ -79,7 +79,7 @@
         </div>
 
         <div class="input-border">
-            <label for="producer-name">Producent (wybierz z listy)</label>
+            <label class="label-form" for="producer-name">Producent (wybierz z listy)</label>
             <input type="text" id="producer-name"
                    th:field="*{producer}"
                    th:classappend="${#fields.hasErrors('producer')} ?'error-input':'' "
@@ -88,7 +88,7 @@
                    autocorrect="off"
                    onkeyup="validateGameProducer()">
             <ul id="show-producers-suggestion-list" class="hide-notification"></ul>
-            <label for="producer-value">Wybrany producent</label>
+            <label class="label-form" for="producer-value">Wybrany producent</label>
             <input readonly type="text" id="producer-value">
             <div class="input-validation-container">
                 <p class="notification-error" id="game-producer-error"></p>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="input-border">
-            <label for="publisher-name">Wydawca (wybierz z listy)</label>
+            <label class="label-form" for="publisher-name">Wydawca (wybierz z listy)</label>
             <input type="text" id="publisher-name"
                    th:field="*{publisher}"
                    th:classappend="${#fields.hasErrors('publisher')} ?'error-input':'' "
@@ -107,7 +107,7 @@
                    onkeyup="validateGamePublisher()">
             <ul id="show-publishers-suggestion-list" class="hide-notification"></ul>
 
-            <label for="publisher-value">Wybrany wydawca</label>
+            <label class="label-form" for="publisher-value">Wybrany wydawca</label>
             <input readonly type="text" id="publisher-value">
 
             <div class="input-validation-container">
@@ -117,7 +117,7 @@
         </div>
 
 
-        <label for="categories">Kategorie (wybierz z listy)</label>
+        <label class="label-form" for="categories">Kategorie (wybierz z listy)</label>
         <span><i class="fa fa-solid fa-crown"></i> główna kategoria</span>
         <select multiple id="categories" th:field="*{category}">
             <option th:each="cat:${allCategories}" th:value="${cat.name}" th:text="${cat.name}"></option>
@@ -131,11 +131,11 @@
         </div>
 
         <div class="input-border" id="game-modes-input-container">
-            <label for="game-modes">Tryby gry (wybierz z listy)</label>
+            <label class="label-form" for="game-modes">Tryby gry (wybierz z listy)</label>
 
             <div class="checkbox-left-center-container" id="game-modes">
                 <div class="checkbox-margin-box" th:each="modes:${allGameModes}">
-                    <label class="checkbox-container">
+                    <label class="checkbox-container label-form">
                         <span th:text="${modes.name}"></span>
                         <input type="checkbox" th:field="${game.gameModes}" th:value="${modes.name}"
                                onclick="validateGameMode()">
@@ -145,7 +145,7 @@
 
 
                 <div id="show-players-range" class="hide-players-range">
-                    <label for="min-players">Minimalna liczba graczy</label>
+                    <label class="label-form" for="min-players">Minimalna liczba graczy</label>
                     <input type="number"
                            min="1"
                            max="999"
@@ -154,7 +154,7 @@
                            th:field="${game.playerRange.minPlayers}"
                            value="1"
                            oninput="validatePlayersRange()"/>
-                    <label for="max-players">Maksymalna liczba graczy</label>
+                    <label class="label-form" for="max-players">Maksymalna liczba graczy</label>
                     <input type="number"
                            min="1"
                            max="2000"
@@ -176,7 +176,7 @@
             </div>
         </div>
 
-        <label for="platforms">Platformy (wybierz z listy)</label>
+        <label class="label-form" for="platforms">Platformy (wybierz z listy)</label>
         <select multiple id="platforms" th:field="*{platform}">
             <option th:each="platforms:${allAvailableGamePlatforms}" th:value="${platforms}"
                     th:text="${platforms}"></option>
@@ -187,7 +187,7 @@
         </div>
 
         <div class="input-border" id="game-date-input-container">
-            <label for="release-date">Data wydania</label>
+            <label class="label-form" for="release-date">Data wydania</label>
             <select id="platformName" multiple name="platformName" style="display: none"></select>
             <select id="releaseDate"multiple name="releaseDate" style="display: none"></select>
             <div id="release-date" class="release-date-box">
@@ -199,7 +199,7 @@
             <p class="notification-error" th:errors="*{releaseYear}">Powiadomienie</p>
         </div>
 
-        <label for="game-poster">Plakat gry max min 400x600 rozmiar 1Mb (jpg, png, jpeg)</label>
+        <label class="label-form" for="game-poster">Plakat gry max min 400x600 rozmiar 1Mb (jpg, png, jpeg)</label>
         <p id="game-poster-proportion-height"></p>
         <p id="game-poster-proportion-width"></p>
         <div class="file-container">
@@ -208,7 +208,7 @@
                        th:field="*{poster}"
                        th:classappend="${#fields.hasErrors('poster')} ?'error-input':'' "
                        onchange="validateGamePoster()">
-                <label for="game-poster" id="game-poster-preview">
+                <label class="label-form" for="game-poster" id="game-poster-preview">
                     <img class="game-poster-preview" th:src="@{/img/notfound.jpg}" alt="not-upload">
                     <div class="game-poster-name">
                         <span>+</span>
@@ -223,7 +223,7 @@
             <p class="notification-error" th:errors="${game.poster}">Powiadomienie</p>
         </div>
 
-        <label for="small-suggestion-poster">Mały baner reklamowy min rozmiar 600x200 max 1Mb (jpg, png, jpeg)</label>
+        <label class="label-form" for="small-suggestion-poster">Mały baner reklamowy min rozmiar 600x200 max 1Mb (jpg, png, jpeg)</label>
         <p id="small-suggestion-proportion-height"></p>
         <p id="small-suggestion-proportion-width"></p>
         <div class="file-container">
@@ -232,7 +232,7 @@
                        th:field="*{smallPosterSuggestion}"
                        th:classappend="${#fields.hasErrors('smallPosterSuggestion')} ?'error-input':'' "
                        onchange="validateSmallSuggestionPoster()">
-                <label for="small-suggestion-poster" id="small-suggestion-poster-preview">
+                <label class="label-form" for="small-suggestion-poster" id="small-suggestion-poster-preview">
                     <img class="small-suggestion-poster-preview" th:src="@{/img/notfoundhorizontal.jpg}"
                          alt="not-upload">
                     <div class="small-suggestion-poster-name">
@@ -250,7 +250,7 @@
 
 
         <div id="big-suggestion-poster-display" class="hide-big-suggestion-poster">
-            <label for="big-suggestion-poster">Duży plakat promocyjny (dla gier przed premierą) min rozmiar 1100x350 1Mb
+            <label class="label-form" for="big-suggestion-poster">Duży plakat promocyjny (dla gier przed premierą) min rozmiar 1100x350 1Mb
                 (jpg, png, jpeg)</label>
             <p id="big-suggestion-proportion-height"></p>
             <p id="big-suggestion-proportion-width"></p>
@@ -261,7 +261,7 @@
                            th:classappend="${#fields.hasErrors('bigPosterSuggestion')} ?'error-input':'' "
                            onchange="validateBigSuggestionPoster()">
 
-                    <label for="big-suggestion-poster" id="big-suggestion-poster-preview">
+                    <label class="label-form" for="big-suggestion-poster" id="big-suggestion-poster-preview">
                         <img class="big-suggestion-poster-preview" th:src="@{/img/notfoundhorizontal.jpg}"
                              alt="not-upload">
                         <div class="big-suggestion-poster-name">
@@ -279,7 +279,7 @@
 
 
         <div class="checkbox-margin-box">
-            <label class="checkbox-container">Gra polecana przez redakcje
+            <label class="label-form checkbox-container">Gra polecana przez redakcje
                 <input type="checkbox" name="isPromoted" id="isPromoted" onkeyup="validateIsPromoted()"
                        th:field="*{promoted}">
                 <span class="checkmark"></span>

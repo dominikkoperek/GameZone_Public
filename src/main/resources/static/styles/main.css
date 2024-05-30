@@ -1,14 +1,14 @@
 * {
     margin: 0;
     padding: 0;
-    color: #cccccc;
+    color: #d9d9d9;
 }
 
 body {
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
-    color: #cccccc;
+    color: #d9d9d9;
 }
 
 a {
@@ -113,7 +113,6 @@ p {
         align-self: center;
         width: 1100px;
     }
-
 }
 
 
@@ -207,6 +206,7 @@ p {
     word-break: break-word;
 }
 
+
 .display-block {
     display: block;
 }
@@ -214,13 +214,13 @@ p {
 .game-list {
     list-style-type: none;
     display: flex;
-    margin-right: 1rem;
+    margin-right: 0.8rem;
     flex-wrap: wrap;
 }
 
 .game-list-item {
     margin-bottom: 1rem;
-    margin-left: 1rem;
+    margin-left: 0.8rem;
     display: flex;
 
     border: 1px solid #4b4b4b;
@@ -411,9 +411,6 @@ p {
 
 
 /*game.html*/
-.game {
-    display: flex;
-}
 
 .game-summary {
     display: flex;
@@ -446,7 +443,6 @@ p {
     color: #ffe6cb;
     font-size: 1rem;
     opacity: 0.9;
-    transition: font-size 100ms ease-in-out;
 }
 
 .game-summary-category > li:not(:last-child) {
@@ -460,24 +456,93 @@ p {
     color: #f5b800;
 }
 
-.game-summary-info {
-    margin: 1rem 1rem;
-}
 
 .game-summary-title {
     color: #f5b800;
     margin-bottom: 0.25rem;
     font-size: 1.8rem;
-    transition: font-size 200ms ease-in-out;
 }
 
 .game-summary-short-description {
-    transition: font-size 200ms ease-in-out;
+    text-align: justify;
+    text-justify: auto;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .game-summary-item {
+    list-style: none;
     margin: 0.25rem 0;
-    transition: font-size 200ms ease-in-out;
+}
+
+.game-summary-date-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 25rem;
+    height: 1.75rem;
+    padding: 0.25rem;
+    background-color: #3a3a3a;
+    border: 1px solid rgba(117, 117, 117, 0.62);
+    column-gap: 0.7rem;
+    border-radius: 2px;
+}
+
+.game-summary-date-box-list {
+    list-style: none;
+    flex-wrap: wrap;
+    display: flex;
+    column-gap: 0.8rem;
+    row-gap: 0.3rem;
+}
+
+.game-summary-platform-date-list {
+    display: flex;
+    list-style: none;
+}
+
+.date-day, .date-month, .date-year {
+    background-color: #38576e;
+    text-align: center;
+    border: 1px solid rgba(114, 165, 203, 0.51);
+    border-right: 0;
+    font-size: 1rem;
+    padding: 0.2rem;
+    font-family: "Roboto Condensed", -apple-system, Arial, Helvetica, sans-serif;
+}
+.date-text{
+    font-weight: 600;
+}
+
+.date-year {
+    border-right: 1px solid rgba(178, 178, 178, 0.42);
+    font-weight: 700;
+}
+
+.game-summary-platform-name-list {
+    list-style: none;
+    display: inline-flex;
+
+}
+
+.game-summary-platform-name-list li {
+    text-align: center;
+    background-color: #565656;
+    font-size: 0.9rem;
+    padding: 0.2rem;
+    border: 1px solid rgba(178, 178, 178, 0.42);
+    border-right: 0;
+    font-family: "Roboto Condensed", -apple-system, Arial, Helvetica, sans-serif;
+}
+
+.game-summary-platform-name-list li:last-child {
+    border: 1px solid rgba(178, 178, 178, 0.42);
+}
+
+.game-producers {
+    display: inline-flex;
+    flex-wrap: wrap;
+    column-gap: 1.5rem;
 }
 
 ul.game-summary-item > a > i {
@@ -502,12 +567,23 @@ ul.game-summary-item > a > i {
 
 }
 
+.game {
+    display: flex;
+}
+
 .game-summary-details {
     border-bottom: 1px dashed #4b4b4b;
     border-top: 1px dashed #4b4b4b;
     margin: 0.5rem 0 0.25rem;
     display: flex;
     flex-direction: column;
+}
+
+.game-summary-info {
+    margin: 1rem 0 0 0.6rem;
+}
+
+.game-container {
 
 }
 
@@ -515,33 +591,18 @@ ul.game-summary-item > a > i {
     display: none;
 }
 
-@media (max-width: 400px) {
-    .show-platforms {
-        display: block;
-        margin: 0 0.3rem;
-    }
-
-    .icon-container {
-        height: 0.9rem;
-    }
-
-    .platform-text {
-        font-size: 0.8rem;
-    }
-
-    .hide-platforms {
-        display: none;
-    }
-
-    .game-list-item-title {
-        font-size: 1.2rem;
-    }
-
-    .game-summary-cover {
-        max-width: 8rem;
-        max-height: 10.5rem;
-    }
-
+.release-date-hidden{
+    display: none;
+    justify-content: space-between;
+    border-bottom: 1px dashed #4b4b4b;
+    padding-bottom: 0.2rem;
+}
+.date-mobile-box{
+    display: flex;
+    flex-direction: column;
+}
+.release-date-hidden:last-child{
+    margin-bottom: 1rem;
 }
 
 @media (max-width: 359px) {
@@ -578,9 +639,14 @@ ul.game-summary-item > a > i {
     .popular-produced-games {
         display: none;
     }
-
-
+    .release-date-hidden{
+        display: flex;
+    }
+    .game-summary-date-box-list{
+        display: none;
+    }
 }
+
 
 .game-trailer {
     border: none;
@@ -683,7 +749,7 @@ ul.game-summary-item > a > i {
 }
 
 /*GAME RATING MEDIA*/
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 672px) {
     .game-rating-container {
         width: 8rem;
     }
@@ -708,6 +774,39 @@ ul.game-summary-item > a > i {
         font-size: 0.5rem;
     }
 
+    .show-platforms {
+        display: block;
+        margin: 0 0.3rem;
+    }
+
+    .icon-container {
+        height: 0.7rem;
+    }
+
+    .platform-text,.platform-logo {
+        font-size: 0.7rem;
+    }
+
+    .hide-platforms {
+        display: none;
+    }
+    .game-list-item-title {
+        font-size: 1.2rem;
+    }
+
+    .game-summary-cover {
+        max-width: 8rem;
+        max-height: 10.5rem;
+    }
+}
+.test-list{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.test-div{
+    display: flex;
 }
 
 /* GAME DESCRIPTION*/
@@ -845,7 +944,9 @@ textarea {
     outline: none;
     border: 1px solid #868686;
     font-size: 1.2rem;
-    background-color: #cccccc;
+    background-color: #d9d9d9;
+}
+.label-form{
 }
 
 .add-content-form {
@@ -1113,7 +1214,8 @@ textarea {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
-input[type=checkbox]:disabled ~ .checkmark{
+
+input[type=checkbox]:disabled ~ .checkmark {
     background-color: #ff6161;
 }
 
@@ -1196,7 +1298,7 @@ input[type="file"]::file-selector-button:hover {
     margin-top: -34px;
     text-align: center;
     line-height: 2rem;
-    color: #cccccc;
+    color: #d9d9d9;
     font-size: 1rem;
     background-color: rgba(93, 93, 93, 0.57);
 }
@@ -1275,7 +1377,7 @@ input[type="file"]::file-selector-button:hover {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    color: #cccccc;
+    color: #d9d9d9;
     padding: 0.43rem 0.43rem;
     background-color: #38576e;
     border: 1px solid rgba(114, 165, 203, 0.51);
@@ -1496,18 +1598,19 @@ input[type="file"]::file-selector-button:hover {
     border: 1px solid #4f4f4f;
     flex-direction: column;
     justify-content: left;
-    margin:auto;
+    margin: auto;
 }
-.release-date-check-box{
+
+.release-date-check-box {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     grid-row: auto;
 }
 
-.release-date-container{
+.release-date-container {
     display: flex;
-   justify-content: space-between;
+    justify-content: space-between;
 }
 
 .platform-release-date-box p {
@@ -1518,7 +1621,8 @@ input[type="file"]::file-selector-button:hover {
     max-width: 0.8rem;
     overflow: hidden;
 }
-.release-date-inputs{
+
+.release-date-inputs {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
@@ -1721,7 +1825,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .select-box {
-    background-color: #cccccc;
+    background-color: #d9d9d9;
     border: 1px solid #727272;
     display: flex;
     justify-content: space-between;
@@ -1770,7 +1874,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     display: none;
     position: absolute;
     width: 100%;
-    background-color: #cccccc;
+    background-color: #d9d9d9;
     border-top: none;
     max-height: 14rem;
     overflow: auto;
@@ -1867,7 +1971,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .mult-select-tag .body {
     display: flex;
     border: 1px solid #525252;
-    background: #cccccc;
+    background: #d9d9d9;
     min-height: 2.15rem;
     width: 100%;
     min-width: 6rem;
@@ -1968,7 +2072,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 
 .mult-select-tag .drawer {
     position: absolute;
-    background: #cccccc;
+    background: #d9d9d9;
     max-height: 15rem;
     z-index: 40;
     top: 98%;
@@ -2189,10 +2293,27 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
         font-size: 0.9rem;
     }
 }
-
+/*Media for home page images*/
 @media (max-width: 399px) {
     .suggestion-box {
         max-width: 9.5rem;
+    }
+    .poster-list-wrapper {
+        display: block;
+        width: 7.5rem;
+        height: 10rem;
+    }
+    .game-list-item-title,
+    .game-details-container,
+    .game-category,
+    .game-list-item-rating{
+        font-size: 1rem;
+    }
+    .game-category{
+       font-size:  0.8rem;
+    }
+
+    .game-list-item-poster {
     }
 }
 
@@ -2203,9 +2324,9 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     }
 }
 
-@media (max-width: 1000px) {
-    .suggestion-platforms-container {
-        display: none;
+@media (max-width: 500px) {
+    .suggestion-platform-logo {
+        width: 1.6rem;
     }
 
 }
@@ -2239,7 +2360,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .login-container-wrapper > h2 {
     font-size: 2rem;
     text-align: center;
-    color: #cccccc;
+    color: #d9d9d9;
 }
 
 .login-container-wrapper .login-input-box {
@@ -2284,7 +2405,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px #363636 inset, 0 0 0 1px rgba(204, 204, 204, 0.51) !important;
-    -webkit-text-fill-color: #cccccc;
+    -webkit-text-fill-color: #d9d9d9;
     border: none;
     outline: none;
 }
@@ -2396,7 +2517,7 @@ input::-ms-clear {
     border: 1px solid grey;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.13);
-    background-color: #cccccc;
+    background-color: #d9d9d9;
     color: #1f1f1f;
     cursor: pointer;
     font-weight: 600;

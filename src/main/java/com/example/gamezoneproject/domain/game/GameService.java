@@ -2,6 +2,7 @@ package com.example.gamezoneproject.domain.game;
 
 import com.example.gamezoneproject.domain.exceptions.CategoryNotFoundException;
 import com.example.gamezoneproject.domain.exceptions.CompanyNotFoundException;
+import com.example.gamezoneproject.domain.exceptions.PlatformNotFoundException;
 import com.example.gamezoneproject.domain.game.dto.*;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryRepository;
@@ -229,7 +230,6 @@ public class GameService {
         return gameRepository.findAllByPublisher_Id(publisherId)
                 .stream()
                 .map(gameDtoMapper::mapGameByCompanyId)
-                // .sorted(Comparator.comparing(GameByCompanyDto::getReleaseYear).reversed()) FIX
                 .toList();
     }
 
@@ -258,7 +258,7 @@ public class GameService {
         game.setShortDescription(gameSaveDto.getShortDescription().trim());
         game.setDescription(gameSaveDto.getDescription().trim());
         game.setDailymotionTrailerId(gameSaveDto.getDailymotionTrailerId().trim());
-        game.setReleaseDate(getReleaseDate(gameSaveDto.getReleaseYear()));
+        game.setReleaseDate(getReleaseCalendar(gameSaveDto.getReleaseYear()));
         Company producer = companyRepository.findByNameIgnoreCase(gameSaveDto.getProducer())
                 .orElseThrow(CompanyNotFoundException::new);
         game.setProducer(producer);
@@ -290,41 +290,55 @@ public class GameService {
         gameRepository.save(game);
     }
 
-    public Map<String,LocalDate> mapToReleaseDateMap(List<String> platformName, List<String> releaseDate) {
-        Map<String,LocalDate> map = new HashMap<>();
+    /**
+     * This method map 2-String lists into map where key is String platform name and value is Local date release date.
+     *
+     * @param platformName List of platform names of the game.
+     * @param releaseDate  List of Strings release dates.
+     * @return Map of Platform names and parsed dates.
+     */
+    public Map<String, LocalDate> mapToReleaseDateMap(List<String> platformName, List<String> releaseDate) {
+        Map<String, LocalDate> map = new HashMap<>();
         for (int i = 0; i < platformName.size(); i++) {
-            map.put(platformName.get(i),LocalDate.parse(releaseDate.get(i)));
+            map.put(platformName.get(i), LocalDate.parse(releaseDate.get(i)));
         }
         return map;
     }
 
     /**
-     * This method gets the release date of the game.
-     * If the release year is null, it returns a default date.
+     * This method parse map of string,localdate to ReleaseCalendar object and add it to list.
+     * Method finds platform by name and release year in database if such calendar exists add it to list if not
+     * create a new one and then add it to list.
      *
-     * @param releaseYear The release year of the game.
-     * @return The release date of the game.
+     * @param releaseYear Map of platforms names and release dates to be parsed.
+     * @return List of ReleaseCalender for game.
      */
-    private List<ReleaseCalendar> getReleaseDate(Map<String, LocalDate> releaseYear) {
+    private List<ReleaseCalendar> getReleaseCalendar(Map<String, LocalDate> releaseYear) {
         List<ReleaseCalendar> premiereDates = new ArrayList<>();
         for (Map.Entry<String, LocalDate> localDateStringEntry : releaseYear.entrySet()) {
             LocalDate localDate = localDateStringEntry.getValue();
-            String platform = localDateStringEntry.getKey();
-            Optional<ReleaseCalendar> byReleaseDateAndGamePlatform = releaseDateRepository
-                    .findByReleaseDateAndGamePlatform(localDate, platform);
+            GamePlatform gamePlatform = gamePlatformRepository
+                    .findByNameIgnoreCase(localDateStringEntry.getKey())
+                    .orElseThrow(PlatformNotFoundException::new);
+            Optional<ReleaseCalendar> calendarByPlatformNameAndDate = releaseDateRepository
+                    .findByReleaseDateAndGamePlatform_Name(localDate, gamePlatform.getName());
 
-            if (byReleaseDateAndGamePlatform.isPresent()) {
-                premiereDates.add(byReleaseDateAndGamePlatform.get());
+            if (calendarByPlatformNameAndDate.isPresent()) {
+                premiereDates.add(calendarByPlatformNameAndDate.get());
             } else {
-                ReleaseCalendar releaseCalendar = new ReleaseCalendar();
-                releaseCalendar.setReleaseDate(localDate);
-                releaseCalendar.setGamePlatform(platform);
+                ReleaseCalendar releaseCalendar = getReleaseCalendar(localDate, gamePlatform);
                 premiereDates.add(releaseCalendar);
                 releaseDateRepository.save(releaseCalendar);
             }
-
         }
         return premiereDates;
+    }
+
+    private static ReleaseCalendar getReleaseCalendar(LocalDate localDate, GamePlatform gamePlatform) {
+        ReleaseCalendar releaseCalendar = new ReleaseCalendar();
+        releaseCalendar.setReleaseDate(localDate);
+        releaseCalendar.setGamePlatform(gamePlatform);
+        return releaseCalendar;
     }
 
     /**

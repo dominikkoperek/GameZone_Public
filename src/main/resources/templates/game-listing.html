@@ -167,14 +167,14 @@
                                     </li>
                                 </ul>
                             </div>
-
+                            <p class="game-summary-item" th:each="date:${gameReleaseDates}">
                             <h4 th:if="${game.platform.isEmpty()}" th:text="|Brak platformy|">Brak danych</h4>
                             <div class="game-details-container">
                                 <p th:if="${game.releaseYear}">
                                         <span th:each="date:${game.releaseYear.entrySet()}"
                                               th:if="${dateStat.index}==0">
                                                 <span th:if="${date.value.year}<3000"
-                                                      th:text="${date.value}"></span>
+                                                      th:text="${#temporals.format(date.value, 'd MMMM yyyy')}"></span>
                                                 <span th:if="${date.value.year}==8888"
                                                       th:text="'nieznana'"></span>
                                                 <span th:if="${date.value.year}==9999"

@@ -16,7 +16,9 @@
 
             <section class="game ">
                 <div class="game-container">
+
                     <div class="game-summary">
+
                         <div class="summary-cover-wrapper">
                             <img src="../static/img/notfound.jpg"
                                  th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.jpg}"
@@ -55,72 +57,6 @@
 
 
                 <div class="game-summary-info">
-                    <h1 class="game-summary-title" th:text="${game.title}">Mass Effect 3</h1>
-                    <p class="game-summary-short-description" th:text="${game.shortDescription}">
-                        Trzecia odsłona osadzonej w konwencji space opery gry studia BioWare.
-                        Mass Effect 3 jest zwieńczeniem epickiej trylogii opowiadającej o losach komandora Sheparda
-                        i konflikcie z prastarą rasą Żniwiarzy.
-                    </p>
-                    <div class="game-summary-details">
-                        <ul class="game-summary-item game-summary-category" th:if="${game.category}">
-                            <li th:each="gameCategory : ${game.category}">
-                                <a href="#"
-                                   th:if="${!game.category.isEmpty()}"
-                                   th:href="@{|/gry/kategorie/${gameCategory.name}|}"
-                                   th:text="${gameCategory.name}">RPG</a>
-                            </li>
-                        </ul>
-
-                        <ul class="game-summary-item">
-                            <span>Tryb gry:</span>
-                            <a th:each="mode:${game.gameModes}">
-                                <i th:if="${mode.name} eq 'singleplayer'" title="singleplayer"
-                                   class="fa-solid fa-user"></i>
-                                <i th:if="${mode.name} eq 'multiplayer'" title="multiplayer"
-                                   class="fa-solid fa-users">
-                                <span class="game-summary-item-gamemode"
-                                      th:if="${game.playerRange.maxPlayers} ge ${game.playerRange.minPlayers}"
-                                      th:text="|${game.playerRange.minPlayers} - ${game.playerRange.maxPlayers}|">1</span>
-                                </i>
-                            </a>
-                            <i th:if="${game.gameModes.isEmpty()}" title="brak" class="fa-solid fa-question"></i>
-                        </ul>
-
-<!--                        <p class="game-summary-item" th:if="${game.releaseYear le 3000}"-->
-<!--                           th:text="|Premiera: ${#temporals.format(game.releaseYear, 'd MMM yyyy')}|">Premiera: 6 mar-->
-<!--                            2012 </p>-->
-<!--                        <p class="game-summary-item" th:unless="${game.releaseYear ne 9999}">-->
-<!--                            Premiera: nieogłoszona-->
-<!--                        </p>-->
-
-                        <p class="game-summary-item" th:each="date:${gameReleaseDates}">
-<!--                            <span th:if="${date.value.year le 3000}" th:text="${date.key}"></span>-->
-<!--                            <span th:if="${date.value.year le 3000}" th:text="${#temporals.format(date.value, 'd MMM yyyy')}"></span>-->
-
-                            <span th:if="${date.key.year le 3000}" th:text="${date.value}">Platforma</span>
-                            <span th:if="${date.key.year le 3000}" th:text="${#temporals.format(date.key, 'd MMM yyyy')}">Date</span>
-
-                            <span th:if="${date.key.year eq 8888}" th:text="${date.value}">Platforma</span>
-                            <span th:if="${date.key.year eq 8888}">nieznana</span>
-
-                            <span th:if="${date.key.year eq 9999}" th:text="${date.value}">Platforma</span>
-                            <span th:if="${date.key.year eq 9999}">anulowana</span>
-                        </p>
-
-                        <span class="game-summary-item">Producent:
-                        <a href="#"
-                           th:href="@{|/katalog-firm/firma/${#strings.replace(game.producer.name,' ','-')}/${game.producer.id}|}"
-                           th:text="${game.producer.name}">BioWare
-                        </a>
-                    </span>
-                        <span class="game-summary-item">Wydawca:
-                        <a href="#"
-                           th:href="@{|/katalog-firm/firma/${#strings.replace(game.publisher.name,' ','-')}/${game.publisher.id}|}"
-                           th:text="${game.publisher.name}">Electronic Arts Inc.
-                        </a>
-                    </span>
-                    </div>
-
                     <div class="platforms-container hide-platforms">
                         <ul class="platform-list">
                             <li class="platform_element" th:each="platform: ${game.platform}">
@@ -134,7 +70,95 @@
                             </li>
                         </ul>
                     </div>
+                    <h1 class="game-summary-title" th:text="${game.title}">Mass Effect 3</h1>
+                    <p class="game-summary-short-description" th:text="${game.shortDescription}">
+                        Trzecia odsłona osadzonej w konwencji space opery gry studia BioWare.
+                        Mass Effect 3 jest zwieńczeniem epickiej trylogii opowiadającej o losach komandora Sheparda
+                        i konflikcie z prastarą rasą Żniwiarzy.
+                    </p>
+
+                    <div class="game-summary-details">
+                        <ul class="game-summary-item game-summary-category" th:if="${game.category}">
+                            <li th:each="gameCategory : ${game.category}">
+                                <a href="#"
+                                   th:if="${!game.category.isEmpty()}"
+                                   th:href="@{|/gry/kategorie/${gameCategory.name}|}"
+                                   th:text="${gameCategory.name}">RPG</a>
+                            </li>
+                        </ul>
+
+                        <ul class="game-summary-item">
+                            <li>
+                                <span>Tryb gry:</span>
+                                <a th:each="mode:${game.gameModes}">
+                                    <i th:if="${mode.name} eq 'singleplayer'" title="singleplayer"
+                                       class="fa-solid fa-user"></i>
+                                    <i th:if="${mode.name} eq 'multiplayer'" title="multiplayer"
+                                       class="fa-solid fa-users">
+                                <span class="game-summary-item-gamemode"
+                                      th:if="${game.playerRange.maxPlayers} ge ${game.playerRange.minPlayers}"
+                                      th:text="|${game.playerRange.minPlayers} - ${game.playerRange.maxPlayers}|">1</span>
+                                    </i>
+                                </a>
+                                <i th:if="${game.gameModes.isEmpty()}" title="brak" class="fa-solid fa-question"></i>
+                            </li>
+
+                        </ul>
+                        <div class="game-producers">
+                            <span class="game-summary-item">producent:
+                        <a href="#"
+                           th:href="@{|/katalog-firm/firma/${#strings.replace(game.producer.name,' ','-')}/${game.producer.id}|}"
+                           th:text="${game.producer.name}">BioWare
+                        </a>
+                    </span>
+                            <span class="game-summary-item">wydawca:
+                        <a href="#"
+                           th:href="@{|/katalog-firm/firma/${#strings.replace(game.publisher.name,' ','-')}/${game.publisher.id}|}"
+                           th:text="${game.publisher.name}">Electronic Arts Inc.
+                        </a>
+                    </span>
+                        </div>
+                    </div>
+                    <ul class="game-summary-date-box-list">
+                        <li th:each="date:${gameReleaseDates}">
+                            <div class="game-summary-date-box">
+                                <ul class="game-summary-platform-name-list">
+                                    <li th:if="${date.key.year le 3000} or ${date.key.year} eq 8888 or ${date.key.year} eq 9999"
+                                        th:each="platform:${date.value}"
+                                        th:text="${platform}">PC
+                                    </li>
+
+                                </ul>
+                                <ul th:if="${date.key.year le 3000} or ${date.key.year} eq 8888 or ${date.key.year} eq 9999"
+                                    class="game-summary-platform-date-list">
+                                    <li th:if="${date.key.year le 3000}" class="date-day"
+                                        th:text="${#temporals.format(date.key, 'd')}"></li>
+                                    <li th:if="${date.key.year le 3000}" class="date-month"
+                                        th:text="${#temporals.format(date.key, 'MMM')}"></li>
+                                    <li th:if="${date.key.year le 3000}" class="date-year"
+                                        th:text="${#temporals.format(date.key, 'yyyy')}"></li>
+                                    <li th:if="${date.key.year eq 8888}" class="date-year">nieznana</li>
+                                    <li th:if="${date.key.year eq 9999}" class="date-year">anulowana</li>
+                                </ul>
+                            </div>
+
+                    </ul>
+                    <div class="date-mobile-box">
+                        <p class="game-summary-item release-date-hidden" th:each="date:${gameReleaseDates}">
+                            <span th:if="${date.key.year le 3000}" th:text="${date.value}">Platforma</span>
+                            <span class="date-text" th:if="${date.key.year le 3000}"
+                                  th:text="${#temporals.format(date.key, 'd MMM yyyy')}">Date</span>
+
+                            <span th:if="${date.key.year eq 8888}" th:text="${date.value}">Platforma</span>
+                            <span class="date-text" th:if="${date.key.year eq 8888}">nieznana</span>
+
+                            <span th:if="${date.key.year eq 9999}" th:text="${date.value}">Platforma</span>
+                            <span class="date-text" th:if="${date.key.year eq 9999}">anulowana</span>
+                        </p>
+                    </div>
+
                 </div>
+
             </section>
 
 
@@ -151,7 +175,6 @@
                     </li>
                 </ul>
             </div>
-
 
             <div class="game-full-description">
                 <section class="game-section">

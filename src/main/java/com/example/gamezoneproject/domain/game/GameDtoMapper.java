@@ -58,11 +58,11 @@ public class GameDtoMapper {
         Map<String, LocalDate> releaseDateMap = game.getReleaseDate()
                 .stream()
                 .collect(Collectors.toMap(
-                        ReleaseCalendar::getGamePlatform,
+                        gamePlatform -> gamePlatform.getGamePlatform().getName(),
                         ReleaseCalendar::getReleaseDate,
                         (oldValue, newValue) -> oldValue
                 ));
-       return GameService.sortReleaseDates(releaseDateMap);
+        return GameService.sortReleaseDates(releaseDateMap);
     }
 
 
@@ -85,7 +85,8 @@ public class GameDtoMapper {
                 game.getPoster()
         );
     }
-    private LocalDate mapToFirstReleaseDate(Long gameId){
+
+    private LocalDate mapToFirstReleaseDate(Long gameId) {
         return releaseDateRepository
                 .findEarliestReleaseDateFromTodayByGameId(gameId).map(ReleaseCalendar::getReleaseDate)
                 .orElse(LocalDate.of(9999, 1, 1));
@@ -119,20 +120,24 @@ public class GameDtoMapper {
                 game.getId(),
                 game.getTitle(),
                 mapReleaseDateToMap(game),
-                game.getGamePlatform()
-                        .stream()
-                        .collect(Collectors.toMap(GamePlatform::getName, GamePlatform::getLogoAddressImage)),
+                mapPlatforms(game),
                 game.getSmallPosterSuggestion(),
                 game.getBigPosterSuggestion(),
                 getDaysBeforeRelease(game)
         );
     }
 
+    private Map<String, String> mapPlatforms(Game game) {
+        return releaseDateRepository.findPlatformsByEarliestDateByGameId(game.getId())
+                .stream()
+                .collect(Collectors.toMap(GamePlatform::getName, GamePlatform::getLogoAddressImage));
+    }
+
     private int getDaysBeforeRelease(Game game) {
         ReleaseCalendar earliestReleaseDate = releaseDateRepository
                 .findEarliestReleaseDateFromTodayByGameId(game.getId())
                 .orElseThrow(GameNotFoundException::new);
-        return (int)ChronoUnit.DAYS.between(LocalDate.now(),earliestReleaseDate.getReleaseDate());
+        return (int) ChronoUnit.DAYS.between(LocalDate.now(), earliestReleaseDate.getReleaseDate());
     }
 
 }
