@@ -1,6 +1,6 @@
 package com.example.gamezoneproject.domain.user.dto;
 
-import com.example.gamezoneproject.domain.validation.other.email.Email;
+import com.example.gamezoneproject.validation.other.email.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 

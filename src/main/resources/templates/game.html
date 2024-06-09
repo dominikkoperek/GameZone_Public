@@ -2,6 +2,7 @@
 <html lang="pl"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
 
 <head>
@@ -13,12 +14,23 @@
     <main class="main-content" layout:fragment="content">
         <div class="margin-box">
 
-
             <section class="game ">
+
                 <div class="game-container">
 
-                    <div class="game-summary">
+                    <div class="game-rating-container-top ">
+                        <h3 class="game-rating-heading">ocena gry</h3>
+                        <div>
 
+                            <p class="game-rating-value" th:if="${game.ratingCount ge 2}"
+                               th:text="${#numbers.formatDecimal(game.averageRating,1,1,'POINT')}">7.3
+                            <p class="game-rating-heading" th:if="${game.ratingCount lt 2}">brak oceny</p>
+                            <p class="game-rating-heading" th:if="${game.ratingCount lt 2}">mniej niż 2 głosy</p>
+                            <p class="game-rating-count" th:text="|oceny: ${game.ratingCount} |">212 ocen</p>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="game-summary">
                         <div class="summary-cover-wrapper">
                             <img src="../static/img/notfound.jpg"
                                  th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.jpg}"
@@ -29,30 +41,32 @@
                         </div>
                     </div>
                     <div class="game-rating-container game-section">
-                        <h3 class="game-rating-heading">Wystaw ocene</h3>
-                        <div>
-                            <p class="game-rating-value">4.3
-                                <span class="game-rating-max-value">/5</span></p>
-                        </div>
-                        <form action="#" class="game-rating-form">
-                            <input type=hidden name="gameId">
-                            <div class="game-rating-buttons">
-                                <button data-rating="5" class="game-rating-button"><i class="fa-solid fa-star"></i>
-                                </button>
-                                <button data-rating="4" class="game-rating-button"><i class="fa-solid fa-star"></i>
-                                </button>
-                                <button data-rating="3" class="game-rating-button"><i class="fa-solid fa-star"></i>
-                                </button>
-                                <button data-rating="2" class="game-rating-button"><i class="fa-solid fa-star"></i>
-                                </button>
-                                <button data-rating="1" class="game-rating-button"><i class="fa-solid fa-star"></i>
-                                </button>
-                            </div>
-                            <p class="game-rating-count"><i class="fa-solid fa-user"></i> 212</p>
-                        </form>
-                        <p class="game-rating-login"><a href="#">Zaloguj sie</a>, aby zagłosować </p>
-                    </div>
+                        <h3 class="game-rating-heading">twoja ocena</h3>
 
+                        <div sec:authorize="isAuthenticated()">
+                            <p id="user-rate" class="game-rating-value-user"
+                               th:text="${userRate ne null ? userRate:'?'}">?</p>
+
+                            <p id="user-rate-message" class="game-rating-message"></p>
+                        </div>
+                        <form action="#" th:action="@{/ocen-gre}" method="post" sec:authorize="isAuthenticated()">
+                            <div class="rating-slider-container">
+                                <input type="hidden" name="gameId" th:value="${game.id}">
+                                <input name="rating" id="slider" type="range" min="0" max="10" step="0.5"
+                                       class="rating-slider" th:value="${userRate}">
+                                <button id="game-rate-button" type="submit" class="game-rate-button">oceń</button>
+                                <div class="rating-buttons-container">
+                                    <button type="button" class="form-back-button">
+                                        <i class="fa-solid fa-chart-simple rate-stats"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <p class="game-rating-login" sec:authorize="isAnonymous()">
+                            <a href="/zaloguj" th:href="@{/zaloguj}">Zaloguj sie</a>, aby zagłosować
+                        </p>
+
+                    </div>
                 </div>
 
 
@@ -158,9 +172,20 @@
                     </div>
 
                 </div>
+                <div class="rate-stats-container">
+                    <button>
+                        <i class="fa-solid fa-x"></i>
+                    </button>
+                    <div>
+                        <p>Oceny użytkowników</p>
+                    </div>
+                    <span th:each="i:${#numbers.sequence(0,20)}">
+                            <p th:text="${i/2.0}"></p>
+                            <p th:text="${allRates[(i/2.0)] != null ? allRates[(i/2.0)] : 0}"></p>
+                        </span>
+                </div>
 
             </section>
-
 
             <div class="platforms-container show-platforms">
                 <ul class="platform-list">
@@ -188,8 +213,8 @@
                 </section>
             </div>
         </div>
+        <script src="/static/scripts/company.js" th:src="@{/scripts/gameRaiting.js}"></script>
     </main>
 </div>
-
 </body>
 </html>

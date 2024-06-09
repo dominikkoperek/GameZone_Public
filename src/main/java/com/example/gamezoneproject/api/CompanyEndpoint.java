@@ -1,9 +1,9 @@
 package com.example.gamezoneproject.api;
 
-import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyDtoMapper;
-import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyService;
-import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyApiDto;
-import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanyDto;
+import com.example.gamezoneproject.domain.company.CompanyDtoMapper;
+import com.example.gamezoneproject.domain.company.CompanyService;
+import com.example.gamezoneproject.domain.company.dto.CompanyApiDto;
+import com.example.gamezoneproject.domain.company.dto.CompanyDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

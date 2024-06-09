@@ -1,14 +1,15 @@
 package com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy;
 
 import com.example.gamezoneproject.domain.userToken.TemporaryTokenService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountActivationToken implements TemporaryTokenStrategy {
-    private final TemporaryTokenService temporaryTokenService;
+    private final int token_life_time;
 
-    public AccountActivationToken(TemporaryTokenService temporaryTokenService) {
-        this.temporaryTokenService = temporaryTokenService;
+    public AccountActivationToken(@Value("${temporary-token.life-time}") int token_life_time) {
+        this.token_life_time = token_life_time;
     }
 
     @Override
@@ -23,7 +24,7 @@ public class AccountActivationToken implements TemporaryTokenStrategy {
 
     @Override
     public int getTokenLifeTimeMinutes() {
-        return 30;
+        return token_life_time;
     }
 
     @Override

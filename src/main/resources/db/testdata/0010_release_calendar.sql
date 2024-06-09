@@ -32,5 +32,3 @@ insert into release_calendar (game_platform_id, release_date)values (1, '2024-08
 insert into release_calendar (game_platform_id, release_date)values (5, '2024-08-29');
 insert into release_calendar (game_platform_id, release_date)values (3, '2024-08-29');
 insert into release_calendar (game_platform_id, release_date)values (11, '2024-08-29');
-insert into release_calendar (game_platform_id, release_date)values (12, '2024-06-26');
-insert into release_calendar (game_platform_id, release_date)values (13, '2024-06-26');

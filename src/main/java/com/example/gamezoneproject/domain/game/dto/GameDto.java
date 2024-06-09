@@ -1,6 +1,6 @@
 package com.example.gamezoneproject.domain.game.dto;
 
-import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
+import com.example.gamezoneproject.domain.company.Company;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.GameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
@@ -28,11 +28,13 @@ public class GameDto {
     private Company publisher;
     private String poster;
     private PlayerRange playerRange;
+    private double averageRating;
+    private int ratingCount;
 
     public GameDto(Long id, String title, String dailymotionTrailerId, String shortDescription, String description,
                    Map<String, LocalDate> releaseYear, List<Category> category, Map<String, String> platform,
                    List<GameMode> gameModes, boolean promoted, Company producer, Company publisher, String poster,
-                   PlayerRange playerRange) {
+                   PlayerRange playerRange, double averageRating, int ratingCount) {
         this.id = id;
         this.title = title;
         this.dailymotionTrailerId = dailymotionTrailerId;
@@ -47,6 +49,8 @@ public class GameDto {
         this.publisher = publisher;
         this.poster = poster;
         this.playerRange = playerRange;
+        this.averageRating = averageRating;
+        this.ratingCount = ratingCount;
     }
 
     public String getShortDescription() {
@@ -160,5 +164,21 @@ public class GameDto {
 
     public void setPlayerRange(PlayerRange playerRange) {
         this.playerRange = playerRange;
+    }
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public int getRatingCount() {
+        return ratingCount;
+    }
+
+    public void setRatingCount(int ratingCount) {
+        this.ratingCount = ratingCount;
     }
 }

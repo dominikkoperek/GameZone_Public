@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
-    <changeSet id="00010-1" author="dominik">
+    <changeSet id="00012-1" author="dominik">
 
         <createTable tableName="temporary_token">
             <column name="id" type="BIGINT" autoIncrement="true">

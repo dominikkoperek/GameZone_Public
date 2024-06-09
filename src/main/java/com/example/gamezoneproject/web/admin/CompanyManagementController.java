@@ -1,7 +1,7 @@
 package com.example.gamezoneproject.web.admin;
 
-import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyService;
-import com.example.gamezoneproject.domain.game.gameDetails.company.dto.CompanySaveDto;
+import com.example.gamezoneproject.domain.company.CompanyService;
+import com.example.gamezoneproject.domain.company.dto.CompanySaveDto;
 import com.example.gamezoneproject.domain.game.gameDetails.country.CountryService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;

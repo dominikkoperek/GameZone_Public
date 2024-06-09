@@ -1,12 +1,10 @@
 package com.example.gamezoneproject.domain.game.gameDetails.platform.dto;
 
-import com.example.gamezoneproject.domain.validation.other.containsh2.ContainsH2;
-import com.example.gamezoneproject.domain.validation.other.illegalexpression.NoIllegalExpression;
-import com.example.gamezoneproject.domain.validation.other.nohtmltags.NoHtmlTags;
-import com.example.gamezoneproject.domain.validation.other.svg.SvgImage;
-import com.example.gamezoneproject.domain.validation.platform.NoPlatformDuplication;
+import com.example.gamezoneproject.validation.other.illegalexpression.NoIllegalExpression;
+import com.example.gamezoneproject.validation.other.nohtmltags.NoHtmlTags;
+import com.example.gamezoneproject.validation.other.svg.SvgImage;
+import com.example.gamezoneproject.validation.platform.NoPlatformDuplication;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 /**
  * Main DTO class for the GamePlatform.

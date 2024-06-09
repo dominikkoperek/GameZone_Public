@@ -1,9 +1,8 @@
 package com.example.gamezoneproject.domain.game.gameDetails.category.dto;
 
-import com.example.gamezoneproject.domain.validation.category.NoCategoryDuplication;
-import com.example.gamezoneproject.domain.validation.other.nohtmltags.NoHtmlTags;
+import com.example.gamezoneproject.validation.category.NoCategoryDuplication;
+import com.example.gamezoneproject.validation.other.nohtmltags.NoHtmlTags;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 /**

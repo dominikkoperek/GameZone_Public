@@ -16,9 +16,9 @@ public interface GameRepository extends CrudRepository<Game, Long> {
      *
      * @return A sorted list of all promoted games.
      */
-    @Query("SELECT g FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id  " +
+    @Query("SELECT g,min(grc.releaseCalendar.releaseDate) FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id  " +
             "WHERE year (grc.releaseCalendar.releaseDate)<3000 and g.promoted=true " +
-            "ORDER BY grc.releaseCalendar.releaseDate  DESC")
+            "GROUP BY g.id ORDER BY min( grc.releaseCalendar.releaseDate)  DESC")
     List<Game> findAllByPromotedIsTrueSortedByReleaseDate();
     /**
      * Finds all games by category name, ignoring case and sort them by release date.
@@ -27,9 +27,9 @@ public interface GameRepository extends CrudRepository<Game, Long> {
      * @return A sorted list of all games in the specified category.
      */
 
-    @Query("SELECT g FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id  JOIN g.category ca " +
+    @Query("SELECT g,min(grc.releaseCalendar.releaseDate) FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id  JOIN g.category ca " +
             "WHERE year (grc.releaseCalendar.releaseDate)<3000 and LOWER(ca.name) = LOWER(:category)" +
-            "ORDER BY grc.releaseCalendar.releaseDate  DESC")
+            "GROUP BY g.id ORDER BY min(grc.releaseCalendar.releaseDate)  DESC")
     List<Game> findAllByCategoryNameSortedByReleaseDateIgnoreCase(@Param("category")String category);
     /**
      * Finds all games by game platform name, ignoring case and sort them by release date.
@@ -37,9 +37,10 @@ public interface GameRepository extends CrudRepository<Game, Long> {
      * @param platform The name of the game platform.
      * @return A sorted list of all games on the specified platform.
      */
-    @Query("SELECT g FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id  JOIN g.gamePlatform gp " +
+
+    @Query("SELECT g,min(grc.releaseCalendar.releaseDate) FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id  JOIN g.gamePlatform gp " +
             "WHERE year (grc.releaseCalendar.releaseDate)<3000 and LOWER(gp.name) = LOWER(:platform)" +
-            "ORDER BY grc.releaseCalendar.releaseDate  DESC")
+            "GROUP BY g.id ORDER BY min(grc.releaseCalendar.releaseDate)  DESC")
     List<Game> findAllGamesByPlatformSortedByReleaseDate(@Param("platform")String platform);
     /**
      * Finds all games by producer ID that are promoted.
@@ -61,16 +62,17 @@ public interface GameRepository extends CrudRepository<Game, Long> {
      * @param publisherId The ID of the publisher.
      * @return A list of all games by the specified publisher.
      */
-    List<Game> findAllByPublisher_Id(Long publisherId);
+    List<Game> findAllByPublisher_IdOrderByReleaseDate_ReleaseDateDesc(Long publisherId);
     /**
      * Finds all games by producer ID.
      *
      * @param producerId The ID of the producer.
      * @return A list of all games by the specified producer.
      */
-    List<Game> findAllByProducer_Id(Long producerId);
+    List<Game> findAllByProducer_IdOrderByReleaseDate_ReleaseDateDesc(Long producerId);
     /**
      * Finds a game by title, ignoring case.
+     *
      *
      * @param title The title of the game.
      * @return An Optional containing the game if found, or empty if not found.
@@ -94,7 +96,7 @@ public interface GameRepository extends CrudRepository<Game, Long> {
             "JOIN GameReleaseCalendar grc ON g.id = grc.game.id " +
             "JOIN ReleaseCalendar rc ON grc.releaseCalendar.id = rc.id " +
             "WHERE rc.releaseDate >= CURRENT_DATE AND YEAR (grc.releaseCalendar.releaseDate)<3000" +
-            "ORDER BY ABS(DATEDIFF(DAY, rc.releaseDate,CURRENT_DATE)) asc limit 1 ")
+            "ORDER BY ABS(TIMESTAMPDIFF(DAY,rc.releaseDate,CURRENT_DATE)) asc limit 1 ")
     Optional<Game> findGameByClosestPremierDate();
 
 

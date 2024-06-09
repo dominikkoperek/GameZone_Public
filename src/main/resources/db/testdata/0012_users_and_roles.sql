@@ -1,9 +1,9 @@
 insert into
     users (email,login, password,is_active,temporary_token_id)
-values ('admin@wp.pl','admin', '{noop}admin','true',null),
-       ('moderator@wp.pl','moderator', '{noop}moderator','true',null),
-       ('user@wp.pl','user', '{noop}user','true',null),
-       ('tomek@wp.pl','tomek', '{noop}tomek','false',1);
+values ('admin@wp.pl','admin', '{noop}admin',true,null),
+       ('moderator@wp.pl','moderator', '{noop}moderator',true,null),
+       ('user@wp.pl','user', '{noop}user',true,null),
+       ('tomek@wp.pl','tomek', '{noop}tomek',false,1);
 
 insert into
     user_role(name, description)

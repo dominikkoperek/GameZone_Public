@@ -6,8 +6,8 @@ import com.example.gamezoneproject.domain.exceptions.PlatformNotFoundException;
 import com.example.gamezoneproject.domain.game.dto.*;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryRepository;
-import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
-import com.example.gamezoneproject.domain.game.gameDetails.company.CompanyRepository;
+import com.example.gamezoneproject.domain.company.Company;
+import com.example.gamezoneproject.domain.company.CompanyRepository;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.GameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.GameModeRepository;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
@@ -183,10 +183,9 @@ public class GameService {
      * @return List of games by producer id sorted by release year reversed.
      */
     public List<GameByCompanyDto> findAllGamesByProducerId(Long producerId) {
-        return gameRepository.findAllByProducer_Id(producerId)
+        return gameRepository.findAllByProducer_IdOrderByReleaseDate_ReleaseDateDesc(producerId)
                 .stream()
                 .map(gameDtoMapper::mapGameByCompanyId)
-                //   .sorted(Comparator.comparing().reversed()) ************* FIX SORTOWANIE
                 .toList();
     }
 
@@ -227,7 +226,7 @@ public class GameService {
      * @return List of games by publisher id sorted by release year reversed.
      */
     public List<GameByCompanyDto> findAllGamesByPublisherId(Long publisherId) {
-        return gameRepository.findAllByPublisher_Id(publisherId)
+        return gameRepository.findAllByPublisher_IdOrderByReleaseDate_ReleaseDateDesc(publisherId)
                 .stream()
                 .map(gameDtoMapper::mapGameByCompanyId)
                 .toList();

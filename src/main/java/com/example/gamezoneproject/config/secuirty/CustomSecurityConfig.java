@@ -24,11 +24,13 @@ public class CustomSecurityConfig {
         http.authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/admin/dodaj-platforme").hasAnyRole(ADMIN_ROLE)
                         .requestMatchers("/admin/**").hasAnyRole(ADMIN_ROLE, MODERATOR_ROLE)
+                        .requestMatchers("/ocen-gre").authenticated()
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login
                         .loginPage("/zaloguj")
+                        .successHandler(new SuccessLoginHandler())
                         .failureUrl("/zaloguj?blad")
                         .permitAll())
                 .rememberMe(rememberMeConfigurer->rememberMeConfigurer
@@ -37,8 +39,8 @@ public class CustomSecurityConfig {
 
                 .logout((logout) -> logout
                         .deleteCookies("JSESSIONID")
+                        .logoutUrl("/?wyloguj")
                         .logoutSuccessUrl("/")
-                        .logoutUrl("/wyloguj")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/wyloguj/**", HttpMethod.GET.name()))
                         .logoutSuccessUrl("/?wyloguj").permitAll()
                         .permitAll()

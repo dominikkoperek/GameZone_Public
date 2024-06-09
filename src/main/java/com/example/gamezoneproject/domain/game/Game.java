@@ -1,11 +1,12 @@
 package com.example.gamezoneproject.domain.game;
 
-import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
+import com.example.gamezoneproject.domain.company.Company;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.GameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
 import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendar;
+import com.example.gamezoneproject.domain.rating.Rating;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -18,11 +19,13 @@ public class Game {
     private String title;
     private String dailymotionTrailerId;
     private String shortDescription;
+    @Lob
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
     @ManyToMany
     @JoinTable(name = "game_release_calendar",
-    joinColumns = @JoinColumn(name = "game_id",referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "release_calendar_id",referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "release_calendar_id", referencedColumnName = "id"))
     private List<ReleaseCalendar> releaseDate = new ArrayList<>();
     @ManyToMany
     @JoinTable(name = "game_category",
@@ -44,13 +47,16 @@ public class Game {
     )
     private Set<GamePlatform> gamePlatform = new HashSet<>();
 
-    @ManyToMany @JoinTable(name = "game_game_mode",
+    @ManyToMany
+    @JoinTable(name = "game_game_mode",
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "game_mode_id", referencedColumnName = "id")
     )
     private List<GameMode> gameModes = new LinkedList<>();
-
-    private boolean promoted;
+    @OneToMany(mappedBy = "game")
+    private Set<Rating> ratings = new HashSet<>();
+    @Column(columnDefinition = "TINYINT(1)")
+    private Boolean promoted;
     private String poster;
 
     private String smallPosterSuggestion;
@@ -131,11 +137,11 @@ public class Game {
         this.gamePlatform = gamePlatform;
     }
 
-    public boolean isPromoted() {
+    public Boolean isPromoted() {
         return promoted;
     }
 
-    public void setPromoted(boolean promoted) {
+    public void setPromoted(Boolean promoted) {
         this.promoted = promoted;
     }
 
@@ -185,5 +191,13 @@ public class Game {
 
     public void setBigPosterSuggestion(String bigPosterSuggestion) {
         this.bigPosterSuggestion = bigPosterSuggestion;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

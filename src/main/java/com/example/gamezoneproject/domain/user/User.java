@@ -17,6 +17,7 @@ public class User {
     private String email;
     private String login;
     private String password;
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean isActive;
     @OneToOne
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)

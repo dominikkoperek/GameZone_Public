@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0014-1" author="dominik">
+        <createTable tableName="game_rating">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_game_rating_user_id"
+                             referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="game_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_game_rating_game_id"
+                             referencedTableName="game"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="rating" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint constraintName="unique_game_rating"
+                             tableName="game_rating"
+                             columnNames="game_id,user_id"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -17,8 +17,8 @@
     <include file="0011_create_game_release_calendar.xml" relativeToChangelogFile="true"/>
     <include file="0012_create_table_temporary_token_and_user_tokens.xml" relativeToChangelogFile="true"/>
     <include file="0013_create_table_users_and_role.xml" relativeToChangelogFile="true"/>
+    <include file="0014_create_table_game_rating.xml" relativeToChangelogFile="true"/>
 
-    <!--    Test data-->
     <include file="../testdata/0001_categories.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0002_game_platform.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0003_game_category.sql" relativeToChangelogFile="true" context="dev"/>
@@ -31,4 +31,5 @@
     <include file="../testdata/0010_release_calendar.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0011_game_release_calendar.sql" relativeToChangelogFile="true" context="dev"/>
     <include file="../testdata/0012_users_and_roles.sql" relativeToChangelogFile="true" context="dev"/>
+    <include file="../testdata/0013_game_rating.sql" relativeToChangelogFile="true" context="dev"/>
 </databaseChangeLog>

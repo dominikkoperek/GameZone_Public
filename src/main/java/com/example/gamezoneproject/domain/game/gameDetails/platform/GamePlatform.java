@@ -10,6 +10,8 @@ public class GamePlatform {
     private Long id;
     private String name;
     private String description;
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String logoAddress;
     private String logoAddressImage;
 

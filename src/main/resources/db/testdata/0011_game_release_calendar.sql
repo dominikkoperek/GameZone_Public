@@ -32,6 +32,4 @@ insert into game_release_calendar (game_id, release_calendar_id)values (7, 25);
 insert into game_release_calendar (game_id, release_calendar_id)values (7, 26);
 insert into game_release_calendar (game_id, release_calendar_id)values (7, 27);
 insert into game_release_calendar (game_id, release_calendar_id)values (7, 28);
-insert into game_release_calendar (game_id, release_calendar_id)values (7, 29);
-insert into game_release_calendar (game_id, release_calendar_id)values (7, 30);
 

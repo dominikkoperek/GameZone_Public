@@ -414,7 +414,7 @@ p {
 
 .game-summary {
     display: flex;
-    margin-top: 1rem;
+    margin-top: 0.3rem;
 }
 
 .game-summary-cover {
@@ -654,74 +654,103 @@ ul.game-summary-item > a > i {
 
 /*RATING SYSTEM*/
 
-.game-rating-container {
+.game-rating-container,
+.game-rating-container-top {
     font-size: 0.6rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     max-width: 15.625rem;
     padding-bottom: 8px;
     background-color: rgba(56, 56, 56, 0.35);
-    border-radius: 0 0 2rem 2rem;
+    border-radius: 0 0 1.5rem 1.5rem;
     border: 1px solid rgba(138, 138, 138, 0.2);
     box-shadow: 2px 2px 12px #212121;
     overflow: hidden;
+    margin: 8px 0;
 }
+.game-rating-container-top{
+    border-radius: 1.5rem 1.5rem 0 0;
+    padding-bottom: 4px;
+}
+
 
 .game-rating-heading {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
-
-.game-rating-value {
+.game-rating-container-top div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.game-rating-value,
+.game-rating-value-user {
     text-align: center;
     font-weight: 600;
     font-size: 1.8rem;
     color: #6cff6c;
     text-shadow: 1px 1px 7px #252525;
 }
-
-.game-rating-button {
-    color: #a9a9a9;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    padding: 2px;
-    font-size: 1.3rem;
-
+.game-rating-value-user{
+    color: #939393;
 }
-
-.game-rating-buttons {
+.rate-red{
+    color: #B93939FF;
+}
+.rate-orange{
+    color: #db981d;
+}
+.rate-green{
+    color: #54FC54FF;
+}
+.rate-best{
+    color: gold;
+    text-shadow: gold 1px 1px 8px;
+}
+.game-rate-button{
     display: flex;
-    flex-direction: row-reverse;
-}
-
-.game-rating-button i {
-    transition: transform 200ms ease-in-out, color 200ms ease-in-out;
-}
-
-.active,
-.game-rating-button:hover i {
-    color: gold;
-    cursor: pointer;
-}
-
-.active:hover,
-.game-rating-button:hover i {
-    text-shadow: 0 0 3px gold;
-    transform: scale(1.4);
-
-}
-
-.game-rating-buttons button:hover ~ button i {
-    color: gold;
-}
-
-.game-rating-form > p {
+    font-weight: 700;
+    font-size: 0.9rem;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin-bottom: 2px;
-    font-size: 0.8rem;
+    line-height: 1.2rem;
+    margin: 0.3rem auto auto auto;
+    width: 4rem;
+    border-radius: 6px;
+    border: 1px solid #6e6e6e;
+    background-color: #383838;
 }
+.rating-buttons-container{
+    display: flex;
+    top: -1.42rem;
+    justify-content: right;
+    position: relative;
+    height: 0;
+}
+.remove-rate,.rate-stats{
+    font-size:1rem;
+}
+.game-rate-button:hover{
+    cursor: pointer;
+    border: 1px solid #6e6e6e;
+    color: #1f1f1f;
+    background-color: #f1c87c;
+}
+.rate-stats-container{
+    background-color: #38576e;
+    display: none;
+    right: 24rem;
+    position: absolute;
+    width: 25rem;
+}
+.rate-stats-container span{
+    display: flex;
+    column-gap: 0.5rem;
+}
+
 
 .game-rating-login {
     font-size: 0.7rem;
@@ -730,35 +759,51 @@ ul.game-summary-item > a > i {
 .game-rating-login a:hover {
     color: #b08600;
 }
-
-
-.game-rating-container {
-    margin: 8px 0;
-}
-
-.game-rating-max-value {
-    font-size: 1.1rem;
-    color: grey;
-}
-
-.game-rating-count {
+.game-rating-message{
+    font-size: 0.8rem;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    height: 1rem;
+}
+
+.rating-slider{
+    -webkit-appearance: none;
+    margin: 0.3rem 0 0.3rem;
+    height: 1rem;
+    background: linear-gradient(to right,
+    #b93939, yellow, #54fc54);
 
 }
+.rating-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 0;
+    height: 1.2rem;
+    width: 1.2rem;
+    background: #e3e3e3;
+    outline: 1px solid #9d9d9d;
+    border-radius: 15%;
+    background-size: cover;
+    cursor: pointer;
+}
+
+
 
 /*GAME RATING MEDIA*/
 @media only screen and (max-width: 672px) {
-    .game-rating-container {
+    .game-rating-container,
+    .game-rating-container-top {
         width: 8rem;
     }
+
 
     .game-rating-heading {
         font-size: 0.7rem;
     }
 
-    .game-rating-value {
+    .game-rating-value,
+    .game-rating-value-user {
         font-size: 1rem;
     }
 
@@ -797,6 +842,13 @@ ul.game-summary-item > a > i {
     .game-summary-cover {
         max-width: 8rem;
         max-height: 10.5rem;
+    }
+    .rating-slider{
+        width: 7rem;
+        height: 0.9rem;
+    }
+    .rating-slider::-webkit-slider-thumb {
+        height:1.2rem;
     }
 }
 .test-list{
@@ -1001,6 +1053,7 @@ textarea {
 .form-back-button:hover,
 .form-back-button:hover i {
     color: #b08600;
+    cursor: pointer;
 }
 
 .form-button-container {
@@ -1372,7 +1425,7 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .company-letter-button,
-.company-type-button {
+.company-type-button{
     font-size: 0.9rem;
     display: inline-flex;
     justify-content: center;
@@ -1382,9 +1435,10 @@ input[type="file"]::file-selector-button:hover {
     background-color: #38576e;
     border: 1px solid rgba(114, 165, 203, 0.51);
     border-radius: 5px;
-    flex-wrap: wrap;
     transition: ease-in-out background-color 100ms;
-
+}
+.display-button{
+    padding: 1rem 1rem;
 }
 
 .company-letter-button:hover,
@@ -1709,12 +1763,21 @@ input:read-only {
     line-height: 1.5rem;
 }
 
-.game-list-container p span {
-    float: right;
-    transition: all ease-in-out 100ms;
+
+.game-list-container p {
+    display: flex;
+    justify-content: space-between;
 }
 
+.game-list-container p span {
+    display: block;
+    float: right;
+    white-space: nowrap;
+    transition: all ease-in-out 100ms;
+}
 .game-link i {
+    display: inline-flex;
+    flex-direction: row;
     color: #7c7c7c;
     font-size: 0.9rem;
     font-style: normal;
@@ -1727,8 +1790,7 @@ input:read-only {
     transition: all ease-in-out 100ms;
 }
 
-.games-list-hide li:hover div strong,
-.games-list-hide li:hover div a {
+.games-list-hide li:hover div strong {
     transform: scale(1.03);
     color: #b08600;
 }
@@ -1759,10 +1821,13 @@ input:read-only {
     justify-content: space-between;
     margin-bottom: 0.3rem;
 }
+.games-list-hide li:last-child{
+    border-bottom: none;
+}
 
 .game-list-info p {
     font-size: 0.9rem;
-    color: #d9d9d9;
+    margin-bottom: 0.5rem;
 }
 
 .games-list-hide li:nth-child(n+26):not(:last-child) {

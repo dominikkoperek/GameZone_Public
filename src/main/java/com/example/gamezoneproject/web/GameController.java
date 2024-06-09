@@ -2,7 +2,9 @@ package com.example.gamezoneproject.web;
 
 import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameDto;
+import com.example.gamezoneproject.domain.rating.RatingService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +21,11 @@ import java.util.Map;
 @Controller
 public class GameController {
     private final GameService gameService;
+    private final RatingService ratingService;
 
-    public GameController(GameService gameService) {
+    public GameController(GameService gameService, RatingService ratingService) {
         this.gameService = gameService;
+        this.ratingService = ratingService;
     }
 
     /**
@@ -34,16 +38,21 @@ public class GameController {
     @GetMapping("/gry/{gameTitle}/{id}")
     public String game(@PathVariable Long id,
                        @PathVariable String gameTitle,
-                       Model model) {
+                       Model model,
+                       Authentication authentication) {
         GameDto gameDto = gameService
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
+        if(authentication !=null){
+            Double userRate = ratingService.getUserRatingForGame(authentication.getName(), id).orElse(null);
+            model.addAttribute("userRate",userRate);
+        }
 
         if (gameTitle.replaceAll("-", " ").equalsIgnoreCase(gameDto.getTitle())) {
             model.addAttribute("game", gameDto);
             model.addAttribute("gameTitle", gameDto.getTitle());
             model.addAttribute("gameReleaseDates", gameService.mergeSameReleaseDates(gameDto));
+            model.addAttribute("allRates",ratingService.getAllRatesForGame(id));
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

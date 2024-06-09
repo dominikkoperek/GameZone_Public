@@ -34,7 +34,6 @@ public class RecommendedGamesController {
     public String home(Model model) {
         List<GameDto> promotedGames = gameService.findAllPromotedGames()
                 .stream()
-                //.sorted(Comparator.comparing(GameDto::getReleaseYear).reversed()) FIX
                 .toList();
         LinkedHashMap<String, String> gamePlatforms = gamePlatformService.findAllGamePlatforms();
 

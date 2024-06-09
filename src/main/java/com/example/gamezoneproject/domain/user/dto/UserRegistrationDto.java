@@ -1,9 +1,9 @@
 package com.example.gamezoneproject.domain.user.dto;
 
-import com.example.gamezoneproject.domain.validation.other.email.Email;
-import com.example.gamezoneproject.domain.validation.other.notwhitespace.NotWhitespace;
-import com.example.gamezoneproject.domain.validation.other.registrationAlphanumeric.AlphanumericAndSpecialSymbols;
-import com.example.gamezoneproject.domain.validation.password.Password;
+import com.example.gamezoneproject.validation.other.email.Email;
+import com.example.gamezoneproject.validation.other.notwhitespace.NotWhitespace;
+import com.example.gamezoneproject.validation.other.registrationAlphanumeric.AlphanumericAndSpecialSymbols;
+import com.example.gamezoneproject.validation.password.Password;
 import jakarta.validation.constraints.*;
 
 

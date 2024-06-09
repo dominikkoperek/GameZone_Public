@@ -8,11 +8,10 @@ import com.example.gamezoneproject.domain.game.dto.PromotedGameByCompanyDto;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
 import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendar;
 import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendarRepository;
+import com.example.gamezoneproject.domain.rating.Rating;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,10 +21,13 @@ import java.util.stream.Collectors;
  */
 @Service
 public class GameDtoMapper {
+    private static final short MIN_VOTES_TO_CALCULATE_AVG_RATING = 2;
     private final ReleaseCalendarRepository releaseDateRepository;
+    private final GameRepository gameRepository;
 
-    public GameDtoMapper(ReleaseCalendarRepository releaseDateRepository) {
+    public GameDtoMapper(ReleaseCalendarRepository releaseDateRepository, GameRepository gameRepository) {
         this.releaseDateRepository = releaseDateRepository;
+        this.gameRepository = gameRepository;
     }
 
     /**
@@ -36,6 +38,16 @@ public class GameDtoMapper {
      * @return A new GameDto object with fields mapped from the Game object.
      */
     static GameDto map(Game game) {
+        int ratingCount = game.getRatings().size();
+        double avgRating = 0;
+        if (ratingCount >= MIN_VOTES_TO_CALCULATE_AVG_RATING) {
+            avgRating = game.getRatings().stream()
+                    .map(Rating::getRating)
+                    .mapToDouble(val -> val)
+                    .average().orElse(0);
+        }
+
+
         return new GameDto(
                 game.getId(),
                 game.getTitle(),
@@ -51,7 +63,9 @@ public class GameDtoMapper {
                 game.getProducer(),
                 game.getPublisher(),
                 game.getPoster(),
-                game.getPlayerRange());
+                game.getPlayerRange(),
+                avgRating,
+                ratingCount);
     }
 
     private static Map<String, LocalDate> mapReleaseDateToMap(Game game) {
@@ -88,7 +102,7 @@ public class GameDtoMapper {
 
     private LocalDate mapToFirstReleaseDate(Long gameId) {
         return releaseDateRepository
-                .findEarliestReleaseDateFromTodayByGameId(gameId).map(ReleaseCalendar::getReleaseDate)
+                .findFirstReleaseDate(gameId).map(ReleaseCalendar::getReleaseDate)
                 .orElse(LocalDate.of(9999, 1, 1));
 
     }
@@ -135,7 +149,7 @@ public class GameDtoMapper {
 
     private int getDaysBeforeRelease(Game game) {
         ReleaseCalendar earliestReleaseDate = releaseDateRepository
-                .findEarliestReleaseDateFromTodayByGameId(game.getId())
+                .findLatestReleaseDateByGameId(game.getId())
                 .orElseThrow(GameNotFoundException::new);
         return (int) ChronoUnit.DAYS.between(LocalDate.now(), earliestReleaseDate.getReleaseDate());
     }

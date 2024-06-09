@@ -63,7 +63,7 @@
                             <img
                                     class="small-image-suggestion"
                                     src="../static/img/notfound.jpg"
-                                    th:src="@{/galeria/rekomendacje/s/diablo_s_0.jpg}"
+                                    th:src="@{/galeria/rekomendacje/s/stellarblade_s_0.jpg}"
                                     alt="tytuł gry">
                         </picture>
                     </a>
@@ -192,7 +192,8 @@
 
                         <div class="game-list-item-rating">
                             <i class="fas fa-star"></i>
-                            <span>8.9</span>
+                            <span th:if="${game.ratingCount ge 2}" th:text="${#numbers.formatDecimal(game.averageRating,1,1,'POINT')}">8.9</span>
+                            <span th:if="${game.ratingCount lt 2}">Brak oceny</span>
                         </div>
                     </div>
 

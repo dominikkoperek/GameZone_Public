@@ -1,6 +1,5 @@
 package com.example.gamezoneproject.domain.game.gameDetails.country;
 
-import com.example.gamezoneproject.domain.game.gameDetails.company.Company;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

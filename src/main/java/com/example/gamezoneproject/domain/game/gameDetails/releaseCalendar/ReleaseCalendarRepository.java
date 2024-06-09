@@ -14,8 +14,13 @@ public interface ReleaseCalendarRepository extends CrudRepository<ReleaseCalenda
 
     @Query("SELECT rc  FROM ReleaseCalendar rc JOIN GameReleaseCalendar grc ON rc.id=grc.releaseCalendar.id " +
             "WHERE grc.game.id=:gameId AND YEAR(grc.releaseCalendar.releaseDate)<3000 " +
-            "ORDER BY ABS(DATEDIFF(DAY, rc.releaseDate,CURRENT_DATE)) limit 1")
-    Optional<ReleaseCalendar> findEarliestReleaseDateFromTodayByGameId(@Param("gameId") Long gameId);
+            "ORDER BY ABS(TIMESTAMPDIFF(DAY,rc.releaseDate,CURRENT_DATE)) limit 1")
+    Optional<ReleaseCalendar> findLatestReleaseDateByGameId(@Param("gameId") Long gameId);
+
+    @Query("SELECT rc FROM ReleaseCalendar rc JOIN GameReleaseCalendar grc ON rc.id=grc.releaseCalendar.id " +
+            "WHERE grc.game.id=:gameId AND YEAR(grc.releaseCalendar.releaseDate)<3000 " +
+            "ORDER BY rc.releaseDate ASC limit 1")
+    Optional<ReleaseCalendar> findFirstReleaseDate(@Param("gameId") Long gameId);
 
     @Query("SELECT DISTINCT rc.gamePlatform " +
             "FROM ReleaseCalendar rc " +

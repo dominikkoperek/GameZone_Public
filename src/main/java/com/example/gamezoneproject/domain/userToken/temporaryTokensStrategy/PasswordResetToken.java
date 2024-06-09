@@ -1,9 +1,15 @@
 package com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PasswordResetToken implements TemporaryTokenStrategy{
+    private final int token_life_time;
+
+    public PasswordResetToken(@Value("${temporary-token.life-time}") int token_life_time) {
+        this.token_life_time = token_life_time;
+    }
     @Override
     public String getDescription() {
         return "Resetowanie hasła";
@@ -16,7 +22,7 @@ public class PasswordResetToken implements TemporaryTokenStrategy{
 
     @Override
     public int getTokenLifeTimeMinutes() {
-        return 30;
+        return token_life_time;
     }
 
     @Override

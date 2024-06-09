@@ -95,17 +95,27 @@
         <section>
             <h2 class="article-heading" th:text="|Wszystkie gry wyprodukowane przez ${company.name}|"></h2>
             <ul id="games-list-producer" class="games-list-hide container-limit">
+                <li class="game-list-info">
+                    <p>Tytuł</p>
+                    <p>Platformy</p>
+                    <p>Pierwsza premiera</p>
+                </li>
                 <li th:each="allGames:${allGamesByProducerId}">
-                    <a class="games-list-container" href="#"
-                       th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}">
-                        <span class="all-games-list" th:text="${allGames.title}"></span>
-                        <span class="games-date"
-                              th:text="${allGames.firstReleaseDate.year ne 9999} ? ${allGames.firstReleaseDate.year} : 'nieogłoszona' "></span>
+                    <div class="game-list-container">
+                        <p>
+                            <a href="#" th:href="@{|/gry/${#strings.replace(allGames.title,' ','-')}/${allGames.id}|}"
+                               class="game-link">
+                                <strong th:text="${allGames.title}"></strong>
+                                <i th:text="${allGames.platforms}">PC, XONE, X360</i>
 
+                            </a>
+                            <span class="game-date" th:text="${#temporals.format(allGames.firstReleaseDate, 'd MMM yyyy')}">2019</span>
+                        </p>
+                    </div>
                     </a>
                 </li>
                 <li th:if="${allGamesByProducerId.size() ge 25}">
-                    <button id="producer-button" class="company-type-button" onclick="showAllProducedGames()"
+                    <button id="producer-button" class="company-type-button display-button" onclick="showAllProducedGames()"
                             type="button">Pokaż wszystkie wyprodukowane
                     </button>
                 </li>
@@ -120,7 +130,7 @@
                 <li class="game-list-info">
                     <p>Tytuł</p>
                     <p>Platformy</p>
-                    <p>Data pierwszego wydania</p>
+                    <p>Pierwsza premiera</p>
                 </li>
                 <li th:each="allGames:${allGamesByPublisherId}">
                     <div class="game-list-container">
@@ -134,14 +144,10 @@
                             <span class="game-date" th:text="${#temporals.format(allGames.firstReleaseDate, 'd MMM yyyy')}">2019</span>
                         </p>
                     </div>
-
-                    <!--                        <span class="all-games-list" th:text="${allGames.title}"></span>-->
-                    <!--                        <span class="all-games-platforms" th:text="${allGames.releaseYear.keySet()}"></span>-->
-                    <!--                        <span class="games-date" th:text="${allGames.releaseYear.values()}"></span>-->
                     </a>
                 </li>
                 <li th:if="${allGamesByPublisherId.size() ge 25}">
-                    <button id="publisher-button" class="company-type-button" onclick="showAllPublishedGames()"
+                    <button id="publisher-button" class="company-type-button display-button" onclick="showAllPublishedGames()"
                             type="button">Pokaż wszystkie wydane
                     </button>
                 </li>

@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="0010-1" author="dominik">
+    <changeSet id="0013-1" author="dominik">
         <createTable tableName="users">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
@@ -21,7 +21,7 @@
             <column name="temporary_token_id" type="BIGINT">
                 <constraints nullable="true" unique="true"/>
             </column>
-            <column name="is_active" type="BOOLEAN">
+            <column name="is_active" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>

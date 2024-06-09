@@ -1,8 +1,8 @@
 package com.example.gamezoneproject.domain.user.dto;
 
-import com.example.gamezoneproject.domain.validation.other.notwhitespace.NotWhitespace;
-import com.example.gamezoneproject.domain.validation.password.FieldEqualField2;
-import com.example.gamezoneproject.domain.validation.password.Password;
+import com.example.gamezoneproject.validation.other.notwhitespace.NotWhitespace;
+import com.example.gamezoneproject.validation.password.FieldEqualField2;
+import com.example.gamezoneproject.validation.password.Password;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 @FieldEqualField2(

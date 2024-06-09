@@ -12,7 +12,7 @@
             <column name="title" type="VARCHAR(99)"/>
             <column name="short_description" type="VARCHAR(320)"/>
             <column name="dailymotion_Trailer_Id" type="VARCHAR(30)"/>
-            <column name="promoted" type="BOOLEAN"/>
+            <column name="promoted" type="boolean"/>
             <column name="poster" type="VARCHAR(100)"/>
             <column name="small_Poster_Suggestion" type="VARCHAR(100)"/>
             <column name="big_Poster_Suggestion" type="VARCHAR(100)"/>
@@ -28,7 +28,7 @@
                              referencedTableName="company"
                              referencedColumnNames="id"/>
             </column>
-            <column name="description" type="VARCHAR(MAX)">
+            <column name="description" type="MEDIUMTEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="min_players" type="INTEGER">
