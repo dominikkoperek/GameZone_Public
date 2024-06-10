@@ -20,7 +20,7 @@ public class LoginController {
      */
     @GetMapping("/zaloguj")
     public String loginForm(@CurrentSecurityContext SecurityContext securityContext,
-                            @RequestHeader String referer,
+                            @RequestHeader (required = false)String referer,
                             HttpSession session) {
         if (!(securityContext.getAuthentication() instanceof AnonymousAuthenticationToken)) {
             return "redirect:/";

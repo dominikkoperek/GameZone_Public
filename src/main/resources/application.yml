@@ -1,6 +1,10 @@
 spring:
   mail:
-
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    username: ${EMAIL_LOGIN}
+    password: ${EMAIL_PASSWORD}
     default-encoding: UTF-8
     properties:
       mail:
@@ -10,3 +14,20 @@ spring:
             enable: true
         debug: true
     test-connection: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:/db/changelog/master.xml
+
+server:
+  tomcat:
+    max-swallow-size: -1
+  servlet:
+    session:
+      timeout: 30m
+temporary-token:
+  length: 64
+  life-time: 30
+remember-me:
+  token: ${REMEMBER_ME_TOKEN}

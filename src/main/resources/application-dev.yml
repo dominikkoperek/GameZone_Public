@@ -4,6 +4,7 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/master.xml
     contexts: dev
+    drop-first: true
   jpa:
     hibernate:
       ddl-auto: validate
@@ -12,8 +13,17 @@ spring:
       static-locations: classpath:/static/,file:uploads/
   servlet:
     multipart:
-      max-file-size: 5
-      max-request-size: 5
+      max-file-size: -1
+      max-request-size: -1
+  sql:
+    init:
+      mode: always
 app:
   storage:
     location: uploads
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
