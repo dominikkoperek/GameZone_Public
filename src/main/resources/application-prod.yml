@@ -7,8 +7,7 @@ spring:
     contexts: prod
   web:
     resources:
-      static-locations: classpath:/static/,file:/opt/gamezonefiles/uploads
-
+      static-locations: classpath:/static/,file:/opt/gamezone/uploads
 app:
   storage:
-    location: file:/opt/gamezonefiles/uploads
+    location: ${IMAGE_LOCATION}

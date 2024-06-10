@@ -7,4 +7,4 @@ RUN mvn package
 FROM openjdk:21-slim-bookworm
 EXPOSE 8080
 COPY --from=MAVEN_BUILD /target/GameZone-project-*.jar /app.jar
-ENTRYPOINT ["java","-Dspring.profiles.active=DEV","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar","-Dspring.profiles.active=DEV"]
