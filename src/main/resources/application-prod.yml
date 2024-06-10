@@ -11,4 +11,4 @@ spring:
 
 app:
   storage:
-    location: file:/opt/gamezonefiles/uploads
+    location: file:/optcd/gamezonefiles/uploads
