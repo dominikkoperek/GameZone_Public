@@ -10,5 +10,5 @@ RUN mvn clean package
 
 FROM openjdk:21-slim-bookworm
 EXPOSE 8080
-COPY --from=MAVEN_BUILD target/gameZone-project-*.jar /app.jar
+COPY --from=MAVEN_BUILD /target/gameZone-project-*.jar /app.jar
 ENTRYPOINT ["java", "-jar","/app.jar"]
