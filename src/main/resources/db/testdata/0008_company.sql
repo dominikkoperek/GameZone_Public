@@ -192,113 +192,119 @@ VALUES ('2Dboy','Electronic Arts Inc. (w skrócie EA) to jeden z największych n
 i jednocześnie najstarszych producentów, wydawców i dystrybutorów gier na komputery, konsole oraz urządzenia
 mobilne, funkcjonujący w branży nieprzerwanie od roku 1982.','Stany Zjednoczone','false','true',
         'super firma super opis');
-INSERT INTO company (name, short_description, country, is_Producer, is_Publisher, description)
+INSERT INTO company (name, short_description, country, is_Producer, is_Publisher,poster, description)
 VALUES
-    ('Claudia Gilmore','Noah Savage','Indonesia','false','true','Barrett Wynn'),
-    ('Gareth Briggs','Malcolm Stout','Germany','true','true','Amaya Matthews'),
-    ('Bethany Oliver','Phyllis Bullock','Italy','true','true','Callie Golden'),
-    ('Maggie Aguirre','Justine Richmond','Ukraine','true','true','Fitzgerald Forbes'),
-    ('Moses Burris','Kiayada Phillips','United States','true','true','Allegra Ferguson'),
-    ('Gil Buckley','Candace Collins','France','true','true','Lillith Cotton'),
-    ('Noble Espinoza','Nyssa Hewitt','Pakistan','true','true','Alfonso Snow'),
-    ('Leah Ramsey','Lane Casey','Poland','true','true','Daryl Hutchinson'),
-    ('Kasper Cochran','Lyle Cochran','Spain','true','true','Steel Rice'),
-    ('Abbot Woodward','Leigh Bradley','South Africa','true','true','Jacqueline Terry'),
-    ('Uta Kirby','Kuame Joseph','Belgium','true','true','Francis Weiss'),
-    ('Hilda Monroe','Cairo Randolph','Colombia','true','true','Salvador Shaffer'),
-    ('Ezra Bell','Burke Mckenzie','Spain','true','true','Lydia Frank'),
-    ('Chelsea Frederick','Deacon Rivers','Russian Federation','true','true','Macon Emerson'),
-    ('Hammett Livingston','MacKenzie Marshall','Chile','true','true','Mariko Hoffman'),
-    ('Lavinia Becker','Ignatius Erickson','Indonesia','true','true','Herrod Harrington'),
-    ('Lester French','Nora Lucas','Nigeria','true','true','Madison Burnett'),
-    ('Miranda Lang','Judith Merritt','Italy','true','true','Belle Ratliff'),
-    ('Nicholas Garcia','Tallulah Dyer','Indonesia','true','true','Palmer Oliver'),
-    ('Malik Goff','Zachary Dotson','Vietnam','true','true','Zachary Adkins'),
-    ('Karly Wilson','Cherokee Moran','India','true','true','Haley Hoffman'),
-    ('Hayley Pierce','Miranda Torres','Indonesia','true','true','Wylie Barron'),
-    ('Dana Willis','Brendan Vance','Colombia','true','true','Xander Bartlett'),
-    ('Garrett Mcneil','Jerome Witt','Pakistan','true','true','Michelle Riley'),
-    ('Mara May','Samuel Francis','Spain','true','true','Barry Duke'),
-    ('Ryan Hawkins','Vanna Barrett','Brazil','true','true','Alea Ortiz'),
-    ('Rinah Robbins','Briar Dunn','Sweden','true','true','Alan Munoz'),
-    ('David Castro','Perry Salazar','Costa Rica','true','true','Nomlanga Logan'),
-    ('Uma Baldwin','Callie Salas','Ukraine','true','true','Felicia Guerrero'),
-    ('Stella Franklin','Seth Durham','Belgium','true','true','Lamar Decker'),
-    ('Dominique Hicks','Leah May','Ireland','true','true','Clinton Rush'),
-    ('Arthur Hensley','Robin Hawkins','Costa Rica','true','true','Timothy Britt'),
-    ('Armand Ford','Kirestin Massey','Russian Federation','true','true','Griffith Johnston'),
-    ('Basil Mcintyre','Brooke Reid','Germany','true','true','Dieter Graham'),
-    ('Nissim Joyce','Quyn Gill','Indonesia','true','true','Marvin Harvey'),
-    ('Thaddeus Deleon','Jeremy Castillo','Austria','true','true','Josiah Everett'),
-    ('Ira Cortez','Micah Stevenson','Italy','true','true','Dustin May'),
-    ('Vance Crosby','Zelenia Ortiz','South Korea','true','true','Logan Simon'),
-    ('Ivy Gillespie','Richard House','Indonesia','true','true','Dennis Baxter'),
-    ('Ivy Vega','Hillary Hayes','Brazil','true','true','Fallon Steele'),
-    ('Veda Gibson','Denise Barrera','Peru','true','true','Oleg Pollard'),
-    ('Kiona Mcclure','Nita Chan','Colombia','true','true','Philip Wright'),
-    ('Irma Dejesus','Nayda Wilcox','Brazil','true','true','Madeline Rich'),
-    ('Phyllis Merritt','Gareth Blair','Norway','true','true','Aretha Mccoy'),
-    ('Armando Love','Piper Pratt','South Korea','true','true','Sharon Moran'),
-    ('Vera Hatfield','Larissa Rios','Nigeria','true','true','Lars Boyle'),
-    ('Buffy Holt','Mariko Johns','India','true','true','Neville Wagner'),
-    ('Megan Beck','Kristen Mosley','Spain','true','true','Nehru Maddox'),
-    ('Whilemina Jennings','Nadine White','Brazil','true','true','Urielle Garrett'),
-    ('Henry Mcleod','Avram Sanchez','Chile','true','true','Deirdre Hull'),
-    ('Herrod Waller','Micah Daniel','Ukraine','true','true','Fay Osborne'),
-    ('Teagan Malone','Asher Blair','South Korea','true','true','Keane Bowers'),
-    ('Clare Koch','Declan Mcfarland','New Zealand','true','true','Dominique Warner'),
-    ('Drew Ramos','Holly Gordon','India','true','true','Nissim Henson'),
-    ('Kevin Nichols','Cade Harding','Indonesia','true','true','Lois Kaufman'),
-    ('Hadley Cotton','Brynn Odom','Turkey','true','true','Wilma Huffman'),
-    ('Daniel Solomon','Elliott Vinson','Brazil','true','true','Harding Soto'),
-    ('Valentine Mccray','Reese Wolfe','South Africa','true','true','Hamilton Mccormick'),
-    ('Stuart Schroeder','Amity Stein','Italy','true','true','Solomon Duncan'),
-    ('Leonard Mathis','Jaime Landry','South Korea','true','true','Tara Griffin'),
-    ('Colby Dunlap','Alexander Clayton','Sweden','true','true','Irene Blake'),
-    ('Evan Bass','Nathaniel Trujillo','Belgium','true','true','Hollee Dudley'),
-    ('Maite Contreras','Quon Erickson','Singapore','true','true','Melanie Branch'),
-    ('Chaim Rodriquez','Astra May','Sweden','true','true','Quinlan Lowery'),
-    ('Emery Jensen','Anastasia Oliver','United States','true','true','Driscoll Yates'),
-    ('Maile Hale','Inez Craig','Costa Rica','true','true','Julian Robinson'),
-    ('Alfreda Stokes','Emmanuel Medina','Netherlands','true','true','Barrett Mosley'),
-    ('Farrah Phillips','Aristotle Paul','Peru','true','true','Kirestin Pratt'),
-    ('Kasimir Burks','Bree Solis','Chile','true','true','Clayton Lancaster'),
-    ('Lila Le','Cruz Morrison','Mexico','true','true','Urielle Petersen'),
-    ('Wynter Chavez','Brian Marquez','Singapore','true','true','Hyatt Walter'),
-    ('Jessica Goodwin','Caldwell Compton','South Korea','true','true','Ursula Barr'),
-    ('Magee Zimmerman','Nicholas Ferrell','Brazil','true','true','Keaton Walls'),
-    ('Dahlia Kim','Jaden Ruiz','Russian Federation','true','true','Zephr Valencia'),
-    ('Mohammad Tran','Rigel Dotson','Russian Federation','true','true','Leila Parks'),
-    ('Jameson Frederick','Sydnee Tanner','South Africa','true','true','Asher Ortiz'),
-    ('Justine Mendoza','Abbot Hardy','Austria','true','true','Jakeem Bass'),
-    ('Shoshana Sanchez','Rogan Rosario','Ukraine','true','true','Ferris Shaw'),
-    ('Caldwell Douglas','Clio Elliott','Ukraine','true','true','Boris Rivas'),
-    ('Larissa Sullivan','Sybill Dale','Sweden','true','true','Austin Cummings'),
-    ('Chloe Christian','Kuame Alexander','Peru','true','true','Maxwell Rich'),
-    ('Ulric Harvey','Geoffrey Case','Spain','true','true','Louis Carey'),
-    ('Gary Mcgowan','Brooke Strickland','Pakistan','true','true','Selma Shelton'),
-    ('Britanni Johnson','Geoffrey Haley','Austria','true','true','Murphy Gomez'),
-    ('Paloma Willis','Claire Elliott','Austria','true','true','Justine Lucas'),
-    ('Chava Puckett','Dara Mcclure','Philippines','true','true','Zephania Mccray'),
-    ('Erin Harrington','Ashely William','Costa Rica','true','true','Molly Becker'),
-    ('Claudia Leon','Lane Swanson','Costa Rica','true','true','Flavia Peterson'),
-    ('Yolanda Dudley','Austin Mcdonald','Pakistan','true','true','Ali Strickland'),
-    ('Sylvia Moon','Meghan Harrington','South Africa','true','true','Christian Booker'),
-    ('Anthony Booth','Shelley Rose','Sweden','true','true','Nero Strickland'),
-    ('Sybill Hewitt','Kasimir Cohen','India','true','true','Remedios Jackson'),
-    ('Wendy Morrison','Jonas Salazar','Ireland','true','true','Galena Singleton'),
-    ('Steven Ramos','Alexis Mccray','Italy','true','true','Dominic Oneil'),
-    ('Scott Huff','Jayme Meadows','Colombia','true','true','Jamalia Hatfield'),
-    ('Jerry Barrera','Amber Dickerson','France','true','true','Noelle Galloway'),
-    ('Sheila Spence','Wyatt Orr','New Zealand','true','true','Quyn Tanner'),
-    ('Jillian Mercado','Howard Mccoy','Italy','true','true','Drew Elliott'),
-    ('Savannah Burton','Jin Cruz','Philippines','true','true','Owen Thomas'),
-    ('Ava Ratliff','Castor Houston','Australia','true','true','Jocelyn Gray'),
-    ('Blaze Wood','Dante Barnett','United Kingdom','true','true','Roary Sheppard'),
-    ('Aristotle Price','Logan Orr','Peru','true','true','Otto Beck'),
-    ('Tallulah Mcgowan','Luke Grimes','South Korea','true','true','Simon Collins'),
-    ('Jolene Lott','Delilah Hooper','Colombia','true','true','Walker Morse'),
-    ('Savannah Montgomery','Athena Hicks','China','true','true','Joelle Boyer');
+    ('Cenega S.A.','Cenega S.A. to jeden z największych i najstarszych polskich wydawców gier na komputery PC oraz konsole. Siedziba firmy mieści się w Warszawie. Od 2005 roku Cenega S.A., podobnie jak i cały holding Cenega N.V. oraz wszystkie firmy wchodzące w skład koncernu, stały się częścią grupy 1C – rosyjskiego giganta wydawniczego z siedzibą w Moskwie. Z kolei w 2022 roku Cenega, wraz z całą grupą deweloperską 1C Entertainment S.A., została wykupiona przez chiński Tencent, odcinając się od rosyjskiego 1C.','Polska','false','true','cenegasa0.jpg','<h2>Cenega S.A. jako wydawca gier</h2>
 
+<p>Opr&oacute;cz wydawania gier na rynku polskim, firma Cenega S.A. wydała r&oacute;wnież kilka tytuł&oacute;w na rynku światowym. Początkowo były to gł&oacute;wnie rodzime produkcje, odziedziczone po bezpośrednich poprzednikach Cenegi, takich jak IPS Computer Group czy IM Group (wcześniej&nbsp;Mirage Media). W p&oacute;źniejszym okresie działalności, samodzielnie (lub we wsp&oacute;łpracy z czeską sp&oacute;łką macierzystą) Cenega wprowadziła na rynki światowe kilka innych tytuł&oacute;w, przygotowywanych najczęściej przez deweloper&oacute;w z Polski i innych kraj&oacute;w Wschodniej Europy.</p>
 
+<div class="n-anchor">
 
+<div id="NH2_3"></div>
+
+</div>
+
+<h2>Historia</h2>
+
+<p><strong>Historia firmy Cenega sięga przełomu lat 80. i 90. ubiegłego wieku</strong>. W roku 1991 założona została sp&oacute;łka IPS Computer Group, będąca jedną z pierwszych firm, kt&oacute;re zajęły się sprowadzaniem legalnych gier komputerowych na rynki Wschodniej Europy. Niemal od początku istnienia, IPS Computer Group zajmowało się r&oacute;wnież lokalizacją dystrybuowanych przez siebie produkt&oacute;w. Najpierw tłumaczone były instrukcje i opakowania, a następnie kompletne gry.&nbsp;<strong>Najstarszym rynkowym rywalem IPS Computer Group była założona w 1988 roku sp&oacute;łka Mirage Media</strong>, zajmująca się produkcją i sprzedażą gier na Atari XL/XE, Commodore 64/Amiga, a p&oacute;źniej także komputery PC. Mirage Media, jako pierwsza firma w Polsce (bo już w 1996 roku) wprowadziła na nasz rynek w pełni zlokalizowaną grę (<em>Touche: Przygody Piątego Muszkietera</em>).&nbsp;<strong>Rywalizacja obu firm zakończyła się połączeniem sił w kwietniu 2000 roku, kiedy to utworzono wsp&oacute;lny zarząd, a sama sp&oacute;łka zmieniła nazwę na IM Group sp. z o.o.&nbsp;</strong>IM Group zostało wyłącznym dystrybutorem gier produkcji Mirage Media, zaś działalność deweloperską firmy przejęło nowe studio&nbsp;Mirage Interactive&nbsp;sp. z o.o.</p>
+
+<p>W październiku 2000 roku w Pradze&nbsp;<strong>doszło do połączenia IM Group sp. z o.o. z czeskim producentem gier komputerowych, firmą&nbsp;</strong>Bohemia Interactive,<strong>&nbsp;w wyniku czego utworzony został holding Cenega N.V</strong>. Trzecim i jednocześnie największym partnerem został DBG OSTEUROPA Holding GmbH &ndash; fundusz venture capital, w kt&oacute;rym gł&oacute;wnymi partnerami byli m.in. Deutsche Bank, Mitsubishi Corporation, EBOiR oraz DEG. W latach 2001-2002 firma IM Group zmieniła nazwę na Cenega Poland, zaś Bohemia Interactive na Cenega Czechy. R&oacute;wnocześnie powstała też firma Cenega Slovakia, a działalność wydawniczą rozpoczęła Cenega Publishing.&nbsp;<strong>Od 2005 roku holding Cenega N.V. stał się częścią grupy 1C, rosyjskiego giganta wydawniczego z siedzibą w Moskwie</strong>. W marcu 2010 roku firma 1C Company połączyła siły z firmą SoftClub, jednym z największych rosyjskich wydawc&oacute;w oraz dystrybutor&oacute;w gier konsolowych i od tej chwili holding nosi nazwę 1C-SoftClub.</p>
+
+<p>W listopadzie 2021 roku poinformowano, że polska grupa deweloperska 1C Entertainment S.A., do kt&oacute;rej należała r&oacute;wnież Cenega,&nbsp;<strong>zmieni właściciela na firmę Tencent</strong>. Transakcja została sfinalizowana 25 lutego 2022 roku. Wraz z opisywanym wydawcą w ręce chińskiego giganta trafiły w&oacute;wczas: sklep internetowy Muve, wydawca 1C Online Games, a także firma&nbsp;QLOC.</p>
+
+<div class="n-anchor">
+
+<div id="NH2_4"></div>
+
+</div>
+
+<h2>Kompania graczy</h2>
+
+<p>27 sierpnia 2007 roku Cenega S.A. uruchomiła&nbsp;<strong>unikalny program lojalnościowy o nazwie Kompania Graczy, będący pierwszą tego typu incjatywą w naszym kraju</strong>. W ramach programu, klienci kupujący oryginalne gry dystrybuowane w Polsce przez firmę Cenega mogli je rejestrować w dedykowanym&nbsp;serwisie internetowym, otrzymując wzamian punkty uprawniające do otrzymywania nagr&oacute;d, takich jak gadżety z gier, książki i komiksy, kody zniżkowe itp. Ważnym krokiem w rozwoju programu stała się możliwość rejestracji gier konsolowych, udostępniona graczom w listopadzie 2009 roku.&nbsp;<strong>W maju 2010 roku wystartowała Kompania Graczy Open, w ramach kt&oacute;rej można rejestrować oryginalne gry komputerowe i konsolowe, wydane w naszym kraju nie tylko przez Cenegę, ale także inne firmy</strong>. W tym celu wymagane jest przesłanie dowodu zakupu na adres&nbsp;kompania_graczy@cenega.pl&nbsp;z prośbą o wygenerowanie kodu rejestracyjnego.</p>
+
+<div class="n-anchor">
+
+<div id="NH2_5"></div>
+
+</div>
+
+<h2>muve.pl</h2>
+
+<p>Cenega S.A.&nbsp;<strong>jako jedna z pierwszych firm w Polsce uruchomiła także sklep internetowy, pozwalający na zakup gier na komputery PC oraz konsole</strong>. Z biegiem czasu sklep &oacute;w przeobraził się w platformę muve.pl, umożliwiającą r&oacute;wnież zakup cyfrowych wersji gier na komputery PC/Mac, szerokiego asortymentu sprzętu oraz gadżet&oacute;w dla graczy, a także ebook&oacute;w, audiobook&oacute;w i poradnik&oacute;w do gier. Pieczę nad sklepem piastuje obecnie wydzielona sp&oacute;łka MUVE S.A.</p>');
+
+INSERT INTO company (name, short_description, country, is_Producer, is_Publisher,poster, description)
+VALUES('Bandai Namco Entertainment','Bandai Namco Entertainment to jeden z największych japońskich producentów i wydawców gier na automaty arcade, komputery osobiste, konsole oraz urządzenia mobilne. Powstał w 2005 roku z połączenia dwóch tokijskich firm Bandai Co Ltd. oraz Namco Ltd. Choć sprawujący kontrolę nad firmą holding Bandai Namco Holdings prowadzi swą działalność biznesową na wielu płaszczyznach, przedsiębiorstwo znane jest na świecie przede wszystkim jako producent gier wideo oraz zabawek (związanych nierzadko z rozwijanymi przez firmę markami). Siedziba główna Bandai Namco Entertainment mieści się w tokijskiej dzielnicy Shinagawa, choć firma posiada również amerykańską siedzibę w mieście Santa Clara w stanie Kalifornia, oraz wiele oddziałów lokalnych na całym świecie. Prezesem i dyrektorem generalnym Bandai Namco Entertainment jest Satoshi Oshita.','Japonia','true','true','bandainamcoentertainment_0.jpg','<h2>Bandai Namco Entertainment jako producent gier</h2>
+
+<p>Bandai Namco Entertainment prowadzi działalność producenta gier poprzez&nbsp;<strong>wewnętrzne studia deweloperskie, funkcjonujące w ramach oddziału o nazwie Bandai Namco Studios</strong>, zatrudniającego ponad 1000 os&oacute;b na całym świecie. W przeciwieństwie do wielu liczących się światowych wydawc&oacute;w gier, grupa Bandai Namco zatrudnia raczej niewiele studi&oacute;w deweloperskich, a poszczeg&oacute;lne teamy nie są powszechnie znane ze swego dorobku oraz nazwy.&nbsp;<strong>Kluczową rolę w strukturach Bandai Namco Studios pełnią ekipy deweloperskie pracujące przy gł&oacute;wnej siedzibie firmy w Tokio</strong>; obok nich funkcjonują r&oacute;wnież studia w Singapurze (odpowiedzialne za tworzenie gier przeznaczonych dla odbiorc&oacute;w z południowo-wschodniej Azji i regionu Pacyfiku) oraz kanadyjskim Vancouver (zajmujące się gł&oacute;wnie sieciowymi grami społecznościowymi na rynek amerykański i europejski).</p>
+
+<p>Bandai Namco Studios nieczęsto zaskakuje świat zupełnie nowymi, autorskimi produkcjami,&nbsp;<strong>koncentrując się niemal wyłącznie na markach, kt&oacute;re zyskały renomę jeszcze przed połączeniem firm Namco oraz Bandai, a nierzadko jeszcze wcześniej &ndash; na salonowych automatach arcade</strong>. Wśr&oacute;d najważniejszych serii gier rozwijanych do dziś przez Bandai Namco Entertainment wyr&oacute;żnić warto przede wszystkim takie marki, jak zręcznościowe symulatory&nbsp;Ace Combat, gry wyścigowe z serii&nbsp;Ridge Racer, strzelaniny z cyklu&nbsp;Time Crisis, bijatyki&nbsp;Soulcalibur&nbsp;oraz&nbsp;Tekken, a także część z ogromnej puli gier powiązanych z kultowymi cyklami mangi/anime&nbsp;<em>Dragon Ball</em>&nbsp;i&nbsp;<em>Naruto</em>. Pr&oacute;cz tego, od czasu do czasu firma odcina r&oacute;wnież kupony od serii wykreowanych jeszcze na popularnych na przełomie lat 80. i 90. ubiegłego wieku automatach coin-op, takich jak&nbsp;Dig Dug,&nbsp;Galaga,&nbsp;Gundam&nbsp;czy nieśmiertelny&nbsp;Pac-Man.</p>
+
+<div class="n-anchor">
+
+<div id="NH2_2"></div>
+
+</div>
+
+<h2>Bandai Namco Entertainment jako wydawca gier</h2>
+
+<p>O ile spora liczba tytuł&oacute;w wyprodukowanych przez Bandai Namco Entertainment znana jest wyłącznie w rodzimej Japonii<strong>, jako wydawca gier koncern prowadzi aktywną działalność r&oacute;wnież na terenie Ameryki P&oacute;łnocnej oraz Europy</strong>&nbsp;i zaliczany jest tam do największych i najbardziej rozpoznawalnych. Z punktu widzenia polskiej sceny gier wideo rzecz godną odnotowania stanowi z pewnością fakt, że w ostatnich latach firma pełniła także rolę światowego wydawcy wielu produkcji powstałych nad Wisłą, przygotowanych przez takie studia, jak&nbsp;CD Projekt RED,&nbsp;CI Games / City Interactive&nbsp;czy&nbsp;The Farm 51.</p>
+
+<div class="n-anchor">
+
+<div id="NH2_3"></div>
+
+</div>
+
+<h2>Historia</h2>
+
+<p><strong>Początki firm Bandai oraz Namco</strong></p>
+
+<p>Choć w swej obecnej postaci Bandai Namco Entertainment funkcjonuje dopiero od roku 2006, to jednak&nbsp;<strong>historia firmy związana jest nierozerwalnie z dziejami tworzących ją sp&oacute;łek i sięga znacznie dalej wstecz, bo aż do lat 50. ubiegłego wieku</strong>. W roku 1950 w tokijskiej dzielnicy Taito utworzona została bowiem firma Bandai Co. Ltd., kt&oacute;ra początkowo skoncentrowała się przede wszystkim na produkcji zabawek. Począwszy od pierwszego większego sukcesu, jakim okazał się zaprezentowany w roku 1962 zestaw samochod&oacute;w wyścigowych, w latach 60. i 70. firma Bandai dynamicznie się rozwijała, aby&nbsp;<strong>już w latach 80. stać się największym producentem zabawek w Japonii</strong>, posiadającym tak popularne licencje, jak&nbsp;<em>Daikaiju</em>,&nbsp;<em>Ultraman</em>,&nbsp;<em>Super Robot</em>,&nbsp;<em>Kamen Rider</em>,&nbsp;<em>Super Sentai</em>,&nbsp;<em>Power Rangers</em>&nbsp;czy&nbsp;<em>Gundam</em>. Pomimo połączenia z Namco, Bandai prowadzi działalność w branży zabawkarskiej do dziś i obok takich firm, jak Mattel, Hasbro czy The LEGO Company,&nbsp;<strong>zaliczane jest do największych producent&oacute;w zabawek na świecie</strong>. Swoistą ciekawostkę z historii firmy stanowić może fakt, że już w p&oacute;źnych latach 90. ubiegłego wieku planowana była potężna fuzja Bandai oraz SEGI, jednak na skutek fali protest&oacute;w średniej kadry kierowniczej sp&oacute;łki do połączenia nie doszło.</p>
+
+<p>Nieco p&oacute;źniej niż Bandai, bo w połowie 1955 roku działalność w tokijskiej dzielnicy Ota rozpoczęła zaś&nbsp;<strong>firma Namco Ltd. (najpierw pod nazwą Nakamura Manufacturing)</strong>. Początkowo sp&oacute;łka skupiała się na produkcji rozmaitych atrakcji dla dzieci na terenie Yokohamy, jednak już w roku 1958 rozszerzyła swą działalność i zmieniła nazwę na NAMCO (skr&oacute;t od Nakamura Amusement Machine Manufacturing Company).&nbsp;<strong>W roku 1970 firma wyprodukowała swą pierwszą maszynę typu coin-op, czyli mechaniczny symulator samochodowy o nazwie&nbsp;</strong><strong><em>Racer</em></strong>. W roku 1974, za zawrotną w owym czasie kwotę 500 tys. dolar&oacute;w, właściciel Namco wykupił japoński oddział firmy Atari, co okazało się znakomitą inwestycją, pozwalającą Namco m.in. na wyłączną dystrybucję wyprodukowanych przez firmę automat&oacute;w arcade.</p>
+
+<p>Pierwszą oryginalną grą firmy Namco było zaprezentowane w roku 1978&nbsp;<em>Gee Bee</em>. W latach 1979-82 na rynku pojawiły się zaś r&oacute;wnież takie produkcje, jak&nbsp;<em>Galaxian, Pac-Man, Galaga, Dig Dug, Xevious&nbsp;</em>oraz&nbsp;<em>Pole Position,&nbsp;</em>z kt&oacute;rych część&nbsp;<strong>stanowiła prawdziwą rewolucję i weszła na stałe do kanonu gier wideo</strong>. W 1987 roku Namco zasłynęło też stworzeniem pierwszej wieloosobowej gry na automaty arcade &ndash; czyli&nbsp;<em>Final Lap,&nbsp;</em>pozwalającego na r&oacute;wnoczesną zabawę do ośmiu os&oacute;b po połączeniu czterech automat&oacute;w w prostą sieć. Pod koniec lat 80. ubiegłego wieku Namco wkroczyło w domenę konsol domowych,&nbsp;<strong>w kr&oacute;tkim czasie zdobywając ok. 40 procent rynku gier na Nintendo Entertainment System</strong>, a następnie (po fali krytyki praktyk monopolistycznych Nintendo) aktywnie wspierając konkurencyjną konsolę Sega Genesis. Na przełomie lat 80. i 90. firma dość nieoczekiwanie rozszerzyła spektrum działalności, inwestując w budowę park&oacute;w rozrywki, z kt&oacute;rych jeden utworzony został także w Londynie.</p>
+
+<p>W roku 1993 zapoczątkowana została&nbsp;<strong>jedna z najbardziej rozpoznawalnych marek firmy Namco, czyli&nbsp;</strong><strong><em>Ridge Racer</em></strong>, jedna z pierwszych gier wyścigowych oferujących grafikę 3D; ukazała się najpierw na automatach coin-op, a następnie na konsolach Sony PlayStation.&nbsp;<strong>Rok p&oacute;źniej na rynku pojawiła się zaś pierwsza odsłona cyklu&nbsp;</strong><strong><em>Tekken</em></strong><em>&nbsp;</em>(r&oacute;wnież z p&oacute;źniejszym portem na konsole domowe), dając początek rozwijanej do dziś serii. Pod koniec lat 90. Namco niemal całkowicie zdominowało rynek tr&oacute;jwymiarowych bijatyk, publikując kolejne odsłony&nbsp;<em>Tekkena&nbsp;</em>oraz serii&nbsp;<em>Soul Blade&nbsp;</em>(w Japonii znanej jako&nbsp;<em>Soul Edge</em>). Firma wydała też takie gry jak&nbsp;<em>Point Blank&nbsp;</em>czy&nbsp;<em>Time Crisis,&nbsp;</em><strong>wykorzystujące przeznaczony na automaty arcade (a p&oacute;źniej także konsole domowe) specjalny kontroler &ndash; light gun</strong>. W tym samym okresie Namco przejęło też pakiet kontrolny japońskiej wytw&oacute;rni filmowej Nikkatsu, jednak został on sprzedany kilka lat p&oacute;źniej, po fuzji z Bandai.</p>
+
+<h2>Powstanie Bandai Namco Entertainment</h2>
+
+<p>Na początku roku 2005 firmy Namco Ltd. oraz Bandai Co Ltd. ogłosiły&nbsp;<strong>plany połączenia sił, kt&oacute;re zostały wcielone w życie 29 września, a w wyniku fuzji utworzony został Bandai Namco Holdings</strong>. 31 marca 2006 roku odpowiedzialny za produkcję gier wideo oddział firmy Bandai został włączony w struktury Namco i przemianowany na Namco Bandai Games. W międzyczasie amerykańskie oddziały obu firm: Namco Hometek oraz Bandai Games utworzyły zaś Namco Bandai Games America.&nbsp;<strong>Holding przejął też odpowiedzialny za produkcję gier wideo oddział konkurencyjnej firmy&nbsp;</strong>Banpresto&nbsp;i w kwietniu 2008 roku włączył ją w struktury Namco Bandai Games. Pod koniec roku 2008 Namco Bandai Entertainment ogłosiło utworzenie zupełnie nowej marki wydawniczej o nazwie Surge, koncentrującej się na grach skierowanych do zachodniego odbiorcy i zawierających nieco większą dozę brutalności.</p>
+
+<p>Pierwszą i jak się okazało jedyną produkcją firmowaną marką Surge była wydana w styczniu 2009 roku trzecioosobowa gra akcji&nbsp;Afro Samurai, bazująca na popularnej w Japonii mandze i anime. W kolejnych materiałach prasowych Surge zapowiedziano r&oacute;wnież takie produkcje, jak&nbsp;Dead to Rights: Retribution&nbsp;oraz&nbsp;Splatterhouse. Obie gry pojawiły się jednak pod szyldem Namco Bandai, a marka Surge ostatecznie przestała istnieć. W roku 2009, w wyniku kolejnej restrukturyzacji,&nbsp;<strong>do firmy włączono też Bandai Networks oraz oddział zajmujący się grami na telefony kom&oacute;rkowe</strong>. Na początku roku 2011 firma Namco Networks została wchłonięta przez Namco Bandai Games America, co w praktyce zakończyło proces konsolidacji wszystkich oddział&oacute;w holdingu związanych z produkcją i wydawaniem gier wideo.</p>
+
+<p>W kwietniu roku 2012 Namco Bandai Games&nbsp;<strong>przekazało wszelką działalność deweloperską w ręce nowo utworzonego oddziału o nazwie Namco Bandai Studios</strong>, kt&oacute;rego celem było zoptymalizowanie procesu tworzenia gier i zapewnienie lepszej komunikacji pomiędzy poszczeg&oacute;lnymi studiami firmy. W marcu 2013 założone zostały zaś dwa zupełnie nowe studia &ndash; w Singapurze oraz kanadyjskim Vancouver. Pierwsze z nich przekształciło się w wiodącego producenta gier przeznaczonych na rynki Azji i regionu Pacyfiku, podczas gdy drugie skupiło się gł&oacute;wnie na tworzeniu gier sieciowych i społecznościowych na rynek amerykański oraz europejski. W czerwcu tego samego roku oddział o nazwie Namco Bandai Partners, odpowiedzialny dotąd za dystrybucję gier firmy w regionie PAL, został włączony w struktury Namco Bandai Games Europe, celem połączenia działalności wydawniczej i dystrybucyjnej w jedną całość.</p>
+
+<p>25 stycznia 2014 roku&nbsp;<strong>Namco Bandai Games oraz Namco Bandai Studios ogłosiły, że od tego momentu znane będą odpowiednio jako Bandai Namco Games oraz Bandai Namco Studios</strong>, a zmiana wywołana była chęcią ujednolicenia nazwy całego holdingu, w kt&oacute;rym nazwy firm składowych w zależności od oddziału lub lokalizacji funkcjonowały dotąd w r&oacute;żnej kolejności. W komunikacie prasowym, opublikowanym w grudniu 2014 roku, ogłoszono, że&nbsp;<strong>z dniem 1 kwietnia 2015 dotychczasowa nazwa firmy macierzystej zmieniona zostaje na Bandai Namco Entertainment</strong>. O ile Bandai Namco Entertainment (w skr&oacute;cie BNEI) pełni w strukturach holdingu rolę nadrzędną, odpowiadając za kluczowe decyzje strategiczne &ndash; począwszy od procesu produkcji, na sieci dystrybucji i kwestiach marketingowych kończąc, o tyle Bandai Namco Studios (w skr&oacute;cie BNSI) koncentruje się wyłącznie na tworzeniu gier.</p>
+
+<p>Rok 2018 przyni&oacute;sł kolejne zmiany w strukturze firmy, bowiem jej dział zajmujący się automatami został przeniesiony pod skrzydła siostrzanego Bandai Namco Amusement. We wrześniu 2020 roku opisywana firma przejęła kanadyjskie studio&nbsp;Reflector Entertainment, zaś w lutym 2021 roku nabyła mniejszościowy pakiet udział&oacute;w w&nbsp;Limbic Entertainment. W marcu&nbsp;<strong>Bandai Namco Entertainment zapowiedziało zakończenie swojej działalności związanej z automatami na terenie Ameryki P&oacute;łnocnej</strong>; bezpośrednim powodem takiego stanu rzeczy był wybuch pandemii COVID-19, przez kt&oacute;rą szereg obiekt&oacute;w tego typu przestał istnieć. Firma Bandai Namco Amusement America miała jednak nadal funkcjonować w dotychczasowym trybie.</p>
+
+<p><strong>W czerwcu 2022 roku na branżowej mapie pojawił się nowy byt &ndash; Bandai Namco Aces</strong>&nbsp;&ndash; w kt&oacute;rym 51% udział&oacute;w posiadała opisywana firma, zaś pozostałe 49% znajdowało się w rękach firmy ILCA. Nowe studio miało zająć się produkcją gier z segmentu AAA, na czele z serią&nbsp;<em>Ace Combat</em>.&nbsp;<strong>W październiku 2022 roku Bandai Namco Entertainment nabyło zaś większościowy pakiet udział&oacute;w w Limbic Entertainment.</strong></p>');
+INSERT INTO company (name, short_description, country, is_Producer, is_Publisher,poster, description)
+VALUES('Kuro Game','Kuro Games (库洛游戏, Kù Luò yóuxì) to chińska firma zajmująca się tworzeniem i publikowaniem gier wideo. Firma została założona w 2017 roku i jest znana z tworzenia gier w stylu 2D. Oprócz gier, firma tworzy różne produkty, takie jak seriale animowane, powieści, komiksy, muzykę i inne towary, takie jak figurki.'
+      ,'Chiny','true','true','kurogame_0.jpg','	<h2>O firmie</h2>
+
+<p>Kuro Game jest tw&oacute;rca i wydawcą gier firma jest znana z kilku tytuł&oacute;w:</p>
+
+<ul>
+
+<li><strong>Punishing: Gray Raven</strong>&nbsp;- akcji RPG, kt&oacute;ry został wydany w 2021 roku.</li>
+
+<li><strong>Wuthering Waves</strong>&nbsp;- to gra RPG z otwartym światem i bogatą fabułą, kt&oacute;ra jest obecnie w trakcie tworzenia.</li>
+
+<li><strong>Naruto</strong>&nbsp;- gra, kt&oacute;ra ma zostać wydana w 2024 roku.</li>
+
+</ul>');
+INSERT INTO company (name, short_description, country, is_Producer, is_Publisher,poster, description)
+VALUES('Shift Up','Shift Up to południowokoreańskie studio deweloperskie z siedzibą w Seulu. Firma została założona w grudniu 2013 roku przez artystę Kim Hyung Tae, aby tworzyć gry mobilne dla południowokoreańskiego rynku. Studio stało się znane dzięki grze mobilnej Destiny Child. W 2022 roku chiński gigant Tencent nabył 20% udziałów w Shift Up, stając się drugim największym udziałowcem firmy.	'
+      ,'Korea Południowa','true','true','shiftup_0.jpg','<h2>Historia</h2>
+
+<p>Dzieje studia Shift Up rozpoczynają się w grudniu 2013 roku. Założycielami firmy byli KyungRip Min oraz Kim Hyung Tae, zaś&nbsp;<strong>początkowo jej gł&oacute;wnym celem było tworzenie gier mobilnych z myślą o lokalnym rynku</strong>.</p>
+
+<p>Na pierwsze dzieło ekipy, kt&oacute;rej siedziba mieściła się w Seulu, trzeba było czekać do 2016 roku. W&oacute;wczas to na smartfony i tablety trafiła gra&nbsp;<em>Destiny Child</em>, kt&oacute;ra po dw&oacute;ch latach pojawiła się r&oacute;wnież na Zachodzie (aczkolwiek w ocenzurowanej formie).</p>
+
+<p>W 2019 roku Shift Up przystąpiło do swoistej ofensywy i zapowiedziało dwa nowe projekty. Opr&oacute;cz mobilnego&nbsp;<em>Project Nikke: The Goddess of Victory</em>&nbsp;(p&oacute;źniej przemianowanego na&nbsp;<em>Goddess of Victory: Nikke</em>),&nbsp;<strong>jej portfolio miała zasilić pierwsza konsolowo-komputerowa produkcja, nosząca kodowe miano&nbsp;</strong><strong><em>Project Eve</em></strong>. Na potrzeby tej drugiej firma otworzyła drugą dywizję, czyli Second EVE Studio, kt&oacute;ra miała zająć się jej tworzeniem.</p>
+
+<p>Pomimo że początkowo&nbsp;<em>Project Eve</em>&nbsp;zmierzał na komputery osobiste, PlayStation 4 oraz Xboksa One, we wrześniu 2021 roku ogłoszono, że&nbsp;<strong>opisywane studio nawiązało wsp&oacute;łpracę z&nbsp;</strong>Sony Interactive Entertainment. W efekcie to właśnie japoński gigant miał zostać jej wydawcą, a sama gra zmierzała już tylko na PlayStation 5 (i w dalszej perspektywie &ndash; potencjalnie r&oacute;wnież na PC). We wrześniu 2022 roku dowiedzieliśmy się natomiast, że&nbsp;<strong><em>Project Eve</em></strong><strong>&nbsp;zostało przechrzczone na&nbsp;</strong><strong><em>Stellar Blade</em></strong>. Poza tym w grudniu 2022 roku gruchnęła wiadomość o tym, że w Shift Up zainwestował chiński gigant&nbsp;Tencent&nbsp;i wykupił 20% jego akcji, stając się jego drugim największym udziałowcem.</p>
+
+<p>Samo&nbsp;<em>Stellar Blade</em>, kt&oacute;re jeszcze przed premierą przyniosło omawianemu zespołowi rozpoznawalność na całym świecie,&nbsp;<strong>było grą RPG akcji z systemem walki rodem ze slasher&oacute;w</strong>, zainspirowaną takimi produkcjami, jak&nbsp;NieR: Automata&nbsp;czy&nbsp;God of War. Produkcja przenosiła graczy do postapokaliptycznego świata opanowanego przez potwory i pozwalała im wcielić się w wojowniczkę, kt&oacute;ra walczyła z tymi maszkarami.</p>');

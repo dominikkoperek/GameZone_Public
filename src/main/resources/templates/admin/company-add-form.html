@@ -11,7 +11,8 @@
     <h2 class="list-heading">Panel administracyjny</h2>
     <h3 class="list-description">Dodaj nową firmę</h3>
 
-    <form action=""  th:action="@{/admin/dodaj-firme}" method="post" class="add-content-form" id="add-content-form" th:object="${company}"
+    <form action="" th:action="@{/admin/dodaj-firme}" method="post" class="add-content-form" id="add-content-form"
+          th:object="${company}"
           autocomplete="off" enctype="multipart/form-data">
         <div class="form-button-container">
             <a class="form-back-button" href="#" th:href="@{/admin}">
@@ -36,17 +37,17 @@
             <p class="notification-error" th:errors="${company.name}">Powiadomienie</p>
         </div>
 
-            <label for="company-country">Kraj pochodzenia (Wyszukiwarka)</label>
+        <label for="company-country">Kraj pochodzenia (Wyszukiwarka)</label>
 
-            <select multiple id="company-country" th:field="*{country}">
-                <option th:each="country:${allCountries}" th:value="${country}"
-                        th:text="${country}"></option>
-            </select>
+        <select multiple id="company-country" th:field="*{country}">
+            <option th:each="country:${allCountries}" th:value="${country}"
+                    th:text="${country}"></option>
+        </select>
 
-            <div class="input-validation-container">
-                <p class="notification-error" id="country-error"></p>
-                <p class="notification-error" th:errors="${company.country}">Powiadomienie</p>
-            </div>
+        <div class="input-validation-container">
+            <p class="notification-error" id="country-error"></p>
+            <p class="notification-error" th:errors="${company.country}">Powiadomienie</p>
+        </div>
 
         <label for="company-short-description">Krótki opis(100 - 1000 znaków)</label>
         <textarea rows="8" id="company-short-description"
@@ -127,27 +128,27 @@
 
     <script src="/scripts/multipleFormSelect.js" th:src="@{/scripts/multipleFormSelect.js}"></script>
     <script src="/scripts/companyFormValidation.js" th:src="@{/scripts/companyFormValidation.js}"></script>
-    <!--    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"-->
-    <!--            referrerpolicy="origin"></script>-->
-    <!--    <script>-->
-    <!--         tinymce.init({-->
-    <!--             selector: '.contentEditor',-->
-    <!--             plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",-->
-    <!--             toolbar: 'undo|redo|removeformat|numlist |bullist | outdent |indent| bold|italic| h2 | link | preview|',-->
-    <!--             menubar: '',-->
-    <!--             toolbar_sticky: false,-->
-    <!--             icons: 'thin',-->
-    <!--             content_css: "/styles/tinymce.css",-->
-    <!--             setup: function (editor) {-->
-    <!--                editor.on('keyup', function (e) {-->
-    <!--                     validateCompanyLongDescription();-->
-    <!--                 });-->
-    <!--             },-->
-    <!--             min_height: 400,-->
-    <!--             max_height: 800,-->
-    <!--         });-->
+    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '.content-editor',
+            plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",
+            toolbar: 'undo|redo|removeformat|numlist |bullist | outdent |indent| bold|italic| h2 | link | preview|',
+            menubar: '',
+            toolbar_sticky: false,
+            icons: 'thin',
+            content_css: "/styles/tinymce.css",
+            setup: function (editor) {
+                editor.on('keyup', function (e) {
+                    validateCompanyLongDescription();
+                });
+            },
+            min_height: 400,
+            max_height: 800,
+        });
 
-    <!--    </script>-->
+    </script>
     <script>
         new MultiSelectTag('company-country');
     </script>

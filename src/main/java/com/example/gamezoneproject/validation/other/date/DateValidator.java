@@ -33,7 +33,9 @@ public class DateValidator implements ConstraintValidator<Date, Map<String, Loca
             }
         }
         for (LocalDate value : stringLocalDateMap.values()) {
-            if (value.getYear() < min || value.getYear() > max) {
+            if (value.getYear() == 8888 || value.getYear() == 9999) {
+                return true;
+            } else if (value.getYear() < min || value.getYear() > max) {
                 return false;
             }
         }

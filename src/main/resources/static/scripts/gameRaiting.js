@@ -1,7 +1,7 @@
 let slider = document.getElementById("slider");
 let userRate = document.getElementById("user-rate")
 let userRateMessage = document.getElementById("user-rate-message");
-if (userRate.innerText !== '?') switchRate();
+if (userRate!==null && userRate.innerText !== '?') switchRate();
 
 function switchRate() {
     switch (slider.value) {
@@ -88,10 +88,6 @@ function switchRate() {
             break;
     }
 }
+if(slider!==null){
 slider.oninput = switchRate;
-
-//RATING BUTTON
-let rateButton = document.getElementById("game-rate-button")
-function rateGame(){
-
 }

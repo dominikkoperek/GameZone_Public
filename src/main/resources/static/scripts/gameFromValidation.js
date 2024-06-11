@@ -420,7 +420,7 @@ const validateGamePublisher = () => {
 //VALIDATE RELEASE DATE
 const releaseDateContainer = document.getElementById('game-date-input-container');
 let releaseDate;
-let releaseDateError;
+let releaseDateError =document.getElementById('release-date-error');
 let releaseDateValue = [];
 let todayDate = new Date();
 todayDate.setHours(23);
@@ -431,7 +431,6 @@ let isPremiereInFuture;
 
 const validateGameReleaseDate = () => {
     releaseDate = document.querySelectorAll('.date-platform-value');
-    releaseDateError = document.getElementById('release-date-error');
     for (let i = 0; i < releaseDate.length; i++) {
         releaseDateValue[i] = new Date(releaseDate[i].value);
     }

@@ -290,26 +290,26 @@
     <script src="/scripts/gameFromValidation.js" th:src="@{/scripts/gameFromValidation.js}"></script>
     <script src="/scripts/multipleFormSelect.js" th:src="@{/scripts/multipleFormSelect.js}"></script>
 
-    <!--    <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"-->
-    <!--            referrerpolicy="origin"></script>-->
-    <!--    <script>-->
-    <!--        tinymce.init({-->
-    <!--            selector: '.content-editor',-->
-    <!--            plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",-->
-    <!--            toolbar: 'undo|redo|removeformat|numlist |bullist | outdent |indent| bold|italic| h2 | link | preview|',-->
-    <!--            menubar: '',-->
-    <!--            toolbar_sticky: false,-->
-    <!--            icons: 'thin',-->
-    <!--            content_css: "/styles/tinymce.css",-->
-    <!--            setup: function (editor) {-->
-    <!--                editor.on('change', function (e) {-->
-    <!--                    validateGameLongDescription();-->
-    <!--                });-->
-    <!--            },-->
-    <!--            min_height: 400,-->
-    <!--            max_height: 800,-->
-    <!--        });-->
-    <!--    </script>-->
+        <script src="https://cdn.tiny.cloud/1/he5czymkzvg283r2v9jzaxf9ppuvobtcwngw9chci0rjn4aa/tinymce/6/tinymce.min.js"
+                referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '.content-editor',
+                plugins: "wordcount lists link preview pagebreak autoresize Search and Replace",
+                toolbar: 'undo|redo|removeformat|numlist |bullist | outdent |indent| bold|italic| h2 | link | preview|',
+                menubar: '',
+                toolbar_sticky: false,
+                icons: 'thin',
+                content_css: "/styles/tinymce.css",
+                setup: function (editor) {
+                    editor.on('change', function (e) {
+                        validateGameLongDescription();
+                    });
+                },
+                min_height: 400,
+                max_height: 800,
+            });
+        </script>
     <script>
         new MultiSelectTag('categories');
         new MultiSelectTag('platforms');

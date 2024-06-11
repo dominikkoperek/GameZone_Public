@@ -96,10 +96,10 @@ const validateCompanyShortDescription = () => {
 //VALIDATE LONG DESCRIPTION
 let companyLongDescription = document.getElementById("company-long-description");
 let companyLongDescriptionError = document.getElementById("long-description-error");
+let companyLongDescriptionValue;
 const validateCompanyLongDescription = () => {
-    let companyLongDescriptionValue;
     try {
-        companyLongDescriptionValue = tinymce.get("companyLongDescription").getContent();
+        companyLongDescriptionValue = tinymce.get("company-long-description").getContent();
     } catch (e) {
         if (e instanceof ReferenceError) {
             companyLongDescriptionValue = companyLongDescription.value.trim();
@@ -186,22 +186,22 @@ const validateCompanyPoster = async () => {
     }
     if (width > 1200 && companyPoster.value !== "") {
         companyPoster.classList.add("error-input");
-        companyPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px"+" (max 1200px)";
+        companyPosterError.innerHTML = "Szerokość obrazu jest za duża " + width + "px" + " (max 1200px)";
         return false;
     }
     if (width < 300 && companyPoster.value !== "") {
         companyPoster.classList.add("error-input");
-        companyPosterError.innerHTML = "Szerokość obrazu jest za mała " + width + "px" +" (min 300px)";
+        companyPosterError.innerHTML = "Szerokość obrazu jest za mała " + width + "px" + " (min 300px)";
         return false;
     }
     if (height > 1200 && companyPoster.value !== "") {
         companyPoster.classList.add("error-input");
-        companyPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px"+" (max 1200px)";
+        companyPosterError.innerHTML = "Wysokość obrazu jest za duża " + height + "px" + " (max 1200px)";
         return false;
     }
     if (height < 300 && companyPoster.value !== "") {
         companyPoster.classList.add("error-input");
-        companyPosterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px"+" (min 300px)";
+        companyPosterError.innerHTML = "Wysokość obrazu jest za mała " + height + "px" + " (min 300px)";
         return false;
     }
 

@@ -99,146 +99,102 @@ INSERT INTO game
 (title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
 VALUES ('Stellar Blade', 'Gra RPG akcji inspirowana przez takie hity, jak NieR: Automata oraz God of War. W Stellar Blade (znanym wcześniej jako Project Eve) trafiamy do postapokaliptycznego świata i wcielamy się w wojowniczkę walczącą z potworami, które go opanowały.',
-        'x8w7vu8', true, 3 ,3,'Gra',1,1,'stellarblade.jpg','stellarblade_s_0.jpg','stellarblade_b_0.jpg');
+        'x8w7vu8', true, 10 ,3,'<h2>Fabuła</h2>
+
+<p><strong>Gra przedstawia ponurą wizję przyszłości</strong>, w kt&oacute;rej świat został opanowany przez krwiożercze istoty, tzw. Naytiba. Ludzkość nie była w stanie stawić oporu napastnikom i błyskawicznie uległa ich brutalnej sile.</p>
+
+<p><strong>Gł&oacute;wną bohaterką&nbsp;</strong><strong><em>Stellar Blade</em></strong><strong>&nbsp;jest Eve, kt&oacute;ra wraz z towarzyszami ląduje na zniszczonej Ziemi, by podjąć walkę z wrogiem.</strong>&nbsp;Na miejscu spotyka Adama, jednego z nielicznych ocalałych z pogromu. Wsp&oacute;lnie udają się do miasta Xion &ndash; niedyś tętniącego życiem miejsca, a obecnie ostatniego bastionu ludzkości.</p>
+
+<p>Z czasem protagonistka poznaje historię jego mieszkańc&oacute;w i staje przed szansą na odmianę ich życia. Dalszy los świata zależeć będzie jednak od podejmowanych przez nas decyzji.</p>
+
+<h2>Gameplay</h2>
+
+<p><em>Stellar Blade</em>&nbsp;jest dynamiczną grą reprezentującą gatunek RPG akcji, a&nbsp;<strong>modelem rozgrywki przypomina w dużej mierze</strong>&nbsp;NieR: Automata. W postapokaliptycznym uniwersum odwiedzamy zniszczone miasta oraz pustkowia opanowane przez Naytiba.&nbsp;<strong>Z potworami rozprawiamy się gł&oacute;wnie za pomocą miecza</strong>&nbsp;&ndash; podstawowej broni protagonistki.</p>
+
+<div id="scroller-mid-direct"></div>
+
+<p>Podczas starć robimy użytek z blok&oacute;w oraz unik&oacute;w, kt&oacute;re, wykonane w odpowiednim momencie, otwierają nam drogę do efektownych&nbsp;kombos&oacute;w. Korzystamy także ze specjalnych umiejętności Eve (Beta Skills oraz Burst Skills) zwiększających bojowy potencjał postaci. Poza standardowymi przeciwnikami natrafimy r&oacute;wnież na monstrualnej wielkości&nbsp;boss&oacute;w&nbsp;&ndash; starcia z nimi wymagają nie tylko siły, ale i odpowiedniej taktyki.</p>
+
+<p><strong>W grze nie ma w pełni otwartego świata</strong>, ale badane lokacje bywają p&oacute;łotwarte i zachęcają do eksploracji &ndash; możemy skanować otoczenie, odkrywać sekretne obszary oraz tworzyć nowe skr&oacute;ty do p&oacute;źniejszego wykorzystania. Na znalezienie czeka też mn&oacute;stwo łup&oacute;w, np. surowc&oacute;w do&nbsp;craftingu&nbsp;albo nowych element&oacute;w wyposażenia.</p>
+
+<h2>Elementy soulslike</h2>
+
+<p><strong>W grze obecne są r&oacute;wnież mechaniki typu soulslike</strong>&nbsp;&ndash; bohaterka dysponuje ograniczoną liczbą leczeń, postępy możemy zapisywać tylko w odblokowanych posterunkach (tutejszy odpowiednich ognisk z&nbsp;<em>Dark Souls</em>), zaś pokonani zwykli&nbsp;<strong>wrogowie mogą odradzać się po śmierci protagonistki lub po skorzystaniu z opcji odpoczynku</strong>.&nbsp;<em>Stellar Blade</em>&nbsp;nie ignoruje jednak potrzeb graczy, kt&oacute;rzy chcieliby skupić się na fabule &ndash;&nbsp;<strong>można obniżyć poziom trudności walk</strong>.</p>
+
+<div id="scroller-bot-programmatic"></div>
+
+<h2>Silnik</h2>
+
+<p><strong><em>Stellar Blade</em></strong><strong>&nbsp;napędzane jest przez Unreal Engine 4</strong> &ndash; gra może pochwalić się wysokiej jakości grafiką utrzymaną w lekko mangowej stylistyce. Jej reżyserem jest Kim Hyoung Tae, wcześniej znany także z roli projektanta postaci do gier mobilnych.</p>',1,1,'stellarblade.jpg','stellarblade_s_0.jpg','stellarblade_b_0.jpg');
 INSERT INTO game
 (title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
 VALUES ('Wuthering Waves', 'Gra RPG akcji TPP z otwartym światem. W Wuthering Waves trafiamy do fantastycznej krainy, którą przemierzamy, wykonując zadania i tocząc dynamiczne pojedynki z demonicznymi istotami znanymi jako Calamony.',
-        'kavx7WnlDdJkjAAE7RI', true, 3 ,3,'Gra',1,1,'wutheringwaves.jpg','stellarblade_s_0.jpg','wutheringwaves_b_0.jpg');
+        'kavx7WnlDdJkjAAE7RI', true, 9 ,9,'<h2>Fabuła</h2>
+
+<p><strong><em>Wuthering Waves</em></strong><strong>&nbsp;zabiera nas w podr&oacute;ż do fantastycznego świata, kt&oacute;ry sto lat temu nawiedził kataklizm znany jako Calament.</strong>&nbsp;W jego wyniku pojawiły się w nim istoty zwane Calamonami, siejące zniszczenie wszędzie tam, gdzie trafiły. Mijały lata, a ci, kt&oacute;rym udało się przetrwać, przystąpili do odbudowy tego, co zostało utracone podczas Calamentu.&nbsp;<strong>W trakcie rozgrywki przejmujemy kontrolę nad bohaterami, kt&oacute;rzy stanowią nową nadzieję dla świata.</strong></p>
+
+<div id="gpc-embed-25688" class="gpc-c300 no-teads">
+
+<div id="gpc-cnt-25688"></div>
+
+</div>
+
+<h2>Mechanika</h2>
+
+<p>W&nbsp;<em>Wuthering Waves</em>&nbsp;akcję oglądamy z perspektywy trzeciej osoby (TPP).<strong>&nbsp;Produkcja oddaje nam do dyspozycji rozległy świat, kt&oacute;ry możemy swobodnie przemierzać.</strong>&nbsp;Kontrolowana przez nas postać jest wyjątkowo mobilna (potrafi między innymi biegać po ścianach), toteż&nbsp;eksploracja&nbsp;w jej wykonaniu wypada bardzo dynamicznie. W trakcie rozgrywki wykonujemy postawione przed nami&nbsp;zadania, a także eliminujemy zastępy przeciwnik&oacute;w.</p>
+
+<p>Podczas szybkich starć musimy być w ciągłym ruchu, wykonywać uniki, skutecznie machać bronią białą czy wreszcie robić dobry użytek z nadnaturalnych umiejętności. Ponadto gra pozwala nam&nbsp;<strong>szybko przełączać się pomiędzy postaciami, co dodatkowo poszerza wachlarz naszych możliwości</strong>&nbsp;na polu walki. W miarę postęp&oacute;w&nbsp;rozwijamy postać, dzięki czemu z czasem możemy stawiać czoła coraz większym wyzwaniom.</p>
+
+<h2>Kwestie techniczne</h2>
+
+<p><em>Wuthering Waves</em> może pochwalić się wysokiej jakości grafiką w barwnej, mangowej stylistyce.</p>',1,1,'wutheringwaves.jpg','stellarblade_s_0.jpg','wutheringwaves_b_0.jpg');
 INSERT INTO game
 (title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
 VALUES ('WitchSpring R', 'Gra jRPG, w której wcielamy się w wiedźmę imieniem Pieberry. W WitchSpring R przemierzamy fantastyczny świat i poznajemy jego mieszkańców, a także stawiamy czoła niebezpieczeństwom.	',
-        'kavx7WnlDdJkjAAE7RI', true, 4 ,4,'<h2> Fabuła</h2>
-WitchSpring R przenosi nas do fantastycznego świata. Główną bohaterką gry jest Pieberry, czyli siwowłosa wiedźma z króliczymi uszami, która dorastała w lesie pełnym potworów. Pewnego dnia nasza podopieczna postanawia ożywić wspomnienia ze swojego dzieciństwa i nauczyć się żyć pośród ludzi. Nasza w tym głowa, by wyszła cało ze starcia z nowym dla siebie światem pełnym nieznanych dotąd doświadczeń.
+        'kavx7WnlDdJkjAAE7RI', true, 4 ,4,'<h2>Fabuła</h2>
+
+<p><em>WitchSpring R</em>&nbsp;przenosi nas do fantastycznego świata. Gł&oacute;wną bohaterką gry jest Pieberry, czyli siwowłosa wiedźma z kr&oacute;liczymi uszami, kt&oacute;ra dorastała w lesie pełnym potwor&oacute;w. Pewnego dnia&nbsp;<strong>nasza podopieczna postanawia ożywić wspomnienia ze swojego dzieciństwa i nauczyć się żyć pośr&oacute;d ludzi</strong>. Nasza w tym głowa, by wyszła cało ze starcia z nowym dla siebie światem pełnym nieznanych dotąd doświadczeń.</p>
+
+<div id="gpc-embed-26629" class="gpc-c300 no-teads">
+
+<div id="gpc-cnt-26629"></div>
+
+</div>
+
 <h2>Mechanika</h2>
-W WitchSpring R akcję oglądamy głównie w widoku izometrycznym, choć w wielu momentach kamera prezentuje protagonistkę z innych ujęć. Przygoda wiedzie nas przez różnorodne lokacje; od wielkiego miasta, po malownicze plenery. Jej motorem są rozmowy prowadzone z postaciami neutralnymi oraz zadania wykonywane przez Pieberry.
-W trakcie zabawy naszym oczkiem w głowie powinien być rozwój bohaterki. Protagonistka rośnie w siłę, ćwicząc i doskonaląc swe umiejętności. Ponadto w trakcie zabawy zdobywamy rozmaite składniki, które służą nam do przyrządzania magicznych wywarów wzmacniających Pieberry bądź ulepszających jej kostur. Nowe przepisy odblokowujemy, zdobywając magiczne księgi i przepisy kulinarne, które rozrzucono po świecie gry.
-Jako że dookoła roi się od niebezpieczeństw, często przychodzi nam stawać do walki z przeciwnikami. Potyczki toczą się w trybie turowym, a w ich trakcie kluczem do sukcesu jest przede wszystkim umiejętne wykorzystywanie magicznych zdolności protagonistki. Warto przy tym pamiętać, że Pieberry nie jest skazana na samotną przeprawę. Bohaterka może bowiem oswajać różnorodne stworzenia, które następnie służą jej pomocą, między innymi w charakterze wierzchowców. Dodatkowo zabawę urozmaica szereg minigier.
+
+<p>W&nbsp;<em>WitchSpring R</em>&nbsp;akcję oglądamy gł&oacute;wnie w&nbsp;widoku izometrycznym, choć w wielu momentach kamera prezentuje protagonistkę z innych ujęć. Przygoda wiedzie nas przez r&oacute;żnorodne lokacje; od wielkiego miasta, po malownicze plenery. Jej motorem są rozmowy prowadzone z&nbsp;postaciami neutralnymi&nbsp;oraz&nbsp;zadania&nbsp;wykonywane przez Pieberry.</p>
+
+<p>W trakcie zabawy naszym oczkiem w głowie powinien być&nbsp;rozw&oacute;j bohaterki. Protagonistka rośnie w siłę, ćwicząc i doskonaląc swe&nbsp;umiejętności. Ponadto w trakcie zabawy zdobywamy rozmaite składniki, kt&oacute;re służą nam do przyrządzania magicznych wywar&oacute;w wzmacniających Pieberry bądź ulepszających jej kostur. Nowe przepisy odblokowujemy, zdobywając magiczne księgi i przepisy kulinarne, kt&oacute;re rozrzucono po świecie gry.</p>
+
+<div id="scroller-mid-direct"></div>
+
+<p>Jako że dookoła roi się od niebezpieczeństw,&nbsp;<strong>często przychodzi nam stawać do walki z przeciwnikami</strong>. Potyczki toczą się w&nbsp;trybie turowym, a w ich trakcie kluczem do sukcesu jest przede wszystkim umiejętne wykorzystywanie magicznych zdolności protagonistki. Warto przy tym pamiętać, że Pieberry nie jest skazana na samotną przeprawę. Bohaterka może bowiem oswajać r&oacute;żnorodne stworzenia, kt&oacute;re następnie służą jej pomocą, między innymi w charakterze wierzchowc&oacute;w. Dodatkowo zabawę urozmaica szereg&nbsp;minigier.</p>
+
 <h2>Kwestie techniczne</h2>
-WitchSpring R może się pochwalić barwną, mangową grafiką wysokiej jakości. Podobać się mogą zarówno modele postaci, jak i projekty lokacji. Tytuł doczekał się japońskiego dubbingu.'
+
+<p><em>WitchSpring R</em> może się pochwalić barwną, mangową grafiką wysokiej jakości. Podobać się mogą zar&oacute;wno modele postaci, jak i projekty lokacji. Tytuł doczekał się japońskiego dubbingu.</p>'
            ,1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
 INSERT INTO game
 (title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('ddd','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
-INSERT INTO game
-(title, short_description, dailymotion_trailer_id, promoted,
- producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
-values ('d','a','a',true,1,1,'1',1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
+ producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion)
+VALUES ('Tekken 8', 'Tekken 8 to mordobicie należące do jednego z najpopularniejszych cykli z tego gatunku. Tradycyjnie zabawa koncentruje się na dynamicznych pojedynkach jeden na jednego, które możemy toczyć przeciwko AI lub innym graczom.',
+        'k3qnjex76fuZvcALSQs', true, 8 ,7,'<h2>Mechanika</h2>
+
+<p>Produkcję zbudowano na fundamentach wcześniejszych odsłon. Otrzymujemy zatem klasycznie zrealizowaną bijatykę, w kt&oacute;rej zabawa sprowadza się do toczenia pojedynk&oacute;w jeden na jednego. Mapy w grze są tr&oacute;jwymiarowe, ale sama rozgrywka odbywa się w dw&oacute;ch wymiarach.</p>
+
+<div id="primisWidget"></div>
+
+<p>Do wyboru jest bogata galeria postaci, z kt&oacute;rych każda posiada unikalny styl walki i techniki specjalne.</p>
+
+<h2>Tryby gry</h2>
+
+<p><em>Tekken 8</em>&nbsp;pozwala zar&oacute;wno na samotną zabawę, jak i rywalizowanie przeciwko innym graczom. Opcja single player obejmuje czyste potyczki z AI oraz rozbudowany tryb fabularny (tzw. Story Mode) z bogatym scenariuszem i licznymi scenkami przerywnikowymi.</p>
+
+<p>Z kolei multiplayer pozwala na walkę z innymi graczem na wsp&oacute;lnym ekranie lub przez Internet.</p>
+
+<h2>Kwestie techniczne</h2>
+
+<p><em>Tekken 8&nbsp;</em>oferuje imponującą oprawę graficzną. Zar&oacute;wno postacie, jak i lokacje są znacznie bardziej szczeg&oacute;łowe niż w poprzedniej części. Uwagę zwracają takie detale, jak krople deszczu spływające po twarzach wojownik&oacute;w czy mięśnie napinające się przed uderzeniem.</p>',1,2,'tekken8_0.jpg','tekken8_s_0.png');

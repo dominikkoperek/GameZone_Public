@@ -13,3 +13,6 @@ INSERT INTO game_game_mode (game_id,game_mode_id) VALUES (5,1);
 INSERT INTO game_game_mode (game_id,game_mode_id) VALUES (6,1);
 
 INSERT INTO game_game_mode (game_id,game_mode_id) VALUES (7,1);
+
+INSERT INTO game_game_mode (game_id,game_mode_id) VALUES (8,1);
+INSERT INTO game_game_mode (game_id,game_mode_id) VALUES (8,2);
