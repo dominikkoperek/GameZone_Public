@@ -1,6 +1,9 @@
 
 ![Logo](https://i.imgur.com/JUUVWtn.png)
 
+## Demo
+http://185.238.74.30:8080/
+
 ## 🛠 Techstack
 Java, Spring, Thymeleaf, Hibernate, SQL, Liquibase, Javascript, HTML, CSS
 
