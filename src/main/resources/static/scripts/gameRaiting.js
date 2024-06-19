@@ -1,7 +1,7 @@
 let slider = document.getElementById("slider");
 let userRate = document.getElementById("user-rate")
 let userRateMessage = document.getElementById("user-rate-message");
-if (userRate!==null && userRate.innerText !== '?') switchRate();
+if (userRate !== null && userRate.innerText !== '?') switchRate();
 
 function switchRate() {
     switch (slider.value) {
@@ -88,6 +88,45 @@ function switchRate() {
             break;
     }
 }
-if(slider!==null){
-slider.oninput = switchRate;
+
+if (slider !== null) {
+    slider.oninput = switchRate;
 }
+//HIDE RATES
+let closeButton = document.getElementById('close-rates');
+let rateStatsSticky = document.getElementById('rate-stats-sticky');
+let showStatsButton = document.getElementById('show-stats');
+let statsContainer = document.getElementById('stats-container');
+let rateBar =document.querySelectorAll(".rate-load-bar");
+
+closeButton.addEventListener('click', () => {
+    removeClasses();
+})
+rateStatsSticky.addEventListener('click', () => {
+    removeClasses();
+});
+statsContainer.addEventListener('click',ev=>{
+    ev.stopPropagation();
+    ev.preventDefault();
+});
+
+//DISPLAY RATES
+
+if (statsContainer.classList.contains('hide-stats-container')) {
+    showStatsButton.addEventListener('click', () => {
+        statsContainer.classList.remove("hide-stats-container");
+        rateStatsSticky.classList.remove("hide-stats-container");
+        statsContainer.classList.add("rates-slide-animation");
+        rateStatsSticky.classList.add("rate-opacity-animation");
+        rateBar.forEach(c=>c.classList.add("rate-load-bar-animation"));
+
+    });
+}
+function removeClasses(){
+    statsContainer.classList.add("hide-stats-container");
+    rateStatsSticky.classList.add("hide-stats-container");
+    statsContainer.classList.remove("rates-slide-animation");
+    rateStatsSticky.classList.remove("rate-opacity-animation");
+    rateBar.forEach(c=>c.classList.remove("rate-load-bar-animation"));
+}
+

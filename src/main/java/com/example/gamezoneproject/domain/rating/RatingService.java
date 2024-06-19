@@ -7,7 +7,6 @@ import com.example.gamezoneproject.domain.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -48,9 +47,15 @@ public class RatingService {
         return ratingRepository.findByUser_loginAndGame_Id(userName, gameId).map(Rating::getRating);
     }
 
-    public Map<Double, Integer> getAllRatesForGame(long gameId) {
+    public Map<Double, Double> getAllRatesForGame(long gameId) {
+        int rateCount = gameRepository.findById(gameId).orElseThrow().getRatings().size();
         List<Rating> allByGameId = ratingRepository.findAllByGame_id(gameId);
         return allByGameId.stream()
-                .collect(Collectors.groupingBy(Rating::getRating, Collectors.summingInt(rating -> 1)));
+                .collect(Collectors.groupingBy(Rating::getRating,
+                        Collectors.collectingAndThen(
+                                Collectors.summingInt(rating -> 1),
+                                count -> (count / (double)rateCount) * 100)
+                ));
     }
 }
+

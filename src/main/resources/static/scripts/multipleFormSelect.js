@@ -1,5 +1,3 @@
-// Author: Habib Mhamadi
-// Email: habibmhamadi@gmail.com
 
 function MultiSelectTag(el, customs = {shadow: false, rounded: true}) {
     let element = null

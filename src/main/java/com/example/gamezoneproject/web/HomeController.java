@@ -45,7 +45,7 @@ public class HomeController {
         LinkedHashMap<String, String> gamePlatforms = gamePlatformService.findAllGamePlatforms();
         model.addAttribute("platforms", gamePlatforms);
         model.addAttribute("heading", "Wielka encyklopedia gier");
-        model.addAttribute("description", "Encyklopedia Gier GameZone.pl zawiera opisy, screeny," +
+        model.addAttribute("description", "Encyklopedia Gier GameZone zawiera opisy, screeny," +
                 " trailery, daty premier, wymagania sprzętowe, oceny i recenzje gier zarówno przed, jak i po premierze. Wszystkie gry w jednym miejscu!");
         model.addAttribute("games", allGames);
         model.addAttribute("allPlatforms", "Wszystkie");
@@ -55,6 +55,4 @@ public class HomeController {
                 .orElse(null);
         model.addAttribute("closestGameReleaseDate", gameByClosestPremierDate);
     }
-
-
 }
