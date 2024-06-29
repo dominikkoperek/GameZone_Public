@@ -31,6 +31,7 @@ validateCompanyName = async () => {
         companyNameError.innerHTML = 'Firma już istnieje';
         return false;
     }
+
     companyName.classList.remove('error-input');
     companyNameError.innerHTML = '';
     return true;
@@ -84,9 +85,9 @@ const validateCompanyShortDescription = () => {
         companyShortDescriptionError.innerHTML = 'Opis musi mieć przynajmniej 100 znaków'
         return false;
     }
-    if (companyShortDescriptionValue.length > 1000) {
+    if (companyShortDescriptionValue.length > 1500) {
         companyShortDescription.classList.add('error-input');
-        companyShortDescriptionError.innerHTML = 'Opis może mieć maksymalnie 1000 znaków'
+        companyShortDescriptionError.innerHTML = 'Opis może mieć maksymalnie 1500 znaków'
         return false;
     }
     companyShortDescriptionError.innerHTML = '';

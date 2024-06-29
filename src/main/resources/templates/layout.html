@@ -19,59 +19,202 @@
 
 <body>
 <div class="container">
-    <div class="navbar">
+    <div class="hide-jumbotron" id="hide-jumbotron">
+        <div class="navbar">
+            <header class="jumbotron">
+                <div class="jumbotron-box">
+                    <div class="jumbotron-text">
+                        <div class="menu-logo-container">
+                            <a href="#" th:href="@{/}">
+                                <i class="fa-solid fa-dragon logo"></i> GameZone
+                            </a>
+                        </div>
+                        <p class="jumbotron-description" th:if="${sectionDescription}"
+                           th:text="${sectionDescription}">Encyklopedia gier</p>
+                    </div>
 
-        <ul class="menu">
-            <li class="menu-logo-container">
+                    <div class="login-search-bar-container">
+                        <div class="login-box">
+                            <div class="user-login-box">
+                               <span class="header-menu-item" sec:authorize="isAnonymous()">
+                                <a href="#" th:href="@{/zaloguj}">zaloguj się</a>
+                                </span>
+                                <span class="header-menu-item" sec:authorize="isAnonymous()">
+                                 <a href="#" th:href="@{/rejestracja}">rejestracja</a>
+                                </span>
+                                <span class="header-menu-item" sec:authorize="isAuthenticated()">
+                                 <a href="#" class="user-details-info">
+                                     <p th:text="${username}"></p>
+                                 </a>
+                                    <a href="#" th:href="@{/wyloguj}" class="user-details-info">
+                                        <i class="fa-solid fa-power-off" title="wyloguj"></i>
+                                    </a>
+                                </span>
+                            </div>
+
+                            <span class="menu-top-media">
+                            <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                        </span>
+                            <span class="menu-top-media">
+                               <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
+                                   <i class="fa-brands fa-instagram"></i>
+                               </a>
+                             </span>
+                            <span class="menu-top-media">
+                            <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                        </span>
+                        </div>
+
+                        <div class="login-search-bar-menu-container">
+                            <div class="login-search-bar" id="nav-bar-search-row">
+                                <input type="text" placeholder="szukana gra..." aria-autocomplete="none"
+                                       autocomplete="off" autocorrect="off" id="nav-bar-search-input">
+                                <button class="company-search-button" id="company-search-button">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                                <div class="login-search-bar-extend company-result-box-hide" id="nav-bar-box">
+                                    <div class="login-search-bar-list" id="nav-bar-list-box"></div>
+                                </div>
+                            </div>
+
+                            <div class="nav-icon"  onclick="body.classList.toggle('nav-open')" id="menu-button">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+            <nav class="nav-container">
+                <div class="sub-nav-items">
+                    <a href="#" th:href="@{/newsroom}">Newsroom</a>
+                    <a href="#" th:href="@{/gry}">Encyklopedia Gier</a>
+                    <a href="/polecane-gry" th:href="@{/teksty-o-grach}">Teksty</a>
+                    <a href="/firma" th:href="@{/poradniki-do-gier}">Poradniki</a>
+                    <a href="/admin" th:href="@{/admin}" sec:authorize="hasAnyRole('ADMIN','MODERATOR')" >Admin</a>
+                </div>
+            </nav>
+        </div>
+
+        <nav class="sub-nav-container" th:if="${displayGameListNav}" id="sub-navbar">
+            <div class="sub-nav-items">
+                <a href="/polecane-gry" th:href="@{/gry/top-gry}">Top gry</a>
+                <a href="/katalog-firm/" th:href="@{/katalog-firm}">Katalog firm</a>
+                <a href="/kategorie/" th:href="@{/gry/kategorie}">Kategorie</a>
+            </div>
+        </nav>
+        <nav class="extend-nav-container hidden" id="extend-nav-bar">
+                <div class="menu-extend-border-right menu-extend-top-content-box">
+                    <a href="#" th:href="@{/newsroom}" class="menu-head">Newsroom</a>
+                    <a href="#" th:href="@{/newsroom/wiadomosci}" class="menu-subhead">wiadomości</a>
+                    <a href="#" th:href="@{/newsroom/popularne}" class="menu-subhead">popularne</a>
+                    <a href="#" th:href="@{/newsroom/top-tematy}" class="menu-subhead">top tematy</a>
+                    <span class="menu-extend-top-border-right"></span>
+                    <a href="#" th:href="@{/teksty-o-grach}" class="menu-head">Teksty</a>
+                    <a href="#" th:href="@{/teksty-o-grach/recenzje}" class="menu-subhead">recenzje</a>
+                    <a href="#" th:href="@{/teksty-o-grach/przed-premiera}" class="menu-subhead">przed premierą</a>
+                </div>
+                <div class="menu-extend-top-content-box menu-extend-border-right">
+                    <a href="#" th:href="@{/gry}" class="menu-head">Encyklopedia gier</a>
+                    <a href="#" th:href="@{/gry/wyszukiwarka} "class="menu-subhead">wyszukiwarka</a>
+                    <a href="#" th:href="@{/gry/top-gry}" class="menu-subhead">top gry</a>
+                    <a href="#" th:href="@{/gry/kategorie} "class="menu-subhead">kategorie</a>
+                    <a href="#" th:href="@{/katalog-firm}" class="menu-subhead">katalog firm</a>
+                    <span class="menu-extend-top-border-right"></span>
+                    <a href="#" th:href="@{/poradniki-do-gier}" class="menu-head">Poradniki</a>
+                </div>
+                <div class="menu-user-container-box">
+                    <div class="menu-user-container">
+                        <a href="#" class="user-head">Twój profil
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+                        <a href="#" class="user-head">Kolekcja Gier
+                            <i class="fa-solid fa-heart"></i>
+                        </a>
+                        <a href="#" class="user-head">Ustawienia
+                            <i class="fa-solid fa-gear"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-footer-box">
+                    <div class="menu-footer">
+                        <span class="menu-footer-element">
+                            <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
+                              <i class="fa-brands fa-instagram"></i>
+                              <span>Instagram: </span>GameZone
+                            </a>
+                        </span>
+                        <span  class="menu-footer-element">
+                            <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
+                              <i class="fa-brands fa-youtube"></i>
+                                <span>YT: </span>GameZone
+                            </a>
+                        </span>
+                        <span  class="menu-footer-element">
+                            <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
+                              <i class="fa-brands fa-twitter"></i>
+                                <span>Twitter: </span>GameZone
+                            </a>
+                        </span>
+                        <span  class="menu-footer-element">
+                            <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
+                             <i class="fa-solid fa-users"></i>
+                                Redakcja GameZone
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+        </nav>
+    </div>
+
+    <div class="mobile-nav-container-hide" id="mobile-nav-bar-hide">
+        <div class="mobile-nav-container">
+            <div class="mobile-nav-icon">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div>
                 <a href="#" th:href="@{/}">
                     <i class="fa-solid fa-dragon logo"></i> GameZone
                 </a>
-            </li>
-            <li class="menu-toggle">
-                <a href="#">
-                    <i id="toggle-icon" class="fa-solid fa-bars"></i>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" th:href="@{/admin}" sec:authorize="hasAnyRole('ADMIN','MODERATOR')">Admin</a>
-            </li>
-            <li class="menu-item">
-                <a href="#" th:href="@{/gry/kategorie}">Kategorie</a>
-            </li>
-            <li class="menu-item">
-                <a href="/polecane-gry" th:href="@{/polecane-gry}">Top10</a>
-            </li>
-            <li class="menu-item">
-                <a href="/firma" th:href="@{/katalog-firm}">Firmy</a>
-            </li>
+                <p class="mobile-nav-description" th:if="${sectionDescription}"
+                   th:text="${sectionDescription}">Encyklopedia gier</p>
+            </div>
 
-            <li class="menu-item" sec:authorize="isAuthenticated()">
-                <a href="#" class="user-details-info" >
-                    <p th:text="${username}"></p>
-                </a>
-                <a href="#" th:href="@{/wyloguj}" class="user-details-info">
-                    <i class="fa-solid fa-power-off" title="wyloguj"></i>
-                </a>
-            </li>
-            <li class="menu-item" sec:authorize="!isAuthenticated()">
-                <a href="#" th:href="@{/zaloguj}" >Zaloguj się</a>
-            </li>
-
-        </ul>
-    </div>
-    <header class="jumbotron">
-        <div class="jumbotron-text">
-            <h1 class="jumbotron-header">GameZone</h1>
-            <p class="jumbotron-description">
-                Odkryj świat gier razem z nami! Oceniaj, dyskutuj i odkrywaj najlepsze gry wszechczasów!
-            </p>
+            <div class="mobile-search-icon">
+                <button class="company-search-button" id="mobile-search-input">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
         </div>
-    </header>
+
+        <div class="mobile-search-bar-container mobile-search-bar-container-hide" id="mobile-search-bar-container">
+            <input type="text"
+                   placeholder="szukana gra..."
+                   aria-label="szukana gra..."
+                   aria-autocomplete="none"
+                   autocomplete="off"
+                   autocorrect="off">
+            <button class="company-search-button" id="mobile-search-button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+
+    </div>
 
     <main class="main-content margin-box" layout:fragment="content">
-
     </main>
-
 
     <footer class="footer">
         <p id="copyright"> GameZone</p>
@@ -80,4 +223,5 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script defer src="../static/scripts/common.js" th:src="@{/scripts/common.js}"></script>
 </body>
+
 </html>

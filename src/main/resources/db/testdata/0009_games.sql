@@ -20,7 +20,7 @@ INSERT INTO game
 VALUES ('Tomb Raider', 'Dziesiąta odsłona przygód Lary Croft,
 stanowiąca zarazem reboot serii przygodowych gier akcji
 Tomb Raider. Dewelopingiem tytułu zajęło się studio Crystal
-Dynamics przy wsparciu firmy Eidos Montreal.', 'k3hAOov5PoDOfQzOotY', true, 1,2,'<h2>Opis</h2>
+Dynamics przy wsparciu firmy Eidos Montreal.', 'k3hAOov5PoDOfQzOotY', true, 11,12,'<h2>Opis</h2>
 
 <p>Tomb Raider to najnowsza część klasycznej serii gier akcji wzbogaconych wątkami przygodowymi. Całość została opracowana przez studio Crystal Dynamics - to samo, kt&oacute;re stworzyło trzy poprzednie odcinki cyklu, czyli Anniversary, Legend oraz Underworld.</p>
 
@@ -77,7 +77,7 @@ INSERT INTO game
  producer_id,publisher_id,description,min_players,max_players,poster)
 VALUES ('Spore', 'Nietypowa gra symulacyjna, w której zadaniem graczy jest stworzenie prężnie
 funkcjonującego gatunku, poczynając od najniższego szczebla drabiny ewolucji.',
-        'k5rGh06xQv9C0EzZBTw', false, 1 ,2,'<h2>Opis</h2>
+        'k5rGh06xQv9C0EzZBTw', false, 13 ,4,'<h2>Opis</h2>
 
 <p>Will Wright jest jedną z najsłynniejszych postaci związanych z branżą elektronicznej rozrywki na PeCety. To właśnie jemu zawdzięczamy sprzedające się w milionach egzemplarzy pozycje, takie jak SimCity, czy The Sims. Spore jest kolejną produkcją wspomnianego wyżej człowieka, kt&oacute;ra zwraca na siebie uwagę niespotykaną dotąd budową i charakterem rozgrywki.</p>
 
@@ -153,7 +153,7 @@ INSERT INTO game
 (title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion,big_poster_suggestion)
 VALUES ('WitchSpring R', 'Gra jRPG, w której wcielamy się w wiedźmę imieniem Pieberry. W WitchSpring R przemierzamy fantastyczny świat i poznajemy jego mieszkańców, a także stawiamy czoła niebezpieczeństwom.	',
-        'kavx7WnlDdJkjAAE7RI', true, 4 ,4,'<h2>Fabuła</h2>
+        'kQgmErhs3LGg9yAWcly', true, 4 ,4,'<h2>Fabuła</h2>
 
 <p><em>WitchSpring R</em>&nbsp;przenosi nas do fantastycznego świata. Gł&oacute;wną bohaterką gry jest Pieberry, czyli siwowłosa wiedźma z kr&oacute;liczymi uszami, kt&oacute;ra dorastała w lesie pełnym potwor&oacute;w. Pewnego dnia&nbsp;<strong>nasza podopieczna postanawia ożywić wspomnienia ze swojego dzieciństwa i nauczyć się żyć pośr&oacute;d ludzi</strong>. Nasza w tym głowa, by wyszła cało ze starcia z nowym dla siebie światem pełnym nieznanych dotąd doświadczeń.</p>
 

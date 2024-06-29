@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
  * Controller for category list and game list sorted by categories.
  */
 @Controller
+@RequestMapping("/gry")
 
 public class CategoryController {
     private final CategoryService categoryService;
@@ -48,6 +50,8 @@ public class CategoryController {
         model.addAttribute("recommendationHeading","Polecane dla Ciebie!");
         model.addAttribute("recommendationDescription","Nasz serwis dostosowuje rekomendacje do Twoich preferencji, bazując na Twoimzachowaniu na stronie oraz ocenach gier. Jeśli często przeglądasz gry z kategorii “romans”, to w naszychrekomendacjachznajdziesz więcej takich tytułów. Dodatkowo, jeśli wysoko oceniłeś gry akcji, zwiększymy szanse napojawienie się podobnych gier w Twoich polecanych. Dzięki temu, rekomendacje są jak najbardziej dopasowane doTwoich gustów.");
         model.addAttribute("closestPremierGame", new GameSuggestionsDto());
+        model.addAttribute("sectionDescription","Kategorie gier");
+        model.addAttribute("displayGameListNav",true);
         return "game-listing";
     }
 
@@ -56,7 +60,7 @@ public class CategoryController {
      * @param model The Model object that add attributes, CategoryDto and messages, heading and description.
      * @return The view name of the categories-listing.
      */
-    @GetMapping("/gry/kategorie")
+    @GetMapping("/kategorie")
     public String getCategoryList(Model model) {
         List<CategoryDto> categories = categoryService.findAllGameCategories()
                 .stream()
@@ -66,7 +70,8 @@ public class CategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("heading", "Kategorie gier");
         model.addAttribute("description", " Każda gra ma jeden główny gatunek: Akcji, Bijatyki, Logiczne, Przygodowe, RPG, Sportowe, Strategiczne, Symulacje, Romanse, Wyścigi, Zręcznościowe itp. Dodatkowo każda gra ma kilka pobocznych kategorii dzięki którym znajdziesz swój ulubiony tytuł!");
-
+        model.addAttribute("sectionDescription","Kategorie gier");
+        model.addAttribute("displayGameListNav",true);
         return "categories-listing";
     }
 }

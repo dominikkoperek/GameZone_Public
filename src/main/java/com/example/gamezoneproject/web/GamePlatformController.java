@@ -49,6 +49,7 @@ public class GamePlatformController {
         model.addAttribute("description", gamePlatform.getDescription());
         model.addAttribute("allPlatforms", "Wszystkie");
         model.addAttribute("games", games);
+        model.addAttribute("sectionDescription","Encyklopedia gier");
 
         return "game-listing";
     }

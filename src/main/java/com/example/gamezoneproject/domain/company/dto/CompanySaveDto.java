@@ -20,7 +20,7 @@ public class CompanySaveDto {
     @NoIllegalExpression
     private String name;
     @NotBlank
-    @Size(min = 100,max = 1000)
+    @Size(min = 100,max = 1500)
     @NoIllegalExpression
     private String shortDescription;
     @NotBlank

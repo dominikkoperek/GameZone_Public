@@ -4,6 +4,9 @@ import com.example.gamezoneproject.domain.user.UserService;
 import com.example.gamezoneproject.domain.user.dto.UserRegistrationDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,9 +27,12 @@ public class RegistrationController {
     }
 
     @GetMapping("/rejestracja")
-    public String registrationForm(Model model) {
+    public String registrationForm(@CurrentSecurityContext SecurityContext securityContext, Model model) {
         UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
         model.addAttribute("user", userRegistrationDto);
+        if (!(securityContext.getAuthentication() instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
         return "registration-form";
     }
 

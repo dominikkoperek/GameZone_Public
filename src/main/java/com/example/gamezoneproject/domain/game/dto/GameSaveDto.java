@@ -51,7 +51,7 @@ public class GameSaveDto {
     @Date(min = 1980, max = 3000)
     private Map<String,LocalDate> releaseYear = new HashMap<>();
     @NotEmpty
-    @Size(min = 4, max = 14)
+    @Size(min = 3, max = 14)
     @CategoryNotExists
     private LinkedList<String> category;
     @CategoryNotExists

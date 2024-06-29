@@ -1,10 +1,13 @@
-const companySearchInput = document.getElementById("company-search-input");
-const companySearchList = document.getElementById("company-result-list");
-const companyResultBox = document.getElementById("company-result-box");
 const companySearchContainer = document.getElementById("company-search-row");
+const companySearchInput = document.getElementById("company-search-input");
+const companyResultBox = document.getElementById("company-result-box");
+const companySearchList = document.getElementById("company-result-list");
 let companyTimer;
 let dataSuggestions = [];
 
+companySearchInput.addEventListener("click", ()=> {
+    companySearchInput.value = "";
+})
 
 companySearchInput.onkeyup = (e) => {
     let userData = e.target.value;
@@ -56,6 +59,7 @@ function getCompanyName(input) {
     }
 }
 
+
 function showCompany(input) {
     let filteredSuggestions = dataSuggestions.filter(suggestion => suggestion.name.toLowerCase().trim()
         .includes(input.trim().toLowerCase()));
@@ -68,11 +72,17 @@ function showCompany(input) {
         companyResultBox.classList.add("company-result-box-hide")
     }
     companySearchList.innerHTML = '';
+
+    function highlightMatch(text, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="search-color">$1</span>');
+    }
+
     filteredSuggestions.forEach(suggestion => {
         let listLink = document.createElement('a');
         let companyName = suggestion.name.replaceAll(' ', '-');
         listLink.href = "/katalog-firm/firma/" + companyName + "/" + suggestion.id
-        listLink.textContent = suggestion.name;
+        listLink.innerHTML = highlightMatch(suggestion.name,input);
         companySearchList.appendChild(listLink);
     });
 }

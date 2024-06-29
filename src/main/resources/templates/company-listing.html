@@ -32,7 +32,6 @@
                            aria-autocomplete="none"
                            autocomplete="off"
                            autocorrect="off">
-                    <button class="company-search-button"><i class="fa-solid fa-xmark"></i></button>
                     <div class="company-result-box company-result-box-hide" id="company-result-box">
                         <div id="company-result-list"></div>
                     </div>
@@ -107,30 +106,32 @@
              th:if=" ${displayProducerFlag}">
             <span class="decoration-line"></span>
             <div class="company-letter-container">
-                        <a class="company-letter-button" href="/katalog-firm/firma/producenci/top-producenci"
-                           th:href="@{/katalog-firm/firma/producenci/top-producenci}">Top 100</a>
-                        <a class="company-letter-button" href="/katalog-firm/firma/producenci/0-9"
-                           th:href="@{/katalog-firm/firma/producenci/0-9}">#</a>
-                        <a  th:each="letter:${alphabet}" class="company-letter-button" href="/katalog-firm/firma/producenci/"
-                           th:href="@{'/katalog-firm/firma/producenci/'+${letter}}" th:text="${letter}">a</a>
+                <a class="company-letter-button" href="/katalog-firm/firma/producenci/top-producenci"
+                   th:href="@{/katalog-firm/firma/producenci/top-producenci}">Top 100</a>
+                <a class="company-letter-button" href="/katalog-firm/firma/producenci/0-9"
+                   th:href="@{/katalog-firm/firma/producenci/0-9}">#</a>
+                <a th:each="letter:${alphabet}" class="company-letter-button" href="/katalog-firm/firma/producenci/"
+                   th:href="@{'/katalog-firm/firma/producenci/'+${letter}}" th:text="${letter}">a</a>
             </div>
             <h2 class="company-heading" th:if="${allProducers}">Producenci Gier - top 100</h2>
-            <h2 class="company-heading" th:if="${producersByLetter}" th:text="|Producenci Gier - na litere ${letter}|">Producenci Gier - top 100</h2>
-            <h2 class="company-heading" th:if="${producersByDigit}" th:text="|Producenci Gier - na ${letter}|">Producenci Gier - top 100</h2>
+            <h2 class="company-heading" th:if="${producersByLetter}" th:text="|Producenci Gier - na litere ${letter}|">
+                Producenci Gier - top 100</h2>
+            <h2 class="company-heading" th:if="${producersByDigit}" th:text="|Producenci Gier - na ${letter}|">
+                Producenci Gier - top 100</h2>
             <ul class="company-list">
-                <li  th:each="allProducer,count :${allProducers}" th:if="${count.index lt 100}">
+                <li th:each="allProducer,count :${allProducers}" th:if="${count.index lt 100}">
                     <a href="#"
                        th:href="@{|/katalog-firm/firma/${#strings.replace(allProducer.name,' ','-')}/${allProducer.id}|}"
                        th:text="${allProducer.name}">Cd Projekt Red</a>
                 </li>
 
-                <li  th:each="producersByLetter :${producersByLetter}">
+                <li th:each="producersByLetter :${producersByLetter}">
                     <a href="#"
                        th:href="@{|/katalog-firm/firma/${#strings.replace(producersByLetter.name,' ','-')}/${producersByLetter.id}|}"
                        th:text="${producersByLetter.name}">Cd Projekt Red</a>
                 </li>
 
-                <li  th:each="producersByDigit :${producersByDigit}">
+                <li th:each="producersByDigit :${producersByDigit}">
                     <a href="#"
                        th:href="@{|/katalog-firm/firma/${#strings.replace(producersByDigit.name,' ','-')}/${producersByDigit.id}|}"
                        th:text="${producersByDigit.name}">Cd Projekt Red</a>
@@ -147,26 +148,28 @@
                    th:href="@{/katalog-firm/firma/wydawcy/top-wydawcy}">Top 100</a>
                 <a class="company-letter-button" href="/katalog-firm/firma/wydawcy/0-9"
                    th:href="@{/katalog-firm/firma/wydawcy/0-9}">#</a>
-                <a  th:each="letter:${alphabet}" class="company-letter-button" href="/katalog-firm/firma/wydawcy"
-                    th:href="@{'/katalog-firm/firma/wydawcy/'+${letter}}" th:text="${letter}">a</a>
+                <a th:each="letter:${alphabet}" class="company-letter-button" href="/katalog-firm/firma/wydawcy"
+                   th:href="@{'/katalog-firm/firma/wydawcy/'+${letter}}" th:text="${letter}">a</a>
             </div>
             <h2 class="company-heading" th:if="${allPublishers}">Wydawcy Gier - top 100</h2>
-            <h2 class="company-heading" th:if="${publishersByLetter}" th:text="|Wydawcy Gier - na litere ${letter}|">Wydawcy Gier - na litere A</h2>
-            <h2 class="company-heading" th:if="${publishersByDigit}" th:text="|Wydawcy Gier - na ${letter}|">Wydawcy Gier - na 0-9</h2>
+            <h2 class="company-heading" th:if="${publishersByLetter}" th:text="|Wydawcy Gier - na litere ${letter}|">
+                Wydawcy Gier - na litere A</h2>
+            <h2 class="company-heading" th:if="${publishersByDigit}" th:text="|Wydawcy Gier - na ${letter}|">Wydawcy
+                Gier - na 0-9</h2>
             <ul class="company-list">
-                <li  th:each="allPublishers,count :${allPublishers}" th:if="${count.index lt 100}">
+                <li th:each="allPublishers,count :${allPublishers}" th:if="${count.index lt 100}">
                     <a href="#"
                        th:href="@{|/katalog-firm/firma/${#strings.replace(allPublishers.name,' ','-')}/${allPublishers.id}|}"
                        th:text="${allPublishers.name}">Cd Projekt Red</a>
                 </li>
 
-                <li  th:each="publisherByLetter :${publishersByLetter}">
+                <li th:each="publisherByLetter :${publishersByLetter}">
                     <a href="#"
                        th:href="@{|/katalog-firm/firma/${#strings.replace(publisherByLetter.name,' ','-')}/${publisherByLetter.id}|}"
                        th:text="${publisherByLetter.name}">Cd Projekt Red</a>
                 </li>
 
-                <li  th:each="publisherByDigit :${publishersByDigit}">
+                <li th:each="publisherByDigit :${publishersByDigit}">
                     <a href="#"
                        th:href="@{|/katalog-firm/firma/${#strings.replace(publisherByDigit.name,' ','-')}/${publisherByDigit.id}|}"
                        th:text="${publisherByDigit.name}">Cd Projekt Red</a>

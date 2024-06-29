@@ -1,10 +1,9 @@
 package com.example.gamezoneproject.domain.game;
 
+import com.example.gamezoneproject.domain.company.dto.CompanyApiDto;
+import com.example.gamezoneproject.domain.company.dto.CompanyDto;
 import com.example.gamezoneproject.domain.exceptions.GameNotFoundException;
-import com.example.gamezoneproject.domain.game.dto.GameDto;
-import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;
-import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
-import com.example.gamezoneproject.domain.game.dto.PromotedGameByCompanyDto;
+import com.example.gamezoneproject.domain.game.dto.*;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
 import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendar;
 import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendarRepository;
@@ -152,6 +151,18 @@ public class GameDtoMapper {
                 .findLatestReleaseDateByGameId(game.getId())
                 .orElseThrow(GameNotFoundException::new);
         return (int) ChronoUnit.DAYS.between(LocalDate.now(), earliestReleaseDate.getReleaseDate());
+    }
+    /**
+     * This static method is responsible for mapping a GameDto entity to a GameApiDto.
+     *
+     * @param gameDto The GameDto object to be mapped.
+     * @return A new GameApiDto object with id and name fields mapped from the gameDto object.
+     */
+    public static GameApiDto mapToApiDto(GameDto gameDto){
+        return new GameApiDto(
+                gameDto.getId(),
+                gameDto.getTitle()
+        );
     }
 
 }

@@ -23,7 +23,6 @@
         </div>
     </div>
 
-
     <div class="company-button-container">
         <a class="company-type-button" href="/katalog-firm/firma/polscy-producenci"
            th:href="@{/katalog-firm/firma/polscy-producenci}">Polscy Producenci Gier</a>
@@ -45,7 +44,6 @@
                        aria-autocomplete="none"
                        autocomplete="off"
                        autocorrect="off">
-                <button class="company-search-button"><i class="fa-solid fa-xmark"></i></button>
                 <div class="company-result-box company-result-box-hide" id="company-result-box">
                     <div id="company-result-list">
                     </div>
@@ -55,7 +53,7 @@
     </div>
     <div class="game-full-description">
         <section class="game-section">
-            <section th:utext="${company.description}"></section>
+            <section th:utext="${company.description}" class="company-content-box"></section>
         </section>
     </div>
 
@@ -109,13 +107,15 @@
                                 <i th:text="${allGames.platforms}">PC, XONE, X360</i>
 
                             </a>
-                            <span class="game-date" th:text="${#temporals.format(allGames.firstReleaseDate, 'd MMM yyyy')}">2019</span>
+                            <span class="game-date"
+                                  th:text="${#temporals.format(allGames.firstReleaseDate, 'd MMM yyyy')}">2019</span>
                         </p>
                     </div>
                     </a>
                 </li>
                 <li th:if="${allGamesByProducerId.size() ge 25}">
-                    <button id="producer-button" class="company-type-button display-button" onclick="showAllProducedGames()"
+                    <button id="producer-button" class="company-type-button display-button"
+                            onclick="showAllProducedGames()"
                             type="button">Pokaż wszystkie wyprodukowane
                     </button>
                 </li>
@@ -141,13 +141,15 @@
                                 <i th:text="${allGames.platforms}">PC, XONE, X360</i>
 
                             </a>
-                            <span class="game-date" th:text="${#temporals.format(allGames.firstReleaseDate, 'd MMM yyyy')}">2019</span>
+                            <span class="game-date"
+                                  th:text="${#temporals.format(allGames.firstReleaseDate, 'd MMM yyyy')}">2019</span>
                         </p>
                     </div>
                     </a>
                 </li>
                 <li th:if="${allGamesByPublisherId.size() ge 25}">
-                    <button id="publisher-button" class="company-type-button display-button" onclick="showAllPublishedGames()"
+                    <button id="publisher-button" class="company-type-button display-button"
+                            onclick="showAllPublishedGames()"
                             type="button">Pokaż wszystkie wydane
                     </button>
                 </li>

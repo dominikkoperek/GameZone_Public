@@ -49,7 +49,7 @@
             <p class="notification-error" th:errors="${company.country}">Powiadomienie</p>
         </div>
 
-        <label for="company-short-description">Krótki opis(100 - 1000 znaków)</label>
+        <label for="company-short-description">Krótki opis(100 - 1500 znaków)</label>
         <textarea rows="8" id="company-short-description"
                   th:field="*{shortDescription}"
                   th:classappend="${#fields.hasErrors('shortDescription')} ? 'error-input':'' "
@@ -140,7 +140,7 @@
             icons: 'thin',
             content_css: "/styles/tinymce.css",
             setup: function (editor) {
-                editor.on('keyup', function (e) {
+                editor.on('change', function (e) {
                     validateCompanyLongDescription();
                 });
             },

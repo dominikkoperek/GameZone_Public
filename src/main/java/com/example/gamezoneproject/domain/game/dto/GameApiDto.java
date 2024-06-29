@@ -1,17 +1,15 @@
 package com.example.gamezoneproject.domain.game.dto;
 
-public class PromotedGameByCompanyDto {
+public class GameApiDto {
     private Long id;
     private String title;
-    private String poster;
 
-    public PromotedGameByCompanyDto(Long id, String title, String poster) {
+    public GameApiDto(Long id, String title) {
         this.id = id;
         this.title = title;
-        this.poster = poster;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -25,13 +23,5 @@ public class PromotedGameByCompanyDto {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getPoster() {
-        return poster;
-    }
-
-    public void setPoster(String poster) {
-        this.poster = poster;
     }
 }

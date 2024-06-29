@@ -45,9 +45,9 @@ function getGameTitleSuggestions(input) {
 }
 
 function showGameTitleSuggestions(input) {
-    let filteredGameTitles = gameTitleHintsResult.filter(suggestion => suggestion.toLowerCase().trim()
+    let filteredGameTitles = gameTitleHintsResult.filter(suggestion => suggestion.title.toLowerCase().trim()
         .includes(input.trim().toLowerCase()))
-    filteredGameTitles = filteredGameTitles.sort((a, b) => a.localeCompare(b));
+    filteredGameTitles = filteredGameTitles.sort((a, b) => a.title.localeCompare(b));
     if (!input) {
         gameListSuggestions.innerHTML = '';
         return;
@@ -56,7 +56,7 @@ function showGameTitleSuggestions(input) {
     filteredGameTitles.forEach(suggestion => {
         let listItem = document.createElement('li');
         listItem.className = 'hint-listing';
-        listItem.textContent = suggestion;
+        listItem.textContent = suggestion.title;
         gameListSuggestions.appendChild(listItem);
     });
 }
@@ -576,9 +576,9 @@ const categoriesError = document.getElementById("game-categories-error");
 function validateCategories() {
     const itemCategories = document.querySelectorAll(".item-categories");
 
-    if (itemCategories.length < 4) {
+    if (itemCategories.length < 3) {
         categories.classList.add("error-input");
-        categoriesError.innerHTML = "Dodaj przynajmniej 4 kategorie";
+        categoriesError.innerHTML = "Dodaj przynajmniej 3 kategorie";
         return false;
     }
     if (itemCategories.length > 14) {

@@ -1,6 +1,8 @@
 package com.example.gamezoneproject.api;
 
+import com.example.gamezoneproject.domain.game.GameDtoMapper;
 import com.example.gamezoneproject.domain.game.GameService;
+import com.example.gamezoneproject.domain.game.dto.GameApiDto;
 import com.example.gamezoneproject.domain.game.dto.GameDto;
 import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;
 import org.springframework.http.ResponseEntity;
@@ -46,11 +48,11 @@ public class GameEndpoint {
      * @return ResponseEntity containing list of game's names.
      */
     @GetMapping("/allGames")
-    public ResponseEntity<List<String>> findAllGames() {
-        List<String> games = gameService
+    public ResponseEntity<List<GameApiDto>> findAllGames() {
+        List<GameApiDto> games = gameService
                 .findAllGamesSortedByOldestReleaseDate()
                 .stream()
-                .map(GameDto::getTitle)
+                .map(GameDtoMapper::mapToApiDto)
                 .toList();
         return ResponseEntity.ok(games);
     }

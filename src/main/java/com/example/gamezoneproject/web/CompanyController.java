@@ -154,6 +154,8 @@ public class CompanyController {
         model.addAttribute("allPromotedGamesByPublisherId", allPromotedGamesByPublisherId);
         model.addAttribute("allGamesByProducerId", allGamesByProducerId);
         model.addAttribute("allGamesByPublisherId", allGamesByPublisherId);
+        model.addAttribute("sectionDescription","Katalog firm");
+        model.addAttribute("displayGameListNav",true);
     }
 
     private void addModelAttributesAllCompanies(Model model) {
@@ -175,6 +177,8 @@ public class CompanyController {
                 " oraz wydawców gier. Zawiera zarówno firmy, które do tej pory funkcjonują w branży gier komputerowych " +
                 "i konsolowych, jak i nieistniejące już przedsiębiorstwa. Klikając na nazwę firmy, możesz zapoznać się " +
                 "z jej portfolio, a w niektórych przypadkach także przeczytać o jej historii.");
+        model.addAttribute("sectionDescription","Katalog firm");
+        model.addAttribute("displayGameListNav",true);
 
     }
 
@@ -187,6 +191,8 @@ public class CompanyController {
         model.addAttribute("polishProducers", allPolishProducers);
         model.addAttribute("displayPolishProducersFlag", true);
         model.addAttribute("title", "Polscy Producenci - GameZone");
+        model.addAttribute("sectionDescription","Katalog firm");
+        model.addAttribute("displayGameListNav",true);
     }
     private void addModelAttributesPolishPublisherTitles(Model model) {
         List<CompanyDto> allPolishPublishers = companyService.findAllPolishPublishers();
@@ -198,6 +204,8 @@ public class CompanyController {
         model.addAttribute("displayPolishPublishersFlag", true);
         model.addAttribute("title", "Polscy Wydawcy - GameZone");
         model.addAttribute("polishPublishers", allPolishPublishers);
+        model.addAttribute("sectionDescription","Katalog firm");
+        model.addAttribute("displayGameListNav",true);
     }
 
     private void addModelAttributesAllProducers(Model model, String letter) {
@@ -278,5 +286,7 @@ public class CompanyController {
                 .mapToObj(c -> (char) c)
                 .toList();
         model.addAttribute("alphabet",alphabet);
+        model.addAttribute("sectionDescription","Katalog firm");
+        model.addAttribute("displayGameListNav",true);
     }
 }

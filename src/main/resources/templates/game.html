@@ -196,7 +196,7 @@
                                     323</p>
                                 <p th:if="${game.ratingCount eq 1}">ocena</p>
                                 <p th:if="${game.ratingCount gt 1} and ${game.ratingCount lt 5}">oceny</p>
-                                <p th:if="${game.ratingCount ge 11}">ocen</p>
+                                <p th:if="${game.ratingCount ge 5 or game.ratingCount eq 0} ">ocen</p>
                             </div>
                         </div>
 
