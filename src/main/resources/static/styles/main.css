@@ -84,7 +84,7 @@ p {
     justify-content: center;
     background-image: url("../img/jumbotron.jpg");
     background-position: center;
-    background-position-y: -10rem;
+    background-position-y: -2.75rem;
     background-repeat: no-repeat;
     height: 100%;
 }

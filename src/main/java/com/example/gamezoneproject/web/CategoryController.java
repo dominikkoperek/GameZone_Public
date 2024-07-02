@@ -39,7 +39,7 @@ public class CategoryController {
      * @param model The Model object that add attribute GameDto and two messages category name and description.
      * @return The view name of the game listing.
      */
-    @GetMapping("/gry/kategorie/{name}")
+    @GetMapping("/kategorie/{name}")
     public String getCategory(@PathVariable String name, Model model) {
         CategoryDto category = categoryService.findCategoryByName(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
