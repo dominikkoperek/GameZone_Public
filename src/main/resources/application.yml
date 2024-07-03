@@ -19,7 +19,9 @@ spring:
       ddl-auto: validate
   liquibase:
     change-log: classpath:/db/changelog/master.xml
-
+  thymeleaf:
+    servlet:
+      produce-partial-output-while-processing: false
 server:
   tomcat:
     max-swallow-size: -1
