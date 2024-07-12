@@ -1,21 +1,16 @@
 package com.example.gamezoneproject.api;
 
 import com.example.gamezoneproject.domain.game.GameDtoMapper;
-import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameApiDto;
-import com.example.gamezoneproject.domain.game.dto.GameDto;
 import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;
+import com.example.gamezoneproject.domain.game.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 /**
- * Endpoint controller responsible for getting info about games from database.
+ * Endpoint controller responsible for getting info about content from database.
  */
 @RestController
 @RequestMapping("/api/games")
@@ -27,10 +22,10 @@ public class GameEndpoint {
     }
 
     /**
-     * Endpoint that finds all games in database by a company's id. If the id parameter is not provided, it returns a bad request code.
+     * Endpoint that finds all content in database by a company's id. If the id parameter is not provided, it returns a bad request code.
      *
      * @param id Optional id of the company.
-     * @return ResponseEntity containing a list of games produced by the company with the provided id. If the id is not
+     * @return ResponseEntity containing a list of content produced by the company with the provided id. If the id is not
      * provided, it returns a ResponseEntity with a bad request code.
      */
     @GetMapping("/company")
@@ -43,27 +38,24 @@ public class GameEndpoint {
     }
 
     /**
-     * Endpoint that finds all games in database and map them to get their names.
+     * Endpoint that finds all content in database and map them to get their names.
      *
      * @return ResponseEntity containing list of game's names.
      */
     @GetMapping("/allGames")
     public ResponseEntity<List<GameApiDto>> findAllGames() {
-        List<GameApiDto> games = gameService
-                .findAllGamesSortedByOldestReleaseDate()
-                .stream()
-                .map(GameDtoMapper::mapToApiDto)
-                .toList();
+
+        List<GameApiDto> games = gameService.findAllGamesApi();
         return ResponseEntity.ok(games);
     }
 
     /**
      * Endpoint that check if game already exists in database by provided title
-     * If the title param is null, it returns all games.
+     * If the title param is null, it returns all content.
      *
      * @param title name of the game provided by user (optional).
      * @return ResponseEntity containing true/false if the title is provided, or a ResponseEntity containing list
-     * of all games if the name is null.
+     * of all content if the name is null.
      */
     @GetMapping("/availability")
     public ResponseEntity<?> checkAvailability(@RequestParam(required = false) String title) {

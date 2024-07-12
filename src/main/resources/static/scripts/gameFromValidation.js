@@ -45,7 +45,7 @@ function getGameTitleSuggestions(input) {
 }
 
 function showGameTitleSuggestions(input) {
-    let filteredGameTitles = gameTitleHintsResult.filter(suggestion => suggestion.title.toLowerCase().trim()
+    let filteredGameTitles = gameTitleHintsResult.games.filter(suggestion => suggestion.title.toLowerCase().trim()
         .includes(input.trim().toLowerCase()))
     filteredGameTitles = filteredGameTitles.sort((a, b) => a.title.localeCompare(b));
     if (!input) {

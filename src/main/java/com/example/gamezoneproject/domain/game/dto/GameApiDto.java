@@ -1,6 +1,8 @@
 package com.example.gamezoneproject.domain.game.dto;
 
-public class GameApiDto {
+import com.example.gamezoneproject.domain.game.dto.page.BaseGameDto;
+
+public class GameApiDto extends BaseGameDto {
     private Long id;
     private String title;
 

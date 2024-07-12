@@ -1,8 +1,6 @@
 package com.example.gamezoneproject.domain.game;
 
-import com.example.gamezoneproject.domain.company.dto.CompanyApiDto;
-import com.example.gamezoneproject.domain.company.dto.CompanyDto;
-import com.example.gamezoneproject.domain.exceptions.GameNotFoundException;
+import com.example.gamezoneproject.exceptions.GameNotFoundException;
 import com.example.gamezoneproject.domain.game.dto.*;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatform;
 import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.ReleaseCalendar;
@@ -22,11 +20,9 @@ import java.util.stream.Collectors;
 public class GameDtoMapper {
     private static final short MIN_VOTES_TO_CALCULATE_AVG_RATING = 2;
     private final ReleaseCalendarRepository releaseDateRepository;
-    private final GameRepository gameRepository;
 
-    public GameDtoMapper(ReleaseCalendarRepository releaseDateRepository, GameRepository gameRepository) {
+    public GameDtoMapper(ReleaseCalendarRepository releaseDateRepository) {
         this.releaseDateRepository = releaseDateRepository;
-        this.gameRepository = gameRepository;
     }
 
     /**
@@ -36,7 +32,7 @@ public class GameDtoMapper {
      * @param game The Game object to be mapped.
      * @return A new GameDto object with fields mapped from the Game object.
      */
-    static GameDto map(Game game) {
+    public  GameDto map(Game game) {
         int ratingCount = game.getRatings().size();
         double avgRating = 0;
         if (ratingCount >= MIN_VOTES_TO_CALCULATE_AVG_RATING) {
@@ -67,7 +63,7 @@ public class GameDtoMapper {
                 ratingCount);
     }
 
-    private static Map<String, LocalDate> mapReleaseDateToMap(Game game) {
+    private  Map<String, LocalDate> mapReleaseDateToMap(Game game) {
         Map<String, LocalDate> releaseDateMap = game.getReleaseDate()
                 .stream()
                 .collect(Collectors.toMap(
@@ -75,8 +71,24 @@ public class GameDtoMapper {
                         ReleaseCalendar::getReleaseDate,
                         (oldValue, newValue) -> oldValue
                 ));
-        return GameService.sortReleaseDates(releaseDateMap);
+        return sortReleaseDates(releaseDateMap);
     }
+    /**
+     * Method sorting game release dates map by value (date) descending
+     *
+     * @param releaseDateMap map with all release dates for game.
+     * @return sorted map with all release dates for game.
+     */
+    private Map<String, LocalDate> sortReleaseDates(Map<String, LocalDate> releaseDateMap) {
+        List<Map.Entry<String, LocalDate>> entryList = new ArrayList<>(releaseDateMap.entrySet());
+        entryList.sort(Map.Entry.comparingByValue());
+        Map<String, LocalDate> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, LocalDate> entry : entryList) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedMap;
+    }
+
 
 
     /**
@@ -112,7 +124,7 @@ public class GameDtoMapper {
      * @param game The Game object to be mapped.
      * @return A new PromotedGameByCompanyDto object with fields mapped from the Game object.
      */
-    static PromotedGameByCompanyDto mapPromotedGameByCompanyId(Game game) {
+    public  PromotedGameByCompanyDto mapPromotedGameByCompanyId(Game game) {
         return new PromotedGameByCompanyDto(
                 game.getId(),
                 game.getTitle(),
@@ -127,7 +139,7 @@ public class GameDtoMapper {
      * @param game The Game object to be mapped.
      * @return A new GameSuggestionDto object with fields mapped from Game object.
      */
-    GameSuggestionsDto mapToGameSuggestionsDto(Game game) {
+    public GameSuggestionsDto mapToGameSuggestionsDto(Game game) {
 
         return new GameSuggestionsDto(
                 game.getId(),
@@ -152,16 +164,17 @@ public class GameDtoMapper {
                 .orElseThrow(GameNotFoundException::new);
         return (int) ChronoUnit.DAYS.between(LocalDate.now(), earliestReleaseDate.getReleaseDate());
     }
+
     /**
      * This static method is responsible for mapping a GameDto entity to a GameApiDto.
      *
-     * @param gameDto The GameDto object to be mapped.
+     * @param game The GameDto object to be mapped.
      * @return A new GameApiDto object with id and name fields mapped from the gameDto object.
      */
-    public static GameApiDto mapToApiDto(GameDto gameDto){
+    public GameApiDto mapToApiDto(Game game) {
         return new GameApiDto(
-                gameDto.getId(),
-                gameDto.getTitle()
+                game.getId(),
+                game.getTitle()
         );
     }
 

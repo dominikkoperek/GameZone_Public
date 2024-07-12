@@ -1,8 +1,16 @@
-package com.example.gamezoneproject.domain.game;
+package com.example.gamezoneproject.domain.game.service.impl;
 
-import com.example.gamezoneproject.domain.exceptions.CategoryNotFoundException;
-import com.example.gamezoneproject.domain.exceptions.CompanyNotFoundException;
-import com.example.gamezoneproject.domain.exceptions.PlatformNotFoundException;
+import com.example.gamezoneproject.domain.game.Game;
+import com.example.gamezoneproject.domain.game.GameDtoMapper;
+import com.example.gamezoneproject.domain.game.GameRepository;
+import com.example.gamezoneproject.domain.game.dto.page.BaseGameDto;
+import com.example.gamezoneproject.domain.game.dto.page.GamePageApiDto;
+import com.example.gamezoneproject.domain.game.dto.page.GamePageDto;
+import com.example.gamezoneproject.domain.game.dto.page.PageDto;
+import com.example.gamezoneproject.domain.game.service.GameService;
+import com.example.gamezoneproject.exceptions.CategoryNotFoundException;
+import com.example.gamezoneproject.exceptions.CompanyNotFoundException;
+import com.example.gamezoneproject.exceptions.PlatformNotFoundException;
 import com.example.gamezoneproject.domain.game.dto.*;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryRepository;
@@ -19,19 +27,23 @@ import com.example.gamezoneproject.storage.FileStorageService;
 import com.example.gamezoneproject.storage.storageStrategy.BigPoster;
 import com.example.gamezoneproject.storage.storageStrategy.GamePoster;
 import com.example.gamezoneproject.storage.storageStrategy.SmallPoster;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
- * This class shares public methods which allow to manage games.
+ * This class shares public methods which allow to manage content.
  * It uses the GameRepository, GamePlatformRepository, CompanyRepository, CategoryRepository, GameModeRepository
  * to interact with the database.
  */
 @Service
-public class GameService {
+public class GameServiceImpl implements GameService {
     private final FileStorageService fileStorageService;
     private final GameRepository gameRepository;
     private final GamePlatformRepository gamePlatformRepository;
@@ -44,11 +56,11 @@ public class GameService {
     private final SmallPoster smallPoster;
     private final BigPoster bigPoster;
 
-    public GameService(FileStorageService fileStorageService, GameRepository gameRepository,
-                       GamePlatformRepository gamePlatformRepository, CompanyRepository companyRepository,
-                       CategoryRepository categoryRepository, GameModeRepository gameModeRepository,
-                       ReleaseCalendarRepository releaseDateRepository, GameDtoMapper gameDtoMapper, GamePoster gamePoster, SmallPoster smallPoster,
-                       BigPoster bigPoster) {
+    public GameServiceImpl(FileStorageService fileStorageService, GameRepository gameRepository,
+                           GamePlatformRepository gamePlatformRepository, CompanyRepository companyRepository,
+                           CategoryRepository categoryRepository, GameModeRepository gameModeRepository,
+                           ReleaseCalendarRepository releaseDateRepository, GameDtoMapper gameDtoMapper,
+                           GamePoster gamePoster, SmallPoster smallPoster, BigPoster bigPoster) {
         this.fileStorageService = fileStorageService;
         this.gameRepository = gameRepository;
         this.gamePlatformRepository = gamePlatformRepository;
@@ -63,14 +75,21 @@ public class GameService {
     }
 
     /**
-     * Finds all promoted games, and map them to GameDto.
+     * Finds all promoted content, and map them to GameDto.
      *
-     * @return A list of promoted games mapped to GameDto.
+     * @return A list of promoted content mapped to GameDto.
      */
-    public List<GameDto> findAllPromotedGames() {
-        return gameRepository.findAllByPromotedIsTrueSortedByReleaseDate()
-                .stream().map(GameDtoMapper::map)
-                .toList();
+    @Override
+    public GamePageDto findAllPromotedGames(int pageNo,int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Game> allGames = gameRepository
+                .findAllByPromotedIsTrueSortedByReleaseDate(pageable);
+        List<GameDto> content = allGames
+                .getContent()
+                .stream()
+                .map(gameDtoMapper::map)
+                .toList();;
+        return createPageResponse(content,allGames,GamePageDto::new);
     }
 
     /**
@@ -79,44 +98,57 @@ public class GameService {
      * @param gameId The id of the game.
      * @return Option containing GameDto if game is found, or empty if not.
      */
-
+    @Override
     public Optional<GameDto> findById(Long gameId) {
         return gameRepository.findById(gameId)
-                .map(GameDtoMapper::map);
+                .map(gameDtoMapper::map);
     }
 
     /**
-     * Finds all games by category name, and map it to GameDto.
+     * Finds all content by category name, and map it to GameDto.
      *
      * @param category name of the category.
      * @return List of GameDto by the category.
      */
-    public List<GameDto> findGamesByCategoryName(String category) {
-        return gameRepository.findAllByCategoryNameSortedByReleaseDateIgnoreCase(category)
+    @Override
+    public GamePageDto findGamesByCategoryName(String category,int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Game> allGamesByCategory = gameRepository
+                .findAllByCategoryNameSortedByReleaseDateIgnoreCase(category, pageable);
+        List<GameDto> content = allGamesByCategory
+                .getContent()
                 .stream()
-                .map(GameDtoMapper::map)
+                .map(gameDtoMapper::map)
                 .toList();
+        return createPageResponse(content,allGamesByCategory,GamePageDto::new);
     }
 
     /**
-     * Finds all games by platform name, and map it to GameDto.
+     * Finds all content by platform name, and map it to GameDto.
      *
      * @param gamePlatform name of the game platform.
      * @return List of GameDto by the game platform.
      */
-    public List<GameDto> findGamesByGamePlatformName(String gamePlatform) {
-        return gameRepository.findAllGamesByPlatformSortedByReleaseDate(gamePlatform)
+    @Override
+    public GamePageDto findGamesByGamePlatformName(String gamePlatform,int pageNo,int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        Page<Game> allGamesByPlatform = gameRepository
+                .findAllGamesByPlatformSortedByReleaseDate(gamePlatform, pageable);
+        List<GameDto> content = allGamesByPlatform
+                .getContent()
                 .stream()
-                .map(GameDtoMapper::map)
-                .toList();
-    }
+                .map(gameDtoMapper::map)
+                .toList();;
+        return createPageResponse(content,allGamesByPlatform,GamePageDto::new);
+}
 
     /**
-     * Finds all games that are promoted by producer id, and map them to GameByCompanyDto.
+     * Finds all content that are promoted by producer id, and map them to GameByCompanyDto.
      *
      * @param producerId The id of the producer.
      * @return List of all promoted Games by producer id.
      */
+    @Override
     public List<GameByCompanyDto> findAllPromotedGamesByProducerId(Long producerId) {
         return gameRepository.findAllByProducer_IdAndPromotedIsTrue(producerId)
                 .stream()
@@ -125,45 +157,65 @@ public class GameService {
     }
 
     /**
-     * Finds all games that are promoted by publisher id, and map them to GameByCompanyDto.
+     * Finds all content that are promoted by publisher id, and map them to GameByCompanyDto.
      *
      * @param publisherId The id of the publisher.
      * @return List of all promoted Games by publisher id.
      */
+    @Override
     public List<PromotedGameByCompanyDto> findAllPromotedGamesByPublisherId(Long publisherId) {
         return gameRepository.findAllByPublisher_IdAndPromotedIsTrue(publisherId)
                 .stream()
-                .map(GameDtoMapper::mapPromotedGameByCompanyId)
+                .map(gameDtoMapper::mapPromotedGameByCompanyId)
                 .toList();
     }
 
     /**
-     * Finds all games, and map it to GameDto.
+     * Finds all content, and map it to GameDto.
      *
-     * @return List of all games mapped to GameDto.
+     * @return List of all content mapped to GameDto.
      */
-    public List<GameDto> findAllGamesSortedByOldestReleaseDate() {
+    @Override
+    public GamePageDto findAllGamesSortedByOldestReleaseDate(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Game> allGameSorted = gameRepository.findAllSortedByOldestReleaseDate(pageable);
+        List<GameDto> content = allGameSorted.getContent().stream().map(gameDtoMapper::map).toList();;
+        return createPageResponse(content, allGameSorted, GamePageDto::new);
+    }
+
+    @Override
+    public List<GameApiDto> findAllGamesApi() {
         return gameRepository
-                .findAllSortedByOldestReleaseDate().stream()
-                .map(GameDtoMapper::map)
+                .findAll()
+                .stream()
+                .map(gameDtoMapper::mapToApiDto)
                 .toList();
-
     }
 
-    /**
-     * Method sorting game release dates map by value (date) descending
-     *
-     * @param releaseDateMap map with all release dates for game.
-     * @return sorted map with all release dates for game.
-     */
-    public static Map<String, LocalDate> sortReleaseDates(Map<String, LocalDate> releaseDateMap) {
-        List<Map.Entry<String, LocalDate>> entryList = new ArrayList<>(releaseDateMap.entrySet());
-        entryList.sort(Map.Entry.comparingByValue());
-        Map<String, LocalDate> sortedMap = new LinkedHashMap<>();
-        for (Map.Entry<String, LocalDate> entry : entryList) {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-        return sortedMap;
+    @Override
+    public GamePageApiDto findAllGamesSortedByOldestReleaseDateApi(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Game> allGamesSorted = gameRepository.findAllSortedByOldestReleaseDate(pageable);
+        List<GameApiDto> content = allGamesSorted
+                .getContent()
+                .stream()
+                .map(gameDtoMapper::mapToApiDto)
+                .toList();;
+        return createPageResponse(content, allGamesSorted, GamePageApiDto::new);
+    }
+
+    private <T extends BaseGameDto, D extends PageDto<T>> D createPageResponse(List<T> content,
+                                                                               Page<Game> allGamesSorted,
+                                                                               Supplier<D> supplier) {
+        D pageDto = supplier.get();
+        pageDto.setGames(content);
+        pageDto.setTotalPages(allGamesSorted.getTotalPages());
+        pageDto.setTotalElements(allGamesSorted.getTotalElements());
+        pageDto.setPageNo(allGamesSorted.getNumber());
+        pageDto.setPageSize(allGamesSorted.getSize());
+        pageDto.setFirstPage(allGamesSorted.isFirst());
+        pageDto.setLastPage(allGamesSorted.isLast());
+        return pageDto;
     }
 
     /**
@@ -172,16 +224,18 @@ public class GameService {
      * @param gameTitle The game title.
      * @return True if the game not exists, and false if the game already is in database.
      */
+    @Override
     public boolean isTitleAvailable(String gameTitle) {
         return gameRepository.findByTitleIgnoreCase(gameTitle).isEmpty();
     }
 
     /**
-     * Finds all games by producer id, map them to GameByCompanyDto and sort them by release year reversed.
+     * Finds all content by producer id, map them to GameByCompanyDto and sort them by release year reversed.
      *
      * @param producerId The id of the producer.
-     * @return List of games by producer id sorted by release year reversed.
+     * @return List of content by producer id sorted by release year reversed.
      */
+    @Override
     public List<GameByCompanyDto> findAllGamesByProducerId(Long producerId) {
         return gameRepository.findAllByProducer_IdOrderByReleaseDate_ReleaseDateDesc(producerId)
                 .stream()
@@ -195,6 +249,7 @@ public class GameService {
      *
      * @return Option containing GameSuggestionsDto if game is found, or empty if not.
      */
+    @Override
     public Optional<GameSuggestionsDto> findGameByClosestPremierDate() {
         return gameRepository
                 .findGameByClosestPremierDate()
@@ -207,6 +262,7 @@ public class GameService {
      * @param gameDto Game dto object.
      * @return Merged map with  release date and list of platforms.
      */
+    @Override
     public Map<LocalDate, List<String>> mergeSameReleaseDates(GameDto gameDto) {
         Map<LocalDate, List<String>> resultMap = new TreeMap<>();
         for (Map.Entry<String, LocalDate> entry : gameDto.getReleaseYear().entrySet()) {
@@ -220,11 +276,12 @@ public class GameService {
     }
 
     /**
-     * Finds all games by publisher id, map them to GameByCompanyDto and sort them by release year reversed.
+     * Finds all content by publisher id, map them to GameByCompanyDto and sort them by release year reversed.
      *
      * @param publisherId The id of the publisher.
-     * @return List of games by publisher id sorted by release year reversed.
+     * @return List of content by publisher id sorted by release year reversed.
      */
+    @Override
     public List<GameByCompanyDto> findAllGamesByPublisherId(Long publisherId) {
         return gameRepository.findAllByPublisher_IdOrderByReleaseDate_ReleaseDateDesc(publisherId)
                 .stream()
@@ -239,8 +296,9 @@ public class GameService {
      * @param name name of the game.
      * @return Optional containing a GameDto if the name exists, or empty optional.
      */
+    @Override
     public Optional<GameDto> findByTitle(String name) {
-        return gameRepository.findByTitleIgnoreCase(name).map(GameDtoMapper::map);
+        return gameRepository.findByTitleIgnoreCase(name).map(gameDtoMapper::map);
     }
 
     /**
@@ -250,6 +308,7 @@ public class GameService {
      *
      * @param gameSaveDto The DTO object containing the game details to be saved.
      */
+    @Override
     @Transactional
     public void addGame(GameSaveDto gameSaveDto) {
         Game game = new Game();
@@ -296,6 +355,7 @@ public class GameService {
      * @param releaseDate  List of Strings release dates.
      * @return Map of Platform names and parsed dates.
      */
+    @Override
     public Map<String, LocalDate> mapToReleaseDateMap(List<String> platformName, List<String> releaseDate) {
         Map<String, LocalDate> map = new HashMap<>();
         for (int i = 0; i < platformName.size(); i++) {

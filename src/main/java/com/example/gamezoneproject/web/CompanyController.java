@@ -1,10 +1,10 @@
 package com.example.gamezoneproject.web;
 
-import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameByCompanyDto;
 import com.example.gamezoneproject.domain.game.dto.PromotedGameByCompanyDto;
 import com.example.gamezoneproject.domain.company.CompanyService;
 import com.example.gamezoneproject.domain.company.dto.CompanyDto;
+import com.example.gamezoneproject.domain.game.service.GameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,8 +69,8 @@ public class CompanyController {
 
     @GetMapping("/firma/producenci/{letter}")
     public String allProducers(@PathVariable String letter, Model model) {
-        System.out.println("halo");
-        if(letter.length()>1 && !letter.equals("0-9")){
+        if ((letter.length() != 1 && !letter.equals("0-9")) ||
+                (letter.length() == 1 && !letter.matches("[A-Za-z]"))) {
             return "redirect:/katalog-firm/firma/producenci/top-producenci";
         }
         addModelAttributesAllProducers(model, letter);
@@ -84,12 +84,12 @@ public class CompanyController {
         addModelAttributesAlphabet(model);
         return "company-listing";
     }
-    
+
     @GetMapping("/firma/wydawcy/{letter}")
     public String allPublishers(@PathVariable String letter, Model model) {
-
-        if(letter.length()>1 && !letter.equals("0-9")){
-            return "redirect:/katalog-firm/firma/wydawca/top-wydawca";
+        if ((letter.length() != 1 && !letter.equals("0-9")) ||
+                (letter.length() == 1 && !letter.matches("[A-Za-z]"))) {
+            return "redirect:/katalog-firm/firma/wydawcy/top-wydawcy";
         }
         addModelAttributesAllPublishers(model, letter);
         addModelAttributesAlphabet(model);
@@ -102,7 +102,6 @@ public class CompanyController {
         addModelAttributesAlphabet(model);
         return "company-listing";
     }
-
 
 
     /**
@@ -154,8 +153,8 @@ public class CompanyController {
         model.addAttribute("allPromotedGamesByPublisherId", allPromotedGamesByPublisherId);
         model.addAttribute("allGamesByProducerId", allGamesByProducerId);
         model.addAttribute("allGamesByPublisherId", allGamesByPublisherId);
-        model.addAttribute("sectionDescription","Katalog firm");
-        model.addAttribute("displayGameListNav",true);
+        model.addAttribute("sectionDescription", "Katalog firm");
+        model.addAttribute("displayGameListNav", true);
     }
 
     private void addModelAttributesAllCompanies(Model model) {
@@ -177,8 +176,8 @@ public class CompanyController {
                 " oraz wydawców gier. Zawiera zarówno firmy, które do tej pory funkcjonują w branży gier komputerowych " +
                 "i konsolowych, jak i nieistniejące już przedsiębiorstwa. Klikając na nazwę firmy, możesz zapoznać się " +
                 "z jej portfolio, a w niektórych przypadkach także przeczytać o jej historii.");
-        model.addAttribute("sectionDescription","Katalog firm");
-        model.addAttribute("displayGameListNav",true);
+        model.addAttribute("sectionDescription", "Katalog firm");
+        model.addAttribute("displayGameListNav", true);
 
     }
 
@@ -191,9 +190,10 @@ public class CompanyController {
         model.addAttribute("polishProducers", allPolishProducers);
         model.addAttribute("displayPolishProducersFlag", true);
         model.addAttribute("title", "Polscy Producenci - GameZone");
-        model.addAttribute("sectionDescription","Katalog firm");
-        model.addAttribute("displayGameListNav",true);
+        model.addAttribute("sectionDescription", "Katalog firm");
+        model.addAttribute("displayGameListNav", true);
     }
+
     private void addModelAttributesPolishPublisherTitles(Model model) {
         List<CompanyDto> allPolishPublishers = companyService.findAllPolishPublishers();
         model.addAttribute("heading", "Polscy wydawcy gier komputerowych");
@@ -204,20 +204,20 @@ public class CompanyController {
         model.addAttribute("displayPolishPublishersFlag", true);
         model.addAttribute("title", "Polscy Wydawcy - GameZone");
         model.addAttribute("polishPublishers", allPolishPublishers);
-        model.addAttribute("sectionDescription","Katalog firm");
-        model.addAttribute("displayGameListNav",true);
+        model.addAttribute("sectionDescription", "Katalog firm");
+        model.addAttribute("displayGameListNav", true);
     }
 
     private void addModelAttributesAllProducers(Model model, String letter) {
         addInfoToProducer(model);
 
-        if(letter.equals("0-9")){
+        if (letter.equals("0-9")) {
             List<CompanyDto> producersByNameDigit = companyService.findAllCompaniesByNameStartWithDigit()
                     .stream()
                     .filter(CompanyDto::getProducer)
                     .toList();
-            model.addAttribute("producersByDigit",producersByNameDigit);
-        }else {
+            model.addAttribute("producersByDigit", producersByNameDigit);
+        } else {
             List<CompanyDto> producersByLetter = companyService.findAllCompaniesByFirstLetter(letter)
                     .stream()
                     .filter(CompanyDto::getProducer)
@@ -246,13 +246,13 @@ public class CompanyController {
 
     private void addModelAttributesAllPublishers(Model model, String letter) {
         addInfoToPublisher(model);
-        if(letter.equals("0-9")){
+        if (letter.equals("0-9")) {
             List<CompanyDto> publishersByDigit = companyService.findAllCompaniesByNameStartWithDigit()
                     .stream()
                     .filter(CompanyDto::getPublisher)
                     .toList();
-            model.addAttribute("publishersByDigit",publishersByDigit);
-        }else {
+            model.addAttribute("publishersByDigit", publishersByDigit);
+        } else {
             List<CompanyDto> publishersByLetter = companyService
                     .findAllCompaniesByFirstLetter(letter)
                     .stream()
@@ -261,6 +261,7 @@ public class CompanyController {
             model.addAttribute("publishersByLetter", publishersByLetter);
         }
     }
+
     private void addModelAttributesTopPublishers(Model model) {
         List<CompanyDto> allPublishers = companyService.findAllPublishers();
         addInfoToPublisher(model);
@@ -280,13 +281,13 @@ public class CompanyController {
     }
 
 
-    private void addModelAttributesAlphabet(Model model){
+    private void addModelAttributesAlphabet(Model model) {
         List<Character> alphabet = IntStream
                 .rangeClosed('A', 'Z')
                 .mapToObj(c -> (char) c)
                 .toList();
-        model.addAttribute("alphabet",alphabet);
-        model.addAttribute("sectionDescription","Katalog firm");
-        model.addAttribute("displayGameListNav",true);
+        model.addAttribute("alphabet", alphabet);
+        model.addAttribute("sectionDescription", "Katalog firm");
+        model.addAttribute("displayGameListNav", true);
     }
 }

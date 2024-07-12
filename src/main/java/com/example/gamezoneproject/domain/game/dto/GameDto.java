@@ -1,6 +1,7 @@
 package com.example.gamezoneproject.domain.game.dto;
 
 import com.example.gamezoneproject.domain.company.Company;
+import com.example.gamezoneproject.domain.game.dto.page.BaseGameDto;
 import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import com.example.gamezoneproject.domain.game.gameDetails.modes.GameMode;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
@@ -13,7 +14,7 @@ import java.util.*;
  * It's responsible for mapping from the Game entity to DTO.
  * This DTO contain ALL game details fields.
  */
-public class GameDto {
+public class GameDto extends BaseGameDto {
     private Long id;
     private String title;
     private String dailymotionTrailerId;

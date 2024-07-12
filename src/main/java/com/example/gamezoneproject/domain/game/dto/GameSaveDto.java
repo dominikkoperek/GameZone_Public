@@ -25,7 +25,7 @@ import java.util.*;
 
 /**
  * Simple DTO class for the Game entity.
- * This is used for saving games, and includes information such as the
+ * This is used for saving content, and includes information such as the
  * game's title, trailer id,short description, long description, release date, list of categories names,
  * set of platforms names,list of game modes names, producer, publisher, is promoted, poster and players range.
  */

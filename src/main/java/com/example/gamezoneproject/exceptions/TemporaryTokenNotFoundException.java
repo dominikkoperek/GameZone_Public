@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.exceptions;
+package com.example.gamezoneproject.exceptions;
 
 public class TemporaryTokenNotFoundException extends RuntimeException{
 }

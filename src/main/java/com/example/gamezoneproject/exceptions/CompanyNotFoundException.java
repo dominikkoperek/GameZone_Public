@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.exceptions;
+package com.example.gamezoneproject.exceptions;
 
 /**
  * Exception class thrown when a company is not found in the database.

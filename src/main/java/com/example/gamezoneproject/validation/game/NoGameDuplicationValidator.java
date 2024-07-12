@@ -1,6 +1,6 @@
 package com.example.gamezoneproject.validation.game;
 
-import com.example.gamezoneproject.domain.game.GameService;
+import com.example.gamezoneproject.domain.game.service.GameService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

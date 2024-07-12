@@ -76,10 +76,29 @@ let titleSuggestions = [];
 navBarSearchInput.addEventListener('click', () => {
     clearSearch();
 });
+
 addEventListener('resize', () => {
     clearSearch();
     clearMenu();
+    clearMobileSearch();
+    hideMobileNav();
 });
+addEventListener('load', () => {
+    clearSearch();
+    clearMenu();
+    clearMobileSearch();
+    hideMobileNav();
+});
+function clearMobileSearch(){
+    navBarSearchInputMobile.value = '';
+    titleSuggestionsMobile = [];
+}
+
+function clearMenu() {
+    menuButton.classList.remove("nav-open");
+    hidedMenu.classList.add("hidden")
+    body.classList.remove("nav-open");
+}
 
 function clearSearch() {
     navBarSearchInput.value = '';
@@ -97,7 +116,7 @@ navBarSearchInput.onkeyup = (e) => {
         if (userData.length < 1) {
             navBarBox.classList.add("company-result-box-hide");
         }
-        getGame(userData)
+        getGame(userData,navBarListBox,navBarBox,7)
     }, 450)
 };
 
@@ -117,16 +136,16 @@ navBarSearchInput.onchange = (e) => {
     }
 }
 
-function getGame(input) {
+function getGame(input,navBarListBox,navBarBox,size) {
     if (titleSuggestions.length > 1) {
-        showGame(input);
+        showGame(input,navBarListBox,navBarBox,size);
     } else {
         $.ajax({
             url: '/api/games/allGames',
             type: 'GET',
             success: function (data) {
                 titleSuggestions = data;
-                showGame(input);
+                showGame(input,navBarListBox,navBarBox,size);
             },
             error: function (error) {
                 console.error('Error: ', error);
@@ -136,11 +155,11 @@ function getGame(input) {
 }
 
 
-function showGame(input) {
+function showGame(input,navBarListBox,navBarBox,size) {
     let filteredSuggestions = titleSuggestions.filter(suggestion => suggestion.title.toLowerCase().trim()
         .includes(input.trim().toLowerCase()));
     filteredSuggestions = filteredSuggestions
-        .sort((a, b) => a.title.localeCompare(b.title)).slice(0, 7);
+        .sort((a, b) => a.title.localeCompare(b.title)).slice(0, size);
 
     if (!input.trim()) {
         navBarListBox.innerHTML = '';
@@ -165,33 +184,127 @@ function showGame(input) {
     });
 }
 
+/*Search mobile menu/*/
+const navBarSearchRowMobile = document.getElementById("nav-bar-search-row-mobile");
+const navBarSearchInputMobile = document.getElementById("nav-bar-search-input-mobile");
+const navBarBoxMobile = document.getElementById("nav-bar-box-mobile");
+const navBarListBoxMobile = document.getElementById("nav-bar-list-box-mobile");
+
+let navBarTimerMobile;
+let titleSuggestionsMobile = [];
+
+navBarSearchInputMobile.addEventListener('click', ()=>{
+    clearMobileSearch();
+});
+
+navBarSearchInputMobile.onkeyup = (e) => {
+    let userData = e.target.value;
+    clearTimeout(navBarTimerMobile);
+    navBarTimerMobile = setTimeout(function () {
+        if (navBarBoxMobile.classList.contains("company-result-box-hide")) {
+            navBarBoxMobile.classList.remove("company-result-box-hide");
+        }
+        if (userData.length < 1) {
+            navBarBoxMobile.classList.add("company-result-box-hide");
+        }
+        getGame(userData,navBarListBoxMobile,navBarBoxMobile,10)
+    }, 450)
+};
+
+navBarSearchInputMobile.onchange = (e) => {
+    if (!navBarBoxMobile.classList.contains("company-result-box-hide")) {
+        document.addEventListener("click", function (ev) {
+            if (!navBarSearchRowMobile.contains(ev.target)) {
+                navBarSearchInputMobile.value = '';
+                navBarListBoxMobile.innerHTML = '';
+                navBarBoxMobile.classList.add("company-result-box-hide");
+            } else if (navBarSearchInputMobile.value !== '') {
+                navBarSearchInputMobile.value = '';
+                navBarListBoxMobile.innerHTML = '';
+                navBarBoxMobile.classList.add("company-result-box-hide");
+            }
+        });
+    }
+}
+
+
+
+
+
+
+
+
 /*Display hided navbar*/
 const hidedMenu = document.getElementById("extend-nav-bar");
 const menuButton = document.getElementById("menu-button");
 const body = document.body;
 const subNavbar = document.getElementById("sub-navbar");
 menuButton.addEventListener('click', () => {
-    if(menuButton.classList.contains("nav-open")){
+    if (menuButton.classList.contains("nav-open")) {
         menuButton.classList.remove("nav-open");
         hidedMenu.classList.add("hidden");
-        if(subNavbar){
-        subNavbar.classList.remove("hidden");
+        if (subNavbar) {
+            subNavbar.classList.remove("hidden");
         }
 
-    }else {
+    } else {
         menuButton.classList.add("nav-open");
         hidedMenu.classList.remove("hidden")
-        if(subNavbar){
-        subNavbar.classList.add("hidden");
+        if (subNavbar) {
+            subNavbar.classList.add("hidden");
         }
     }
-
-
 })
-function clearMenu() {
-    menuButton.classList.remove("nav-open");
-    hidedMenu.classList.add("hidden")
-    body.classList.remove("nav-open");
+
+/*Show/hide mobile menu*/
+let mobileCloseButton = document.getElementById('close-mobile');
+let mobileMenuSticky = document.getElementById('mobile-menu-sticky');
+let mobileShowButton = document.getElementById('mobile-show-button');
+let mobileMenuContainer = document.getElementById('mobile-menu-container');
+
+mobileCloseButton.addEventListener('click', () => {
+    hideMobileNav();
+})
+mobileMenuSticky.addEventListener('click', () => {
+    hideMobileNav();
+});
+mobileMenuContainer.addEventListener('click',ev=>{
+    ev.stopPropagation();
+
+});
+
+
+if (mobileMenuContainer.classList.contains('hide-stats-container')) {
+    mobileShowButton.addEventListener('click', () => {
+        mobileMenuContainer.classList.remove("hide-stats-container");
+        mobileMenuContainer.classList.add("mobile-nav-animation");
+        mobileMenuSticky.classList.remove("hide-stats-container");
+        mobileMenuSticky.classList.add("rate-opacity-animation");
+        body.style.overflow='hidden';
+    });
+}
+function hideMobileNav(){
+    mobileMenuContainer.classList.add("hide-stats-container");
+    mobileMenuSticky.classList.add("hide-stats-container");
+    mobileMenuContainer.classList.remove("mobile-nav-animation");
+    mobileMenuSticky.classList.remove("rate-opacity-animation");
+    body.style.overflow=null;
+}
+
+
+function loadPage(pageNo) {
+    $.ajax({
+        url: '?page=' + pageNo,
+        success: function (data) {
+            setTimeout(function () {
+                $('#game-list-container').html($(data).find('#game-list-container').html());
+                window.scrollTo(0, $("#game-list-container").offset().top)
+                window.history.pushState({page: pageNo}, '', '?page=' + pageNo)
+                window.location.reload();
+            }, 25)
+
+        }
+    });
 }
 
 

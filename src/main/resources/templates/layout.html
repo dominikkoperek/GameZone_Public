@@ -81,7 +81,7 @@
                                 </div>
                             </div>
 
-                            <div class="nav-icon"  onclick="body.classList.toggle('nav-open')" id="menu-button">
+                            <div class="nav-icon" onclick="body.classList.toggle('nav-open')" id="menu-button">
                                 <span></span>
                                 <span></span>
                                 <span></span>
@@ -101,7 +101,7 @@
                     <a href="#" th:href="@{/gry}">Encyklopedia Gier</a>
                     <a href="/polecane-gry" th:href="@{/teksty-o-grach}">Teksty</a>
                     <a href="/firma" th:href="@{/poradniki-do-gier}">Poradniki</a>
-                    <a href="/admin" th:href="@{/admin}" sec:authorize="hasAnyRole('ADMIN','MODERATOR')" >Admin</a>
+                    <a href="/admin" th:href="@{/admin}" sec:authorize="hasAnyRole('ADMIN','MODERATOR')">Admin</a>
                 </div>
             </nav>
         </div>
@@ -114,73 +114,72 @@
             </div>
         </nav>
         <nav class="extend-nav-container hidden" id="extend-nav-bar">
-                <div class="menu-extend-border-right menu-extend-top-content-box">
-                    <a href="#" th:href="@{/newsroom}" class="menu-head">Newsroom</a>
-                    <a href="#" th:href="@{/newsroom/wiadomosci}" class="menu-subhead">wiadomości</a>
-                    <a href="#" th:href="@{/newsroom/popularne}" class="menu-subhead">popularne</a>
-                    <a href="#" th:href="@{/newsroom/top-tematy}" class="menu-subhead">top tematy</a>
-                    <span class="menu-extend-top-border-right"></span>
-                    <a href="#" th:href="@{/teksty-o-grach}" class="menu-head">Teksty</a>
-                    <a href="#" th:href="@{/teksty-o-grach/recenzje}" class="menu-subhead">recenzje</a>
-                    <a href="#" th:href="@{/teksty-o-grach/przed-premiera}" class="menu-subhead">przed premierą</a>
+            <div class="menu-extend-border-right menu-extend-top-content-box">
+                <a href="#" th:href="@{/newsroom}" class="menu-head">Newsroom</a>
+                <a href="#" th:href="@{/newsroom/wiadomosci}" class="menu-subhead">wiadomości</a>
+                <a href="#" th:href="@{/newsroom/popularne}" class="menu-subhead">popularne</a>
+                <a href="#" th:href="@{/newsroom/top-tematy}" class="menu-subhead">top tematy</a>
+                <span class="menu-extend-top-border-right"></span>
+                <a href="#" th:href="@{/teksty-o-grach}" class="menu-head">Teksty</a>
+                <a href="#" th:href="@{/teksty-o-grach/recenzje}" class="menu-subhead">recenzje</a>
+                <a href="#" th:href="@{/teksty-o-grach/przed-premiera}" class="menu-subhead">przed premierą</a>
+            </div>
+            <div class="menu-extend-top-content-box menu-extend-border-right">
+                <a href="#" th:href="@{/gry}" class="menu-head">Encyklopedia gier</a>
+                <a href="#" th:href="@{/gry/wyszukiwarka} " class="menu-subhead">wyszukiwarka</a>
+                <a href="#" th:href="@{/gry/top-gry}" class="menu-subhead">top gry</a>
+                <a href="#" th:href="@{/gry/kategorie} " class="menu-subhead">kategorie</a>
+                <a href="#" th:href="@{/katalog-firm}" class="menu-subhead">katalog firm</a>
+                <span class="menu-extend-top-border-right"></span>
+                <a href="#" th:href="@{/poradniki-do-gier}" class="menu-head">Poradniki</a>
+            </div>
+            <div class="menu-user-container-box">
+                <div class="menu-user-container">
+                    <a href="#" class="user-head">Twój profil
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                    <a href="#" class="user-head">Kolekcja Gier
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                    <a href="#" class="user-head">Ustawienia
+                        <i class="fa-solid fa-gear"></i>
+                    </a>
                 </div>
-                <div class="menu-extend-top-content-box menu-extend-border-right">
-                    <a href="#" th:href="@{/gry}" class="menu-head">Encyklopedia gier</a>
-                    <a href="#" th:href="@{/gry/wyszukiwarka} "class="menu-subhead">wyszukiwarka</a>
-                    <a href="#" th:href="@{/gry/top-gry}" class="menu-subhead">top gry</a>
-                    <a href="#" th:href="@{/gry/kategorie} "class="menu-subhead">kategorie</a>
-                    <a href="#" th:href="@{/katalog-firm}" class="menu-subhead">katalog firm</a>
-                    <span class="menu-extend-top-border-right"></span>
-                    <a href="#" th:href="@{/poradniki-do-gier}" class="menu-head">Poradniki</a>
-                </div>
-                <div class="menu-user-container-box">
-                    <div class="menu-user-container">
-                        <a href="#" class="user-head">Twój profil
-                            <i class="fa-solid fa-user"></i>
-                        </a>
-                        <a href="#" class="user-head">Kolekcja Gier
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                        <a href="#" class="user-head">Ustawienia
-                            <i class="fa-solid fa-gear"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="menu-footer-box">
-                    <div class="menu-footer">
+            </div>
+            <div class="menu-footer-box">
+                <div class="menu-footer">
                         <span class="menu-footer-element">
                             <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
                               <i class="fa-brands fa-instagram"></i>
                               <span>Instagram: </span>GameZone
                             </a>
                         </span>
-                        <span  class="menu-footer-element">
+                    <span class="menu-footer-element">
                             <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
                               <i class="fa-brands fa-youtube"></i>
                                 <span>YT: </span>GameZone
                             </a>
                         </span>
-                        <span  class="menu-footer-element">
+                    <span class="menu-footer-element">
                             <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
                               <i class="fa-brands fa-twitter"></i>
                                 <span>Twitter: </span>GameZone
                             </a>
                         </span>
-                        <span  class="menu-footer-element">
+                    <span class="menu-footer-element">
                             <a href="https://www.linkedin.com/in/dominik-koperek/" target="_blank">
                              <i class="fa-solid fa-users"></i>
                                 Redakcja GameZone
                             </a>
                         </span>
-                    </div>
                 </div>
-
+            </div>
         </nav>
     </div>
 
     <div class="mobile-nav-container-hide" id="mobile-nav-bar-hide">
         <div class="mobile-nav-container">
-            <div class="mobile-nav-icon">
+            <div class="mobile-nav-icon" id="mobile-show-button">
                 <i class="fa-solid fa-bars"></i>
             </div>
 
@@ -205,13 +204,72 @@
                    aria-label="szukana gra..."
                    aria-autocomplete="none"
                    autocomplete="off"
-                   autocorrect="off">
+                   autocorrect="off"
+                   id="nav-bar-search-input-mobile"
+                   tabindex="1">
             <button class="company-search-button" id="mobile-search-button">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
+            <div class="login-search-bar-extend-mobile company-result-box-hide" id="nav-bar-box-mobile">
+                <div class="login-search-bar-list-mobile" id="nav-bar-list-box-mobile">
+                </div>
+            </div>
         </div>
-
     </div>
+    <nav>
+        <div class="mobile-menu-sticky hide-stats-container" id="mobile-menu-sticky">
+            <div class="mobile-menu-container hide-stats-container" id="mobile-menu-container">
+                <button class="rate-stats-close" id="close-mobile">
+                    <i class="fa-solid fa-x"></i>
+                </button>
+                <div class="menu-mobile menu-head menu-mobile-first">
+                    <a href="#">Newsroom</a>
+                </div>
+                <div class="menu-mobile-extended">
+                    <a href="#" class="mobile-menu-subhead">wiadomości</a>
+                    <a href="#" class="mobile-menu-subhead">popularne</a>
+                    <a href="#" class="mobile-menu-subhead">top tempaty</a>
+                </div>
+
+                <div class="menu-mobile menu-head">
+                    <a href="#">Teksty</a>
+                </div>
+                <div class="menu-mobile-extended">
+                    <a href="#" class="mobile-menu-subhead">recenzje</a>
+                    <a href="#" class="mobile-menu-subhead">przed premierą</a>
+                </div>
+
+                <div class="menu-mobile menu-head">
+                    <a href="#" th:href="@{/gry}">Encyklopedia Gier</a>
+                </div>
+                <div class="menu-mobile-extended">
+                    <a href="#" class="mobile-menu-subhead">wyszukiwarka</a>
+                    <a href="#" th:href="@{/gry/top-gry}" class="mobile-menu-subhead">top gry</a>
+                    <a href="#" th:href="@{/gry/kategorie} " class="mobile-menu-subhead">kategorie</a>
+                    <a href="#" th:href="@{/katalog-firm}" class="mobile-menu-subhead">katalog firm</a>
+                </div>
+                <div class="menu-mobile menu-head">
+                    <a href="#">Poradniki</a>
+                </div>
+
+                <div class="mobile-menu-user-container">
+                    <div class="mobile-user-details">
+                        <a href="#" th:href="@{/zaloguj}" class="user-head">Zaloguj się</a>
+                        <a href="#" th:href="@{/rejestracja}" class="user-head">Rejestracja</a>
+                        <a href="#" class="user-head">Twój profil
+                            <i class="fa-solid fa-circle-user"></i>
+                        </a>
+                        <a href="#" class="user-head">Kolekcja Gier
+                            <i class="fa-solid fa-heart"></i>
+                        </a>
+                        <a href="#" class="user-head">Ustawienia
+                            <i class="fa-solid fa-gear"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <main class="main-content margin-box" layout:fragment="content">
     </main>

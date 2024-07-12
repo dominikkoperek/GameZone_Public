@@ -1,6 +1,5 @@
 package com.example.gamezoneproject.web.admin;
 
-import com.example.gamezoneproject.domain.game.GameService;
 import com.example.gamezoneproject.domain.game.dto.GameSaveDto;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryService;
 import com.example.gamezoneproject.domain.game.gameDetails.category.dto.CategoryDto;
@@ -8,6 +7,7 @@ import com.example.gamezoneproject.domain.game.gameDetails.modes.dto.GameModeDto
 import com.example.gamezoneproject.domain.game.gameDetails.modes.GameModeService;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.game.gameDetails.playersRange.PlayerRange;
+import com.example.gamezoneproject.domain.game.service.GameService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

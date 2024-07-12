@@ -1,26 +1,25 @@
 package com.example.gamezoneproject.web;
 
-import com.example.gamezoneproject.domain.game.GameService;
-import com.example.gamezoneproject.domain.game.dto.GameDto;
-import com.example.gamezoneproject.domain.game.dto.GameSuggestionsDto;
+import com.example.gamezoneproject.domain.game.dto.page.GamePageDto;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.GamePlatformService;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.dto.GamePlatformDto;
+import com.example.gamezoneproject.domain.game.service.GameService;
+import com.example.gamezoneproject.web.global.GlobalControllerAdvice;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Optional;
 
 /**
- * Controller for displaying games by platform
+ * Controller for displaying content by platform
  */
 @Controller
+@RequestMapping("/gry")
 public class GamePlatformController {
     private final GamePlatformService gamePlatformService;
     private final GameService gameService;
@@ -31,26 +30,64 @@ public class GamePlatformController {
     }
 
     /**
-     * Display all games by platform
-     * @param name The name of the platform.
+     * Display all content by platform
+     *
+     * @param name  The name of the platform.
      * @param model The Model object that add attributes.
      * @return The view name of the game-listing.
      */
-    @GetMapping("/gry/platforma/{name}")
-    public String getCategory(@PathVariable String name, Model model) {
-        GamePlatformDto gamePlatform = gamePlatformService.findGamePlatformByName(name)
+    @GetMapping("/platforma/{name}")
+    public String getCategory(@PathVariable String name, Model model,
+                              @RequestParam(value = GlobalControllerAdvice.PAGE_PATH_VARIABLE,
+                                      defaultValue = GlobalControllerAdvice.DEFAULT_PAGE_NUMBER) Integer pageNo,
+                              @RequestParam(value = GlobalControllerAdvice.PAGE_SIZE_VARIABLE,
+                                      defaultValue = GlobalControllerAdvice.DEFAULT_PAGE_SIZE) Integer pageSize) {
+
+        if (pageNo < 0 || pageSize <= 0){
+            return "redirect:/gry/platforma/"+name;
+        }
+        final String uri = "/gry/platforma/" + name + GlobalControllerAdvice.PAGE_PATH_QUERY;
+        GamePlatformDto gamePlatformDto = gamePlatformService.findGamePlatformByName(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        List<GameDto> games = gameService.findGamesByGamePlatformName(name)
-                .stream()
-                .toList();
+        int nextPage = pageNo + 1;
+        int previousPage = pageNo - 1;
+        GamePageDto allGames = gameService.findGamesByGamePlatformName(name, pageNo, pageSize);
+        int totalPages = Math.max((allGames.getTotalPages() - 1), 0);
         LinkedHashMap<String, String> gamePlatforms = gamePlatformService.findAllGamePlatforms();
+        addToModel(model, gamePlatforms, gamePlatformDto, allGames, pageNo, totalPages, nextPage, previousPage, uri);
+        if (pageNo > totalPages) {
+            return buildUri(totalPages, name);
+        }
+        return "game-listing";
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String handleTypeMismatch() {
+        return "redirect:/gry";
+    }
+
+    private static String buildUri(Integer totalPages, String name) {
+        return UriComponentsBuilder
+                .fromPath("redirect:/")
+                .path("gry/platforma/")
+                .path(name)
+                .queryParam(GlobalControllerAdvice.PAGE_PATH_VARIABLE, totalPages)
+                .build()
+                .toString();
+    }
+
+    private static void addToModel(Model model, LinkedHashMap<String, String> gamePlatforms, GamePlatformDto gamePlatform,
+                                   GamePageDto games, int currentPage, int totalPages, int nextPage, int prevPage, String uri) {
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("nextPage", nextPage);
+        model.addAttribute("prevPage", prevPage);
         model.addAttribute("platforms", gamePlatforms);
+        model.addAttribute("nextPageLink", uri);
         model.addAttribute("heading", "Gry na " + gamePlatform.getName());
         model.addAttribute("description", gamePlatform.getDescription());
         model.addAttribute("allPlatforms", "Wszystkie");
-        model.addAttribute("games", games);
-        model.addAttribute("sectionDescription","Encyklopedia gier");
-
-        return "game-listing";
+        model.addAttribute("content", games);
+        model.addAttribute("sectionDescription", "Encyklopedia gier");
     }
 }

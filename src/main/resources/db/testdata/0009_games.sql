@@ -176,7 +176,7 @@ VALUES ('WitchSpring R', 'Gra jRPG, w której wcielamy się w wiedźmę imieniem
 <h2>Kwestie techniczne</h2>
 
 <p><em>WitchSpring R</em> może się pochwalić barwną, mangową grafiką wysokiej jakości. Podobać się mogą zar&oacute;wno modele postaci, jak i projekty lokacji. Tytuł doczekał się japońskiego dubbingu.</p>'
-           ,1,1,'WitchSpringR_0.png','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
+           ,1,1,'WitchSpringR_0.jpg','WitchSpringR_s_0.png','WitchSpringR_b_0.jpg');
 INSERT INTO game
 (title, short_description, dailymotion_trailer_id, promoted,
  producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion)

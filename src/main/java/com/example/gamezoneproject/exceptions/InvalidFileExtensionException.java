@@ -1,4 +1,4 @@
-package com.example.gamezoneproject.domain.exceptions;
+package com.example.gamezoneproject.exceptions;
 /**
  * Exception class thrown when a file contain invalid extension.
  * This exception should be caught and handled by returning an appropriate

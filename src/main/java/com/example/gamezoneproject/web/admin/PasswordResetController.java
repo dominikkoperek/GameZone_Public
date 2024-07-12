@@ -1,7 +1,7 @@
 package com.example.gamezoneproject.web.admin;
 
-import com.example.gamezoneproject.domain.exceptions.AccountLockedException;
-import com.example.gamezoneproject.domain.exceptions.TokenIsActiveException;
+import com.example.gamezoneproject.exceptions.AccountLockedException;
+import com.example.gamezoneproject.exceptions.TokenIsActiveException;
 import com.example.gamezoneproject.domain.user.UserService;
 import com.example.gamezoneproject.domain.user.dto.EmailDto;
 import com.example.gamezoneproject.domain.userToken.temporaryTokensStrategy.PasswordResetToken;

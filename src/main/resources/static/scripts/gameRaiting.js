@@ -107,7 +107,6 @@ rateStatsSticky.addEventListener('click', () => {
 });
 statsContainer.addEventListener('click',ev=>{
     ev.stopPropagation();
-    ev.preventDefault();
 });
 
 //DISPLAY RATES

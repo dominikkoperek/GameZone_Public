@@ -1,6 +1,6 @@
 package com.example.gamezoneproject.storage;
 
-import com.example.gamezoneproject.domain.exceptions.InvalidFileExtensionException;
+import com.example.gamezoneproject.exceptions.InvalidFileExtensionException;
 import com.example.gamezoneproject.storage.storageStrategy.*;
 import com.mortennobel.imagescaling.ResampleFilters;
 import com.mortennobel.imagescaling.ResampleOp;

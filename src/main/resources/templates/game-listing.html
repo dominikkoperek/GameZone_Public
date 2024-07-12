@@ -110,7 +110,7 @@
             <h2 class="list-heading" th:text="${#strings.capitalize(heading)}">Popularne gry/ Nazwa Kategorii</h2>
             <p class="list-description" th:text="${description}"> Opis sekcji,kategoria,strony głównej</p>
 
-            <div class="platforms-container all-platforms-container">
+            <div class="platforms-container all-platforms-container" >
                 <ul class="platform-list all-platform-list">
                     <li class="platform-element" th:each="platform : ${platforms}">
                         <a class="platform-item all-platform-item" href="#"
@@ -133,96 +133,120 @@
                 </ul>
             </div>
 
-            <ul class="game-list" th:remove="all-but-first">
-                <li class="game-list-item" th:each="game: ${games}">
-                    <div class="game-poster-wrapper">
-                        <div class="poster-list-wrapper">
-                            <a href="#" th:href="@{|/gry/${#strings.replace(game.title,' ','-')}/${game.id}|}"> <img
-                                    src="../static/img/notfound.jpg"
-                                    th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.jpg}"
-                                    alt="tytuł gry"
-                                    class="game-list-item-poster">
-                            </a>
-                        </div>
-                        <div class="game-poster-content fade">
-                            <span class="poster-description" th:text="${game.shortDescription}">Opis gry</span>
-                        </div>
-                    </div>
-
-                    <div class="game-list-item-card">
-                        <div class="game-list-item-content">
-                            <h3 class="game-list-item-title">
-                                <a class="game-list-item-title" href="#"
-                                   th:href="@{|/gry/${#strings.replace(game.title,' ','-')}/${game.id}|}"
-                                   th:text="${game.title}">Tytuł gry</a>
-                            </h3>
-
-                            <div class="platforms-container">
-                                <ul class="platform-list ">
-                                    <li class="platform_element" th:each="platform: ${game.platform}">
-                                        <a class="platform-item" href="#"
-                                           th:href="@{|/gry/platforma/${platform.key}|}">
-                                            <div class="icon-container">
-                                                <span th:utext="${platform.value}" class="platform-logo"></span>
-                                                <span class="platform-text" th:text="${platform.key}">Pc</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
+            <div id="game-list-container" th:fragment="gameList">
+                <ul class="game-list" th:remove="all-but-first" th:if="${!content.games.isEmpty()}" id="game-list">
+                    <li class="game-list-item" th:each="game: ${content.games}">
+                        <div class="game-poster-wrapper">
+                            <div class="poster-list-wrapper">
+                                <a href="#" th:href="@{|/gry/${#strings.replace(game.title,' ','-')}/${game.id}|}"> <img
+                                        src="../static/img/notfound.jpg"
+                                        th:src="${game.poster ne null} ? @{|/galeria/gry/${game.poster}|} : @{/galeria/gry/game-poster-placeholder.jpg}"
+                                        alt="tytuł gry"
+                                        class="game-list-item-poster">
+                                </a>
                             </div>
-                            <p class="game-summary-item" th:each="date:${gameReleaseDates}">
-                            <h4 th:if="${game.platform.isEmpty()}" th:text="|Brak platformy|">Brak danych</h4>
-                            <div class="game-details-container">
-                                <p th:if="${game.releaseYear}">
-                                        <span th:each="date:${game.releaseYear.entrySet()}"
-                                              th:if="${dateStat.index}==0">
-                                                <span th:if="${date.value.year}<3000"
-                                                      th:text="${#temporals.format(date.value, 'd MMMM yyyy')}"></span>
-                                                <span th:if="${date.value.year}==8888"
-                                                      th:text="'nieznana'"></span>
-                                                <span th:if="${date.value.year}==9999"
-                                                      th:text="'anulowana'"></span>
-                                            </span>
-                                </p>
-
-                                <a href="#"
-                                   th:if="${!game.category.isEmpty()}"
-                                   th:href="@{|/gry/kategorie/${game.category[0].name}|}"
-                                   th:text="|[${game.category[0].name}]|"
-                                   class="game-category">Action</a>
+                            <div class="game-poster-content fade">
+                                <span class="poster-description" th:text="${game.shortDescription}">Opis gry</span>
                             </div>
                         </div>
 
-                        <div class="game-list-item-rating">
-                            <i class="fas fa-star"></i>
-                            <span th:if="${game.ratingCount ge 2}"
-                                  th:text="${#numbers.formatDecimal(game.averageRating,1,1,'POINT')}">8.9</span>
-                            <span th:if="${game.ratingCount lt 2}">Brak oceny</span>
-                        </div>
-                    </div>
+                        <div class="game-list-item-card">
+                            <div class="game-list-item-content">
+                                <h3 class="game-list-item-title">
+                                    <a class="game-list-item-title" href="#"
+                                       th:href="@{|/gry/${#strings.replace(game.title,' ','-')}/${game.id}|}"
+                                       th:text="${game.title}">Tytuł gry</a>
+                                </h3>
 
-                </li>
+                                <div class="platforms-container">
+                                    <ul class="platform-list">
+                                        <li class="platform_element" th:each="platform: ${game.platform}">
+                                            <a class="platform-item" href="#"
+                                               th:href="@{|/gry/platforma/${platform.key}|}">
+                                                <div class="icon-container">
+                                                    <span th:utext="${platform.value}" class="platform-logo"></span>
+                                                    <span class="platform-text" th:text="${platform.key}">Pc</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="game-summary-item" th:each="date:${gameReleaseDates}">
+                                <h4 th:if="${game.platform.isEmpty()}" th:text="|Brak platformy|">Brak danych</h4>
+                                <div class="game-details-container">
+                                    <p th:if="${game.releaseYear}">
+                                            <span th:each="date:${game.releaseYear.entrySet()}"
+                                                  th:if="${dateStat.index}==0">
+                                                    <span th:if="${date.value.year}<3000"
+                                                          th:text="${#temporals.format(date.value, 'd MMMM yyyy')}"></span>
+                                                    <span th:if="${date.value.year}==8888"
+                                                          th:text="'nieznana'"></span>
+                                                    <span th:if="${date.value.year}==9999"
+                                                          th:text="'anulowana'"></span>
+                                                </span>
+                                    </p>
 
-                <li class="game-list-item">
-                    <a href="#">
-                        <img src="../static/img/notfound.jpg"
-                             alt="tytuł gry"
-                             class="game-list-item-poster">
-                    </a>
-                    <div class="game-list-item-card">
-                        <div class="game-list-item-content">
-                            <h3 class="game-list-item-title">
-                                <a href="#">Tytuł gry</a>
-                            </h3>
-                            <p>1999</p>
+                                    <a href="#"
+                                       th:if="${!game.category.isEmpty()}"
+                                       th:href="@{|/gry/kategorie/${game.category[0].name}|}"
+                                       th:text="|[${game.category[0].name}]|"
+                                       class="game-category">Action</a>
+                                </div>
+                            </div>
+
+                            <div class="game-list-item-rating">
+                                <i class="fas fa-star"></i>
+                                <span th:if="${game.ratingCount ge 2}"
+                                      th:text="${#numbers.formatDecimal(game.averageRating,1,1,'POINT')}">8.9</span>
+                                <span th:if="${game.ratingCount lt 2}">Brak oceny</span>
+                            </div>
                         </div>
-                        <div class="game-list-item-rating">
-                            <i class="fas fa-star"></i>
-                            <span>8.9</span>
+
+                    </li>
+
+                    <li class="game-list-item">
+                        <a href="#">
+                            <img src="../static/img/notfound.jpg"
+                                 alt="tytuł gry"
+                                 class="game-list-item-poster">
+                        </a>
+                        <div class="game-list-item-card">
+                            <div class="game-list-item-content">
+                                <h3 class="game-list-item-title">
+                                    <a href="#">Tytuł gry</a>
+                                </h3>
+                                <p>1999</p>
+                            </div>
+                            <div class="game-list-item-rating">
+                                <i class="fas fa-star"></i>
+                                <span>8.9</span>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <article th:unless="${!content.games.isEmpty()}" class="search-not-found-container">
+                <h3>Brak wyników z podanymi kryteriami wyszukiwania!</h3>
+                <img th:src="@{/img/plantNotFound.png}" alt="brak treści">
+            </article>
+
+            <div class="page-arrows-container"
+                 th:style="${currentPage} == 0 ? 'float: right;' : (${currentPage} == ${totalPages} ? 'float: left;' : '')">
+                <button type="button" th:onclick="|loadPage(${prevPage})|"
+                        id="page-left-arrow" th:if="${currentPage} gt 0">
+                    <i class="fa-solid fa-chevron-left page-arrow"></i>
+                    Poprzednia
+                    <span class="page-arrow-hide"> strona</span>
+                </button>
+                <button type="button" th:onclick="|loadPage(${nextPage})|"
+                        th:unless="${currentPage} eq ${totalPages}">
+                    Następna
+                    <span class="page-arrow-hide"> strona</span>
+                    <i class="fa-solid fa-chevron-right page-arrow"></i>
+                </button>
+            </div>
+            <div class="page-number-container" th:text="|${currentPage}/${totalPages}|"></div>
         </div>
     </main>
 
