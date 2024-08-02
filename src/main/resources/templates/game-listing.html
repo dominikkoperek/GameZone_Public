@@ -180,9 +180,9 @@
                                                     <span th:if="${date.value.year}<3000"
                                                           th:text="${#temporals.format(date.value, 'd MMMM yyyy')}"></span>
                                                     <span th:if="${date.value.year}==8888"
-                                                          th:text="'nieznana'"></span>
+                                                          th:text="'nie ogłoszona'"></span>
                                                     <span th:if="${date.value.year}==9999"
-                                                          th:text="'anulowana'"></span>
+                                                          th:text="'premiera anulowana'"></span>
                                                 </span>
                                     </p>
 
@@ -196,12 +196,11 @@
 
                             <div class="game-list-item-rating">
                                 <i class="fas fa-star"></i>
-                                <span th:if="${game.ratingCount ge 2}"
-                                      th:text="${#numbers.formatDecimal(game.averageRating,1,1,'POINT')}">8.9</span>
-                                <span th:if="${game.ratingCount lt 2}">Brak oceny</span>
+                                <span th:if="${game.ratingCount ge minVotesToDisplay}"
+                                      th:text="${game.averageRating}">8.9</span>
+                                <span th:if="${game.ratingCount lt minVotesToDisplay}">Brak oceny</span>
                             </div>
                         </div>
-
                     </li>
 
                     <li class="game-list-item">
@@ -231,10 +230,11 @@
                 <img th:src="@{/img/plantNotFound.png}" alt="brak treści">
             </article>
 
-            <div class="page-arrows-container"
-                 th:style="${currentPage} == 0 ? 'float: right;' : (${currentPage} == ${totalPages} ? 'float: left;' : '')">
+
+            <div class="page-arrows-container" th:fragment="pageArrows" th:if="${totalPages}"
+                 th:style="${currentPage} == 1 ? 'float: right;' : (${currentPage} == ${totalPages} ? 'float: left;' : '')">
                 <button type="button" th:onclick="|loadPage(${prevPage})|"
-                        id="page-left-arrow" th:if="${currentPage} gt 0">
+                        id="page-left-arrow" th:if="${currentPage} gt 1">
                     <i class="fa-solid fa-chevron-left page-arrow"></i>
                     Poprzednia
                     <span class="page-arrow-hide"> strona</span>

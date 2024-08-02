@@ -7,6 +7,9 @@ import com.example.gamezoneproject.domain.game.dto.page.BaseGameDto;
 import com.example.gamezoneproject.domain.game.dto.page.GamePageApiDto;
 import com.example.gamezoneproject.domain.game.dto.page.GamePageDto;
 import com.example.gamezoneproject.domain.game.dto.page.PageDto;
+import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryDtoMapper;
+import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryService;
+import com.example.gamezoneproject.domain.game.gameDetails.category.dto.CategoryDto;
 import com.example.gamezoneproject.domain.game.service.GameService;
 import com.example.gamezoneproject.exceptions.CategoryNotFoundException;
 import com.example.gamezoneproject.exceptions.CompanyNotFoundException;
@@ -30,6 +33,7 @@ import com.example.gamezoneproject.storage.storageStrategy.SmallPoster;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,12 +59,13 @@ public class GameServiceImpl implements GameService {
     private final GamePoster gamePoster;
     private final SmallPoster smallPoster;
     private final BigPoster bigPoster;
+    private final CategoryService categoryService;
 
     public GameServiceImpl(FileStorageService fileStorageService, GameRepository gameRepository,
                            GamePlatformRepository gamePlatformRepository, CompanyRepository companyRepository,
                            CategoryRepository categoryRepository, GameModeRepository gameModeRepository,
                            ReleaseCalendarRepository releaseDateRepository, GameDtoMapper gameDtoMapper,
-                           GamePoster gamePoster, SmallPoster smallPoster, BigPoster bigPoster) {
+                           GamePoster gamePoster, SmallPoster smallPoster, BigPoster bigPoster, CategoryService categoryService) {
         this.fileStorageService = fileStorageService;
         this.gameRepository = gameRepository;
         this.gamePlatformRepository = gamePlatformRepository;
@@ -72,6 +77,7 @@ public class GameServiceImpl implements GameService {
         this.gamePoster = gamePoster;
         this.smallPoster = smallPoster;
         this.bigPoster = bigPoster;
+        this.categoryService = categoryService;
     }
 
     /**
@@ -80,16 +86,17 @@ public class GameServiceImpl implements GameService {
      * @return A list of promoted content mapped to GameDto.
      */
     @Override
-    public GamePageDto findAllPromotedGames(int pageNo,int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo,pageSize);
+    public GamePageDto findAllPromotedGames(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
         Page<Game> allGames = gameRepository
                 .findAllByPromotedIsTrueSortedByReleaseDate(pageable);
         List<GameDto> content = allGames
                 .getContent()
                 .stream()
                 .map(gameDtoMapper::map)
-                .toList();;
-        return createPageResponse(content,allGames,GamePageDto::new);
+                .toList();
+        ;
+        return createPageResponse(content, allGames, GamePageDto::new);
     }
 
     /**
@@ -111,8 +118,8 @@ public class GameServiceImpl implements GameService {
      * @return List of GameDto by the category.
      */
     @Override
-    public GamePageDto findGamesByCategoryName(String category,int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo,pageSize);
+    public GamePageDto findGamesByCategoryName(String category, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo -1 , pageSize);
         Page<Game> allGamesByCategory = gameRepository
                 .findAllByCategoryNameSortedByReleaseDateIgnoreCase(category, pageable);
         List<GameDto> content = allGamesByCategory
@@ -120,7 +127,7 @@ public class GameServiceImpl implements GameService {
                 .stream()
                 .map(gameDtoMapper::map)
                 .toList();
-        return createPageResponse(content,allGamesByCategory,GamePageDto::new);
+        return createPageResponse(content, allGamesByCategory, GamePageDto::new);
     }
 
     /**
@@ -130,17 +137,58 @@ public class GameServiceImpl implements GameService {
      * @return List of GameDto by the game platform.
      */
     @Override
-    public GamePageDto findGamesByGamePlatformName(String gamePlatform,int pageNo,int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo,pageSize);
+    public GamePageDto findGamesByGamePlatformName(String gamePlatform, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Game> allGamesByPlatform = gameRepository
                 .findAllGamesByPlatformSortedByReleaseDate(gamePlatform, pageable);
         List<GameDto> content = allGamesByPlatform
                 .getContent()
                 .stream()
                 .map(gameDtoMapper::map)
-                .toList();;
-        return createPageResponse(content,allGamesByPlatform,GamePageDto::new);
-}
+                .toList();
+        return createPageResponse(content, allGamesByPlatform, GamePageDto::new);
+    }
+
+    @Override
+    public GamePageDto findGamesByPlatformAndCategories(String platform, List<String> categories, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+        Page<Game> gamesSorted = gameRepository
+                .findByPlatformAndCategories(platform, categories, categories.size(), pageable);
+        List<GameDto> content = gamesSorted
+                .getContent()
+                .stream()
+                .map(gameDtoMapper::map)
+                .toList();
+        return createPageResponse(content, gamesSorted, GamePageDto::new);
+    }
+
+    @Override
+    public GamePageDto findAllGamesSortedByRateAndId(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+        Page<Game> list = gameRepository.findAllGamesSortedByRateAndId(GameDtoMapper.MIN_VOTES_TO_CALCULATE_AVG_RATING, pageable);
+        List<GameDto> content = list.getContent().stream().map(gameDtoMapper::map).toList();
+        return createPageResponse(content, list, GamePageDto::new);
+    }
+
+    @Override
+    public GamePageDto findAllSortedById(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, Sort.by(Sort.Direction.DESC, "id"));
+        Page<Game> allGamesOrderBy = gameRepository.findAllBy(pageable);
+        List<GameDto> content = allGamesOrderBy.getContent().stream().map(gameDtoMapper::map).toList();
+        return createPageResponse(content, allGamesOrderBy, GamePageDto::new);
+    }
+
+    @Override
+    public GamePageDto findAllGamesByCategories(List<String>categories,int pageNo, int pageSize){
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+        Page<Game> byCategory = gameRepository.findByCategoriesList(categories,categories.size(), pageable);
+        List<GameDto> content = byCategory.getContent()
+                .stream()
+                .map(gameDtoMapper::map)
+                .toList();
+        return createPageResponse(content, byCategory, GamePageDto::new);
+
+    }
 
     /**
      * Finds all content that are promoted by producer id, and map them to GameByCompanyDto.
@@ -177,9 +225,10 @@ public class GameServiceImpl implements GameService {
      */
     @Override
     public GamePageDto findAllGamesSortedByOldestReleaseDate(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
         Page<Game> allGameSorted = gameRepository.findAllSortedByOldestReleaseDate(pageable);
-        List<GameDto> content = allGameSorted.getContent().stream().map(gameDtoMapper::map).toList();;
+        List<GameDto> content = allGameSorted.getContent().stream().map(gameDtoMapper::map).toList();
+        ;
         return createPageResponse(content, allGameSorted, GamePageDto::new);
     }
 
@@ -194,13 +243,14 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GamePageApiDto findAllGamesSortedByOldestReleaseDateApi(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
         Page<Game> allGamesSorted = gameRepository.findAllSortedByOldestReleaseDate(pageable);
         List<GameApiDto> content = allGamesSorted
                 .getContent()
                 .stream()
                 .map(gameDtoMapper::mapToApiDto)
-                .toList();;
+                .toList();
+        ;
         return createPageResponse(content, allGamesSorted, GamePageApiDto::new);
     }
 

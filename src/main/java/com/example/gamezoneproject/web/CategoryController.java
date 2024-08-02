@@ -47,16 +47,16 @@ public class CategoryController {
                                       defaultValue = GlobalControllerAdvice.DEFAULT_PAGE_NUMBER) Integer pageNo,
                               @RequestParam(value = GlobalControllerAdvice.PAGE_SIZE_VARIABLE,
                                       defaultValue = GlobalControllerAdvice.DEFAULT_PAGE_SIZE) Integer pageSize) {
-        if (pageNo < 0 || pageSize <= 0) {
+        if (pageNo <= 0 || pageSize <= 0) {
             return "redirect:/gry/kategorie/"+name;
         }
         final String uri = "/gry/kategorie/" + name + GlobalControllerAdvice.PAGE_PATH_QUERY;
         int nextPage = pageNo + 1;
-        int previousPage = pageNo - 1;
+        int previousPage = Math.max(pageNo - 1,1);
         CategoryDto category = categoryService.findCategoryByName(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         GamePageDto allGames = gameService.findGamesByCategoryName(name,pageNo,pageSize);
-        int totalPages = Math.max((allGames.getTotalPages() - 1), 0);
+        int totalPages = allGames.getTotalPages();
         addToModel(model, category, allGames, pageNo, totalPages, nextPage, previousPage,uri);
         if (pageNo > totalPages) {
             return buildUri(totalPages, name);

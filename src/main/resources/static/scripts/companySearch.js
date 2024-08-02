@@ -9,6 +9,23 @@ companySearchInput.addEventListener("click", ()=> {
     companySearchInput.value = "";
 })
 
+companySearchInput.addEventListener('click', () => {
+    clearCompanySearch();
+});
+
+addEventListener('resize', () => {
+    clearCompanySearch();
+});
+addEventListener('load', () => {
+    clearCompanySearch();
+});
+function clearCompanySearch(){
+    companySearchInput.value = '';
+    dataSuggestions = [];
+    companyResultBox.classList.add("company-result-box-hide")
+}
+
+
 companySearchInput.onkeyup = (e) => {
     let userData = e.target.value;
     clearTimeout(companyTimer);

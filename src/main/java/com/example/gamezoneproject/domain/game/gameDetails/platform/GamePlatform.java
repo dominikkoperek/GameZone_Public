@@ -14,6 +14,7 @@ public class GamePlatform {
     @Column(columnDefinition = "TEXT")
     private String logoAddress;
     private String logoAddressImage;
+    private String brand;
 
 
     public Long getId() {
@@ -54,5 +55,13 @@ public class GamePlatform {
 
     public void setLogoAddressImage(String logoAddressImage) {
         this.logoAddressImage = logoAddressImage;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

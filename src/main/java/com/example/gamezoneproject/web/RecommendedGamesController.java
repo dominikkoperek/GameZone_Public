@@ -45,13 +45,13 @@ public class RecommendedGamesController {
                                defaultValue = GlobalControllerAdvice.DEFAULT_PAGE_NUMBER) Integer pageNo,
                        @RequestParam(value = GlobalControllerAdvice.PAGE_SIZE_VARIABLE,
                                defaultValue = GlobalControllerAdvice.DEFAULT_PAGE_SIZE) Integer pageSize) {
-        if (pageNo < 0 || pageSize <= 0) {
+        if (pageNo <= 0 || pageSize <= 0) {
             return "redirect:/gry/top-gry";
         }
         int nextPage = pageNo + 1;
-        int previousPage = pageNo - 1;
+        int previousPage = Math.max(pageNo - 1,1);
         GamePageDto allPromotedGames = gameService.findAllPromotedGames(pageNo, pageSize);
-        int totalPages = Math.max((allPromotedGames.getTotalPages() - 1), 0);
+        int totalPages = allPromotedGames.getTotalPages();
         LinkedHashMap<String, String> gamePlatforms = gamePlatformService.findAllGamePlatforms();
         addToModel(model, gamePlatforms, allPromotedGames, pageNo, totalPages, nextPage, previousPage);
 

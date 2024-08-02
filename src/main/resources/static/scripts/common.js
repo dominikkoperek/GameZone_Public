@@ -301,10 +301,24 @@ function loadPage(pageNo) {
                 window.scrollTo(0, $("#game-list-container").offset().top)
                 window.history.pushState({page: pageNo}, '', '?page=' + pageNo)
                 window.location.reload();
-            }, 25)
-
+                //updatePageNumbers(pageNo)
+            }, 1)
         }
     });
+    function updatePageNumbers(currentPage) {
+        // Przykład aktualizacji elementu z numerem strony
+        $('#current-page').text(currentPage);
+
+        // Aktualizacja linków do stron
+        $('.page-link').each(function() {
+            var page = $(this).data('page');
+            if (page === currentPage) {
+                $(this).addClass('active');
+            } else {
+                $(this).removeClass('active');
+            }
+        });
+}
 }
 
 

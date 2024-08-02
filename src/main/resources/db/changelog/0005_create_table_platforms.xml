@@ -13,6 +13,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="description" type="VARCHAR(800)"/>
+            <column name="brand" type="VARCHAR(50)"/>
             <column name="logo_address" type="TEXT"/>
             <column name="logo_address_image" type="VARCHAR(100)"/>
         </createTable>

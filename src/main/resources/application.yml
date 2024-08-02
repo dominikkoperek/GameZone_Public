@@ -22,6 +22,10 @@ spring:
   thymeleaf:
     servlet:
       produce-partial-output-while-processing: false
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
 server:
   tomcat:
     max-swallow-size: -1

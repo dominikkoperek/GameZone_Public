@@ -1,12 +1,13 @@
 package com.example.gamezoneproject.domain.game.gameDetails.category;
 
+import com.example.gamezoneproject.domain.game.dto.GameDto;
+import com.example.gamezoneproject.domain.game.dto.page.GamePageDto;
 import com.example.gamezoneproject.domain.game.gameDetails.category.dto.CategoryDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
@@ -74,4 +75,5 @@ public class CategoryService {
                 .findByNameIgnoreCase(name)
                 .isEmpty();
     }
+
 }

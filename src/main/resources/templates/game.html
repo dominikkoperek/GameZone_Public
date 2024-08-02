@@ -21,10 +21,11 @@
                     <div class="game-rating-container-top ">
                             <h3 class="game-rating-heading">ocena gry</h3>
                         <div>
-                            <p class="game-rating-value" th:if="${game.ratingCount ge 2}"
-                               th:text="${#numbers.formatDecimal(game.averageRating,1,1,'POINT')}">7.3
-                            <p class="game-rating-heading" th:if="${game.ratingCount lt 2}">brak oceny</p>
-                            <p class="game-rating-heading" th:if="${game.ratingCount lt 2}">mniej niż 2 głosy</p>
+                            <p class="game-rating-value" th:if="${game.ratingCount ge minVotesToDisplay}"
+                               th:text="${game.averageRating}">7.3
+                            <p class="game-rating-heading" th:if="${game.ratingCount lt minVotesToDisplay}">za mało głosów</p>
+                            <p class="game-rating-heading" th:if="${game.ratingCount lt minVotesToDisplay}"
+                            th:text="|minimum to: ${minVotesToDisplay}|">minimum to</p>
                             <p class="game-rating-count" th:text="|oceny:
                             ${#numbers.formatDecimal(game.ratingCount, 0, 'WHITESPACE', 0, 'POINT')}|">212 ocen</p>
                             </p>
@@ -187,7 +188,7 @@
                             <div class="rate-subheader">
                                 <i class="fa-solid fa-star"></i>
                                 <p class="rate-stats-rate" th:if="${game.ratingCount ge 2}"
-                                   th:text="${#numbers.formatDecimal(game.averageRating,1,1,'POINT')}">7.3</p>
+                                   th:text="${game.averageRating}">7.3</p>
                                 <p  class="rate-message" th:if="${game.ratingCount lt 2}">za mało ocen</p>
                             </div>
 

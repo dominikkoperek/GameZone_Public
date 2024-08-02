@@ -36,3 +36,5 @@ INSERT INTO game_platform (game_id,platform_id) VALUES (7,10);
 INSERT INTO game_platform (game_id,platform_id) VALUES (8,4);
 INSERT INTO game_platform (game_id,platform_id) VALUES (8,7);
 INSERT INTO game_platform (game_id,platform_id) VALUES (8,1);
+
+INSERT INTO game_platform (game_id,platform_id) VALUES (9,1);

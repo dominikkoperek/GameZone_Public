@@ -28,12 +28,14 @@ public class GamePlatformDto {
     @NoIllegalExpression
     @SvgImage
     private String logoAddress;
+    private String brand;
 
-    public GamePlatformDto(Long id, String name, String description, String logoAddress) {
+    public GamePlatformDto(Long id, String name, String description, String logoAddress, String brand) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.logoAddress = logoAddress;
+        this.brand = brand;
     }
 
     public GamePlatformDto() {
@@ -45,6 +47,14 @@ public class GamePlatformDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getName() {

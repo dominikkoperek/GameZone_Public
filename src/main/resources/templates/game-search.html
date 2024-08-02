@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pl"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="|${#strings.capitalize(heading)} - GameZone|">GameZone</title>
+</head>
+<body>
+<div class="container">
+
+    <main class="main-content" layout:fragment="content">
+        <div class="margin-box">
+            <div class="game-search-container">
+                <div class="game-search-title" id="page-anchor">
+                    <h1 th:if="${firstCategory}" th:text="|Gry ${#strings.capitalize(firstCategory.name)}|">Romans</h1>
+                    <h1 th:unless="${firstCategory}">Wyszukiwarka</h1>
+                    <h3 th:if="${currentPlatform}" th:text="|- ${currentPlatform}|">Pc</h3>
+                    <h3 th:unless="${currentPlatform}"> - Zbiór gier</h3>
+                </div>
+                <div class="game-search-category-description" th:unless="${firstCategory}">
+                    Wyszukiwarka gier GameZone pozwala na przeszkuanie naszej bazy po gatunkach/tagach.
+                    Możesz wyszukać wiele tagów oraz wybrać gry na konkretne platformy i sortować wyniki według
+                    ocen lub daty wydania.
+                </div>
+                <div class="game-search-category-description" th:if="${firstCategory}"
+                     th:text="${#strings.capitalize(firstCategory.description)}">
+                    Kategoria Romance obejmuje gry, w których główny nacisk kładziony jest na rozwój romantycznych.
+                </div>
+
+                <div class="game-search-platforms" id="game-search-platforms-box" th:unless="${currentPlatform}">
+                    <ul id="game-search-platforms-ul">
+                        <li th:each="svg:${gamesCounter}" th:id="${svg.key.name}">
+                            <a href="#" th:href="${categoriesParam} ?
+                             @{'/gry/wyszukiwarka/'+${svg.key.name} (cat=${categoriesParam})} :
+                              @{'/gry/wyszukiwarka/'+${svg.key.name}}"
+                               class="game-search-logo-link">
+                                <img class="game-search-platform-logo"
+                                     th:src="'/galeria/platformy/'+${svg.key.image}"
+                                     th:alt="${svg.key.name}">
+                                <span th:text="${svg.value}">43212</span>
+                            </a>
+                        </li>
+                        <li th:if="${gamesCounter.isEmpty()}" class="result-not-found">
+                            <img class="game-search-platform-logo"
+                                 th:src="@{/img/plantNotFound.png}"
+                                 alt="not_found">
+                            <p>Brak wyników z podanymi kryteriami!</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="game-search-release-date">
+                    <div class="game-search-date-buttons-container">
+                        <button class="game-search-button">
+                            <span>po premierze </span>
+                            <span class="game-search-number">223</span>
+                        </button>
+
+
+                    </div>
+                    <div class="game-search-date-buttons-container">
+                        <button class="game-search-button">
+                            <span>przed premierą</span>
+                            <span class="game-search-number">532</span>
+                        </button>
+                    </div>
+                    <div class="game-search-chosen-platform-container" id="game-search-chosen-platform-container">
+                        <a th:if="${currentPlatform}"
+                           th:href="${categoriesParam} ? @{/gry/wyszukiwarka(cat=${categoriesParam})} : @{/gry/wyszukiwarka}">
+                            <span th:text="${currentPlatform}">PC</span>
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="game-search-bar-container">
+                    <p>Wyszukaj gatunek/tematykę gry</p>
+                    <div class="game-search-bar-input">
+                        <div class="game-search-bar" id="category-search-row">
+                            <input type="text" placeholder="szukana kategoria..." aria-autocomplete="none"
+                                   autocomplete="off" autocorrect="off" id="category-search-input" tabindex="1">
+                            <div class="game-search-bar-extend hidden" id="category-search-box">
+                                <div class="game-search-bar-list-box" id="category-search-list">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="game-search-chosen-categories">
+                    <p>Wybrane:</p>
+                    <div class="game-search-categories">
+                        <div class="game-search-chosen-button-container"
+                             th:if="${categories ne null} and ${categories.size() ge 1}"
+                             th:each="category:${categories}">
+                            <a class="game-category-remove-button">
+                                <span th:text="${category}" class="game-search-category">romanse</span>
+                                <button>
+                                    <i class="fa-regular fa-circle-xmark"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="game-list-container" th:if="${content.getGames().size() ge 1}" th:replace="~{game-listing :: gameList}"></div>
+        <div th:if="${content.getGames().size() lt 1}" class="result-list-not-found">
+            <img th:src="@{/img/404.png}" alt="not_found"/>
+            <h2>Brak wyników z podanymi kryteriami!</h2>
+        </div>
+        <div th:replace="~{game-listing :: pageArrows}"></div>
+        <div class="page-number-container" th:if="${currentPage ne null and totalPages ne null}"
+             th:text="|${currentPage}/${totalPages}|"></div>
+        <script src="/static/scripts/gameSearcher.js"
+                th:src="@{/scripts/gameSearcher.js}"></script>
+    </main>
+</div>
+</body>
+</html>

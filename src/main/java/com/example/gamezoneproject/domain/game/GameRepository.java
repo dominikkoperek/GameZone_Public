@@ -1,11 +1,10 @@
 package com.example.gamezoneproject.domain.game;
 
+import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -16,6 +15,7 @@ import java.util.Optional;
  */
 public interface GameRepository extends JpaRepository<Game, Long> {
 
+    Page<Game> findAllBy(Pageable pageable);
 
     /**
      * Finds all content that are promoted sorted by release date.
@@ -26,6 +26,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             "WHERE year (grc.releaseCalendar.releaseDate)<3000 and g.promoted=true " +
             "GROUP BY g.id ORDER BY min( grc.releaseCalendar.releaseDate)  DESC")
     Page<Game> findAllByPromotedIsTrueSortedByReleaseDate(Pageable pageable);
+
     /**
      * Finds all content by category name, ignoring case and sort them by release date.
      *
@@ -36,57 +37,92 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     @Query("SELECT g FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id  JOIN g.category ca " +
             "WHERE year (grc.releaseCalendar.releaseDate)<3000 and LOWER(ca.name) = LOWER(:category)" +
             "GROUP BY g.id ORDER BY min(grc.releaseCalendar.releaseDate)  DESC")
-    Page<Game> findAllByCategoryNameSortedByReleaseDateIgnoreCase(@Param("category")String category,Pageable pageable);
+    Page<Game> findAllByCategoryNameSortedByReleaseDateIgnoreCase(@Param("category") String category, Pageable pageable);
+
     /**
      * Finds all content by game platform name, ignoring case and sort them by release date.
      *
      * @param platform The name of the game platform.
-     * @return A sorted list of all content on the specified platform.
+     * @return A sorted Page of all content on the specified platform.
      */
 
     @Query("SELECT g FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id  JOIN g.gamePlatform gp " +
-            "WHERE year (grc.releaseCalendar.releaseDate)<3000 and LOWER(gp.name) = LOWER(:platform)" +
+            "WHERE LOWER(gp.name) = LOWER(:platform)" +
             "GROUP BY g.id ORDER BY min(grc.releaseCalendar.releaseDate)  DESC")
-    Page<Game> findAllGamesByPlatformSortedByReleaseDate(@Param("platform")String platform,Pageable pageable);
+    Page<Game> findAllGamesByPlatformSortedByReleaseDate(@Param("platform") String platform, Pageable pageable);
+
     /**
-     * Finds all content by producer ID that are promoted.
+     * Method finds all games sorted by highest rate when minimum rate
+     * count is bigger than param minRatings otherwise avg rate is set to 0.
      *
-     * @param producerId The ID of the producer.
-     * @return A list of all promoted content by the specified producer.
+     * @param minRatings minimum votes for calculate average game rate.
+     * @param pageable   Page with results.
+     * @return Page holding Game entity.
      */
+    @Query("SELECT g " +
+            "FROM Game g " +
+            "LEFT JOIN g.ratings gr " +
+            "GROUP BY g.id " +
+            "ORDER BY CASE " +
+            "    WHEN COUNT(gr) >= :minRatings THEN ROUND(AVG(gr.rating), 1) " +
+            "    ELSE 0 " +
+            "END DESC,g.id DESC")
+    Page<Game> findAllGamesSortedByRateAndId(@Param("minRatings") int minRatings, Pageable pageable);
+
+    /**
+     * Method find games by categories list
+     *
+     * @param categories List of categories (Strings) to search
+     * @param size       Size of categories list
+     * @param pageable   Page with results.
+     * @return Page holding Game entity contain all attached categories.
+     */
+    @Query("SELECT g FROM Game g " +
+            "JOIN g.category c " +
+            "JOIN GameReleaseCalendar grc ON g.id=grc.game.id " +
+            "WHERE g.id IN (" +
+            "SELECT game.id FROM Game game JOIN game.category cat " +
+            "WHERE lower(cat.name) IN :categories GROUP BY game.id HAVING COUNT(game.id) = :size)" +
+            "GROUP BY g.id")
+    Page<Game> findByCategoriesList(@Param("categories") List<String> categories,
+                                    @Param("size") long size,
+                                    Pageable pageable);
+
+    /**
+     * Method search game by platform and lists of categories.
+     *
+     * @param platform   The name of the game platform.
+     * @param categories List of game categories.
+     * @param size       number of elements in categories.
+     * @return Page with all games which have the chosen platform and contain all attached categories.
+     */
+
+    @Query("SELECT g FROM Game g " +
+            "JOIN g.category c " +
+            "JOIN g.gamePlatform gp " +
+            "JOIN GameReleaseCalendar grc ON g.id=grc.game.id " +
+            "WHERE lower(gp.name) = lower(:platform) AND g.id IN (" +
+            "SELECT game.id FROM Game game JOIN game.category cat " +
+            "WHERE lower(cat.name) IN :categories GROUP BY game.id HAVING COUNT(game.id) = :size)" +
+            "GROUP BY g.id")
+    Page<Game> findByPlatformAndCategories(@Param("platform") String platform,
+                                           @Param("categories") List<String> categories,
+                                           @Param("size") long size,
+                                           Pageable pageable);
+
     List<Game> findAllByProducer_IdAndPromotedIsTrue(Long producerId);
-    /**
-     * Finds all content by publisher ID that are promoted.
-     *
-     * @param publisherId The ID of the publisher.
-     * @return A list of all promoted content by the specified publisher.
-     */
+
     List<Game> findAllByPublisher_IdAndPromotedIsTrue(Long publisherId);
-    /**
-     * Finds all content by publisher ID.
-     *
-     * @param publisherId The ID of the publisher.
-     * @return A list of all content by the specified publisher.
-     */
+
     List<Game> findAllByPublisher_IdOrderByReleaseDate_ReleaseDateDesc(Long publisherId);
-    /**
-     * Finds all content by producer ID.
-     *
-     * @param producerId The ID of the producer.
-     * @return A list of all content by the specified producer.
-     */
+
     List<Game> findAllByProducer_IdOrderByReleaseDate_ReleaseDateDesc(Long producerId);
-    /**
-     * Finds a game by title, ignoring case.
-     *
-     *
-     * @param title The title of the game.
-     * @return An Optional containing the game if found, or empty if not found.
-     */
+
     Optional<Game> findByTitleIgnoreCase(String title);
 
     /**
      * Find all content sorted by release date
+     *
      * @return List of content sorted by release date descending
      */
     @Query("SELECT g FROM Game g JOIN GameReleaseCalendar grc ON g.id=grc.game.id " +
@@ -96,6 +132,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     /**
      * Find a game where the future release year is closest to present day
+     *
      * @return
      */
     @Query("SELECT g FROM Game g " +
@@ -104,7 +141,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             "WHERE rc.releaseDate >= CURRENT_DATE AND YEAR (grc.releaseCalendar.releaseDate)<3000" +
             "ORDER BY ABS(TIMESTAMPDIFF(DAY,rc.releaseDate,CURRENT_DATE)) asc limit 1 ")
     Optional<Game> findGameByClosestPremierDate();
-
 
 
 }

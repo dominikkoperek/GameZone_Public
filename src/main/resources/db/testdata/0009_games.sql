@@ -198,3 +198,8 @@ VALUES ('Tekken 8', 'Tekken 8 to mordobicie należące do jednego z najpopularni
 <h2>Kwestie techniczne</h2>
 
 <p><em>Tekken 8&nbsp;</em>oferuje imponującą oprawę graficzną. Zar&oacute;wno postacie, jak i lokacje są znacznie bardziej szczeg&oacute;łowe niż w poprzedniej części. Uwagę zwracają takie detale, jak krople deszczu spływające po twarzach wojownik&oacute;w czy mięśnie napinające się przed uderzeniem.</p>',1,2,'tekken8_0.jpg','tekken8_s_0.png');
+INSERT INTO game
+(title, short_description, dailymotion_trailer_id, promoted,
+ producer_id,publisher_id,description,min_players,max_players,poster,small_poster_suggestion)
+VALUES ('testgra', 'test',
+        'test', true, 8 ,7,'<h2>Mechanika</h2>',1,2,'tekken8_0.jpg','tekken8_s_0.png');

@@ -1,5 +1,6 @@
 package com.example.gamezoneproject.api;
 
+import com.example.gamezoneproject.domain.game.dto.page.GamePageDto;
 import com.example.gamezoneproject.domain.game.gameDetails.category.CategoryService;
 import com.example.gamezoneproject.domain.game.gameDetails.category.dto.CategoryDto;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +54,7 @@ public class GameCategoryEndpoint {
                 .toList();
         return ResponseEntity.ok(categories);
     }
+
 }
 
 

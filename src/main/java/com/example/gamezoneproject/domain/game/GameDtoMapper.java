@@ -8,6 +8,9 @@ import com.example.gamezoneproject.domain.game.gameDetails.releaseCalendar.Relea
 import com.example.gamezoneproject.domain.rating.Rating;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -18,7 +21,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class GameDtoMapper {
-    private static final short MIN_VOTES_TO_CALCULATE_AVG_RATING = 2;
+    public static final short MIN_VOTES_TO_CALCULATE_AVG_RATING = 2;
+    private static final DecimalFormat df = new DecimalFormat("#.#", new DecimalFormatSymbols(Locale.ENGLISH));
     private final ReleaseCalendarRepository releaseDateRepository;
 
     public GameDtoMapper(ReleaseCalendarRepository releaseDateRepository) {
@@ -39,8 +43,11 @@ public class GameDtoMapper {
             avgRating = game.getRatings().stream()
                     .map(Rating::getRating)
                     .mapToDouble(val -> val)
-                    .average().orElse(0);
+                    .average()
+                    .orElse(0);
         }
+        df.setRoundingMode(RoundingMode.UP);
+
 
 
         return new GameDto(
@@ -59,7 +66,7 @@ public class GameDtoMapper {
                 game.getPublisher(),
                 game.getPoster(),
                 game.getPlayerRange(),
-                avgRating,
+                Double.parseDouble(df.format(avgRating)),
                 ratingCount);
     }
 

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Controller for game.
@@ -43,24 +43,21 @@ public class GameController {
                                defaultValue = GlobalControllerAdvice.DEFAULT_PAGE_NUMBER) Integer pageNo,
                        @RequestParam(value = GlobalControllerAdvice.PAGE_SIZE_VARIABLE,
                                defaultValue = GlobalControllerAdvice.DEFAULT_PAGE_SIZE) Integer pageSize) {
-        if (pageNo < 0 || pageSize <= 0) {
+        if (pageNo <= 0 || pageSize <= 0) {
             return "redirect:/gry";
         }
+
+
         int nextPage = pageNo + 1;
-        int previousPage = pageNo - 1;
-        System.err.println(pageNo);
+        int previousPage = Math.max(pageNo - 1,1);
         GamePageDto allGames = gameService.findAllGamesSortedByOldestReleaseDate(pageNo, pageSize);
-        int totalPages = Math.max((allGames.getTotalPages() - 1), 0);
+        int totalPages = allGames.getTotalPages();
         addModelAttributes(model, allGames, pageNo, totalPages, nextPage, previousPage);
 
         if (pageNo > totalPages) {
             return ("redirect:/gry" + GlobalControllerAdvice.PAGE_PATH_QUERY + totalPages);
         }
         return "game-listing";
-    }
-    @GetMapping("/test")
-    public String sendHtmlFragment(Model map) {
-        return "test :: game-list";
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

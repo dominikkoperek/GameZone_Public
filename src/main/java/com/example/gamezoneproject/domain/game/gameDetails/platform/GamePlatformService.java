@@ -1,5 +1,6 @@
 package com.example.gamezoneproject.domain.game.gameDetails.platform;
 
+import com.example.gamezoneproject.domain.game.gameDetails.platform.dto.GamePlatformBrandDto;
 import com.example.gamezoneproject.domain.game.gameDetails.platform.dto.GamePlatformDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +18,11 @@ import java.util.stream.StreamSupport;
 public class GamePlatformService {
     private final static String ALL_CATEGORIES_NAME = "wszystkie";
     private final GamePlatformRepository gamePlatformRepository;
+    private final GamePlatformDtoMapper gamePlatformDtoMapper;
 
-    public GamePlatformService(GamePlatformRepository gamePlatformRepository) {
+    public GamePlatformService(GamePlatformRepository gamePlatformRepository, GamePlatformDtoMapper gamePlatformDtoMapper) {
         this.gamePlatformRepository = gamePlatformRepository;
+        this.gamePlatformDtoMapper = gamePlatformDtoMapper;
     }
 
     /**
@@ -31,7 +34,7 @@ public class GamePlatformService {
      */
     public Optional<GamePlatformDto> findGamePlatformByName(String name) {
         return gamePlatformRepository.findByNameIgnoreCase(name)
-                .map(GamePlatformDtoMapper::map);
+                .map(gamePlatformDtoMapper::map);
     }
 
     /**
@@ -44,13 +47,29 @@ public class GamePlatformService {
      */
     public LinkedHashMap<String, String> findAllGamePlatforms() {
         return StreamSupport.stream(gamePlatformRepository.findAll().spliterator(), false)
-                .map(GamePlatformDtoMapper::map)
+                .map(gamePlatformDtoMapper::map)
+                .sorted(Comparator.comparing(GamePlatformDto::getBrand))
                 .collect(Collectors.toMap(
                         GamePlatformDto::getName,
                         GamePlatformDto::getLogoAddress,
                         (existing, replacement) -> existing,
                         LinkedHashMap::new
                 ));
+    }
+
+    /**
+     * This method retrieves all game platforms from the database, maps them to GamePlatformBrandDto objects,
+     * sorts them by brand, and filters out the ones with the name ALL_CATEGORIES_NAME.
+     *
+     * @return A list of GamePlatformBrandDto objects representing all game platforms, excluding those named ALL_CATEGORIES_NAME.
+     */
+
+    public List<GamePlatformBrandDto> findAllGamePlatformsByBrand() {
+        return StreamSupport.stream(gamePlatformRepository.findAll().spliterator(), false)
+                .map(gamePlatformDtoMapper::mapBrandDto)
+                .sorted(Comparator.comparing(GamePlatformBrandDto::getBrand))
+                .filter(dto -> !dto.getName().equalsIgnoreCase(ALL_CATEGORIES_NAME))
+                .toList();
     }
 
     /**
@@ -63,6 +82,49 @@ public class GamePlatformService {
         return StreamSupport.stream(gamePlatformRepository.findAll().spliterator(), false)
                 .map(GamePlatform::getName)
                 .toList();
+    }
+
+    /**
+     * Counts the number of games for each platform and returns a sorted map.
+     * This method uses the repository to find all platforms and count games for each platform.
+     * It then streams the result to a sorted map, where the key is a mapped DTO (GamePlatformBrandDto)
+     * and the value is the number of games.
+     *
+     * @return A sorted map where the key is a GamePlatformBrandDto and the value is the number of games.
+     */
+
+    public Map<GamePlatformBrandDto, Long> countAllGamesByPlatforms(String platform) {
+
+        return gamePlatformRepository.countGamesByAllPlatforms(platform)
+                .stream()
+                .map(o -> new AbstractMap.SimpleEntry<>(
+                        gamePlatformDtoMapper.mapBrandDto((GamePlatform) o[0]),
+                        (Long) o[1]
+                ))
+                .filter(entry -> !entry.getKey().getName().equalsIgnoreCase(ALL_CATEGORIES_NAME))
+                .sorted(Map.Entry.comparingByKey(Comparator.comparing(GamePlatformBrandDto::getBrand)))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
+    public Map<GamePlatformBrandDto,Long> countAllGamesByPlatformsAndCategories(List<String>categories,String platformName){
+        return gamePlatformRepository.countGamesByAllPlatformsAndCategories(categories,categories.size(),platformName)
+                .stream()
+                .map(o -> new AbstractMap.SimpleEntry<>(
+                        gamePlatformDtoMapper.mapBrandDto((GamePlatform) o[0]),
+                        (Long) o[1]
+                ))
+                .filter(entry -> !entry.getKey().getName().equalsIgnoreCase(ALL_CATEGORIES_NAME))
+                .sorted(Map.Entry.comparingByKey(Comparator.comparing(GamePlatformBrandDto::getBrand)))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
     }
 
     /**

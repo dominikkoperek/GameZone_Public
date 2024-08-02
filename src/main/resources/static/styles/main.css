@@ -124,11 +124,11 @@ p {
 
 .login-search-bar-extend {
     display: flex;
+    background-color: #c9c9c9;
     position: absolute;
     z-index: 99;
     width: 16rem;
     top: 4.1rem;
-    background-color: #c9c9c9;
 }
 
 .login-search-bar-extend-mobile {
@@ -150,19 +150,6 @@ p {
     width: 100%;
 }
 
-.login-search-bar-list-mobile a {
-    font-size: 0.8rem;
-    background-color: #d0d0d0;
-    list-style: none;
-    padding: 6px 6px;
-    cursor: pointer;
-    color: #1f1f1f;
-    border-radius: 0;
-    overflow: hidden;
-    width: 100%;
-    text-align: left;
-    border-top: 1px dotted rgb(100, 100, 100);
-}
 
 .login-search-bar-list {
     display: flex;
@@ -173,7 +160,9 @@ p {
     width: 100%;
 }
 
-.login-search-bar-list a {
+.login-search-bar-list a,
+.game-search-bar-list-box a,
+.login-search-bar-list-mobile a{
     font-size: 0.8rem;
     background-color: #d0d0d0;
     list-style: none;
@@ -187,11 +176,20 @@ p {
     border-top: 1px dotted rgb(100, 100, 100)
 }
 
-.login-search-bar-list a:not(:first-child) {
-    border-top: 1px solid #7e7e7e
+.login-search-bar-list a:not(:first-child),
+.game-search-bar-list-box a:not(:first-child),
+.login-search-bar-list-mobile a:not(:first-child){
+    border-top: 1px solid #a6a6a6
+}
+.login-search-bar-list a:last-child,
+.game-search-bar-list-box a:last-child,
+.login-search-bar-list-mobile a:last-child{
+    border-bottom: 1px solid #a6a6a6
 }
 
-.login-search-bar-list a:hover {
+.login-search-bar-list a:hover,
+.game-search-bar-list-box a:hover,
+.login-search-bar-list-mobile a:hover {
     background-color: rgb(201, 214, 215);
 }
 
@@ -621,6 +619,7 @@ p {
     margin-bottom: 0.3rem;
 }
 
+/*mobile jump*/
 @media only screen and (min-width: 1024px) {
     .mobile-search-bar-container {
         display: none;
@@ -645,6 +644,7 @@ p {
     font-size: 1rem;
 }
 
+/*Mobile jump*/
 @media (max-width: 1024px) {
     .hide-jumbotron {
         display: none;
@@ -653,6 +653,14 @@ p {
     .mobile-nav-container,
     .mobile-nav-container-hide {
         display: flex;
+    }
+
+    .margin-box {
+        margin: 0 0.6rem;
+    }
+
+    .game-search-container > .game-search-category-description {
+        width: 100%;
     }
 }
 
@@ -685,7 +693,8 @@ p {
     height: 41px;
     line-height: 41px;
 }
-.menu-mobile-first{
+
+.menu-mobile-first {
     width: 92%;
 }
 
@@ -715,7 +724,6 @@ p {
 }
 
 
-
 .mobile-menu-container {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -743,36 +751,44 @@ p {
     display: flex;
     flex-direction: column;
 }
-.mobile-user-details a:first-child{
+
+.mobile-user-details a:first-child {
     border-top: 1px dotted #1f1f1f;
     background-color: transparent;
 }
-.mobile-user-details a:nth-child(2){
+
+.mobile-user-details a:nth-child(2) {
     background-color: transparent;
 }
+
 .menu-mobile-extended a:hover,
 .mobile-user-details a:hover,
-.mobile-menu-container >.menu-head a:hover{
+.mobile-menu-container > .menu-head a:hover {
     background-color: #c0c0c0;
 }
+
 .mobile-user-details a {
     color: #1f1f1f;
     padding: 0.5rem;
     background-color: rgba(130, 155, 173, 0.26);
     border-bottom: 1px dotted #1f1f1f;
 }
+
 .mobile-user-details a i {
     color: #1f1f1f;
 }
+
 .mobile-menu-container a:focus,
 .mobile-menu-container a:active,
-.mobile-menu-container a:focus{
+.mobile-menu-container a:focus {
     background-color: #c5c5c5;
 }
-.mobile-menu-container a:visited{
+
+.mobile-menu-container a:visited {
     background-color: transparent;
 }
-.mobile-menu-container >.menu-head a{
+
+.mobile-menu-container > .menu-head a {
     color: #db981d;
     display: flex;
 }
@@ -796,8 +812,7 @@ p {
     position: relative;
     display: flex;
     justify-content: space-between;
-    margin-left: 0.8rem;
-    margin-right: 0.8rem;;
+    margin-top: 1rem;
     flex-wrap: nowrap;
     flex-direction: row;
     height: 1rem;
@@ -896,15 +911,14 @@ p {
 .game-list {
     list-style-type: none;
     display: flex;
-    margin-right: 0.8rem;
     flex-wrap: wrap;
+    column-gap: 0.8rem;
+    row-gap: 0.8rem;
 }
 
 .game-list-item {
-    margin-bottom: 1rem;
-    margin-left: 0.8rem;
-    display: flex;
 
+    display: flex;
     border: 1px solid #4b4b4b;
     box-shadow: 1px 1px 8px #181818;
     flex: 1 0 calc(50% - 20px);
@@ -1008,6 +1022,253 @@ p {
     max-width: 16rem;
 }
 
+/*Search engine*/
+.game-search-container {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.game-search-title {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+    justify-content: left;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.game-search-category-description {
+    color: #9a9a9a;
+    width: 65%;
+    box-sizing: border-box;
+    line-height: 1.5;
+    padding: 0 1rem 1rem 1rem;
+    text-align: justify;
+    word-break: break-word;
+    border-bottom: 1px dotted #7a7a7a;
+}
+
+.game-search-platforms {
+    padding: 1rem;
+    background-color: #212121;
+    border-bottom: 1px dotted #7a7a7a;
+}
+
+.game-search-platforms ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+}
+
+.game-search-platforms ul > li > a {
+    display: flex;
+    row-gap: 0.25rem;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-search-platforms ul > li span {
+    color: #9a9a9a;
+}
+
+.game-search-platform-logo {
+    width: 3rem;
+    border-bottom: 3px solid #cccccc;
+}
+
+.game-search-logo-link:hover .game-search-platform-logo {
+    border-bottom: 3px solid #f5b800;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.game-search-logo-link:hover:hover span {
+    color: #f5b800;
+}
+
+
+.game-search-release-date {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    justify-content: left;
+    align-items: center;
+    border-bottom: 1px dotted #7a7a7a;
+    flex-direction: row;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
+}
+
+.game-search-number {
+    color: #f5b800;
+}
+
+.game-search-date-buttons-container > .game-search-button {
+    all: unset;
+    font-size: 0.9rem;
+    padding: 0.35rem 0.35rem;
+    background-color: #38576e;
+    border: 1px solid rgba(114, 165, 203, 0.51);
+    border-radius: 5px;
+    transition: ease-in-out background-color 100ms
+}
+
+.game-search-date-buttons-container .game-search-close-button {
+    all: unset;
+}
+
+.game-search-date-buttons-container button span,
+.game-search-chosen-platform-container a span {
+    transition: ease-in-out background-color 100ms
+}
+
+.game-search-chosen-platform-container > a {
+    all: unset;
+    font-size: 0.9rem;
+    padding: 0.35rem 0.35rem;
+    border-radius: 5px;
+    border: 1px solid #6F868C;
+    transition: ease-in-out background-color 100ms
+}
+
+.game-search-chosen-platform-container > a > i {
+    font-size: 0.8rem;
+    color: #ea3c3c;
+}
+
+.game-search-chosen-platform-container > a:hover {
+    background-color: #89AAA9;
+    cursor: pointer;
+}
+
+.game-search-date-buttons-container > button:hover span,
+.game-search-chosen-platform-container > a:hover span {
+    color: #1f1f1f;
+}
+
+.game-search-date-buttons-container > button:hover span.game-search-number {
+    color: #f5b800;
+}
+
+.game-search-date-buttons-container > button:hover {
+    cursor: pointer;
+    background-color: #2AABBC;
+    border: 1px solid rgba(33, 68, 94, 0.51);
+}
+
+.game-search-bar-input {
+    width: 14rem;
+    background-color: #c9c9c9;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.game-search-bar-container{
+    display: flex;
+    padding: 1rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 0.25rem;
+    border-bottom: 1px dotted #7a7a7a;
+}
+.game-search-bar-container > p {
+    font-weight: 600;
+}
+
+.game-search-bar {
+    display: block;
+    width: 100%;
+}
+
+.game-search-bar > input {
+    all: unset;
+    font-size: 0.8rem;
+    color: #1f1f1f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+    background-color: #c9c9c9;
+    padding-left: 5px;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.game-search-bar-extend {
+    position: absolute;
+    display: flex;
+    margin-right: 5rem;
+    border-top: none;
+    background-color: #c9c9c9;
+    z-index: 99;
+    width: 14rem;
+    box-sizing: border-box;
+}
+
+.game-search-bar-list-box {
+    display: flex;
+    padding: 0 6px 6px 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.game-search-chosen-categories{
+    border-bottom: 1px dotted #7a7a7a;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: left;
+    align-items: center;
+    padding: 1rem;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+}
+.game-search-categories{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    justify-content: left;
+    align-items: center;
+    column-gap: 0.5rem;
+    row-gap: 1rem;
+}
+.game-category-remove-button{
+    background-color:#464362;
+    border: 1px solid rgba(172, 167, 203, 0.51);
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    border-radius: 3px;
+    transition: ease-in-out all 100ms;
+    color: #c9c9c9;
+}
+
+.game-search-chosen-button-container >a>button{
+    all: unset;
+}
+.game-category-remove-button >button>i{
+    transition: all ease-in-out 100ms;
+}
+.game-category-remove-button:hover{
+    cursor: pointer;
+    background-color:#ACA9BB ;
+}
+.game-category-remove-button:hover>span{
+    color: #1f1f1f;
+}
+.game-search-chosen-button-container:hover >a>button>i{
+    color: #ea3c3c;
+}
 
 /*Platform logo*/
 
@@ -1093,6 +1354,22 @@ p {
 .platform-item:hover .platform-logo {
     fill: #fce1b6;
     color: #fce1b6;
+}
+.result-not-found{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+.result-list-not-found{
+    display: flex;
+    flex-direction: column-reverse;
+    row-gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+.result-list-not-found>img{
+    height: 8rem;
 }
 
 
@@ -1320,10 +1597,6 @@ ul.game-summary-item > a > i {
         font-size: 0.8rem;
     }
 
-
-    .margin-box {
-        margin: 0 0.6rem;
-    }
 
     .popular-produced-games {
         display: none;
@@ -2420,6 +2693,7 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .company-result-box #company-result-list a {
+    font-size: 0.8rem;
     background-color: transparent;
     list-style: none;
     padding: 6px 6px;

@@ -108,6 +108,7 @@
 
         <nav class="sub-nav-container" th:if="${displayGameListNav}" id="sub-navbar">
             <div class="sub-nav-items">
+                <a href="/polecane-gry" th:href="@{/gry/wyszukiwarka}">Wyszukiwarka</a>
                 <a href="/polecane-gry" th:href="@{/gry/top-gry}">Top gry</a>
                 <a href="/katalog-firm/" th:href="@{/katalog-firm}">Katalog firm</a>
                 <a href="/kategorie/" th:href="@{/gry/kategorie}">Kategorie</a>
@@ -243,7 +244,7 @@
                     <a href="#" th:href="@{/gry}">Encyklopedia Gier</a>
                 </div>
                 <div class="menu-mobile-extended">
-                    <a href="#" class="mobile-menu-subhead">wyszukiwarka</a>
+                    <a href="#" th:href="@{/gry/wyszukiwarka}"class="mobile-menu-subhead">wyszukiwarka</a>
                     <a href="#" th:href="@{/gry/top-gry}" class="mobile-menu-subhead">top gry</a>
                     <a href="#" th:href="@{/gry/kategorie} " class="mobile-menu-subhead">kategorie</a>
                     <a href="#" th:href="@{/katalog-firm}" class="mobile-menu-subhead">katalog firm</a>
