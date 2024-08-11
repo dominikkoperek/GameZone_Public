@@ -46,8 +46,6 @@ public class GameController {
         if (pageNo <= 0 || pageSize <= 0) {
             return "redirect:/gry";
         }
-
-
         int nextPage = pageNo + 1;
         int previousPage = Math.max(pageNo - 1,1);
         GamePageDto allGames = gameService.findAllGamesSortedByOldestReleaseDate(pageNo, pageSize);

@@ -1,7 +1,6 @@
 package com.example.gamezoneproject.domain.game.gameDetails.category;
 
 import org.springframework.data.repository.CrudRepository;
-
 import java.util.Optional;
 
 /**
@@ -15,4 +14,5 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
      * @return An optional containing the category if found, or empty if not.
      */
     Optional<Category> findByNameIgnoreCase(String name);
+
 }

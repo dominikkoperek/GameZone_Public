@@ -13,6 +13,7 @@ import java.util.*;
 
 @Entity
 public class Game {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -62,6 +63,15 @@ public class Game {
     private String smallPosterSuggestion;
     private String bigPosterSuggestion;
     private PlayerRange playerRange;
+
+
+    public Game(String title) {
+        this.title = title;
+    }
+    public Game() {
+
+    }
+
 
     public Long getId() {
         return id;

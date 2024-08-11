@@ -22,14 +22,6 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    /**
-     * This method is using the repository, finding a game category by the provided name,
-     * and then mapping the result to a CategoryDto.
-     *
-     * @param name The name of the game category provided by the user.
-     * @return An Optional containing a CategoryDto if a category with the provided name is found, or an empty Optional
-     * if no category is found.
-     */
     public Optional<CategoryDto> findCategoryByName(String name) {
         return categoryRepository.findByNameIgnoreCase(name)
                 .map(CategoryDtoMapper::map);
@@ -63,17 +55,17 @@ public class CategoryService {
         categoryRepository.save(categoryToSave);
     }
 
-    /**
-     * This method uses the repository to check if a category is available by the provided name.
-     * It checks if a category with the provided name already exists in the database.
-     *
-     * @param name The name of the category provided by the user.
-     * @return True if the provided name does not exist in the database, and false if the category already exists in the database.
-     */
     public boolean isCategoryAvailable(String name) {
         return categoryRepository
                 .findByNameIgnoreCase(name)
                 .isEmpty();
+    }
+    public Set<String> getNormalizedCategories(List<String> cat) {
+        return findAllGameCategories()
+                .stream()
+                .map(CategoryDto::getName)
+                .filter(name-> cat.stream().anyMatch(name::equalsIgnoreCase))
+                .collect(Collectors.toSet());
     }
 
 }

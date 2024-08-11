@@ -4,6 +4,7 @@ import com.example.gamezoneproject.domain.game.gameDetails.category.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 /**
  * Hibernate Interface that is responsible for all operations with Game entity in database.
  */
-public interface GameRepository extends JpaRepository<Game, Long> {
+public interface GameRepository extends JpaRepository<Game, Long>, JpaSpecificationExecutor<Game> {
 
     Page<Game> findAllBy(Pageable pageable);
 
@@ -51,42 +52,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             "GROUP BY g.id ORDER BY min(grc.releaseCalendar.releaseDate)  DESC")
     Page<Game> findAllGamesByPlatformSortedByReleaseDate(@Param("platform") String platform, Pageable pageable);
 
-    /**
-     * Method finds all games sorted by highest rate when minimum rate
-     * count is bigger than param minRatings otherwise avg rate is set to 0.
-     *
-     * @param minRatings minimum votes for calculate average game rate.
-     * @param pageable   Page with results.
-     * @return Page holding Game entity.
-     */
-    @Query("SELECT g " +
-            "FROM Game g " +
-            "LEFT JOIN g.ratings gr " +
-            "GROUP BY g.id " +
-            "ORDER BY CASE " +
-            "    WHEN COUNT(gr) >= :minRatings THEN ROUND(AVG(gr.rating), 1) " +
-            "    ELSE 0 " +
-            "END DESC,g.id DESC")
-    Page<Game> findAllGamesSortedByRateAndId(@Param("minRatings") int minRatings, Pageable pageable);
-
-    /**
-     * Method find games by categories list
-     *
-     * @param categories List of categories (Strings) to search
-     * @param size       Size of categories list
-     * @param pageable   Page with results.
-     * @return Page holding Game entity contain all attached categories.
-     */
-    @Query("SELECT g FROM Game g " +
-            "JOIN g.category c " +
-            "JOIN GameReleaseCalendar grc ON g.id=grc.game.id " +
-            "WHERE g.id IN (" +
-            "SELECT game.id FROM Game game JOIN game.category cat " +
-            "WHERE lower(cat.name) IN :categories GROUP BY game.id HAVING COUNT(game.id) = :size)" +
-            "GROUP BY g.id")
-    Page<Game> findByCategoriesList(@Param("categories") List<String> categories,
-                                    @Param("size") long size,
-                                    Pageable pageable);
 
     /**
      * Method search game by platform and lists of categories.
@@ -141,6 +106,5 @@ public interface GameRepository extends JpaRepository<Game, Long> {
             "WHERE rc.releaseDate >= CURRENT_DATE AND YEAR (grc.releaseCalendar.releaseDate)<3000" +
             "ORDER BY ABS(TIMESTAMPDIFF(DAY,rc.releaseDate,CURRENT_DATE)) asc limit 1 ")
     Optional<Game> findGameByClosestPremierDate();
-
 
 }

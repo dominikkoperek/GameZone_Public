@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public interface GameService {
     GamePageDto findAllPromotedGames(int pageNo, int pageSize);
@@ -22,9 +23,10 @@ public interface GameService {
 
     GamePageDto findGamesByPlatformAndCategories(String platform, List<String> categories, int pageNo, int pageSize);
 
-    GamePageDto findAllGamesSortedByRateAndId(int pageNo, int pageSize);
 
-    GamePageDto findAllSortedById(int pageNo, int pageSize);
+
+    GamePageDto findAllGamesFilteredAndSorted(String platform, Set<String> categories,
+                                              Boolean afterRelease, int pageNo, int pageSize);
 
     List<GameByCompanyDto> findAllPromotedGamesByProducerId(Long producerId);
 
@@ -49,8 +51,6 @@ public interface GameService {
     void addGame(GameSaveDto gameSaveDto);
 
     Map<String, LocalDate> mapToReleaseDateMap(List<String> platformName, List<String> releaseDate);
-
-    GamePageDto findAllGamesByCategories(List<String> categories, int pageNo, int pageSize);
 
 
 }

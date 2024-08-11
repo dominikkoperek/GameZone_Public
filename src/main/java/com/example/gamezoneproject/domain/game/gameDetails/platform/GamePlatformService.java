@@ -110,7 +110,7 @@ public class GamePlatformService {
                         LinkedHashMap::new
                 ));
     }
-    public Map<GamePlatformBrandDto,Long> countAllGamesByPlatformsAndCategories(List<String>categories,String platformName){
+    public Map<GamePlatformBrandDto,Long> countAllGamesByPlatformsAndCategories(Set<String>categories,String platformName){
         return gamePlatformRepository.countGamesByAllPlatformsAndCategories(categories,categories.size(),platformName)
                 .stream()
                 .map(o -> new AbstractMap.SimpleEntry<>(

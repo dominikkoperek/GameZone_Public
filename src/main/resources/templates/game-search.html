@@ -10,6 +10,7 @@
 <div class="container">
 
     <main class="main-content" layout:fragment="content">
+        <p class="notification-bar user-notification-bar" th:if="${notification}" th:text="${notification}">Powiadomienia</p>
         <div class="margin-box">
             <div class="game-search-container">
                 <div class="game-search-title" id="page-anchor">
@@ -51,18 +52,19 @@
                 </div>
                 <div class="game-search-release-date">
                     <div class="game-search-date-buttons-container">
-                        <button class="game-search-button">
+                        <a href="#" th:href="${categoriesParam} ?
+                        @{/gry/wyszukiwarka/b(cat=${categoriesParam})} : @{/gry/wyszukiwarka/b}" class="game-search-button">
                             <span>po premierze </span>
                             <span class="game-search-number">223</span>
-                        </button>
+                        </a>
 
 
                     </div>
                     <div class="game-search-date-buttons-container">
-                        <button class="game-search-button">
+                        <a href="#" class="game-search-button">
                             <span>przed premierą</span>
                             <span class="game-search-number">532</span>
-                        </button>
+                        </a>
                     </div>
                     <div class="game-search-chosen-platform-container" id="game-search-chosen-platform-container">
                         <a th:if="${currentPlatform}"

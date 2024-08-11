@@ -122,7 +122,7 @@ function showCategoriesHints(input, navBarListBox, navBarBox, size) {
 }
 
 
-//REMOVE PLATFORM
+//REMOVE CATEGORY
 let chosenPlatformBox = document.getElementById('game-search-chosen-platform-container');
 let gameCategory = document.getElementsByClassName('game-search-category');
 let gameCategoryButton = document.getElementsByClassName('game-category-remove-button');
@@ -138,7 +138,7 @@ function removeCategory(category) {
     let categories = urlParams.get('cat');
 
     if (categories) {
-        categories = categories.split(',').filter(cat => cat !== category);
+        categories = categories.split(',').filter(cat => cat.toLowerCase() !== category.toLowerCase());
         if (categories.length > 0) {
             urlParams.set('cat', categories.join(','));
         } else {

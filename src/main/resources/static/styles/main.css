@@ -1123,7 +1123,7 @@ p {
     all: unset;
 }
 
-.game-search-date-buttons-container button span,
+.game-search-date-buttons-container a span,
 .game-search-chosen-platform-container a span {
     transition: ease-in-out background-color 100ms
 }
@@ -1147,16 +1147,16 @@ p {
     cursor: pointer;
 }
 
-.game-search-date-buttons-container > button:hover span,
+.game-search-date-buttons-container > a:hover span,
 .game-search-chosen-platform-container > a:hover span {
     color: #1f1f1f;
 }
 
-.game-search-date-buttons-container > button:hover span.game-search-number {
+.game-search-date-buttons-container > a:hover span.game-search-number {
     color: #f5b800;
 }
 
-.game-search-date-buttons-container > button:hover {
+.game-search-date-buttons-container > a:hover {
     cursor: pointer;
     background-color: #2AABBC;
     border: 1px solid rgba(33, 68, 94, 0.51);
